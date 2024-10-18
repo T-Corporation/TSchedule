@@ -7,19 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Entities\TODO" />
-    <None Remove="Exceptions\TODO" />
-    <None Remove="Interfaces\TODO" />
-    <None Remove="Repositories\TODO" />
-    <None Remove="Services\TODO" />
+    <None Remove="Entities\_TODO" />
+    <None Remove="Exceptions\_TODO" />
+    <None Remove="Interfaces\_TODO" />
+    <None Remove="Repositories\_TODO" />
+    <None Remove="Services\_TODO" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Entities\TODO" />
-    <Compile Include="Exceptions\TODO" />
-    <Compile Include="Interfaces\TODO" />
-    <Compile Include="Repositories\TODO" />
-    <Compile Include="Services\TODO" />
+    <Compile Include="Entities\_TODO" />
+    <Compile Include="Exceptions\_TODO" />
+    <Compile Include="Interfaces\_TODO" />
+    <Compile Include="Repositories\_TODO" />
+    <Compile Include="Services\_TODO" />
   </ItemGroup>
 
   <ItemGroup>

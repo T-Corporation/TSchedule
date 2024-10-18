@@ -15,12 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Models\TODO" />
-    <Compile Include="ViewModels\TODO" />
-    <Compile Include="Views\TODO" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\TSchedule.Persistence\TSchedule.Persistence.csproj" />
   </ItemGroup>
 
