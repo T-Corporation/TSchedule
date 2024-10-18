@@ -1,10 +1,29 @@
 ﻿<Window x:Class="TSchedule.Views.MainWindow"
+        xmlns:vm="clr-namespace:TSchedule.ViewModels"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         Width="800"
         Height="450"
-        Title="MainWindow">
-    <Grid>
-
+        Title="TSchedule"
+        WindowStartupLocation="CenterScreen">
+    
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    
+    <Grid Margin="20">
+        
+        <TextBlock FontSize="24"
+                   Text="Добро пожаловать!"/>
+        
+        <Button Width="140"
+                Height="32"
+                Content="Вход"
+                Foreground="White"
+                Background="#FF0078D7"
+                BorderBrush="#FF0078D7"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Right"
+                Command="{Binding GoToLoginWindowCommand}"/>
     </Grid>
 </Window>

@@ -9,13 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Models\TODO" />
-    <None Remove="ViewModels\TODO" />
-    <None Remove="Views\TODO" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TSchedule.Persistence\TSchedule.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Images\" />
   </ItemGroup>
 
 </Project>
