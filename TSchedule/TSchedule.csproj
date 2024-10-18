@@ -20,4 +20,8 @@
     <Compile Include="Views\TODO" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TSchedule.Persistence\TSchedule.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>
