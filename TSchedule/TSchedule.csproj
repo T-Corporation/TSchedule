@@ -8,4 +8,16 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Models\TODO" />
+    <None Remove="ViewModels\TODO" />
+    <None Remove="Views\TODO" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Models\TODO" />
+    <Compile Include="ViewModels\TODO" />
+    <Compile Include="Views\TODO" />
+  </ItemGroup>
+
 </Project>
