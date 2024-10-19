@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TSchedule.Persistence.Entities;
 
-namespace TSchedule;
+namespace TSchedule.Persistence;
 
 /// <summary>
 /// Ключевой класс, который будет работать с БД
