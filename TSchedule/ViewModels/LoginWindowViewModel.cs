@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows;
+using TSchedule.Views;
 
 namespace TSchedule.ViewModels;
 
@@ -12,6 +13,9 @@ public partial class LoginWindowViewModel : ObservableObject
     [ObservableProperty]
     private string password = string.Empty;
 
+    [ObservableProperty]
+    private string errorMessage = string.Empty;
+
     [RelayCommand]
     private void ShowInfo()
         => WindowManager.ShowMessageBox(
@@ -21,14 +25,27 @@ public partial class LoginWindowViewModel : ObservableObject
             MessageBoxImage.Information);
 
     [RelayCommand]
-    private void Login()
+    private async Task Login()
     {
+        ErrorMessage = string.Empty;
+
         if (string.IsNullOrEmpty(UserName)
             || string.IsNullOrEmpty(Password))
         {
             ErrorMessage = "Заполните все поля";
+            return;
         }
 
-        if ()
+        var user = await App.TeachersService.Authenticate(UserName, Password);
+
+        if (user is null)
+        {
+            ErrorMessage = "Неверный логин или пароль";
+            return;
+        }
+
+        App.User = user;
+        WindowManager.CreateWindow<MainWindow>();
+        WindowManager.CloseWindow<LoginWindow>();
     }
 }

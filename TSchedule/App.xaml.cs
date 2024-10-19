@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using TSchedule.Persistence;
 using TSchedule.Persistence.Interfaces;
 using TSchedule.Persistence.Repositories;
 using TSchedule.Persistence.Services;
@@ -8,13 +9,11 @@ namespace TSchedule;
 
 public partial class App
 {
-    public static ITeachersService TeachersService { get; }
+    private static ApplicationDbContext ApplicationDbContext { get; } = new ApplicationDbContext();
+    private static ITeachersRepository TeachersRepository { get; } = new TeachersRepository(ApplicationDbContext);
+    public static ITeachersService TeachersService { get; } = new TeachersService(TeachersRepository);
 
-    public App()
-    {
-        TeachersService = new TeachersService(
-            new TeachersRepository());
-    }
+    public static IUser? User { get; set; }
 
     private void Application_Startup(object sender, StartupEventArgs e)
     {

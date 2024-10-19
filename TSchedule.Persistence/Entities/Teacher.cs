@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TSchedule.Persistence.Interfaces;
 
 namespace TSchedule.Persistence.Entities;
 
-public class Teacher
+public class Teacher : IUser
 {
     [Key] public Guid Id { get; set; } = Guid.NewGuid();
 
@@ -31,8 +32,8 @@ public class Teacher
     public string Email { get; set; } = string.Empty;
 
     [Phone]
-    [StringLength(15)]
     [Required(AllowEmptyStrings = false)]
+    [StringLength(15, MinimumLength = 15)]
     public string PhoneNumber { get; set; } = string.Empty;
 
     [StringLength(255)]

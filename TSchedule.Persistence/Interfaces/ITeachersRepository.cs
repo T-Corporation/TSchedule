@@ -16,9 +16,9 @@ public interface ITeachersRepository
 
     Task<IEnumerable<Teacher>> FindAllByFio(string fio);
 
-    Task<bool> Create(Teacher teacher, bool willThrow);
+    Task<bool> Create(Teacher teacher, bool willThrow = false);
 
-    Task<bool> Update(Teacher teacher, bool willThrow);
+    Task<bool> Update(Teacher teacher, bool willThrow = false);
 
-    Task<bool> DeleteById(Guid id, bool willThrow);
+    Task<bool> DeleteById(Guid id, bool willThrow = false);
 }

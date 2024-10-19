@@ -2,23 +2,25 @@
 using TSchedule.Persistence.Entities;
 using TSchedule.Persistence.Exceptions;
 using TSchedule.Persistence.Interfaces;
-using TSchedule.Persistence.Repositories;
 
 namespace TSchedule.Persistence.Services;
 
-public class TeachersService(TeachersRepository repository) : ITeachersService
+public class TeachersService(ITeachersRepository repository) : ITeachersService
 {
-    public async Task<bool> Authenticate(string username, string password)
+    public async Task<IUser?> Authenticate(string username, string password)
     {
         try
         {
             var teacher = await repository.FindByUserName(username);
-            return PasswordService.Default.Verify(password, teacher.PasswordHash);
+            if (PasswordService.Default.Verify(password, teacher.PasswordHash))
+                return teacher;
+            throw new TeacherNotFoundException(
+                "UserName & Password", $"UserName={username}; Password={password}");
         }
         catch (TeacherNotFoundException tnfe)
         {
             Debug.WriteLine(tnfe.Message);
-            return false;
+            return null;
         }
     }
 
