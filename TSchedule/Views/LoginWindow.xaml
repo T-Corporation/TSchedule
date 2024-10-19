@@ -1,4 +1,5 @@
 ﻿<Window x:Class="TSchedule.Views.LoginWindow"
+        xmlns:c="clr-namespace:TSchedule.Converters"
         xmlns:vm="clr-namespace:TSchedule.ViewModels"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -6,6 +7,12 @@
         Height="450"
         Title="Авторизация"
         WindowStartupLocation="CenterOwner">
+
+    <Window.Resources>
+
+        <c:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+
+    </Window.Resources>
 
     <Window.DataContext>
         
@@ -80,6 +87,12 @@
                         Content="Войти в систему"
                         HorizontalAlignment="Stretch"
                         Command="{Binding LoginCommand}"/>
+
+                <TextBlock Padding="8"
+                           Foreground="#cc3300"
+                           TextAlignment="Center"
+                           Text="{Binding ErrorMessage}"
+                           Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}"/>
 
             </StackPanel>
 

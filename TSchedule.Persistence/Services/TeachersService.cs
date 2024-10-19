@@ -14,6 +14,7 @@ public class TeachersService(ITeachersRepository repository) : ITeachersService
             var teacher = await repository.FindByUserName(username);
             if (PasswordService.Default.Verify(password, teacher.PasswordHash))
                 return teacher;
+
             throw new TeacherNotFoundException(
                 "UserName & Password", $"UserName={username}; Password={password}");
         }
@@ -24,6 +25,5 @@ public class TeachersService(ITeachersRepository repository) : ITeachersService
         }
     }
 
-    public async Task<bool> Register(Teacher teacher)
-        => await repository.Create(teacher);
+    public async Task<bool> Register(Teacher teacher) => await repository.Create(teacher);
 }

@@ -1,33 +1,29 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using TSchedule.Persistence.Interfaces;
 
 namespace TSchedule.Persistence.Entities;
 
+[Table("Teachers", Schema = "School")]
 public class Teacher : IUser
 {
-    [Key] public Guid Id { get; set; } = Guid.NewGuid();
+    [Key]
+    public Guid Id { get; set; } = Guid.NewGuid();
 
+    [StringLength(255)]
     [Required(AllowEmptyStrings = false)]
-    [StringLength(20, MinimumLength = 3)]
+    public string FullName { get; set; } = string.Empty;
+
+    [StringLength(20)]
+    [Required(AllowEmptyStrings = false)]
     public string UserName { get; set; } = string.Empty;
 
-    [StringLength(100)]
-    [Required(AllowEmptyStrings = false)]
+    [Required]
+    [StringLength(60)]
     public string PasswordHash { get; set; } = string.Empty;
 
-    [StringLength(50)]
-    [Required(AllowEmptyStrings = false)]
-    public string Name { get; set; } = string.Empty;
-
-    [StringLength(50)]
-    [Required(AllowEmptyStrings = false)]
-    public string Surname { get; set; } = string.Empty;
-
-    [StringLength(50)]
-    public string? FatherName { get; set; }
-
     [EmailAddress]
-    [StringLength(200)]
+    [StringLength(255)]
     [Required(AllowEmptyStrings = false)]
     public string Email { get; set; } = string.Empty;
 
@@ -36,6 +32,12 @@ public class Teacher : IUser
     [StringLength(15, MinimumLength = 15)]
     public string PhoneNumber { get; set; } = string.Empty;
 
-    [StringLength(255)]
-    public string ProfilePicture { get; set; } = string.Empty;
+    [DataType(DataType.Date)]
+    public DateTime? BirthDate { get; set; }
+
+    [StringLength(50)]
+    public string Classroom { get; set; } = string.Empty;
+
+    [DataType(DataType.DateTime)]
+    public DateTimeOffset? PreferredTime { get; set; }
 }

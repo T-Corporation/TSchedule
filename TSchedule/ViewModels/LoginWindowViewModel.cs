@@ -17,20 +17,16 @@ public partial class LoginWindowViewModel : ObservableObject
     private string errorMessage = string.Empty;
 
     [RelayCommand]
-    private void ShowInfo()
-        => WindowManager.ShowMessageBox(
-            "Логин и пароль предоставляются администрацией вашего учебного заведения.",
-            "Информация",
-            MessageBoxButton.OK,
-            MessageBoxImage.Information);
+    private void ShowInfo() => WindowManager.ShowMessageBox(
+        "Логин и пароль предоставляются администрацией вашего учебного заведения.",
+        "Информация",
+        MessageBoxButton.OK,
+        MessageBoxImage.Information);
 
     [RelayCommand]
     private async Task Login()
     {
-        ErrorMessage = string.Empty;
-
-        if (string.IsNullOrEmpty(UserName)
-            || string.IsNullOrEmpty(Password))
+        if (string.IsNullOrEmpty(UserName) || string.IsNullOrEmpty(Password))
         {
             ErrorMessage = "Заполните все поля";
             return;
@@ -43,6 +39,8 @@ public partial class LoginWindowViewModel : ObservableObject
             ErrorMessage = "Неверный логин или пароль";
             return;
         }
+
+        ErrorMessage = string.Empty;
 
         App.User = user;
         WindowManager.CreateWindow<MainWindow>();
