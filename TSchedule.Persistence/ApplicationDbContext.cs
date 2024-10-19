@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TSchedule.Persistence.Entities;
 
-namespace TSchedule.Persistence;
+namespace TSchedule;
 
 /// <summary>
 /// Ключевой класс, который будет работать с БД
@@ -12,7 +12,7 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Server=LAPTOP-AQTL78HJ;User Id=roman;Password=fnaf;TrustServerCertificate=True");
+        optionsBuilder.UseSqlServer("Server=LAPTOP-AQTL78HJ;Trusted_Connection=True;TrustServerCertificate=True");
     }
 
     // Здесь будут таблицы
