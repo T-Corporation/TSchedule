@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace TSchedule.Persistence.Entities;
 
@@ -30,7 +31,9 @@ public class Schedule
 
     // Ссылка на преподавателя
     [ForeignKey(nameof(Teacher))]
-    public int TeacherId { get; set; }
+    public Guid TeacherId { get; set; }
+
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public Teacher? Teacher { get; set; }
 
     // Ссылка на группу
@@ -41,10 +44,14 @@ public class Schedule
     // Ссылка на предмет
     [ForeignKey(nameof(Subject))]
     public int SubjectId { get; set; }
+
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public Subject? Subject { get; set; }
 
     // Ссылка на аудиторию
     [ForeignKey(nameof(Classroom))]
     public int ClassroomId { get; set; }
+
+    [DeleteBehavior(DeleteBehavior.NoAction)]
     public Classroom? Classroom { get; set; }
 }

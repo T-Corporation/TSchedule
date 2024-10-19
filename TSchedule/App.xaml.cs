@@ -10,8 +10,7 @@ namespace TSchedule;
 
 public partial class App
 {
-    private static ApplicationDbContext ApplicationDbContext { get; } = new ApplicationDbContext();
-    private static ITeachersRepository TeachersRepository { get; } = new TeachersRepository(ApplicationDbContext);
+    private static ITeachersRepository TeachersRepository { get; } = new TeachersRepository();
     public static ITeachersService TeachersService { get; } = new TeachersService(TeachersRepository);
 
     public static IUser? User { get; set; }

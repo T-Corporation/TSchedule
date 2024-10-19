@@ -16,7 +16,7 @@ public class Workload
     public bool IsForSemester { get; set; } // True для семестра (для студентов), False для недели (для преподавателей)
 
     [ForeignKey(nameof(Teacher))]
-    public int? TeacherId { get; set; } // Нагрузка на преподавателя
+    public Guid? TeacherId { get; set; } // Нагрузка на преподавателя
     public Teacher? Teacher { get; set; }
 
     [ForeignKey(nameof(Group))]
