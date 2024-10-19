@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using TSchedule.Persistence;
 using TSchedule.Persistence.Interfaces;
 using TSchedule.Persistence.Repositories;
 using TSchedule.Persistence.Services;

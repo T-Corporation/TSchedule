@@ -88,7 +88,9 @@
                         HorizontalAlignment="Stretch"
                         Command="{Binding LoginCommand}"/>
 
-                <TextBlock Foreground="#cc3300"
+                <TextBlock Padding="8"
+                           Foreground="#cc3300"
+                           TextAlignment="Center"
                            Text="{Binding ErrorMessage}"
                            Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}"/>
 
