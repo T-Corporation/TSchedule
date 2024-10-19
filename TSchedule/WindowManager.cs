@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.Windows;
 
 namespace TSchedule;
 
@@ -30,6 +31,15 @@ public static class WindowManager
             ? (T)window
             : null;
     }
+
+    public static ObservableObject? GetViewModel<T>() where T : Window
+    {
+        var windowType = typeof(T);
+        return GetWindow<T>()?.DataContext as ObservableObject;
+    }
+
+    public static T? As<T>(this ObservableObject viewModel) where T : ObservableObject
+        => viewModel as T;
 
     // Показать окно (если оно скрыто)
     public static void ShowWindow<T>(bool showDialog = false) where T : Window, new()

@@ -4,25 +4,99 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         Width="800"
         Height="450"
-        Title="StartWindow"
+        Title="Авторизация"
         WindowStartupLocation="CenterOwner">
-    
+
     <Window.DataContext>
+        
         <vm:LoginWindowViewModel/>
+        
     </Window.DataContext>
-    
+
     <Grid>
-        <Rectangle HorizontalAlignment="Center" Height="110" Stroke="#FF0078D7" VerticalAlignment="Top" Width="800" Fill="#FF0078D7" OpacityMask="Black"/>
-        <Rectangle HorizontalAlignment="Left" Height="54" Margin="28,28,0,0" Stroke="#FF0078D7" VerticalAlignment="Top" Width="55" Fill="White"/>
-        <Label Content="TSchedule" HorizontalAlignment="Left" Height="76" Margin="26.5,17,0,0" VerticalAlignment="Top" FontSize="48" Width="208"/>
-        <TextBlock HorizontalAlignment="Right" Margin="0,45,296,0" TextWrapping="Wrap" Text="Информационная система создания расписания для колледжей, техникумов и прочих шараг" VerticalAlignment="Top" Width="270" OpacityMask="Black" Foreground="White"/>
-        <Button Command="{Binding ShowInfoCommand}" x:Name="QuestionButton" Content="?" HorizontalAlignment="Right" Height="45" Margin="0,0,15,15" VerticalAlignment="Bottom" Width="44" FontSize="36" Background="#FFE1E1E1"/>
-        <TextBox x:Name="inputLogin" Height="22" Margin="320,253,320,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
-        <Label Content="Введите логин" HorizontalAlignment="Left" Margin="320,227,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="inputPassword" HorizontalAlignment="Center" Height="22" Margin="0,301,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="160"/>
-        <Label Content="Введите пароль" HorizontalAlignment="Left" Margin="320,275,0,0" VerticalAlignment="Top"/>
-        <Label Content="Добро Пожаловать!" HorizontalAlignment="Center" Height="55" Margin="0,149,0,0" VerticalAlignment="Top" Width="356" FontSize="36" BorderBrush="Black"/>
-        <Button Content="Войти в систему" HorizontalAlignment="Center" Height="32" Margin="0,341,0,0" VerticalAlignment="Top" Width="140" BorderBrush="#FF0078D7" Background="#FF0078D7" Foreground="White"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0"
+              Background="#FF0078D7">
+
+            <Label FontSize="48"
+                   Margin="28,0"
+                   Panel.ZIndex="1"
+                   Content="TSchedule"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left" />
+
+            <TextBlock Width="270"
+                       Margin="20"
+                       TextWrapping="Wrap"
+                       Foreground="White"
+                       OpacityMask="Black"
+                       TextAlignment="Right"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Text="Информационная система создания расписания для колледжей, техникумов и прочих шараг"/>
+
+            <Rectangle Width="55"
+                       Height="55"
+                       Fill="White"
+                       Margin="30,24"
+                       Stroke="#FF0078D7"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"/>
+            
+        </Grid>
+
+        <Grid Margin="16"
+              Grid.Row="1"
+              VerticalAlignment="Center">
+
+            <StackPanel MinWidth="300"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Center">
+                
+                <Label Content="Введите логин"
+                       HorizontalAlignment="Left"/>
+                
+                <TextBox Padding="4"
+                         TextWrapping="Wrap"
+                         Text="{Binding UserName}"/>
+
+                <Label Content="Введите пароль"
+                       HorizontalAlignment="Left"/>
+
+                <PasswordBox Padding="4"
+                             x:Name="PasswordBox"
+                             VerticalAlignment="Top"
+                             PasswordChanged="PasswordBox_PasswordChanged"/>
+                
+                <Button Height="32"
+                        Margin="0,20,0,0"
+                        Foreground="White"
+                        Background="#FF0078D7"
+                        BorderBrush="#FF0069BD"
+                        Content="Войти в систему"
+                        HorizontalAlignment="Stretch"
+                        Command="{Binding LoginCommand}"/>
+
+            </StackPanel>
+
+        </Grid>
+
+
+
+        <Button Width="50"
+                Margin="16"
+                Content="?"
+                Grid.Row="1"
+                FontSize="36"
+                Background="Transparent"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Right"
+                Command="{Binding ShowInfoCommand}"/>
 
     </Grid>
+    
 </Window>

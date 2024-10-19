@@ -19,4 +19,16 @@ public partial class LoginWindowViewModel : ObservableObject
             "Информация",
             MessageBoxButton.OK,
             MessageBoxImage.Information);
+
+    [RelayCommand]
+    private void Login()
+    {
+        if (string.IsNullOrEmpty(UserName)
+            || string.IsNullOrEmpty(Password))
+        {
+            ErrorMessage = "Заполните все поля";
+        }
+
+        if ()
+    }
 }
