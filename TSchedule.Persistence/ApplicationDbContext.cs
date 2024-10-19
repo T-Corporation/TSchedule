@@ -12,7 +12,7 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Server=LAPTOP-AQTL78HJ;Trusted_Connection=True;TrustServerCertificate=True");
+        optionsBuilder.UseSqlServer("Server=LAPTOP-AQTL78HJ;Database=TSchedule;Trusted_Connection=True;TrustServerCertificate=True");
     }
 
     // Здесь будут таблицы

@@ -12,7 +12,7 @@ using TSchedule;
 namespace TSchedule.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241019080252_Initial")]
+    [Migration("20241019081229_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

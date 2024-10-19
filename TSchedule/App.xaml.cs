@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using TSchedule.Persistence.Interfaces;
 using TSchedule.Persistence.Repositories;
 using TSchedule.Persistence.Services;
@@ -17,5 +18,6 @@ public partial class App
     private void Application_Startup(object sender, StartupEventArgs e)
     {
         WindowManager.CreateWindow<MainWindow>();
+        Debug.WriteLine(PasswordService.Default.HashPassword("123"));
     }
 }
