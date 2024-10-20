@@ -5,8 +5,19 @@ namespace TSchedule.Persistence.Managers;
 
 public class ConnectionManager : IConnectionManager
 {
-    public static ConnectionManager Default => new();
+    /// <summary>
+    /// "Ленивое" создание менеджера
+    /// </summary>
+    private static readonly Lazy<ConnectionManager> _instance = new(() => new ConnectionManager());
 
+    /// <summary>
+    /// Ссылка на менеджер по умолчанию
+    /// </summary>
+    public static ConnectionManager Default => _instance.Value;
+
+    /// <summary>
+    /// Имя пользователя ПК
+    /// </summary>
     private static string AccountName => Environment.UserName;
 
     /// <summary>
@@ -50,12 +61,19 @@ public class ConnectionManager : IConnectionManager
         return connectionStringBuilder.ToString();
     }
 
+    /// <summary>
+    /// Тип аутентификации БД
+    /// </summary>
     public enum AuthenticationType
     {
         WindowsAuthentication,
         SqlServerAuthentication
     }
 
+    /// <summary>
+    /// Строитель строки подключения
+    /// </summary>
+    /// <param name="authenticationType">Тип аутентификации</param>
     public class ConnectionStringBuilder
         (AuthenticationType authenticationType = AuthenticationType.WindowsAuthentication)
     {
@@ -123,7 +141,6 @@ public class ConnectionManager : IConnectionManager
                     break;
 
                 case AuthenticationType.WindowsAuthentication:
-                default:
                     stringBuilder.Append($"Trusted_Connection={TrustedConnection};");
                     break;
             }
