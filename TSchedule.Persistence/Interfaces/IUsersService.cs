@@ -2,8 +2,8 @@
 
 namespace TSchedule.Persistence.Interfaces;
 
-public interface ITeachersService
+public interface IUsersService
 {
     Task<IUser?> Authenticate(string username, string password);
-    Task<bool> Register(Teacher teacher);
+    Task<bool> Register(IUser user);
 }

@@ -1,11 +1,10 @@
 ﻿using System.Diagnostics;
-using TSchedule.Persistence.Entities;
 using TSchedule.Persistence.Exceptions;
 using TSchedule.Persistence.Interfaces;
 
 namespace TSchedule.Persistence.Services;
 
-public class TeachersService(ITeachersRepository repository) : ITeachersService
+public class UsersService(IUsersRepository repository) : IUsersService
 {
     public async Task<IUser?> Authenticate(string username, string password)
     {
@@ -25,5 +24,5 @@ public class TeachersService(ITeachersRepository repository) : ITeachersService
         }
     }
 
-    public async Task<bool> Register(Teacher teacher) => await repository.Create(teacher);
+    public async Task<bool> Register(IUser user) => await repository.Create(user);
 }
