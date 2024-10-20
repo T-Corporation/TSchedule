@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TSchedule.Persistence.Entities;
-using TSchedule.Persistence.Services;
+using TSchedule.Persistence.Managers;
 
 namespace TSchedule.Persistence;
 
@@ -9,13 +9,15 @@ namespace TSchedule.Persistence;
 /// </summary>
 public class ApplicationDbContext : DbContext
 {
-    public ApplicationDbContext() => Database.EnsureCreated();
+    // Нужно использовать, удостоверившись, что БД пустая
+    // public ApplicationDbContext() => Database.EnsureCreated();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(ConnectionService.Default.GetConnectionString());
+        optionsBuilder.UseSqlServer(ConnectionManager.Default.GetConnectionString());
     }
 
+    public DbSet<Administrator> Administrators { get; set; }
     public DbSet<Classroom> Classrooms { get; set; }
     public DbSet<Schedule> Schedules { get; set; }
     public DbSet<Specialty> Specialties { get; set; }

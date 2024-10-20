@@ -1,19 +1,17 @@
-﻿<Window x:Class="TSchedule.Views.MainWindow"
-        xmlns:c="clr-namespace:TSchedule.Converters"
+﻿<Window x:Class="TSchedule.Views.StartWindow"
         xmlns:vm="clr-namespace:TSchedule.ViewModels"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        Width="800"
-        Height="450"
-        Title="TSchedule"
+        Width="400"
+        Height="500"
+        Title="Добро пожаловать"
         WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
-        
-        <vm:MainWindowViewModel/>
-        
+        <vm:StartWindowViewModel/>
     </Window.DataContext>
 
-    <TextBlock Text="Добро пожаловать!"/>
-
+    <Frame NavigationUIVisibility="Hidden"
+           Content="{Binding CurrentPage}"/>
+    
 </Window>

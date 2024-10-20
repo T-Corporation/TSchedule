@@ -1,14 +1,24 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Windows;
 
-namespace TSchedule;
+namespace TSchedule.Managers;
 
-public static class WindowManager
+public class WindowManager
 {
+    /// <summary>
+    /// "Ленивое" создание менеджера по умолчанию
+    /// </summary>
+    private static readonly Lazy<WindowManager> _instance = new(() => new WindowManager());
+
+    /// <summary>
+    /// Ссылка на менеджер по умолчанию
+    /// </summary>
+    public static WindowManager Default => _instance.Value;
+
     /// <summary>
     /// Коллекция зарегистрированных окон
     /// </summary>
-    private static readonly Dictionary<Type, Window> _windows = [];
+    private readonly Dictionary<Type, Window> _windows = [];
 
     /// <summary>
     /// Создаёт и регистрирует окно
@@ -17,7 +27,8 @@ public static class WindowManager
     /// <param name="showDialog"></param>
     /// <param name="owner"></param>
     /// <returns></returns>
-    public static T CreateWindow<T>(bool showDialog = false, Window? owner = null) where T : Window, new()
+    public T CreateWindow<T>(bool showDialog = false, Window? owner = null)
+        where T : Window, new()
     {
         var windowType = typeof(T);
         if (_windows.TryGetValue(windowType, out Window? value))
@@ -36,7 +47,8 @@ public static class WindowManager
     /// </summary>
     /// <typeparam name="T">Тип окна, которое создано через менеджер</typeparam>
     /// <returns>Если окно найдено, то возвращает его, иначе <b>null</b></returns>
-    public static T? GetWindow<T>() where T : Window
+    public T? GetWindow<T>()
+        where T : Window
     {
         var windowType = typeof(T);
         return _windows.TryGetValue(windowType, out var window)
@@ -49,23 +61,19 @@ public static class WindowManager
     /// </summary>
     /// <typeparam name="T">Тип окна, которое создано через менеджер</typeparam>
     /// <returns>DataContext окна или <b>null</b>, если он отсутствует</returns>
-    public static ObservableObject? GetViewModel<T>() where T : Window
+    public ObservableObject? GetViewModel<T>()
+        where T : Window
         => GetWindow<T>()?.DataContext as ObservableObject;
 
-    /// <summary>
-    /// Преобразует DataContext к указанному типу
-    /// </summary>
-    /// <typeparam name="T">Тип DataContext</typeparam>
-    /// <param name="viewModel">DataContext окна</param>
-    /// <returns>DataContext, приведённый к типу <typeparamref name="T"/></returns>
-    public static T? As<T>(this ObservableObject viewModel) where T : ObservableObject => viewModel as T;
+    
 
     /// <summary>
     /// Показывает окно, если оно скрыто
     /// </summary>
     /// <typeparam name="T">Тип окна, которое создано через менеджер</typeparam>
     /// <param name="showDialog">Если <b>true</b>, то открывает в режиме диалога</param>
-    public static void ShowWindow<T>(bool showDialog = false) where T : Window, new()
+    public void ShowWindow<T>(bool showDialog = false)
+        where T : Window, new()
     {
         var window = CreateWindow<T>();
         if (window.Visibility is Visibility.Visible)
@@ -84,7 +92,8 @@ public static class WindowManager
     /// Скрывает окно
     /// </summary>
     /// <typeparam name="T">Тип окна, которое создано через менеджер</typeparam>
-    public static void HideWindow<T>() where T : Window
+    public void HideWindow<T>()
+        where T : Window
     {
         var window = GetWindow<T>();
         if (window is null)
@@ -97,7 +106,8 @@ public static class WindowManager
     /// Делает окно на весь экран
     /// </summary>
     /// <typeparam name="T">Тип окна, которое создано через менеджер</typeparam>
-    public static void MaximizeWindow<T>() where T : Window
+    public void MaximizeWindow<T>()
+        where T : Window
     {
         var window = GetWindow<T>();
         if (window is null)
@@ -110,7 +120,8 @@ public static class WindowManager
     /// Закрывает окно и удаляет его из коллекции
     /// </summary>
     /// <typeparam name="T">Тип окна, которое создано через менеджер</typeparam>
-    public static void CloseWindow<T>() where T : Window
+    public void CloseWindow<T>()
+        where T : Window
     {
         var window = GetWindow<T>();
         if (window is null)
@@ -125,7 +136,9 @@ public static class WindowManager
     /// </summary>
     /// <typeparam name="T">Тип окна, которое создано через менеджер</typeparam>
     /// <returns></returns>
-    public static bool IsWindowRegistered<T>() where T : Window => _windows.ContainsKey(typeof(T));
+    public bool IsWindowRegistered<T>()
+        where T : Window
+        => _windows.ContainsKey(typeof(T));
 
     /// <summary>
     /// Показывает <see cref="MessageBox"/>
@@ -135,6 +148,10 @@ public static class WindowManager
     /// <param name="button">Кнопки</param>
     /// <param name="icon">Иконка</param>
     /// <returns>Ответ пользователя</returns>
-    public static MessageBoxResult ShowMessageBox(string text, string caption, MessageBoxButton button, MessageBoxImage icon)
+    public static MessageBoxResult ShowMessageBox(
+        string text,
+        string caption,
+        MessageBoxButton button = MessageBoxButton.OK,
+        MessageBoxImage icon = MessageBoxImage.Information)
         => MessageBox.Show(text, caption, button, icon);
 }

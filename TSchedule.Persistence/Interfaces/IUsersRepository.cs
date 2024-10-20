@@ -1,24 +1,25 @@
 ﻿using TSchedule.Persistence.Entities;
+using TSchedule.Persistence.Enums;
 
 namespace TSchedule.Persistence.Interfaces;
 
-public interface IUsersRepository
+public interface IUsersRepository : IRepository
 {
-    Task<IEnumerable<IUser>> FindAll();
+    Task<IEnumerable<ApplicationUser>> FindAll(Роль role);
 
-    Task<IUser> FindById(Guid id);
+    Task<ApplicationUser> FindById(Guid id, Роль role);
 
-    Task<IUser> FindByEmail(string email);
+    Task<ApplicationUser> FindByEmail(string email, Роль role);
 
-    Task<IUser> FindByUserName(string userName);
+    Task<ApplicationUser> FindByUserName(string userName, Роль role);
 
-    Task<IUser> FindByPhoneNumber(string phoneNumber);
+    Task<ApplicationUser> FindByPhoneNumber(string phoneNumber, Роль role);
 
-    Task<IEnumerable<IUser>> FindAllByFullName(string fullName);
+    Task<IEnumerable<ApplicationUser>> FindAllByFullName(string fullName, Роль role);
 
-    Task<bool> Create(IUser user, bool willThrow = false);
+    Task<bool> Create(ApplicationUser user, bool willThrow = false);
 
-    Task<bool> Update(IUser user, bool willThrow = false);
+    Task<bool> Update(ApplicationUser user, bool willThrow = false);
 
-    Task<bool> DeleteById(Guid id, bool willThrow = false);
+    Task<bool> DeleteById(Guid id, Роль role, bool willThrow = false);
 }
