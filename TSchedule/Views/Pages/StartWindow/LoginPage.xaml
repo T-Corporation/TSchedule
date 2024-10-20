@@ -23,35 +23,10 @@
 
     </Page.DataContext>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0"
-              Background="#FF0078D7">
-
-            <TextBlock Text="TSchedule"
-                       Margin="33,0"
-                       FontSize="48"
-                       Panel.ZIndex="1"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Left" />
-
-            <Rectangle Width="55"
-                       Height="55"
-                       Fill="White"
-                       Margin="30,24"
-                       Stroke="#FF0078D7"
-                       VerticalAlignment="Top"
-                       HorizontalAlignment="Left"/>
-
-        </Grid>
+    <Grid VerticalAlignment="Stretch">
 
         <Grid Margin="16"
-              Grid.Row="1"
-              VerticalAlignment="Top">
+              Grid.Row="1">
 
             <StackPanel MinWidth="300"
                         VerticalAlignment="Top"

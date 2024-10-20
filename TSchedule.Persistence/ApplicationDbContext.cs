@@ -11,6 +11,11 @@ public class ApplicationDbContext : DbContext
 {
     // Нужно использовать, удостоверившись, что БД пустая
     // public ApplicationDbContext() => Database.EnsureCreated();
+	
+	/// <summary>
+	/// Прогрев БД простым запросом
+	/// </summary>
+	public async Task WarmUpAsync() => await Teachers.AnyAsync();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer(ConnectionManager.Default.GetConnectionString());

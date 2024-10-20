@@ -14,8 +14,47 @@
     <Window.DataContext>
         <vm:StartWindowViewModel/>
     </Window.DataContext>
+	
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="100"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+		
+		<Grid Grid.Row="0"
+              Background="#FF0078D7">
 
-    <Frame NavigationUIVisibility="Hidden"
-           Content="{Binding CurrentPage}"/>
-    
+            <TextBlock Text="TSchedule"
+                       Margin="33,0"
+                       FontSize="48"
+                       Panel.ZIndex="1"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left" />
+
+            <Rectangle Width="55"
+                       Height="55"
+                       Fill="White"
+                       Margin="30,24"
+                       Stroke="#FF0078D7"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"/>
+
+        </Grid>
+
+		<Frame Padding="20"
+			   Grid.Row="1"
+			   x:Name="ContentPresenter"
+			   Content="{Binding CurrentPage}"
+			   NavigationUIVisibility="Hidden">
+			   
+			<Frame.RenderTransform>
+			
+				<TranslateTransform x:Name="TranslateTransform" />
+				
+			</Frame.RenderTransform>
+			
+		</Frame>
+	
+	</Grid>
+	
 </Window>

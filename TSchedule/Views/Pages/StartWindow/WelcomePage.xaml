@@ -17,8 +17,7 @@
         
     </Page.DataContext>
 
-    <StackPanel VerticalAlignment="Center"
-                HorizontalAlignment="Center">
+    <StackPanel HorizontalAlignment="Center">
         
         <TextBlock Margin="12"
                    FontSize="24"
