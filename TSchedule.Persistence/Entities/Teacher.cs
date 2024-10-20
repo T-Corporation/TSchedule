@@ -8,13 +8,17 @@ namespace TSchedule.Persistence.Entities;
 public class Teacher : ApplicationUser
 {
     [DataType(DataType.Date)]
-    public DateTime? BirthDate { get; set; }
+    public DateOnly? BirthDate { get; set; }
 
     [StringLength(50)]
     public string Classroom { get; set; } = string.Empty;
 
-    [DataType(DataType.DateTime)]
-    public DateTimeOffset? PreferredTime { get; set; }
+    [DataType(DataType.Time)]
+    public TimeOnly? PreferredTimeStart { get; set; }
 
-    public override UserRole Role => UserRole.Teacher;
+    [DataType(DataType.Time)]
+    public TimeOnly? PreferredTimeEnd { get; set; }
+
+    [NotMapped]
+    public override Роль Role => Роль.Преподаватель;
 }

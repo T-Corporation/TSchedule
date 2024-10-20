@@ -17,11 +17,11 @@ public class UsersRepository : IUsersRepository
 
             switch (user.Role)
             {
-                case UserRole.Teacher:
+                case Роль.Преподаватель:
                     await context.Teachers.AddAsync((Teacher)user);
                     break;
 
-                case UserRole.Administrator:
+                case Роль.Администратор:
                     await context.Administrators.AddAsync((Administrator)user);
                     break;
 
@@ -40,7 +40,7 @@ public class UsersRepository : IUsersRepository
         }
     }
 
-    public async Task<bool> DeleteById(Guid id, UserRole role, bool willThrow = false)
+    public async Task<bool> DeleteById(Guid id, Роль role, bool willThrow = false)
     {
         try
         {
@@ -48,10 +48,10 @@ public class UsersRepository : IUsersRepository
 
             ApplicationUser? user = role switch
             {
-                UserRole.Teacher =>
+                Роль.Преподаватель =>
                     await context.Teachers.FirstOrDefaultAsync(teacher => teacher.Id == id),
 
-                UserRole.Administrator =>
+                Роль.Администратор =>
                     await context.Administrators.FirstOrDefaultAsync(admin => admin.Id == id),
 
                 _ => throw new RoleNotSupportedException(role),
@@ -78,17 +78,17 @@ public class UsersRepository : IUsersRepository
         }
     }
 
-    public async Task<IEnumerable<ApplicationUser>> FindAll(UserRole role)
+    public async Task<IEnumerable<ApplicationUser>> FindAll(Роль role)
     {
         using ApplicationDbContext context = new();
 
         return role switch
         {
-            UserRole.Teacher => await context.Teachers.AsNoTracking()
+            Роль.Преподаватель => await context.Teachers.AsNoTracking()
                 .Where(teacher => !teacher.IsDeleted)
                 .ToListAsync(),
 
-            UserRole.Administrator => await context.Administrators.AsNoTracking()
+            Роль.Администратор => await context.Administrators.AsNoTracking()
                 .Where(admin => !admin.IsDeleted)
                 .ToListAsync(),
 
@@ -96,17 +96,17 @@ public class UsersRepository : IUsersRepository
         };
     }
 
-    public async Task<IEnumerable<ApplicationUser>> FindAllByFullName(string fullName, UserRole role)
+    public async Task<IEnumerable<ApplicationUser>> FindAllByFullName(string fullName, Роль role)
     {
         using ApplicationDbContext context = new();
 
         return role switch
         {
-            UserRole.Teacher => await context.Teachers.AsNoTracking()
+            Роль.Преподаватель => await context.Teachers.AsNoTracking()
                 .Where(teacher => !teacher.IsDeleted && EF.Functions.Like(teacher.FullName, $"%{fullName}%"))
                 .ToListAsync(),
 
-            UserRole.Administrator => await context.Administrators.AsNoTracking()
+            Роль.Администратор => await context.Administrators.AsNoTracking()
                 .Where(admin => !admin.IsDeleted && EF.Functions.Like(admin.FullName, $"%{fullName}%"))
                 .ToListAsync(),
 
@@ -114,17 +114,17 @@ public class UsersRepository : IUsersRepository
         };
     }
 
-    public async Task<ApplicationUser> FindByEmail(string email, UserRole role)
+    public async Task<ApplicationUser> FindByEmail(string email, Роль role)
     {
         using ApplicationDbContext context = new();
 
         return role switch
         {
-            UserRole.Teacher => await context.Teachers.AsNoTracking()
+            Роль.Преподаватель => await context.Teachers.AsNoTracking()
                 .FirstOrDefaultAsync(teacher => !teacher.IsDeleted && teacher.Email == email)
                 ?? throw new UserNotFoundException(nameof(email), email),
 
-            UserRole.Administrator => await context.Administrators.AsNoTracking()
+            Роль.Администратор => await context.Administrators.AsNoTracking()
                 .FirstOrDefaultAsync(admin => !admin.IsDeleted && admin.Email == email)
                 ?? throw new UserNotFoundException(nameof(email), email),
 
@@ -132,17 +132,17 @@ public class UsersRepository : IUsersRepository
         };
     }
 
-    public async Task<ApplicationUser> FindById(Guid id, UserRole role)
+    public async Task<ApplicationUser> FindById(Guid id, Роль role)
     {
         using ApplicationDbContext context = new();
 
         return role switch
         {
-            UserRole.Teacher => await context.Teachers.AsNoTracking()
+            Роль.Преподаватель => await context.Teachers.AsNoTracking()
                 .FirstOrDefaultAsync(teacher => !teacher.IsDeleted && teacher.Id == id)
                 ?? throw new UserNotFoundException(nameof(id), id),
 
-            UserRole.Administrator => await context.Administrators.AsNoTracking()
+            Роль.Администратор => await context.Administrators.AsNoTracking()
                 .FirstOrDefaultAsync(admin => !admin.IsDeleted && admin.Id == id)
                 ?? throw new UserNotFoundException(nameof(id), id),
 
@@ -150,17 +150,17 @@ public class UsersRepository : IUsersRepository
         };
     }
 
-    public async Task<ApplicationUser> FindByPhoneNumber(string phoneNumber, UserRole role)
+    public async Task<ApplicationUser> FindByPhoneNumber(string phoneNumber, Роль role)
     {
         using ApplicationDbContext context = new();
 
         return role switch
         {
-            UserRole.Teacher => await context.Teachers.AsNoTracking()
+            Роль.Преподаватель => await context.Teachers.AsNoTracking()
                 .FirstOrDefaultAsync(teacher => !teacher.IsDeleted && teacher.PhoneNumber == phoneNumber)
                 ?? throw new UserNotFoundException(nameof(phoneNumber), phoneNumber),
 
-            UserRole.Administrator => await context.Administrators.AsNoTracking()
+            Роль.Администратор => await context.Administrators.AsNoTracking()
                 .FirstOrDefaultAsync(admin => !admin.IsDeleted && admin.PhoneNumber == phoneNumber)
                 ?? throw new UserNotFoundException(nameof(phoneNumber), phoneNumber),
 
@@ -168,17 +168,17 @@ public class UsersRepository : IUsersRepository
         };
     }
 
-    public async Task<ApplicationUser> FindByUserName(string userName, UserRole role)
+    public async Task<ApplicationUser> FindByUserName(string userName, Роль role)
     {
         using ApplicationDbContext context = new();
 
         return role switch
         {
-            UserRole.Teacher => await context.Teachers.AsNoTracking()
+            Роль.Преподаватель => await context.Teachers.AsNoTracking()
                 .FirstOrDefaultAsync(teacher => !teacher.IsDeleted && teacher.UserName == userName)
                 ?? throw new UserNotFoundException(nameof(userName), userName),
 
-            UserRole.Administrator => await context.Administrators.AsNoTracking()
+            Роль.Администратор => await context.Administrators.AsNoTracking()
                 .FirstOrDefaultAsync(admin => !admin.IsDeleted && admin.UserName == userName)
                 ?? throw new UserNotFoundException(nameof(userName), userName),
 
@@ -194,10 +194,10 @@ public class UsersRepository : IUsersRepository
 
             ApplicationUser? foundUser = user.Role switch
             {
-                UserRole.Teacher => await context.Teachers.FirstOrDefaultAsync(
+                Роль.Преподаватель => await context.Teachers.FirstOrDefaultAsync(
                     teacher => teacher.Id == user.Id),
 
-                UserRole.Administrator => await context.Administrators.FirstOrDefaultAsync(
+                Роль.Администратор => await context.Administrators.FirstOrDefaultAsync(
                     admin => admin.Id == user.Id),
 
                 _ => throw new RoleNotSupportedException(user.Role),

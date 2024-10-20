@@ -1,8 +1,11 @@
-﻿using TSchedule.Persistence.Enums;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using TSchedule.Persistence.Enums;
 
 namespace TSchedule.Persistence.Entities;
 
+[Table("Administrators", Schema = "School")]
 public class Administrator : ApplicationUser
 {
-    public override UserRole Role => UserRole.Administrator;
+    [NotMapped]
+    public override Роль Role => Роль.Администратор;
 }

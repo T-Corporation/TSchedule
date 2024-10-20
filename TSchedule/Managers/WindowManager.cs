@@ -27,7 +27,8 @@ public class WindowManager
     /// <param name="showDialog"></param>
     /// <param name="owner"></param>
     /// <returns></returns>
-    public T CreateWindow<T>(bool showDialog = false, Window? owner = null) where T : Window, new()
+    public T CreateWindow<T>(bool showDialog = false, Window? owner = null)
+        where T : Window, new()
     {
         var windowType = typeof(T);
         if (_windows.TryGetValue(windowType, out Window? value))
@@ -46,7 +47,8 @@ public class WindowManager
     /// </summary>
     /// <typeparam name="T">Тип окна, которое создано через менеджер</typeparam>
     /// <returns>Если окно найдено, то возвращает его, иначе <b>null</b></returns>
-    public T? GetWindow<T>() where T : Window
+    public T? GetWindow<T>()
+        where T : Window
     {
         var windowType = typeof(T);
         return _windows.TryGetValue(windowType, out var window)
@@ -59,7 +61,8 @@ public class WindowManager
     /// </summary>
     /// <typeparam name="T">Тип окна, которое создано через менеджер</typeparam>
     /// <returns>DataContext окна или <b>null</b>, если он отсутствует</returns>
-    public ObservableObject? GetViewModel<T>() where T : Window
+    public ObservableObject? GetViewModel<T>()
+        where T : Window
         => GetWindow<T>()?.DataContext as ObservableObject;
 
     
@@ -69,7 +72,8 @@ public class WindowManager
     /// </summary>
     /// <typeparam name="T">Тип окна, которое создано через менеджер</typeparam>
     /// <param name="showDialog">Если <b>true</b>, то открывает в режиме диалога</param>
-    public void ShowWindow<T>(bool showDialog = false) where T : Window, new()
+    public void ShowWindow<T>(bool showDialog = false)
+        where T : Window, new()
     {
         var window = CreateWindow<T>();
         if (window.Visibility is Visibility.Visible)
@@ -88,7 +92,8 @@ public class WindowManager
     /// Скрывает окно
     /// </summary>
     /// <typeparam name="T">Тип окна, которое создано через менеджер</typeparam>
-    public void HideWindow<T>() where T : Window
+    public void HideWindow<T>()
+        where T : Window
     {
         var window = GetWindow<T>();
         if (window is null)
@@ -101,7 +106,8 @@ public class WindowManager
     /// Делает окно на весь экран
     /// </summary>
     /// <typeparam name="T">Тип окна, которое создано через менеджер</typeparam>
-    public void MaximizeWindow<T>() where T : Window
+    public void MaximizeWindow<T>()
+        where T : Window
     {
         var window = GetWindow<T>();
         if (window is null)
@@ -114,7 +120,8 @@ public class WindowManager
     /// Закрывает окно и удаляет его из коллекции
     /// </summary>
     /// <typeparam name="T">Тип окна, которое создано через менеджер</typeparam>
-    public void CloseWindow<T>() where T : Window
+    public void CloseWindow<T>()
+        where T : Window
     {
         var window = GetWindow<T>();
         if (window is null)
@@ -129,7 +136,9 @@ public class WindowManager
     /// </summary>
     /// <typeparam name="T">Тип окна, которое создано через менеджер</typeparam>
     /// <returns></returns>
-    public bool IsWindowRegistered<T>() where T : Window => _windows.ContainsKey(typeof(T));
+    public bool IsWindowRegistered<T>()
+        where T : Window
+        => _windows.ContainsKey(typeof(T));
 
     /// <summary>
     /// Показывает <see cref="MessageBox"/>
@@ -142,7 +151,7 @@ public class WindowManager
     public static MessageBoxResult ShowMessageBox(
         string text,
         string caption,
-        MessageBoxButton button,
-        MessageBoxImage icon)
+        MessageBoxButton button = MessageBoxButton.OK,
+        MessageBoxImage icon = MessageBoxImage.Information)
         => MessageBox.Show(text, caption, button, icon);
 }

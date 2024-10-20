@@ -5,21 +5,21 @@ namespace TSchedule.Persistence.Interfaces;
 
 public interface IUsersRepository : IRepository
 {
-    Task<IEnumerable<ApplicationUser>> FindAll(UserRole role);
+    Task<IEnumerable<ApplicationUser>> FindAll(Роль role);
 
-    Task<ApplicationUser> FindById(Guid id, UserRole role);
+    Task<ApplicationUser> FindById(Guid id, Роль role);
 
-    Task<ApplicationUser> FindByEmail(string email, UserRole role);
+    Task<ApplicationUser> FindByEmail(string email, Роль role);
 
-    Task<ApplicationUser> FindByUserName(string userName, UserRole role);
+    Task<ApplicationUser> FindByUserName(string userName, Роль role);
 
-    Task<ApplicationUser> FindByPhoneNumber(string phoneNumber, UserRole role);
+    Task<ApplicationUser> FindByPhoneNumber(string phoneNumber, Роль role);
 
-    Task<IEnumerable<ApplicationUser>> FindAllByFullName(string fullName, UserRole role);
+    Task<IEnumerable<ApplicationUser>> FindAllByFullName(string fullName, Роль role);
 
     Task<bool> Create(ApplicationUser user, bool willThrow = false);
 
     Task<bool> Update(ApplicationUser user, bool willThrow = false);
 
-    Task<bool> DeleteById(Guid id, UserRole role, bool willThrow = false);
+    Task<bool> DeleteById(Guid id, Роль role, bool willThrow = false);
 }

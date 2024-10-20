@@ -9,7 +9,8 @@ namespace TSchedule.Persistence;
 /// </summary>
 public class ApplicationDbContext : DbContext
 {
-    public ApplicationDbContext() => Database.EnsureCreated();
+    // Нужно использовать, удостоверившись, что БД пустая
+    // public ApplicationDbContext() => Database.EnsureCreated();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

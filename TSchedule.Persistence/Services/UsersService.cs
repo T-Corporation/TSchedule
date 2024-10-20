@@ -11,7 +11,7 @@ public class UsersService(IUsersRepository repository) : IUsersService
 {
     private ApplicationUser? ApplicationUser { get; set; }
 
-    public async Task Authenticate(string username, string password, UserRole role)
+    public async Task Authenticate(string username, string password, Роль role)
     {
         try
         {

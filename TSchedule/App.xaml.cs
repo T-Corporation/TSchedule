@@ -11,7 +11,7 @@ public partial class App
     private void Application_Startup(object sender, StartupEventArgs e)
     {
         ServiceManager.Default.AddSingleton<UsersRepository, UsersService>();
-        WindowManager.Default.CreateWindow<MainWindow>();
+        WindowManager.Default.CreateWindow<StartWindow>();
     }
 
     protected override void OnActivated(EventArgs e)

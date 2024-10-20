@@ -6,19 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TSchedule.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class FullDb : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "FatherName",
-                table: "Teachers");
-
-            migrationBuilder.DropColumn(
-                name: "Name",
-                table: "Teachers");
-
             migrationBuilder.EnsureSchema(
                 name: "School");
 
@@ -28,58 +20,23 @@ namespace TSchedule.Persistence.Migrations
             migrationBuilder.EnsureSchema(
                 name: "Academic");
 
-            migrationBuilder.RenameTable(
-                name: "Teachers",
-                newName: "Teachers",
-                newSchema: "School");
-
-            migrationBuilder.RenameColumn(
-                name: "Surname",
+            migrationBuilder.CreateTable(
+                name: "Administrators",
                 schema: "School",
-                table: "Teachers",
-                newName: "Classroom");
-
-            migrationBuilder.RenameColumn(
-                name: "ProfilePicture",
-                schema: "School",
-                table: "Teachers",
-                newName: "FullName");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "PasswordHash",
-                schema: "School",
-                table: "Teachers",
-                type: "nvarchar(60)",
-                maxLength: 60,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(100)",
-                oldMaxLength: 100);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Email",
-                schema: "School",
-                table: "Teachers",
-                type: "nvarchar(255)",
-                maxLength: 255,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(200)",
-                oldMaxLength: 200);
-
-            migrationBuilder.AddColumn<DateTime>(
-                name: "BirthDate",
-                schema: "School",
-                table: "Teachers",
-                type: "datetime2",
-                nullable: true);
-
-            migrationBuilder.AddColumn<DateTimeOffset>(
-                name: "PreferredTime",
-                schema: "School",
-                table: "Teachers",
-                type: "datetimeoffset",
-                nullable: true);
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Administrators", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Classrooms",
@@ -109,6 +66,27 @@ namespace TSchedule.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Specialties", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Teachers",
+                schema: "School",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Classroom = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    PreferredTime = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    FullName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Teachers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -301,6 +279,10 @@ namespace TSchedule.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Administrators",
+                schema: "School");
+
+            migrationBuilder.DropTable(
                 name: "Schedule",
                 schema: "Timetable");
 
@@ -321,68 +303,12 @@ namespace TSchedule.Persistence.Migrations
                 schema: "Academic");
 
             migrationBuilder.DropTable(
+                name: "Teachers",
+                schema: "School");
+
+            migrationBuilder.DropTable(
                 name: "Specialties",
                 schema: "Academic");
-
-            migrationBuilder.DropColumn(
-                name: "BirthDate",
-                schema: "School",
-                table: "Teachers");
-
-            migrationBuilder.DropColumn(
-                name: "PreferredTime",
-                schema: "School",
-                table: "Teachers");
-
-            migrationBuilder.RenameTable(
-                name: "Teachers",
-                schema: "School",
-                newName: "Teachers");
-
-            migrationBuilder.RenameColumn(
-                name: "FullName",
-                table: "Teachers",
-                newName: "ProfilePicture");
-
-            migrationBuilder.RenameColumn(
-                name: "Classroom",
-                table: "Teachers",
-                newName: "Surname");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "PasswordHash",
-                table: "Teachers",
-                type: "nvarchar(100)",
-                maxLength: 100,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(60)",
-                oldMaxLength: 60);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Email",
-                table: "Teachers",
-                type: "nvarchar(200)",
-                maxLength: 200,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(255)",
-                oldMaxLength: 255);
-
-            migrationBuilder.AddColumn<string>(
-                name: "FatherName",
-                table: "Teachers",
-                type: "nvarchar(50)",
-                maxLength: 50,
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Name",
-                table: "Teachers",
-                type: "nvarchar(50)",
-                maxLength: 50,
-                nullable: false,
-                defaultValue: "");
         }
     }
 }

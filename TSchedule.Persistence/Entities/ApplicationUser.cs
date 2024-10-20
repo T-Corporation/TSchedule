@@ -33,5 +33,5 @@ public abstract class ApplicationUser : IUser
 
     public bool IsDeleted { get; set; }
 
-    public abstract UserRole Role { get; }
+    public abstract Роль Role { get; }
 }
