@@ -1,6 +1,6 @@
 ﻿namespace TSchedule.Persistence.Interfaces;
 
-public interface IConnectionService
+public interface IConnectionManager : IManager
 {
     string? GetConnectionString();
 }

@@ -1,6 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows;
+using TSchedule.Managers;
+using TSchedule.Persistence.Enums;
+using TSchedule.Persistence.Services;
 using TSchedule.Views;
 
 namespace TSchedule.ViewModels;
@@ -15,6 +18,9 @@ public partial class LoginWindowViewModel : ObservableObject
 
     [ObservableProperty]
     private string errorMessage = string.Empty;
+
+    [ObservableProperty]
+    private UserRole userRole = UserRole.Guest;
 
     [RelayCommand]
     private void ShowInfo() => WindowManager.ShowMessageBox(
@@ -32,9 +38,10 @@ public partial class LoginWindowViewModel : ObservableObject
             return;
         }
 
-        var user = await App.TeachersService.Authenticate(UserName, Password);
+        var usersService = ServiceManager.Default.GetRequiredService<UsersService>();
+        await usersService.Authenticate(UserName, Password, UserRole);
 
-        if (user is null)
+        if (!usersService.IsAuthenticated())
         {
             ErrorMessage = "Неверный логин или пароль";
             return;
@@ -42,8 +49,7 @@ public partial class LoginWindowViewModel : ObservableObject
 
         ErrorMessage = string.Empty;
 
-        App.User = user;
-        WindowManager.CreateWindow<MainWindow>();
-        WindowManager.CloseWindow<LoginWindow>();
+        WindowManager.Default.CreateWindow<MainWindow>();
+        WindowManager.Default.CloseWindow<LoginWindow>();
     }
 }

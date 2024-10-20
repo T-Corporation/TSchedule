@@ -1,39 +1,72 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using TSchedule.Persistence.Entities;
+using TSchedule.Persistence.Enums;
 using TSchedule.Persistence.Exceptions;
 using TSchedule.Persistence.Interfaces;
 
 namespace TSchedule.Persistence.Repositories;
 
-public class UsersRepository() : IUsersRepository
+public class UsersRepository : IUsersRepository
 {
-    public async Task<bool> Create(IUser user, bool willThrow = false)
+    public async Task<bool> Create(ApplicationUser user, bool willThrow = false)
     {
         try
         {
             using ApplicationDbContext context = new();
-            await context.Teachers.AddAsync(user);
+
+            switch (user.Role)
+            {
+                case UserRole.Teacher:
+                    await context.Teachers.AddAsync((Teacher)user);
+                    break;
+
+                case UserRole.Administrator:
+                    await context.Administrators.AddAsync((Administrator)user);
+                    break;
+
+                default:
+                    throw new RoleNotSupportedException(user.Role);
+            }
+
             await context.SaveChangesAsync();
             return true;
         }
-        catch (OperationCanceledException oce)
+        catch (RoleNotSupportedException rnfe)
         {
-            Debug.WriteLine(oce.Message);
+            Debug.WriteLine(rnfe.Message);
             if (willThrow) throw;
             return false;
         }
     }
 
-    public async Task<bool> DeleteById(Guid id, bool willThrow = false)
+    public async Task<bool> DeleteById(Guid id, UserRole role, bool willThrow = false)
     {
         try
         {
             using ApplicationDbContext context = new();
-            var teacher = await context.Teachers.FirstOrDefaultAsync(
-                t => t.Id == id) ?? throw new UserNotFoundException(nameof(id), id);
 
-            context.Teachers.Remove(teacher);
+            ApplicationUser? user = role switch
+            {
+                UserRole.Teacher =>
+                    await context.Teachers.FirstOrDefaultAsync(teacher => teacher.Id == id),
+
+                UserRole.Administrator =>
+                    await context.Administrators.FirstOrDefaultAsync(admin => admin.Id == id),
+
+                _ => throw new RoleNotSupportedException(role),
+            };
+
+            if (user is null)
+                throw new UserNotFoundException(nameof(id), id);
+
+            if (user.IsDeleted)
+            {
+                Debug.WriteLine($"Пользователь с ролью \"{role}\" и id \"{id}\" уже удалён");
+                return true;
+            }
+
+            user.IsDeleted = true;
             await context.SaveChangesAsync();
             return true;
         }
@@ -45,64 +78,142 @@ public class UsersRepository() : IUsersRepository
         }
     }
 
-    public async Task<IEnumerable<IUser>> FindAll()
+    public async Task<IEnumerable<ApplicationUser>> FindAll(UserRole role)
     {
         using ApplicationDbContext context = new();
-        return await context.Teachers.AsNoTracking() // Освобождение ресурсов, но с условием, что изменения не будут ослеживаться (update не будет работать)
-            .ToListAsync();
+
+        return role switch
+        {
+            UserRole.Teacher => await context.Teachers.AsNoTracking()
+                .Where(teacher => !teacher.IsDeleted)
+                .ToListAsync(),
+
+            UserRole.Administrator => await context.Administrators.AsNoTracking()
+                .Where(admin => !admin.IsDeleted)
+                .ToListAsync(),
+
+            _ => throw new RoleNotSupportedException(role),
+        };
     }
 
-    public async Task<IEnumerable<IUser>> FindAllByFullName(string fio)
+    public async Task<IEnumerable<ApplicationUser>> FindAllByFullName(string fullName, UserRole role)
     {
         using ApplicationDbContext context = new();
-        return await context.Teachers.AsNoTracking()
-            .Where(teacher => EF.Functions.Like(teacher.FullName, $"%{fio}%"))
-            .ToListAsync();
+
+        return role switch
+        {
+            UserRole.Teacher => await context.Teachers.AsNoTracking()
+                .Where(teacher => !teacher.IsDeleted && EF.Functions.Like(teacher.FullName, $"%{fullName}%"))
+                .ToListAsync(),
+
+            UserRole.Administrator => await context.Administrators.AsNoTracking()
+                .Where(admin => !admin.IsDeleted && EF.Functions.Like(admin.FullName, $"%{fullName}%"))
+                .ToListAsync(),
+
+            _ => throw new RoleNotSupportedException(role)
+        };
     }
 
-    public async Task<IUser> FindByEmail(string email)
+    public async Task<ApplicationUser> FindByEmail(string email, UserRole role)
     {
         using ApplicationDbContext context = new();
-        return await context.Teachers.AsNoTracking()
-            .FirstOrDefaultAsync(
-                teacher => teacher.Email == email) ?? throw new UserNotFoundException(nameof(email), email);
+
+        return role switch
+        {
+            UserRole.Teacher => await context.Teachers.AsNoTracking()
+                .FirstOrDefaultAsync(teacher => !teacher.IsDeleted && teacher.Email == email)
+                ?? throw new UserNotFoundException(nameof(email), email),
+
+            UserRole.Administrator => await context.Administrators.AsNoTracking()
+                .FirstOrDefaultAsync(admin => !admin.IsDeleted && admin.Email == email)
+                ?? throw new UserNotFoundException(nameof(email), email),
+
+            _ => throw new RoleNotSupportedException(role)
+        };
     }
 
-    public async Task<IUser> FindById(Guid id)
+    public async Task<ApplicationUser> FindById(Guid id, UserRole role)
     {
         using ApplicationDbContext context = new();
-        return await context.Teachers.AsNoTracking()
-            .FirstOrDefaultAsync(
-                teacher => teacher.Id == id) ?? throw new UserNotFoundException(nameof(id), id);
+
+        return role switch
+        {
+            UserRole.Teacher => await context.Teachers.AsNoTracking()
+                .FirstOrDefaultAsync(teacher => !teacher.IsDeleted && teacher.Id == id)
+                ?? throw new UserNotFoundException(nameof(id), id),
+
+            UserRole.Administrator => await context.Administrators.AsNoTracking()
+                .FirstOrDefaultAsync(admin => !admin.IsDeleted && admin.Id == id)
+                ?? throw new UserNotFoundException(nameof(id), id),
+
+            _ => throw new RoleNotSupportedException(role)
+        };
     }
 
-    public async Task<IUser> FindByPhoneNumber(string phoneNumber)
+    public async Task<ApplicationUser> FindByPhoneNumber(string phoneNumber, UserRole role)
     {
         using ApplicationDbContext context = new();
-        return await context.Teachers.AsNoTracking()
-            .FirstOrDefaultAsync(
-                teacher => teacher.PhoneNumber == phoneNumber) ?? throw new UserNotFoundException(nameof(phoneNumber), phoneNumber);
+
+        return role switch
+        {
+            UserRole.Teacher => await context.Teachers.AsNoTracking()
+                .FirstOrDefaultAsync(teacher => !teacher.IsDeleted && teacher.PhoneNumber == phoneNumber)
+                ?? throw new UserNotFoundException(nameof(phoneNumber), phoneNumber),
+
+            UserRole.Administrator => await context.Administrators.AsNoTracking()
+                .FirstOrDefaultAsync(admin => !admin.IsDeleted && admin.PhoneNumber == phoneNumber)
+                ?? throw new UserNotFoundException(nameof(phoneNumber), phoneNumber),
+
+            _ => throw new RoleNotSupportedException(role)
+        };
     }
 
-    public async Task<IUser> FindByUserName(string userName)
+    public async Task<ApplicationUser> FindByUserName(string userName, UserRole role)
     {
         using ApplicationDbContext context = new();
-        return await context.Teachers.AsNoTracking()
-            .FirstOrDefaultAsync(
-                teacher => teacher.UserName == userName) ?? throw new UserNotFoundException(nameof(userName), userName);
+
+        return role switch
+        {
+            UserRole.Teacher => await context.Teachers.AsNoTracking()
+                .FirstOrDefaultAsync(teacher => !teacher.IsDeleted && teacher.UserName == userName)
+                ?? throw new UserNotFoundException(nameof(userName), userName),
+
+            UserRole.Administrator => await context.Administrators.AsNoTracking()
+                .FirstOrDefaultAsync(admin => !admin.IsDeleted && admin.UserName == userName)
+                ?? throw new UserNotFoundException(nameof(userName), userName),
+
+            _ => throw new RoleNotSupportedException(role)
+        };
     }
 
-    public async Task<bool> Update(IUser user, bool willThrow = false)
+    public async Task<bool> Update(ApplicationUser user, bool willThrow = false)
     {
         try
         {
             using ApplicationDbContext context = new();
-            var foundTeacher = await context.Teachers.FirstOrDefaultAsync(
-                t => t.Id == user.Id) ?? throw new UserNotFoundException("Id", user.Id);
 
-            foreach (var property in user.GetType().GetProperties())
-                // Устанавливаем свойство у найденного препода равным тому, что у переданного в кач-ве параметра метода
-                property.SetValue(foundTeacher, property.GetValue(user));
+            ApplicationUser? foundUser = user.Role switch
+            {
+                UserRole.Teacher => await context.Teachers.FirstOrDefaultAsync(
+                    teacher => teacher.Id == user.Id),
+
+                UserRole.Administrator => await context.Administrators.FirstOrDefaultAsync(
+                    admin => admin.Id == user.Id),
+
+                _ => throw new RoleNotSupportedException(user.Role),
+            };
+
+            if (foundUser is null)
+                throw new UserNotFoundException("Id", user.Id);
+
+            foreach (var property in foundUser.GetType().GetProperties())
+            {
+                if (property.Name is "Id" or "Role")
+                    continue;
+
+                // Устанавливаем свойство у найденного юзера
+                property.SetValue(foundUser, property.GetValue(user));
+            }
 
             await context.SaveChangesAsync();
             return true;

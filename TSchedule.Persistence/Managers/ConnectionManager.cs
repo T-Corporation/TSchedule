@@ -1,11 +1,11 @@
 ﻿using System.Text;
 using TSchedule.Persistence.Interfaces;
 
-namespace TSchedule.Persistence.Services;
+namespace TSchedule.Persistence.Managers;
 
-public class ConnectionService : IConnectionService
+public class ConnectionManager : IConnectionManager
 {
-    public static ConnectionService Default => new();
+    public static ConnectionManager Default => new();
 
     private static string AccountName => Environment.UserName;
 

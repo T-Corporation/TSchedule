@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TSchedule.Persistence.Entities;
-using TSchedule.Persistence.Services;
+using TSchedule.Persistence.Managers;
 
 namespace TSchedule.Persistence;
 
@@ -13,9 +13,10 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(ConnectionService.Default.GetConnectionString());
+        optionsBuilder.UseSqlServer(ConnectionManager.Default.GetConnectionString());
     }
 
+    public DbSet<Administrator> Administrators { get; set; }
     public DbSet<Classroom> Classrooms { get; set; }
     public DbSet<Schedule> Schedules { get; set; }
     public DbSet<Specialty> Specialties { get; set; }
