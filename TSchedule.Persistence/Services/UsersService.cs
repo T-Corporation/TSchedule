@@ -38,4 +38,8 @@ public class UsersService(IUsersRepository repository) : IUsersService
     public void Logout() => ApplicationUser = null;
 
     public bool IsAuthenticated() => ApplicationUser is not null;
+
+    public string GetUserName() => IsAuthenticated() ? ApplicationUser!.UserName : "Гость" ;
+
+    public string GetUserFullName() => IsAuthenticated() ? ApplicationUser!.FullName : "Гость";
 }

@@ -1,8 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using TSchedule.Managers;
+using TSchedule.Persistence.Services;
 
 namespace TSchedule.ViewModels;
 
-public class MainWindowViewModel : ObservableObject
+public partial class MainWindowViewModel : ObservableObject
 {
-
+    [ObservableProperty]
+    private string _userName = ServiceManager.Default.GetRequiredService<UsersService>().GetUserName();
 }

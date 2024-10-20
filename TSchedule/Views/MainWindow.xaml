@@ -6,6 +6,7 @@
         Width="800"
         Height="450"
         Title="TSchedule"
+        WindowStyle="ThreeDBorderWindow"
         WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
@@ -14,6 +15,6 @@
         
     </Window.DataContext>
 
-    <TextBlock Text="Добро пожаловать!"/>
+    <TextBlock Text="{Binding UserName, StringFormat='Добро пожаловать, {0}!'}"/>
 
 </Window>

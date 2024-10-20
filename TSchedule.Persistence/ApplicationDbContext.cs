@@ -13,9 +13,7 @@ public class ApplicationDbContext : DbContext
     // public ApplicationDbContext() => Database.EnsureCreated();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer(ConnectionManager.Default.GetConnectionString());
-    }
+        => optionsBuilder.UseSqlServer(ConnectionManager.Default.GetConnectionString());
 
     public DbSet<Administrator> Administrators { get; set; }
     public DbSet<Classroom> Classrooms { get; set; }

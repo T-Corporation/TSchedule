@@ -9,4 +9,6 @@ public interface IUsersService : IService
     Task<bool> Register(ApplicationUser user);
     bool IsAuthenticated();
     void Logout();
+    string GetUserName();
+    string GetUserFullName();
 }
