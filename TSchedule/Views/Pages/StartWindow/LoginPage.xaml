@@ -76,13 +76,14 @@
 
         </Grid>
 
-        <ui:DropDownButton Content=" ?"
+        <ui:DropDownButton Padding="12"
                            Grid.Row="1"
-                           FontSize="36"
                            VerticalAlignment="Bottom"
                            HorizontalAlignment="Right"
                            ToolTipService.HasDropShadow="True"
                            ToolTipService.ToolTip="Справочная информация">
+            <ui:IconAndText IconSize="24"
+                            Icon="{x:Static ui:SegoeFluentIcons.StatusCircleQuestionMark}"/>
             <ui:DropDownButton.Flyout>
                 <ui:Flyout ShowMode="Transient"
                            Placement="Bottom"
@@ -94,14 +95,17 @@
             </ui:DropDownButton.Flyout>
         </ui:DropDownButton>
 
-        <ui:HyperlinkButton Content="←"
-                            Grid.Row="1"
-                            FontSize="36"
-                            VerticalAlignment="Bottom"
-                            HorizontalAlignment="Left"
-                            ToolTipService.ToolTip="Назад"
-                            Command="{Binding GoBackCommand}"
-                            ToolTipService.HasDropShadow="True"/>
+        <Button Padding="16"
+                Grid.Row="1"
+                FontSize="36"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Left"
+                ToolTipService.ToolTip="Назад"
+                Command="{Binding GoBackCommand}"
+                ToolTipService.HasDropShadow="True">
+            <ui:IconAndText IconSize="16"
+                            Icon="{x:Static ui:SegoeFluentIcons.Back}"/>
+        </Button>
 
     </Grid>
 

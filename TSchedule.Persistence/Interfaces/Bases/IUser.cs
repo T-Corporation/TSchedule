@@ -1,4 +1,4 @@
-﻿namespace TSchedule.Persistence.Interfaces;
+﻿namespace TSchedule.Persistence.Interfaces.Bases;
 
 public interface IUser
 {

@@ -46,4 +46,19 @@
 		<ProjectReference Include="..\TSchedule.Persistence\TSchedule.Persistence.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="Properties\Preferences.Designer.cs">
+	    <DesignTimeSharedInput>True</DesignTimeSharedInput>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Preferences.settings</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Properties\Preferences.settings">
+	    <Generator>PublicSettingsSingleFileGenerator</Generator>
+	    <LastGenOutput>Preferences.Designer.cs</LastGenOutput>
+	  </None>
+	</ItemGroup>
+
 </Project>

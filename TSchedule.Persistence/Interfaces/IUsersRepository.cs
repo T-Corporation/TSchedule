@@ -1,5 +1,6 @@
 ﻿using TSchedule.Persistence.Entities;
 using TSchedule.Persistence.Enums;
+using TSchedule.Persistence.Interfaces.Bases;
 
 namespace TSchedule.Persistence.Interfaces;
 

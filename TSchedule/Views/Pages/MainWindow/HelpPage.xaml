@@ -1,0 +1,9 @@
+﻿<Page x:Class="TSchedule.Views.Pages.MainWindow.HelpPage"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      Title="Поддержка">
+
+    <Grid>
+        
+    </Grid>
+</Page>

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using TSchedule.Persistence.Enums;
-using TSchedule.Persistence.Interfaces;
+using TSchedule.Persistence.Interfaces.Bases;
 
 namespace TSchedule.Persistence.Entities;
 

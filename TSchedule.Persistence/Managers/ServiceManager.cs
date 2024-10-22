@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
-using TSchedule.Persistence.Interfaces;
+using TSchedule.Persistence.Interfaces.Bases;
+using TSchedule.Persistence.Interfaces.Managers;
 
 namespace TSchedule.Persistence.Managers;
 

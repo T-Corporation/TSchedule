@@ -23,6 +23,7 @@
         
         <TextBlock Margin="12"
                    FontSize="24"
+                   TextWrapping="Wrap"
                    TextAlignment="Center"
                    Text="Вход в систему TSchedule"/>
 

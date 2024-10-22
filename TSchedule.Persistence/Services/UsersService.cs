@@ -42,4 +42,6 @@ public class UsersService(IUsersRepository repository) : IUsersService
     public string GetUserName() => IsAuthenticated() ? ApplicationUser!.UserName : "Гость" ;
 
     public string GetUserFullName() => IsAuthenticated() ? ApplicationUser!.FullName : "Гость";
+
+    public Guid GetUserGuid() => IsAuthenticated() ? ApplicationUser!.Id : Guid.Empty;
 }

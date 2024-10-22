@@ -3,7 +3,7 @@ using iNKORE.UI.WPF.Modern.Controls.Helpers;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
-using TSchedule.Persistence.Interfaces;
+using TSchedule.Persistence.Interfaces.Bases;
 
 namespace TSchedule.Managers;
 

@@ -61,6 +61,11 @@ public partial class LoginPageViewModel : ObservableObject
 
         ErrorMessage = string.Empty;
 
+        PreferencesManager.Default.SetRole(Role.Value.ToString());
+        PreferencesManager.Default.SetUserGuid(usersService.GetUserGuid());
+        PreferencesManager.Default.SetLoggedIn(true);
+        PreferencesManager.Default.Save();
+
         WindowManager.Default.CreateWindow<MainWindow>();
         WindowManager.Default.CloseWindow<StartWindow>();
     }

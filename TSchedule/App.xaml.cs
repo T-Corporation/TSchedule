@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using TSchedule.Managers;
+﻿using TSchedule.Managers;
 using TSchedule.Persistence;
 using TSchedule.Persistence.Services;
 using TSchedule.Persistence.Managers;
@@ -10,16 +9,25 @@ namespace TSchedule;
 
 public partial class App
 {
-    private async void Application_Startup(object sender, StartupEventArgs e)
+    private async void Application_Startup(object sender, System.Windows.StartupEventArgs e)
     {
 		await using ApplicationDbContext context = new();
 		await context.WarmUpAsync();
 
-        UserPreferencesManager.SetupTheme();
+        CustomizationManager.Default.LoadStyleFromSettings()
+            .ApplyCurrentTheme();
 
         ServiceManager.Default.AddSingleton<UsersRepository, UsersService>();
 
-        WindowManager.Default.CreateWindow<StartWindow>();
+        var isLoggedIn = PreferencesManager.Default.IsLoggedIn();
+        if (isLoggedIn)
+            WindowManager.Default.CreateWindow<MainWindow>();
+        else
+            WindowManager.Default.CreateWindow<StartWindow>();
+
+        #if DEBUG
+        PreferencesManager.Default.PrintValues();
+        #endif
     }
 
     protected override void OnActivated(EventArgs e)

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TSchedule.Persistence;
 
@@ -11,9 +12,11 @@ using TSchedule.Persistence;
 namespace TSchedule.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241022180204_UpdatedStructure")]
+    partial class UpdatedStructure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,46 +64,6 @@ namespace TSchedule.Persistence.Migrations
                     b.ToTable("Administrators", "School");
                 });
 
-            modelBuilder.Entity("TSchedule.Persistence.Entities.Announcement", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("AbsentFrom")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("AbsentTo")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsVisibleToGuests")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Reason")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<Guid?>("SubstituteTeacherId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TeacherId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SubstituteTeacherId");
-
-                    b.HasIndex("TeacherId");
-
-                    b.ToTable("Announcements", "School");
-                });
-
             modelBuilder.Entity("TSchedule.Persistence.Entities.Classroom", b =>
                 {
                     b.Property<int>("Id")
@@ -122,32 +85,6 @@ namespace TSchedule.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Classrooms", "School");
-                });
-
-            modelBuilder.Entity("TSchedule.Persistence.Entities.RegisteredAnnouncement", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<Guid>("AdministratorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("AnnouncementId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AdministratorId");
-
-                    b.HasIndex("AnnouncementId");
-
-                    b.ToTable("RegisteredAnnouncements", "School");
                 });
 
             modelBuilder.Entity("TSchedule.Persistence.Entities.Schedule", b =>
@@ -363,42 +300,6 @@ namespace TSchedule.Persistence.Migrations
                     b.HasIndex("TeacherId");
 
                     b.ToTable("Workload", "Timetable");
-                });
-
-            modelBuilder.Entity("TSchedule.Persistence.Entities.Announcement", b =>
-                {
-                    b.HasOne("TSchedule.Persistence.Entities.Teacher", "SubstituteTeacher")
-                        .WithMany()
-                        .HasForeignKey("SubstituteTeacherId");
-
-                    b.HasOne("TSchedule.Persistence.Entities.Teacher", "Teacher")
-                        .WithMany()
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SubstituteTeacher");
-
-                    b.Navigation("Teacher");
-                });
-
-            modelBuilder.Entity("TSchedule.Persistence.Entities.RegisteredAnnouncement", b =>
-                {
-                    b.HasOne("TSchedule.Persistence.Entities.Administrator", "Administrator")
-                        .WithMany()
-                        .HasForeignKey("AdministratorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TSchedule.Persistence.Entities.Announcement", "Announcement")
-                        .WithMany()
-                        .HasForeignKey("AnnouncementId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Administrator");
-
-                    b.Navigation("Announcement");
                 });
 
             modelBuilder.Entity("TSchedule.Persistence.Entities.Schedule", b =>

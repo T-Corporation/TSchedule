@@ -1,4 +1,4 @@
-﻿using TSchedule.Persistence.Interfaces;
+﻿using TSchedule.Persistence.Interfaces.Managers;
 
 namespace TSchedule.Persistence.Managers;
 

@@ -13,7 +13,7 @@ public class ApplicationDbContext : DbContext
     // public ApplicationDbContext() => Database.EnsureCreated();
 	
 	/// <summary>
-	/// Прогрев БД простым запросом
+	/// Совершает прогрев БД простым запросом
 	/// </summary>
 	public async Task WarmUpAsync() => await Teachers.AnyAsync();
 
@@ -21,7 +21,9 @@ public class ApplicationDbContext : DbContext
         => optionsBuilder.UseSqlServer(ConnectionManager.Default.GetConnectionString());
 
     public DbSet<Administrator> Administrators { get; set; }
+    public DbSet<Announcement> Announcements { get; set; }
     public DbSet<Classroom> Classrooms { get; set; }
+    public DbSet<RegisteredAnnouncement> RegisteredAnnouncements { get; set; }
     public DbSet<Schedule> Schedules { get; set; }
     public DbSet<Specialty> Specialties { get; set; }
     public DbSet<StudentGroup> StudentGroups { get; set; }
