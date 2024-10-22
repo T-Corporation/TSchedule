@@ -2,10 +2,11 @@
 
 public interface IServiceManager : IManager
 {
-    IServiceManager AddSingleton<TService>() where TService : class, new();
-    IServiceManager AddSingleton<TRepository, TService>() 
-        where TRepository : class, new() 
-        where TService : class;
+    IServiceManager AddSingleton<TService>() where TService : class, IService, new();
 
-    TService GetRequiredService<TService>() where TService : class;
+    IServiceManager AddSingleton<TRepository, TService>() 
+        where TRepository : class, IRepository, new()
+        where TService : class, IService;
+
+    TService GetRequiredService<TService>() where TService : class, IService;
 }

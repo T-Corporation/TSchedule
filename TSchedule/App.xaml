@@ -1,12 +1,14 @@
 ﻿<Application x:Class="TSchedule.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             Startup="Application_Startup"
+             xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Startup="Application_Startup">
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
     <Application.Resources>
-         <ResourceDictionary>
-             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/Main.xaml"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ui:ThemeResources/>
+                <ui:XamlControlsResources/>
             </ResourceDictionary.MergedDictionaries>
-         </ResourceDictionary>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

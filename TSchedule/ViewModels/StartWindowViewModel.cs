@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -19,7 +18,7 @@ public partial class StartWindowViewModel : ObservableObject
 	/// <summary>
 	/// Длительность анимации в секундах
 	/// </summary>
-	private const double AnimationDuration = 0.2;
+	private const double AnimationDuration = 0.15;
 
     [ObservableProperty]
     private Page _currentPage;

@@ -13,10 +13,13 @@ public partial class WelcomePageViewModel : ObservableObject
     private void ContinueWithoutAuthentication()
     {
         WindowManager.Default.CreateWindow<MainWindow>();
+        WindowManager.AddDragMove(WindowManager.Default.GetWindow<MainWindow>()!);
         WindowManager.Default.CloseWindow<StartWindow>();
     }
 
     [RelayCommand]
     private void ContinueWithAuthentication()
-        => WindowManager.Default.GetViewModel<StartWindow>()!.As<StartWindowViewModel>()!.NavigateTo(new LoginPage());
+        => WindowManager.Default.GetViewModel<StartWindow>()!
+            .As<StartWindowViewModel>()!
+            .NavigateTo(new LoginPage());
 }

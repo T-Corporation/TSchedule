@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using TSchedule.Persistence.Interfaces;
 
-namespace TSchedule.Managers;
+namespace TSchedule.Persistence.Managers;
 
 /// <summary>
 /// Менеджер для хранения и регистрации сервисов
@@ -35,7 +35,7 @@ public sealed class ServiceManager : IServiceManager, IDisposable
     /// <returns>Используемый ServiceManager</returns>
     /// <exception cref="ObjectDisposedException">Вылетает, если сервер не был зарегистрирован</exception>
     /// <example cref="InvalidOperationException">Вылетает, если сервер уже зарегистрирован</example>
-    public IServiceManager AddSingleton<TService>() where TService : class, new()
+    public IServiceManager AddSingleton<TService>() where TService : class, IService, new()
     {
         CheckIfDisposed();
         if (!_services.TryAdd(typeof(TService), new TService()))
@@ -54,8 +54,8 @@ public sealed class ServiceManager : IServiceManager, IDisposable
     /// <exception cref="ObjectDisposedException">Вылетает, если сервер не был зарегистрирован</exception>
     /// <example cref="InvalidOperationException">Вылетает, если сервер уже зарегистрирован</example>
     public IServiceManager AddSingleton<TRepository, TService>()
-        where TRepository : class, new()
-        where TService : class
+        where TRepository : class, IRepository, new()
+        where TService : class, IService
     {
         CheckIfDisposed();
         var repository = new TRepository();
@@ -72,7 +72,7 @@ public sealed class ServiceManager : IServiceManager, IDisposable
     /// <typeparam name="TService">Тип сервиса</typeparam>
     /// <returns>Используемый ServiceManager</returns>
     /// <exception cref="InvalidOperationException">Вылетает, если сервер не был зарегистрирован</exception>
-    public TService GetRequiredService<TService>() where TService : class
+    public TService GetRequiredService<TService>() where TService : class, IService
     {
         if (_services.TryGetValue(typeof(TService), out var service))
             return (TService)service;

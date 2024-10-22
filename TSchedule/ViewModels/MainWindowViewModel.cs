@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using TSchedule.Managers;
+using TSchedule.Persistence.Managers;
 using TSchedule.Persistence.Services;
 
 namespace TSchedule.ViewModels;

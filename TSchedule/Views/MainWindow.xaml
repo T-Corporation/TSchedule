@@ -1,20 +1,24 @@
 ﻿<Window x:Class="TSchedule.Views.MainWindow"
         xmlns:c="clr-namespace:TSchedule.Converters"
         xmlns:vm="clr-namespace:TSchedule.ViewModels"
+        xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         Width="800"
         Height="450"
+        MinWidth="500"
+        MinHeight="350"
         Title="TSchedule"
-        WindowStyle="ThreeDBorderWindow"
-        WindowStartupLocation="CenterScreen">
+        BorderThickness="0"
+        ui:TitleBar.Height="60"
+        WindowStartupLocation="CenterScreen"
+        ui:WindowHelper.CornerStyle="RoundSmall"
+        ui:TitleBar.ExtendViewIntoTitleBar="True"
+        ui:WindowHelper.FixMaximizedWindow="True"
+        ui:WindowHelper.UseModernWindowStyle="True">
 
     <Window.DataContext>
-        
         <vm:MainWindowViewModel/>
-        
     </Window.DataContext>
-
-    <TextBlock Text="{Binding UserName, StringFormat='Добро пожаловать, {0}!'}"/>
 
 </Window>

@@ -1,22 +1,45 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<OutputType>WinExe</OutputType>
-		<TargetFramework>net8.0-windows</TargetFramework>
-		<Nullable>enable</Nullable>
-		<ImplicitUsings>enable</ImplicitUsings>
+		<TargetFramework>net8.0-windows10.0.18362.0</TargetFramework>
+		<TargetOSVersion>10.0.18362.38</TargetOSVersion>
+		<SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+		
+		<Optimize>true</Optimize>
+		<DebugType>pdbonly</DebugType>
+		<Prefer32Bit>false</Prefer32Bit>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<DefineConstants>TRACE;RELEASE</DefineConstants>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		
+		<Version>1.0.0.0</Version>
+		<Authors>RomanStalinist, MarkRockord, Sokolovsky-projects, Lexa256</Authors>
+		<Company>T-Corporation</Company>
+		<Product>TSchedule</Product>
+		<PackageId>com.tcorporation.TSchedule</PackageId>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<FileVersion>1.0.0.0</FileVersion>
+		<NeutralLanguage>ru</NeutralLanguage>
+		<Description>Программа для ведения расписания в образовательных учреждениях среднего и высшего образований</Description>
+		<Copyright>© TCorporation (RomanJava)</Copyright>
+		<RepositoryUrl>https://github.com/T-Corporation/TSchedule</RepositoryUrl>
+		<RepositoryType>Public</RepositoryType>
+		<PackageTags>Scheduling, Education, Timetable, WPF, .NET</PackageTags>
+		<PackageIconUrl>Images/Icon.ico</PackageIconUrl>
 		<AssemblyName>TSchedule</AssemblyName>
-		<ApplicatioName>TSchedule</ApplicatioName>
 		<ApplicationIcon>Images/Icon.ico</ApplicationIcon>
+		
 		<UseWPF>true</UseWPF>
+		<Nullable>enable</Nullable>
+		<OutputType>WinExe</OutputType>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<ApplicationName>TSchedule</ApplicationName>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+		<PackageReference Include="iNKORE.UI.WPF.Modern" Version="0.9.30" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" />
 	</ItemGroup>
 
 	<ItemGroup>

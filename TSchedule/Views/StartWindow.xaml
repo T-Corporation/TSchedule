@@ -1,60 +1,78 @@
 ﻿<Window x:Class="TSchedule.Views.StartWindow"
         xmlns:vm="clr-namespace:TSchedule.ViewModels"
+        xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         Width="400"
         Height="500"
-        Topmost="True"
         ResizeMode="NoResize"
-        ShowInTaskbar="False"
         Title="Добро пожаловать"
-        WindowStyle="ThreeDBorderWindow"
-        WindowStartupLocation="CenterScreen">
+        ui:TitleBar.Height="100"
+        WindowStartupLocation="CenterScreen"
+        ui:WindowHelper.CornerStyle="RoundSmall"
+        ui:WindowHelper.SystemBackdropType="Mica"
+        ui:TitleBar.ExtendViewIntoTitleBar="True"
+        ui:WindowHelper.UseModernWindowStyle="True"
+        ui:TitleBar.MaximizeButtonAvailability="Collapsed"
+        Foreground="{DynamicResource SystemControlBackgroundBaseHighBrush}">
 
     <Window.DataContext>
         <vm:StartWindowViewModel/>
     </Window.DataContext>
-	
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="100"/>
-			<RowDefinition/>
-		</Grid.RowDefinitions>
-		
-		<Grid Grid.Row="0"
-              Background="#FF0078D7">
 
-            <TextBlock Text="TSchedule"
-                       Margin="33,0"
-                       FontSize="48"
-                       Panel.ZIndex="1"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Left" />
+    <Border Background="{DynamicResource SystemControlPageBackgroundChromeLowBrush}">
 
-            <Rectangle Width="55"
-                       Height="55"
-                       Fill="White"
-                       Margin="30,24"
-                       Stroke="#FF0078D7"
-                       VerticalAlignment="Top"
-                       HorizontalAlignment="Left"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0"
+                  x:Name="TitleBar"
+                  Background="{DynamicResource SystemControlBackgroundAccentBrush}">
+                  <!--Background="#FF5D4ABC">-->
+
+                <TextBlock Text="TS"
+                           Margin="33,0"
+                           FontSize="48"
+                           Panel.ZIndex="1"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left" />
+
+                <TextBlock Margin="33,0"
+                           FontSize="48"
+                           Text="chedule"
+                           Panel.ZIndex="1"
+                           Padding="54,0,0,0"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left" />
+
+                <Rectangle Width="55"
+                           Height="55"
+                           Margin="30,24"
+                           VerticalAlignment="Top"
+                           HorizontalAlignment="Left"
+                           Fill="{DynamicResource SystemControlBackgroundAltHighBrush}" />
+
+            </Grid>
+
+            <Frame Padding="20"
+		           Grid.Row="1"
+		           x:Name="ContentPresenter"
+		           Content="{Binding CurrentPage}"
+		           NavigationUIVisibility="Hidden">
+
+                <Frame.RenderTransform>
+
+                    <TranslateTransform x:Name="TranslateTransform" />
+
+                </Frame.RenderTransform>
+
+            </Frame>
 
         </Grid>
 
-		<Frame Padding="20"
-			   Grid.Row="1"
-			   x:Name="ContentPresenter"
-			   Content="{Binding CurrentPage}"
-			   NavigationUIVisibility="Hidden">
-			   
-			<Frame.RenderTransform>
-			
-				<TranslateTransform x:Name="TranslateTransform" />
-				
-			</Frame.RenderTransform>
-			
-		</Frame>
-	
-	</Grid>
-	
+    </Border>
+
 </Window>

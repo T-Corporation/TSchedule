@@ -1,6 +1,7 @@
 ﻿<Page x:Class="TSchedule.Views.Pages.StartWindow.LoginPage"
       xmlns:c="clr-namespace:TSchedule.Converters"
       xmlns:vm="clr-namespace:TSchedule.ViewModels"
+      xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -9,80 +10,64 @@
       Title="Авторизация"
       d:DesignWidth="400"
       d:DesignHeight="500"
-      d:Background="White">
+      d:Background="White"
+      Foreground="{DynamicResource SystemControlBackgroundBaseHighBrush}">
     
     <Page.Resources>
-        
         <c:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
-        
     </Page.Resources>
     
     <Page.DataContext>
-
         <vm:LoginPageViewModel/>
-
     </Page.DataContext>
 
     <Grid VerticalAlignment="Stretch">
 
-        <Grid Margin="16"
-              Grid.Row="1">
+        <Grid Grid.Row="1">
 
             <StackPanel MinWidth="300"
                         VerticalAlignment="Top"
-                        HorizontalAlignment="Center">
+                        HorizontalAlignment="Stretch"
+                        ui:PanelHelper.Spacing="12">
 
-                <TextBlock Padding="0,6"
-                           Text="Войти как"/>
-
-                <ComboBox Padding="6"
+                <ComboBox Padding="10"
+                          IsReadOnly="True"
+                          IsEditable="False"
                           ItemsSource="{Binding Roles}"
-                          SelectedItem="{Binding Role}"/>
+                          SelectedItem="{Binding Role}"
+                          HorizontalAlignment="Stretch"
+                          ui:ControlHelper.CornerRadius="4"
+                          ui:ControlHelper.Header="Войти как"
+                          ui:ControlHelper.PlaceholderText="Выберите роль"/>
 
-                <TextBlock Padding="0,6"
-                           Text="Введите логин"
-                           HorizontalAlignment="Left"/>
-
-                <TextBox Padding="4"
+                <TextBox Padding="10"
                          TextWrapping="Wrap"
-                         Text="{Binding UserName}"/>
+                         Text="{Binding UserName}"
+                         ui:ControlHelper.Header="Логин"
+                         ui:ControlHelper.CornerRadius="4"
+                         ui:TextBoxHelper.IsDeleteButtonVisible="True"
+                         ui:ControlHelper.PlaceholderText="Введите имя пользователя"/>
 
-                <TextBlock Padding="0,6"
-                           Text="Введите пароль"
-                           HorizontalAlignment="Left"/>
-
-                <PasswordBox Padding="4"
+                <PasswordBox Padding="10"
                              x:Name="PasswordBox"
                              VerticalAlignment="Top"
-                             PasswordChanged="PasswordBox_PasswordChanged"/>
+                             ui:ControlHelper.CornerRadius="4"
+                             ui:ControlHelper.Header="Введите пароль"
+                             PasswordChanged="PasswordBox_PasswordChanged"
+                             ui:PasswordBoxHelper.PasswordRevealMode="Peek"
+                             ui:ControlHelper.PlaceholderText="Введите ваш пароль"/>
 
-                <Button Height="32"
-                        Margin="0,20,0,0"
-                        Foreground="White"
-                        Background="#FF0078D7"
-                        BorderBrush="#FF0069BD"
+                <Button Padding="10"
+                        Margin="0,6,0,0"
                         Content="Войти в систему"
                         HorizontalAlignment="Stretch"
-                        Command="{Binding LoginCommand}">
-                    <Button.ToolTip>
-                        <ToolTip Padding="0"
-                                 Placement="Mouse"
-                                 VerticalOffset="4"
-                                 Background="Transparent"
-                                 BorderBrush="Transparent">
-                            <Border Padding="8,4"
-                                    CornerRadius="12"
-                                    BorderThickness="1"
-                                    Background="#ffffee"
-                                    BorderBrush="#33000000">
-                                <TextBlock Foreground="#4f4f4f" Text="Нажмите, чтобы войти в систему"/>
-                            </Border>
-                        </ToolTip>
-                    </Button.ToolTip>
-                </Button>
+                        Command="{Binding LoginCommand}"
+                        ToolTipService.HasDropShadow="True"
+                        Style="{StaticResource AccentButtonStyle}"
+                        ToolTipService.ToolTip="Нажмите, чтобы войти в систему"/>
 
-                <TextBlock Padding="8"
-                           Foreground="#cc3300"
+
+                <TextBlock Foreground="#cc3300"
                            TextAlignment="Center"
                            Text="{Binding ErrorMessage}"
                            Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}"/>
@@ -91,61 +76,32 @@
 
         </Grid>
 
-        <Button Width="50"
-                Margin="16"
-                Content="?"
-                Grid.Row="1"
-                FontSize="36"
-                Background="Transparent"
-                VerticalAlignment="Bottom"
-                BorderBrush="Transparent"
-                HorizontalAlignment="Right"
-                Command="{Binding ShowInfoCommand}">
-            <Button.ToolTip>
-                <ToolTip Padding="0"
-                         Placement="Top"
-                         VerticalOffset="-4"
-                         HorizontalOffset="-52"
-                         Background="Transparent"
-                         BorderBrush="Transparent">
-                    <Border Padding="8,4"
-                            CornerRadius="12"
-                            BorderThickness="1"
-                            Background="#ffffee"
-                            BorderBrush="#33000000">
-                        <TextBlock Text="Справочная информация"/>
-                    </Border>
-                </ToolTip>
-            </Button.ToolTip>
-        </Button>
+        <ui:DropDownButton Content=" ?"
+                           Grid.Row="1"
+                           FontSize="36"
+                           VerticalAlignment="Bottom"
+                           HorizontalAlignment="Right"
+                           ToolTipService.HasDropShadow="True"
+                           ToolTipService.ToolTip="Справочная информация">
+            <ui:DropDownButton.Flyout>
+                <ui:Flyout ShowMode="Transient"
+                           Placement="Bottom"
+                           AreOpenCloseAnimationsEnabled="True">
+                    <TextBlock MaxWidth="200"
+                               TextWrapping="Wrap"
+                               Text="Логин и пароль предоставляются администрацией вашего учебного заведения."/>
+                </ui:Flyout>
+            </ui:DropDownButton.Flyout>
+        </ui:DropDownButton>
 
-        <Button Width="50"
-                Margin="16"
-                Content="←"
-                Grid.Row="1"
-                FontSize="36"
-                Padding="0,0,0,6"
-                Background="Transparent"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Left"
-                BorderBrush="Transparent"
-                Command="{Binding GoBackCommand}">
-            <Button.ToolTip>
-                <ToolTip Padding="0"
-                         Placement="Top"
-                         VerticalOffset="-4"
-                         Background="Transparent"
-                         BorderBrush="Transparent">
-                    <Border Padding="8,4"
-                            CornerRadius="12"
-                            BorderThickness="1"
-                            Background="#ffffee"
-                            BorderBrush="#33000000">
-                        <TextBlock Text="Назад"/>
-                    </Border>
-                </ToolTip>
-            </Button.ToolTip>
-        </Button>
+        <ui:HyperlinkButton Content="←"
+                            Grid.Row="1"
+                            FontSize="36"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Left"
+                            ToolTipService.ToolTip="Назад"
+                            Command="{Binding GoBackCommand}"
+                            ToolTipService.HasDropShadow="True"/>
 
     </Grid>
 

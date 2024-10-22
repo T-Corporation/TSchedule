@@ -1,10 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using iNKORE.UI.WPF.Modern.Controls.Helpers;
+using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Interop;
+using TSchedule.Persistence.Interfaces;
 
 namespace TSchedule.Managers;
 
-public class WindowManager
+public class WindowManager : IManager
 {
+    #region Fields
+
     /// <summary>
     /// "Ленивое" создание менеджера по умолчанию
     /// </summary>
@@ -20,26 +26,30 @@ public class WindowManager
     /// </summary>
     private readonly Dictionary<Type, Window> _windows = [];
 
+    [DllImport("user32.dll")]
+    private static extern IntPtr SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
+
+    #endregion
+
+    #region Inner methods
+
     /// <summary>
     /// Создаёт и регистрирует окно
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="showDialog"></param>
-    /// <param name="owner"></param>
+    /// <typeparam name="T">Тип окна</typeparam>
+    /// <param name="isModern">Если <b>true</b>, то современный дизайн, иначе обычный</param>
+    /// <param name="showDialog">Если <b>true</b>, то запуск в диалоговом режиме, иначе – в обычном</param>
+    /// <param name="owner">Владелец окна</param>
     /// <returns></returns>
-    public T CreateWindow<T>(bool showDialog = false, Window? owner = null)
+    public T CreateWindow<T>(bool isModern = true, bool showDialog = false, Window? owner = null)
         where T : Window, new()
     {
         var windowType = typeof(T);
-        if (_windows.TryGetValue(windowType, out Window? value))
+        if (_windows.TryGetValue(windowType, out var value))
             return (T)value;
 
-        var window = new T { Owner = owner, };
-        window.Closed += (_, _) => _windows.Remove(windowType);
-
-        _windows[windowType] = window;
-        ShowWindow<T>(showDialog);
-        return window;
+        var window = new T();
+        return CreateWindow(window, isModern, showDialog, owner);
     }
 
     /// <summary>
@@ -76,30 +86,21 @@ public class WindowManager
         where T : Window, new()
     {
         var window = CreateWindow<T>();
-        if (window.Visibility is Visibility.Visible)
-            return;
-
-        if (showDialog)
-        {
-            window.ShowDialog();
-            return;
-        }
-
-        window.Show();
+        ShowWindow(window, showDialog);
     }
 
     /// <summary>
     /// Скрывает окно
     /// </summary>
     /// <typeparam name="T">Тип окна, которое создано через менеджер</typeparam>
-    public void HideWindow<T>()
+    public void MinimizeWindow<T>()
         where T : Window
     {
         var window = GetWindow<T>();
-        if (window is null)
+        if (window is null || window.WindowState is WindowState.Minimized)
             return;
 
-        window.Hide();
+        window.WindowState = WindowState.Minimized;
     }
 
     /// <summary>
@@ -140,6 +141,75 @@ public class WindowManager
         where T : Window
         => _windows.ContainsKey(typeof(T));
 
+    #endregion
+
+    #region Private methods
+
+    /// <summary>
+    /// Показывает переданное окно
+    /// </summary>
+    /// <typeparam name="T">Тип окна</typeparam>
+    /// <param name="window">Окно для показа</param>
+    /// <param name="showDialog">Если <b>true</b>, то <see cref="Window.ShowDialog()"/>, иначе <see cref="Window.Show()"/></param>
+    private static void ShowWindow<T>(T window, bool showDialog = false)
+        where T : Window
+    {
+        if (window.Visibility is Visibility.Visible)
+            return;
+
+        if (showDialog)
+        {
+            window.ShowDialog();
+            return;
+        }
+
+        window.Show();
+    }
+
+    /// <summary>
+    /// Регистрирует переданное окно
+    /// </summary>
+    /// <typeparam name="T">Тип окна</typeparam>
+    /// <param name="window">Окно для регистрации и показа</param>
+    /// <param name="isModern">Будет ли оно современным</param>
+    /// <param name="showDialog">Если <b>true</b>, то <see cref="Window.ShowDialog()"/>, иначе <see cref="Window.Show()"/></param>
+    /// <param name="owner">Владелец окна</param>
+    /// <returns></returns>
+    private T CreateWindow<T>(T window, bool isModern = true, bool showDialog = false, Window? owner = null)
+        where T : Window
+    {
+        var windowType = typeof(T);
+        WindowHelper.SetUseModernWindowStyle(window, isModern);
+        window.Closed += (_, _) => _windows.Remove(windowType);
+        window.Owner = owner;
+
+        _windows[windowType] = window;
+        ShowWindow(window, showDialog);
+        return window;
+    }
+
+    #endregion
+
+    #region Static methods
+
+    /// <summary>
+    /// Добавить перетаскивание экрана
+    /// </summary>
+    /// <param name="window">Окно</param>
+    /// <param name="draggableElement">Перетаскиваемый элемент окна (<em>если <b>null</b>, то обработчик наложится на само окно</em>)</param>
+    public static void AddDragMove(Window window, object? draggableElement = null)
+    {
+        WindowInteropHelper helper = new(window);
+        if (draggableElement is null)
+        {
+            window.MouseLeftButtonDown += (_, _) => SendMessage(helper.Handle, 161, 2, 0);
+            return;
+        }
+
+        var frameworkElement = (draggableElement as FrameworkElement)!;
+        frameworkElement.MouseLeftButtonDown += (_, _) => SendMessage(helper.Handle, 161, 2, 0);
+    }
+
     /// <summary>
     /// Показывает <see cref="MessageBox"/>
     /// </summary>
@@ -154,4 +224,6 @@ public class WindowManager
         MessageBoxButton button = MessageBoxButton.OK,
         MessageBoxImage icon = MessageBoxImage.Information)
         => MessageBox.Show(text, caption, button, icon);
+
+    #endregion
 }

@@ -1,8 +1,9 @@
 ﻿using System.Windows;
 using TSchedule.Managers;
 using TSchedule.Persistence;
-using TSchedule.Persistence.Repositories;
 using TSchedule.Persistence.Services;
+using TSchedule.Persistence.Managers;
+using TSchedule.Persistence.Repositories;
 using TSchedule.Views;
 
 namespace TSchedule;
@@ -13,7 +14,11 @@ public partial class App
     {
 		await using ApplicationDbContext context = new();
 		await context.WarmUpAsync();
+
+        UserPreferencesManager.SetupTheme();
+
         ServiceManager.Default.AddSingleton<UsersRepository, UsersService>();
+
         WindowManager.Default.CreateWindow<StartWindow>();
     }
 
