@@ -13,6 +13,5 @@ namespace TSchedule.Persistence.Entities
         [Required(AllowEmptyStrings = false)]
         [StringLength(20, MinimumLength = 3)]
         public string Reduction { get; set; } = string.Empty;
-
     }
 }

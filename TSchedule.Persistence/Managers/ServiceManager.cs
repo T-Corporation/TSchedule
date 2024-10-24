@@ -27,22 +27,27 @@ public sealed class ServiceManager : IServiceManager, IDisposable
     /// <summary>
     /// Сервисы
     /// </summary>
-    private readonly ConcurrentDictionary<Type, object> _services = new();
+    private readonly ConcurrentDictionary<Type, IService> _services = new();
 
     /// <summary>
     /// Добавление сервиса, не зависимого от репозитория
     /// </summary>
     /// <typeparam name="TService">Тип самодостаточного сервиса</typeparam>
     /// <returns>Используемый ServiceManager</returns>
-    /// <exception cref="ObjectDisposedException">Вылетает, если сервер не был зарегистрирован</exception>
-    /// <example cref="InvalidOperationException">Вылетает, если сервер уже зарегистрирован</example>
-    public IServiceManager AddSingleton<TService>() where TService : class, IService, new()
+    public IServiceManager AddSingleton<TService>()
+        where TService : class, IService, new()
     {
         CheckIfDisposed();
         if (!_services.TryAdd(typeof(TService), new TService()))
-        {
             throw new InvalidOperationException($"Сервис \"{typeof(TService).Name}\" уже зарегистрирован.");
-        }
+        return this;
+    }
+
+    public IServiceManager AddRepository<TRepository>()
+        where TRepository : class, IRepository, new()
+    {
+        CheckIfDisposed();
+
         return this;
     }
 
@@ -52,8 +57,6 @@ public sealed class ServiceManager : IServiceManager, IDisposable
     /// <typeparam name="TRepository">Тип репозитория</typeparam>
     /// <typeparam name="TService">Тип сервиса</typeparam>
     /// <returns>Используемый ServiceManager</returns>
-    /// <exception cref="ObjectDisposedException">Вылетает, если сервер не был зарегистрирован</exception>
-    /// <example cref="InvalidOperationException">Вылетает, если сервер уже зарегистрирован</example>
     public IServiceManager AddSingleton<TRepository, TService>()
         where TRepository : class, IRepository, new()
         where TService : class, IService
@@ -63,7 +66,6 @@ public sealed class ServiceManager : IServiceManager, IDisposable
         var service = (TService)Activator.CreateInstance(typeof(TService), repository)!;
         if (!_services.TryAdd(typeof(TService), service))
             throw new InvalidOperationException($"Сервис \"{typeof(TService).Name}\" уже зарегистрирован.");
-
         return this;
     }
 
@@ -73,12 +75,12 @@ public sealed class ServiceManager : IServiceManager, IDisposable
     /// <typeparam name="TService">Тип сервиса</typeparam>
     /// <returns>Используемый ServiceManager</returns>
     /// <exception cref="InvalidOperationException">Вылетает, если сервер не был зарегистрирован</exception>
-    public TService GetRequiredService<TService>() where TService : class, IService
+    public TService GetRequiredService<TService>()
+        where TService : class, IService
     {
-        if (_services.TryGetValue(typeof(TService), out var service))
-            return (TService)service;
-
-        throw new InvalidOperationException($"Сервис \"{typeof(TService).Name}\" не зарегистрирован.");
+        if (!_services.TryGetValue(typeof(TService), out var service))
+            throw new InvalidOperationException($"Сервис \"{typeof(TService).Name}\" не зарегистрирован.");
+        return (TService)service;
     }
 
     /// <summary>

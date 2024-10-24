@@ -7,16 +7,14 @@ namespace TSchedule.Persistence.Entities;
 public class StudentGroup
 {
     [Key]
-    public int Id { get; set; }
-
-    [Required(AllowEmptyStrings = false)]
     [StringLength(50)]
-    public string GroupCode { get; set; } = string.Empty;
+    [Required(AllowEmptyStrings = false)]
+    public string Code { get; set; } = string.Empty;
 
     [Range(1, 5)] // Например, курс может быть от 1 до 5
-    public int Course { get; set; }
+    public byte Course { get; set; }
 
     [ForeignKey(nameof(Specialty))]
-    public int SpecialtyId { get; set; }
+    public string SpecialtyCode { get; set; } = null!;
     public Specialty? Specialty { get; set; }
 }

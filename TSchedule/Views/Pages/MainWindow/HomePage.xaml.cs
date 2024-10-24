@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TSchedule.Views.Pages.MainWindow.Teachers
+namespace TSchedule.Views.Pages.MainWindow
 {
     /// <summary>
-    /// Логика взаимодействия для AnnouncementPage.xaml
+    /// Логика взаимодействия для HomePage.xaml
     /// </summary>
-    public partial class AnnouncementPage : Page
+    public partial class HomePage : Page
     {
-        public AnnouncementPage()
+        public HomePage()
         {
             InitializeComponent();
         }

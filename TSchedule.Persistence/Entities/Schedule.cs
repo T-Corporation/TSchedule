@@ -38,12 +38,12 @@ public class Schedule
 
     // Ссылка на группу
     [ForeignKey(nameof(Group))]
-    public int GroupId { get; set; }
+    public string GroupCode { get; set; } = null!;
     public StudentGroup? Group { get; set; }
 
     // Ссылка на предмет
     [ForeignKey(nameof(Subject))]
-    public int SubjectId { get; set; }
+    public string SubjectCode { get; set; } = null!;
 
     [DeleteBehavior(DeleteBehavior.NoAction)]
     public Subject? Subject { get; set; }

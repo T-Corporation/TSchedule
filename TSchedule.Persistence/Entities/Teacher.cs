@@ -10,9 +10,6 @@ public class Teacher : ApplicationUser
     [DataType(DataType.Date)]
     public DateOnly? BirthDate { get; set; }
 
-    [StringLength(50)]
-    public string Classroom { get; set; } = string.Empty;
-
     [DataType(DataType.Time)]
     public TimeOnly? PreferredTimeStart { get; set; }
 

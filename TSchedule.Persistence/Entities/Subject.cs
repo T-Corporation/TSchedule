@@ -7,7 +7,9 @@ namespace TSchedule.Persistence.Entities;
 public class Subject
 {
     [Key]
-    public int Id { get; set; }
+    [StringLength(20, MinimumLength = 3)]
+    [Required(AllowEmptyStrings = false)]
+    public string Code { get; set; } = null!;
 
     [Required(AllowEmptyStrings = false)]
     [StringLength(255)]
@@ -17,6 +19,6 @@ public class Subject
     public int WeeklyHours { get; set; }
 
     [ForeignKey(nameof(Specialty))]
-    public int SpecialtyId { get; set; }
+    public string SpecialtyCode { get; set; } = null!;
     public Specialty? Specialty { get; set; }
 }

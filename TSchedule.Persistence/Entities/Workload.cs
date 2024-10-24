@@ -20,10 +20,10 @@ public class Workload
     public Teacher? Teacher { get; set; }
 
     [ForeignKey(nameof(Group))]
-    public int? GroupId { get; set; } // Нагрузка на студентов
+    public string? GroupCode { get; set; } // Нагрузка на студентов
     public StudentGroup? Group { get; set; }
 
     [ForeignKey(nameof(Subject))]
-    public int SubjectId { get; set; }
+    public string SubjectCode { get; set; } = null!;
     public Subject? Subject { get; set; }
 }

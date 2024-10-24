@@ -96,7 +96,7 @@ public class UsersRepository : IUsersRepository
         };
     }
 
-    public async Task<IEnumerable<ApplicationUser>> FindAllByFullName(string fullName, Роль role)
+    public async Task<IEnumerable<ApplicationUser>> FindByLikeFullName(string fullName, Роль role)
     {
         using ApplicationDbContext context = new();
 

@@ -7,13 +7,11 @@ namespace TSchedule.Persistence.Entities;
 public class Specialty
 {
     [Key]
-    public int Id { get; set; }
+    [StringLength(50)]
+    [Required(AllowEmptyStrings = false)]
+    public string Code { get; set; } = string.Empty;
 
     [Required(AllowEmptyStrings = false)]
     [StringLength(255)]
     public string Name { get; set; } = string.Empty;
-
-    [Required(AllowEmptyStrings = false)]
-    [StringLength(50)]
-    public string Code { get; set; } = string.Empty;
 }
