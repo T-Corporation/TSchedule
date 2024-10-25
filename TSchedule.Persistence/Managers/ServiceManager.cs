@@ -9,65 +9,63 @@ namespace TSchedule.Persistence.Managers;
 /// </summary>
 public sealed class ServiceManager : IServiceManager, IDisposable
 {
-    /// <summary>
-    /// Закрыт ли ServiceManager
-    /// </summary>
+    #region Private Fields
+
     private bool _isDisposed;
-
-    /// <summary>
-    /// "Ленивое" создание менеджера по умолчанию
-    /// </summary>
     private static readonly Lazy<ServiceManager> _default = new(() => new ServiceManager());
-
-    /// <summary>
-    /// Ссылка на менеджер по умолчанию
-    /// </summary>
-    public static ServiceManager Default => _default.Value;
-
-    /// <summary>
-    /// Сервисы
-    /// </summary>
     private readonly ConcurrentDictionary<Type, IService> _services = new();
 
-    /// <summary>
-    /// Добавление сервиса, не зависимого от репозитория
-    /// </summary>
-    /// <typeparam name="TService">Тип самодостаточного сервиса</typeparam>
-    /// <returns>Используемый ServiceManager</returns>
-    public IServiceManager AddSingleton<TService>()
-        where TService : class, IService, new()
-    {
-        CheckIfDisposed();
-        if (!_services.TryAdd(typeof(TService), new TService()))
-            throw new InvalidOperationException($"Сервис \"{typeof(TService).Name}\" уже зарегистрирован.");
-        return this;
-    }
+    #endregion
 
-    public IServiceManager AddRepository<TRepository>()
-        where TRepository : class, IRepository, new()
-    {
-        CheckIfDisposed();
+    #region Properties
 
-        return this;
-    }
+    public static ServiceManager Default => _default.Value;
+
+    #endregion
+
+    #region Methods
 
     /// <summary>
-    /// Добавление сервиса, зависящего от репозитория
+    /// Общий метод по добавлению сервиса с конкретной реализацией
     /// </summary>
-    /// <typeparam name="TRepository">Тип репозитория</typeparam>
     /// <typeparam name="TService">Тип сервиса</typeparam>
+    /// <typeparam name="TImplementation">Тип реализации сервиса</typeparam>
+    /// <param name="service">Сервис</param>
     /// <returns>Используемый ServiceManager</returns>
-    public IServiceManager AddSingleton<TRepository, TService>()
-        where TRepository : class, IRepository, new()
+    /// <exception cref="InvalidOperationException"></exception>
+    private ServiceManager AddSimpleSingleton<TService, TImplementation>(TImplementation service)
         where TService : class, IService
+        where TImplementation : class, TService
     {
         CheckIfDisposed();
-        var repository = new TRepository();
-        var service = (TService)Activator.CreateInstance(typeof(TService), repository)!;
         if (!_services.TryAdd(typeof(TService), service))
-            throw new InvalidOperationException($"Сервис \"{typeof(TService).Name}\" уже зарегистрирован.");
+            throw new InvalidOperationException(
+                $"Сервис \"{typeof(TService).Name}\" уже зарегистрирован.");
         return this;
     }
+
+    /// <summary>
+    /// Добавление сервиса с конкретной реализацией
+    /// </summary>
+    /// <typeparam name="TService">Тип сервиса</typeparam>
+    /// <typeparam name="TImplementation">Тип реализации сервиса</typeparam>
+    /// <returns>Используемый ServiceManager</returns>
+    public IServiceManager AddSingleton<TService, TImplementation>()
+        where TService : class, IService
+        where TImplementation : class, TService, new()
+        => AddSimpleSingleton<TService, TImplementation>(new TImplementation());
+
+    /// <summary>
+    /// Добавление сервиса с конкретной реализацией и фабрикой
+    /// </summary>
+    /// <param name="factory">Фабрика по созданию экземпляра сервиса</param>
+    /// <typeparam name="TService">Тип сервиса</typeparam>
+    /// <typeparam name="TImplementation">Тип реализации сервиса</typeparam>
+    /// <returns>Используемый ServiceManager</returns>
+    public IServiceManager AddSingleton<TService, TImplementation>(Func<TImplementation> factory)
+        where TService : class, IService
+        where TImplementation : class, TService
+        => AddSimpleSingleton<TService, TImplementation>(factory());
 
     /// <summary>
     /// Получает запрошенный сервис
@@ -95,12 +93,13 @@ public sealed class ServiceManager : IServiceManager, IDisposable
     /// <summary>
     /// Проверяет, закрыта ли регистрация сервисов и если да, то выбрасывает <see cref="ObjectDisposedException"/>
     /// </summary>
-    /// <exception cref="ObjectDisposedException">Выбрасывается, если регистрация сервисов закрыта</exception>
     private void CheckIfDisposed()
     {
         if (_isDisposed)
             throw new ObjectDisposedException(
                 nameof(ServiceManager),
-                $"Настройка {nameof(ServiceManager)} доступна только во время загрузки приложения");
+                "Регистрация новых сервисов завершена. Инициализация сервисов доступна только на этапе старта приложения.");
     }
+
+    #endregion
 }

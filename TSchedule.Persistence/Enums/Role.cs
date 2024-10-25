@@ -1,6 +1,6 @@
 ﻿namespace TSchedule.Persistence.Enums;
 
-public enum Роль
+public enum Role
 {
     Гость,
     Преподаватель,

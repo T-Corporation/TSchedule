@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using iNKORE.UI.WPF.Modern.Controls;
 using iNKORE.UI.WPF.Modern.Controls.Helpers;
 using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Interop;
 using TSchedule.Persistence.Interfaces.Bases;
 
 namespace TSchedule.Managers;
@@ -193,24 +193,6 @@ public class WindowManager : IManager
     #region Static methods
 
     /// <summary>
-    /// Добавить перетаскивание экрана
-    /// </summary>
-    /// <param name="window">Окно</param>
-    /// <param name="draggableElement">Перетаскиваемый элемент окна (<em>если <b>null</b>, то обработчик наложится на само окно</em>)</param>
-    public static void AddDragMove(Window window, object? draggableElement = null)
-    {
-        WindowInteropHelper helper = new(window);
-        if (draggableElement is null)
-        {
-            window.MouseLeftButtonDown += (_, _) => SendMessage(helper.Handle, 161, 2, 0);
-            return;
-        }
-
-        var frameworkElement = (draggableElement as FrameworkElement)!;
-        frameworkElement.MouseLeftButtonDown += (_, _) => SendMessage(helper.Handle, 161, 2, 0);
-    }
-
-    /// <summary>
     /// Показывает <see cref="MessageBox"/>
     /// </summary>
     /// <param name="text">Сообщение</param>
@@ -223,7 +205,7 @@ public class WindowManager : IManager
         string caption,
         MessageBoxButton button = MessageBoxButton.OK,
         MessageBoxImage icon = MessageBoxImage.Information)
-        => MessageBox.Show(text, caption, button, icon);
+        => iNKORE.UI.WPF.Modern.Controls.MessageBox.Show(text, caption, button, icon);
 
     #endregion
 }

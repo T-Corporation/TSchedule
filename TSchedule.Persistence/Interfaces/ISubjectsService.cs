@@ -9,6 +9,7 @@ public interface ISubjectsService : IService
     Task<IEnumerable<Subject>> GetAllSubjects();
     Task<IEnumerable<Subject>> GetSubjectsByLikeName(string name);
     Task<IEnumerable<Subject>> GetSubjectsBySpecialtyCode(string code);
+
     Task<bool> AddSubject(Subject subject);
     Task<bool> UpdateSubject(Subject subject);
     Task<bool> RemoveSubject(string code);

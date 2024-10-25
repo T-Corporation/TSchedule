@@ -1,28 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using TSchedule.ViewModels;
 
-namespace TSchedule.Views.Pages.MainWindow.Administrators
+namespace TSchedule.Views.Pages.MainWindow.Administrators;
+
+public partial class TeachersManagementPage
 {
-    /// <summary>
-    /// Логика взаимодействия для TeachersManagementPage.xaml
-    /// </summary>
-    public partial class TeachersManagementPage : Page
-    {
-        public TeachersManagementPage()
-        {
-            InitializeComponent();
-        }
-    }
+    public TeachersManagementPage() => InitializeComponent();
+
+    private async void Page_Loaded(object sender, RoutedEventArgs e)
+        => DataContext = await TeachersManagementViewModel.CreateInstanceAsync();
 }

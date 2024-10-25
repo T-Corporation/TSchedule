@@ -17,5 +17,5 @@ public class Teacher : ApplicationUser
     public TimeOnly? PreferredTimeEnd { get; set; }
 
     [NotMapped]
-    public override Роль Role => Роль.Преподаватель;
+    public override Role Role => Role.Преподаватель;
 }

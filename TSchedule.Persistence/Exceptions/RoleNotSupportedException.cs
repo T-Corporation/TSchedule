@@ -2,5 +2,8 @@
 
 namespace TSchedule.Persistence.Exceptions;
 
-public class RoleNotSupportedException(Роль roleName)
-    : Exception($"Роль {roleName} не поддерживается");
+public class RoleNotSupportedException : Exception
+{
+    public RoleNotSupportedException(Role role) : base($"Роль {role} не поддерживается") { }
+    public RoleNotSupportedException(string roleName) : base($"Роль {roleName} не поддерживается") { }
+}

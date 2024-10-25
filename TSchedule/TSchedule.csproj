@@ -37,6 +37,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Images\Icon.ico" />
+	  <None Remove="Images\Icon.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
 		<PackageReference Include="iNKORE.UI.WPF.Modern" Version="0.9.30" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" />
@@ -44,6 +49,11 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\TSchedule.Persistence\TSchedule.Persistence.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Images\Icon.ico" />
+	  <Resource Include="Images\Icon.png" />
 	</ItemGroup>
 
 	<ItemGroup>

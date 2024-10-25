@@ -13,7 +13,6 @@ public partial class WelcomePageViewModel : ObservableObject
     private void ContinueWithoutAuthentication()
     {
         WindowManager.Default.CreateWindow<MainWindow>();
-        WindowManager.AddDragMove(WindowManager.Default.GetWindow<MainWindow>()!);
         WindowManager.Default.CloseWindow<StartWindow>();
     }
 

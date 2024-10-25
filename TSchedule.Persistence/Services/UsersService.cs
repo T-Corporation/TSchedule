@@ -11,7 +11,7 @@ public class UsersService(IUsersRepository repository) : IUsersService
 {
     private ApplicationUser? ApplicationUser { get; set; }
 
-    public async Task Authenticate(string username, string password, Роль role)
+    public async Task Authenticate(string username, string password, Role role)
     {
         try
         {
@@ -22,6 +22,19 @@ public class UsersService(IUsersRepository repository) : IUsersService
                     "UserName; Password; Role",
                     $"UserName={username}; Password={password}; Role={role}");
 
+            ApplicationUser = user;
+        }
+        catch (UserNotFoundException unfe)
+        {
+            Debug.WriteLine(unfe.Message);
+        }
+    }
+
+    public async Task AuthenticateById(Guid id, Role role)
+    {
+        try
+        {
+            var user = await repository.FindById(id, role);
             ApplicationUser = user;
         }
         catch (UserNotFoundException unfe)
@@ -42,6 +55,13 @@ public class UsersService(IUsersRepository repository) : IUsersService
     public string GetUserName() => IsAuthenticated() ? ApplicationUser!.UserName : "Гость" ;
 
     public string GetUserFullName() => IsAuthenticated() ? ApplicationUser!.FullName : "Гость";
+
+    public Role GetRole() => ApplicationUser switch
+    {
+        Administrator => Role.Администратор,
+        Teacher => Role.Преподаватель,
+        _ => Role.Гость
+    };
 
     public Guid GetUserGuid() => IsAuthenticated() ? ApplicationUser!.Id : Guid.Empty;
 }

@@ -22,10 +22,10 @@ public class Schedule
 
     [Required]
     [Range(1, 2)]
-    public int Semester { get; set; } // Полугодие (1 или 2 семестр)
+    public byte Semester { get; set; } // Полугодие (1 или 2 семестр)
 
     [Required]
-    public int Year { get; set; } // Год обучения
+    public short Year { get; set; } // Год обучения
 
     public bool IsDenominator { get; set; } // Занятие проходит в знаменателе
 

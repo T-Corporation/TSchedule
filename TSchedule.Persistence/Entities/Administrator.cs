@@ -7,5 +7,5 @@ namespace TSchedule.Persistence.Entities;
 public class Administrator : ApplicationUser
 {
     [NotMapped]
-    public override Роль Role => Роль.Администратор;
+    public override Role Role => Role.Администратор;
 }

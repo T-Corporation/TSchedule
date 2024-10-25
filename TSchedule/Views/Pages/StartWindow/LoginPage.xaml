@@ -1,25 +1,25 @@
-﻿<Page x:Class="TSchedule.Views.Pages.StartWindow.LoginPage"
-      xmlns:c="clr-namespace:TSchedule.Converters"
-      xmlns:vm="clr-namespace:TSchedule.ViewModels"
-      xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      mc:Ignorable="d"
-      Title="Авторизация"
-      d:DesignWidth="400"
-      d:DesignHeight="500"
-      d:Background="White"
-      Foreground="{DynamicResource SystemControlBackgroundBaseHighBrush}">
+﻿<ui:Page x:Class="TSchedule.Views.Pages.StartWindow.LoginPage"
+         xmlns:c="clr-namespace:TSchedule.Converters"
+         xmlns:vm="clr-namespace:TSchedule.ViewModels"
+         xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         mc:Ignorable="d"
+         Title="Авторизация"
+         d:DesignWidth="400"
+         d:DesignHeight="500"
+         d:Background="White"
+         Foreground="{DynamicResource SystemControlBackgroundBaseHighBrush}">
     
     <Page.Resources>
         <c:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
     </Page.Resources>
     
-    <Page.DataContext>
+    <ui:Page.DataContext>
         <vm:LoginPageViewModel/>
-    </Page.DataContext>
+    </ui:Page.DataContext>
 
     <Grid VerticalAlignment="Stretch">
 
@@ -27,8 +27,8 @@
 
             <StackPanel MinWidth="300"
                         VerticalAlignment="Top"
-                        HorizontalAlignment="Stretch"
-                        ui:PanelHelper.Spacing="12">
+                        ui:PanelHelper.Spacing="12"
+                        HorizontalAlignment="Stretch">
 
                 <ComboBox Padding="10"
                           IsReadOnly="True"
@@ -85,8 +85,8 @@
             <ui:IconAndText IconSize="24"
                             Icon="{x:Static ui:SegoeFluentIcons.StatusCircleQuestionMark}"/>
             <ui:DropDownButton.Flyout>
-                <ui:Flyout ShowMode="Transient"
-                           Placement="Bottom"
+                <ui:Flyout Placement="Bottom"
+                           ShowMode="Transient"
                            AreOpenCloseAnimationsEnabled="True">
                     <TextBlock MaxWidth="200"
                                TextWrapping="Wrap"
@@ -109,4 +109,4 @@
 
     </Grid>
 
-</Page>
+</ui:Page>

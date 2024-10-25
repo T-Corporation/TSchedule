@@ -16,10 +16,6 @@
         ui:TitleBar.MaximizeButtonAvailability="Collapsed"
         Foreground="{DynamicResource SystemControlBackgroundBaseHighBrush}">
 
-    <Window.DataContext>
-        <vm:StartWindowViewModel/>
-    </Window.DataContext>
-
     <Border Background="{DynamicResource SystemControlPageBackgroundChromeLowBrush}">
 
         <Grid>
@@ -57,19 +53,9 @@
 
             </Grid>
 
-            <Frame Padding="20"
-		           Grid.Row="1"
-		           x:Name="ContentPresenter"
-		           Content="{Binding CurrentPage}"
-		           NavigationUIVisibility="Hidden">
-
-                <Frame.RenderTransform>
-
-                    <TranslateTransform x:Name="TranslateTransform" />
-
-                </Frame.RenderTransform>
-
-            </Frame>
+            <ui:Frame Padding="20"
+		              Grid.Row="1"
+		              x:Name="NavigationFrame"/>
 
         </Grid>
 

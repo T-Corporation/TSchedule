@@ -1,17 +1,17 @@
-﻿<Page x:Class="TSchedule.Views.Pages.StartWindow.WelcomePage"
-      xmlns:ui="http://schemas.modernwpf.com/2019"
-      xmlns:vm="clr-namespace:TSchedule.ViewModels"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      FontSize="16"
-      mc:Ignorable="d"
-      Title="WelcomePage"
-      d:DesignWidth="400"
-      d:DesignHeight="500"
-      d:Background="White"
-      Foreground="{DynamicResource SystemControlBackgroundBaseHighBrush}">
+﻿<ui:Page x:Class="TSchedule.Views.Pages.StartWindow.WelcomePage"
+         xmlns:vm="clr-namespace:TSchedule.ViewModels"
+         xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         FontSize="16"
+         mc:Ignorable="d"
+         Title="WelcomePage"
+         d:DesignWidth="400"
+         d:DesignHeight="500"
+         d:Background="White"
+         Foreground="{DynamicResource SystemControlBackgroundBaseHighBrush}">
     
     <Page.DataContext>
         
@@ -19,27 +19,27 @@
         
     </Page.DataContext>
 
-    <StackPanel HorizontalAlignment="Center">
+    <StackPanel Margin="12"
+                ui:PanelHelper.Spacing="12"
+                HorizontalAlignment="Center">
         
-        <TextBlock Margin="12"
-                   FontSize="24"
+        <TextBlock FontSize="24"
+                   Margin="0,0,0,12"
                    TextWrapping="Wrap"
                    TextAlignment="Center"
                    Text="Вход в систему TSchedule"/>
 
         <Button Padding="8"
-                Margin="12,6"
                 Content="Вход с авторизацией"
                 HorizontalAlignment="Stretch"
                 Style="{StaticResource AccentButtonStyle}"
                 Command="{Binding ContinueWithAuthenticationCommand}"/>
 
         <Button Padding="8"
-                Margin="12,6"
                 HorizontalAlignment="Stretch"
                 Content="Продолжить без авторизации"
                 Command="{Binding ContinueWithoutAuthenticationCommand}"/>
         
     </StackPanel>
     
-</Page>
+</ui:Page>

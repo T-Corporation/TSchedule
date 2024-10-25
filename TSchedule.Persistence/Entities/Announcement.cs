@@ -20,14 +20,6 @@ public class Announcement
 
     public Teacher? Teacher { get; set; }
 
-    // Замена преподавателя
-    [ForeignKey(nameof(SubstituteTeacher))]
-    public Guid? SubstituteTeacherId { get; set; } // Замещающий преподаватель (если есть)
-
-    public Teacher? SubstituteTeacher { get; set; }
-
     [StringLength(500)]
     public string Reason { get; set; } = string.Empty; // Причина отсутствия
-
-    public bool IsVisibleToGuests { get; set; } // Уведомление видно для гостей
 }

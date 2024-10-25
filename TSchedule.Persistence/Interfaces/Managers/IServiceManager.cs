@@ -4,11 +4,14 @@ namespace TSchedule.Persistence.Interfaces.Managers;
 
 public interface IServiceManager : IManager
 {
-    IServiceManager AddSingleton<TService>() where TService : class, IService, new();
+    IServiceManager AddSingleton<TService, TImplementation>()
+        where TService : class, IService
+        where TImplementation : class, TService, new();
 
-    IServiceManager AddSingleton<TRepository, TService>()
-        where TRepository : class, IRepository, new()
+    IServiceManager AddSingleton<TService, TImplementation>(Func<TImplementation> factory)
+        where TService : class, IService
+        where TImplementation : class, TService;
+
+    TService GetRequiredService<TService>()
         where TService : class, IService;
-
-    TService GetRequiredService<TService>() where TService : class, IService;
 }

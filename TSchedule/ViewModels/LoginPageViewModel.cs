@@ -3,8 +3,8 @@ using CommunityToolkit.Mvvm.Input;
 using TSchedule.Extensions;
 using TSchedule.Managers;
 using TSchedule.Persistence.Enums;
+using TSchedule.Persistence.Interfaces;
 using TSchedule.Persistence.Managers;
-using TSchedule.Persistence.Services;
 using TSchedule.Views;
 
 namespace TSchedule.ViewModels;
@@ -21,12 +21,12 @@ public partial class LoginPageViewModel : ObservableObject
     private string _errorMessage = string.Empty;
 
     [ObservableProperty]
-    private Роль? _role;
+    private Role? _role;
 
-    public Роль[] Roles =>
+    public Role[] Roles =>
     [
-        Роль.Преподаватель,
-        Роль.Администратор
+        Persistence.Enums.Role.Преподаватель,
+        Persistence.Enums.Role.Администратор
     ];
 
     [RelayCommand]
@@ -50,7 +50,7 @@ public partial class LoginPageViewModel : ObservableObject
             return;
         }
 
-        var usersService = ServiceManager.Default.GetRequiredService<UsersService>();
+        var usersService = ServiceManager.Default.GetRequiredService<IUsersService>();
         await usersService.Authenticate(UserName, Password, Role.Value);
 
         if (!usersService.IsAuthenticated())

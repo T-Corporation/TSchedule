@@ -26,7 +26,7 @@ public partial class PreferencesManager : IManager
     private static readonly Dictionary<string, dynamic> _defaultSettings = new()
     {
         { "UserGuid", Guid.Empty },
-        { "Role", Роль.Гость.ToString() },
+        { "Role", Role.Гость.ToString() },
         { "IsLoggedIn", false },
         { "Theme", "System" },
         { "FontFamily", "Segoe UI" },
@@ -41,7 +41,7 @@ public partial class PreferencesManager : IManager
     /// <summary>
     /// Доступные роли
     /// </summary>
-    private static readonly string[] _roles = [Роль.Гость.ToString(), Роль.Преподаватель.ToString(), Роль.Администратор.ToString()];
+    private static readonly string[] _roles = [Role.Гость.ToString(), Role.Преподаватель.ToString(), Role.Администратор.ToString()];
 
     /// <summary>
     /// "Ленивая" инициализация менеджера
