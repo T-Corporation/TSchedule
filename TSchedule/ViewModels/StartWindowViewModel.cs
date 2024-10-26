@@ -4,12 +4,12 @@ using iNKORE.UI.WPF.Modern.Controls;
 
 namespace TSchedule.ViewModels;
 
-public partial class StartWindowViewModel : ObservableObject
+public class StartWindowViewModel : ObservableObject
 {
     /// <summary>
     /// Фрейм навигации
     /// </summary>
-    public Frame NavigationFrame { get; set; }
+    private Frame NavigationFrame { get; }
 
     public StartWindowViewModel(Frame navigationFrame)
     {

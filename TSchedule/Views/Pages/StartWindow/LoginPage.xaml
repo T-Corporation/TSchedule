@@ -23,7 +23,7 @@
 
     <Grid VerticalAlignment="Stretch">
 
-        <Grid Grid.Row="1">
+        <Grid>
 
             <StackPanel MinWidth="300"
                         VerticalAlignment="Top"
@@ -33,12 +33,12 @@
                 <ComboBox Padding="10"
                           IsReadOnly="True"
                           IsEditable="False"
-                          ItemsSource="{Binding Roles}"
-                          SelectedItem="{Binding Role}"
                           HorizontalAlignment="Stretch"
                           ui:ControlHelper.CornerRadius="4"
                           ui:ControlHelper.Header="Войти как"
-                          ui:ControlHelper.PlaceholderText="Выберите роль"/>
+                          ui:ControlHelper.PlaceholderText="Выберите роль"
+                          ItemsSource="{Binding Roles}"
+                          SelectedItem="{Binding Role}"/>
 
                 <TextBox Padding="10"
                          TextWrapping="Wrap"
@@ -57,13 +57,14 @@
                              ui:PasswordBoxHelper.PasswordRevealMode="Peek"
                              ui:ControlHelper.PlaceholderText="Введите ваш пароль"/>
 
+                <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
                 <Button Padding="10"
-                        Margin="0,6,0,0"
                         Content="Войти в систему"
+                        Margin="0,6,0,0"
                         HorizontalAlignment="Stretch"
-                        Command="{Binding LoginCommand}"
                         ToolTipService.HasDropShadow="True"
                         Style="{StaticResource AccentButtonStyle}"
+                        Command="{Binding LoginCommand}"
                         ToolTipService.ToolTip="Нажмите, чтобы войти в систему"/>
 
 
@@ -77,7 +78,6 @@
         </Grid>
 
         <ui:DropDownButton Padding="12"
-                           Grid.Row="1"
                            VerticalAlignment="Bottom"
                            HorizontalAlignment="Right"
                            ToolTipService.HasDropShadow="True"
@@ -95,14 +95,13 @@
             </ui:DropDownButton.Flyout>
         </ui:DropDownButton>
 
-        <Button Padding="16"
-                Grid.Row="1"
-                FontSize="36"
+        <Button FontSize="36"
+                Padding="16"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Left"
                 ToolTipService.ToolTip="Назад"
-                Command="{Binding GoBackCommand}"
-                ToolTipService.HasDropShadow="True">
+                ToolTipService.HasDropShadow="True"
+                Command="{Binding GoBackCommand}">
             <ui:IconAndText IconSize="16"
                             Icon="{x:Static ui:SegoeFluentIcons.Back}"/>
         </Button>

@@ -1,6 +1,4 @@
 ﻿<Window x:Class="TSchedule.Views.MainWindow"
-        xmlns:c="clr-namespace:TSchedule.Converters"
-        xmlns:vm="clr-namespace:TSchedule.ViewModels"
         xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -106,8 +104,8 @@
 
         </Grid>
 
-        <ui:NavigationView Padding="8"
-                           Grid.Row="1"
+        <ui:NavigationView Grid.Row="1"
+                           Padding="8"
                            CompactPaneLength="60"
                            IsSettingsVisible="False"
                            PaneDisplayMode="LeftCompact"

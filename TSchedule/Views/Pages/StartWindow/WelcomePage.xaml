@@ -29,6 +29,7 @@
                    TextAlignment="Center"
                    Text="Вход в систему TSchedule"/>
 
+        <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
         <Button Padding="8"
                 Content="Вход с авторизацией"
                 HorizontalAlignment="Stretch"

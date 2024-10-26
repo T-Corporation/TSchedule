@@ -18,6 +18,7 @@ public class Subject
     [Range(1, int.MaxValue)]
     public int WeeklyHours { get; set; }
 
+    [StringLength(50)]
     [ForeignKey(nameof(Specialty))]
     public string SpecialtyCode { get; set; } = null!;
     public Specialty? Specialty { get; set; }

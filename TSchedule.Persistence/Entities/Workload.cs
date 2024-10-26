@@ -19,10 +19,12 @@ public class Workload
     public Guid? TeacherId { get; set; } // Нагрузка на преподавателя
     public Teacher? Teacher { get; set; }
 
+    [StringLength(50)]
     [ForeignKey(nameof(Group))]
     public string? GroupCode { get; set; } // Нагрузка на студентов
     public StudentGroup? Group { get; set; }
 
+    [StringLength(50)]
     [ForeignKey(nameof(Subject))]
     public string SubjectCode { get; set; } = null!;
     public Subject? Subject { get; set; }

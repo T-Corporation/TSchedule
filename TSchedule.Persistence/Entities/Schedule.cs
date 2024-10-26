@@ -37,11 +37,13 @@ public class Schedule
     public Teacher? Teacher { get; set; }
 
     // Ссылка на группу
+    [StringLength(50)]
     [ForeignKey(nameof(Group))]
     public string GroupCode { get; set; } = null!;
     public StudentGroup? Group { get; set; }
 
     // Ссылка на предмет
+    [StringLength(20)]
     [ForeignKey(nameof(Subject))]
     public string SubjectCode { get; set; } = null!;
 

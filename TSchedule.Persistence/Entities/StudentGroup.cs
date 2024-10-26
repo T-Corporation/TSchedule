@@ -14,6 +14,7 @@ public class StudentGroup
     [Range(1, 5)] // Например, курс может быть от 1 до 5
     public byte Course { get; set; }
 
+    [StringLength(50)]
     [ForeignKey(nameof(Specialty))]
     public string SpecialtyCode { get; set; } = null!;
     public Specialty? Specialty { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Diagnostics;
 using TSchedule.Persistence.Interfaces.Bases;
 using TSchedule.Persistence.Interfaces.Managers;
 
@@ -9,6 +10,13 @@ namespace TSchedule.Persistence.Managers;
 /// </summary>
 public sealed class ServiceManager : IServiceManager, IDisposable
 {
+    #pragma warning disable CA1821
+    ~ServiceManager()
+    #pragma warning restore CA1821
+    {
+        Debug.WriteLine("ServiceManager был уничтожен.");
+    }
+    
     #region Private Fields
 
     private bool _isDisposed;

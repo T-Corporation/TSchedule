@@ -1,28 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿namespace TSchedule.Views.Pages.MainWindow.Administrators;
 
-namespace TSchedule.Views.Pages.MainWindow.Administrators
+public partial class EditSchedulePage
 {
-    /// <summary>
-    /// Логика взаимодействия для EditSchedulePage.xaml
-    /// </summary>
-    public partial class EditSchedulePage : Page
+    public EditSchedulePage()
     {
-        public EditSchedulePage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

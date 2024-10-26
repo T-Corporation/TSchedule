@@ -1,5 +1,4 @@
 ﻿<Window x:Class="TSchedule.Views.StartWindow"
-        xmlns:vm="clr-namespace:TSchedule.ViewModels"
         xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"

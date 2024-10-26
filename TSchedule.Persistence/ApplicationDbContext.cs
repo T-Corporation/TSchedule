@@ -9,10 +9,7 @@ namespace TSchedule.Persistence;
 /// </summary>
 public class ApplicationDbContext : DbContext
 {
-    // Нужно использовать, удостоверившись, что БД пустая
-    // public ApplicationDbContext() => Database.EnsureCreated();
-	
-	/// <summary>
+    /// <summary>
 	/// Совершает прогрев БД простым запросом
 	/// </summary>
 	public async Task WarmUpAsync() => await Teachers.AnyAsync();

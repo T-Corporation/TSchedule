@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using iNKORE.UI.WPF.Modern.Controls;
 using iNKORE.UI.WPF.Modern.Controls.Helpers;
-using System.Runtime.InteropServices;
 using System.Windows;
 using TSchedule.Persistence.Interfaces.Bases;
 
@@ -25,9 +23,6 @@ public class WindowManager : IManager
     /// Коллекция зарегистрированных окон
     /// </summary>
     private readonly Dictionary<Type, Window> _windows = [];
-
-    [DllImport("user32.dll")]
-    private static extern IntPtr SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
 
     #endregion
 

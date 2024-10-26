@@ -17,7 +17,9 @@ public partial class MainWindow
         DataContext = new MainWindowViewModel(ContentFrame);
     }
 
+    #pragma warning disable CA1822
     private void NavigationView_ItemInvoked(NavigationView _, NavigationViewItemInvokedEventArgs args)
+    #pragma warning restore CA1822
     {
         WindowManager.Default.GetViewModel<MainWindow>()
             !.As<MainWindowViewModel>()
@@ -44,7 +46,7 @@ public partial class MainWindow
                     PageCode.Subjects => new SubjectsPage(),
                     PageCode.Teachers => new TeachersPage(),
 
-                    PageCode.None or PageCode.Home or _ => new HomePage()
+                    _ => new HomePage()
                 });
     }
 }
