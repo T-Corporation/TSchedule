@@ -2,10 +2,10 @@
         xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        Width="800"
-        Height="450"
-        MinWidth="500"
-        MinHeight="500"
+        Width="960"
+        Height="600"
+        MinWidth="640"
+        MinHeight="480"
         Title="TSchedule"
         BorderThickness="0"
         ui:TitleBar.Height="40"
@@ -20,13 +20,16 @@
             <Setter Property="Width" Value="60"/>
             <Setter Property="Height" Value="60"/>
             <Setter Property="Padding" Value="0"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
         </Style>
 
         <Style TargetType="ui:FontIcon">
             <Setter Property="FontSize" Value="18"/>
         </Style>
+
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -40,27 +43,29 @@
               Margin="16,0,148,0">
 
             <StackPanel Orientation="Horizontal"
-                        ui:PanelHelper.Spacing="16">
+                        ui:PanelHelper.Spacing="8">
                 
                 <Image Width="30"
                        Height="30"
-                       Margin="16,8"
+                       Margin="16,8,40,8"
                        Source="/Images/Icon.ico"/>
 
-                <ui:HyperlinkButton Padding="8">
+                <ui:HyperlinkButton Padding="8"
+                                    Command="{Binding GoBackCommand}"
+                                    IsEnabled="{Binding NavigationFrame.CanGoBack}">
                     <ui:IconAndText ToolTipService.ToolTip="Назад"
                                     ToolTipService.HasDropShadow="True"
                                     Icon="{x:Static ui:SegoeFluentIcons.Back}"
-                                    WindowChrome.IsHitTestVisibleInChrome="True"
-                                    Foreground="{DynamicResource SystemControlBackgroundBaseHighBrush}"/>
+                                    WindowChrome.IsHitTestVisibleInChrome="True"/>
                 </ui:HyperlinkButton>
 
-                <ui:HyperlinkButton Padding="8">
+                <ui:HyperlinkButton Padding="8"
+                                    Command="{Binding GoForwardCommand}"
+                                    IsEnabled="{Binding NavigationFrame.CanGoForward}">
                     <ui:IconAndText ToolTipService.ToolTip="Вперед"
                                     ToolTipService.HasDropShadow="True"
-                                    Icon="{x:Static ui:SegoeFluentIcons.Forward}"
                                     WindowChrome.IsHitTestVisibleInChrome="True"
-                                    Foreground="{DynamicResource SystemControlBackgroundBaseHighBrush}"/>
+                                    Icon="{x:Static ui:SegoeFluentIcons.Forward}"/>
                 </ui:HyperlinkButton>
 
             </StackPanel>
@@ -70,7 +75,9 @@
                         HorizontalAlignment="Right"
                         WindowChrome.IsHitTestVisibleInChrome="True">
 
-                <ui:DropDownButton ToolTipService.HasDropShadow="True"
+                <ui:DropDownButton Background="Transparent"
+                                   BorderBrush="Transparent"
+                                   ToolTipService.HasDropShadow="True"
                                    ToolTipService.ToolTip="{Binding FullName}">
 
                     <ui:PersonPicture Width="30"
@@ -84,10 +91,28 @@
                         <ui:MenuFlyout Placement="Bottom"
                                        ShowMode="Transient"
                                        AreOpenCloseAnimationsEnabled="True">
-                            <MenuItem Header="Профиль"/>
-                            <MenuItem Header="Параметры"/>
                             
-                            <MenuItem Foreground="#CC3300"
+                            <MenuItem Cursor="Hand"
+                                      Command="{Binding GoToProfileCommand}"
+                                      Visibility="{Binding IsAuthenticated, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <MenuItem.Header>
+                                    <ui:IconAndText Content="Профиль"
+                                                    HorizontalAlignment="Left"
+                                                    Icon="{x:Static ui:SegoeFluentIcons.Personalize}"/>
+                                </MenuItem.Header>
+                            </MenuItem>
+                            
+                            <MenuItem Cursor="Hand"
+                                      Command="{Binding GoToParametersCommand}">
+                                <MenuItem.Header>
+                                    <ui:IconAndText Content="Параметры"
+                                                    HorizontalAlignment="Left"
+                                                    Icon="{x:Static ui:SegoeFluentIcons.Settings}"/>
+                                </MenuItem.Header>
+                            </MenuItem>
+                            
+                            <MenuItem Cursor="Hand"
+                                      Foreground="#CC3300"
                                       Command="{Binding LogoutCommand}">
                                 <MenuItem.Header>
                                     <ui:IconAndText Content="Выйти"
@@ -113,12 +138,12 @@
                            IsFooterSeparatorVisible="False"
                            IsPaneToggleButtonVisible="False"
                            IsTitleBarAutoPaddingEnabled="False"
-                           ItemInvoked="NavigationView_ItemInvoked"
-                           Header="{Binding NavigationTitle, Mode=TwoWay}"
                            SelectedItem="{Binding NavigationItem, Mode=TwoWay}"
                            MenuItemsSource="{Binding NavigationItems, Mode=OneTime}">
 
-            <ui:Frame x:Name="ContentFrame"/>
+            <ui:Frame Padding="20"
+                      x:Name="ContentFrame"
+                      Navigated="ContentFrame_Navigated"/>
 
         </ui:NavigationView>
 

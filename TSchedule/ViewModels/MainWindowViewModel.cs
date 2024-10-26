@@ -16,10 +16,20 @@ namespace TSchedule.ViewModels;
 public partial class MainWindowViewModel : ObservableObject
 {
     [ObservableProperty]
-    private NavigationViewItem _navigationItem;
+    private NavigationViewItem? _navigationItem;
 
-    [ObservableProperty]
-    private string _navigationTitle = null!;
+    public bool IsAuthenticated { get; }
+
+    partial void OnNavigationItemChanged(NavigationViewItem? value)
+    {
+        // Проверка, что вызов не будет выполнен повторно при срабатывании OnNavigationItemChanged
+        if (value is not null
+            && value.Tag is PageCode pageCode
+            && NavigationFrame.Content?.ToPageCode() != pageCode)
+        {
+            NavigationFrame.Navigate(pageCode.ToPage());
+        }
+    }
 
     private readonly Lazy<IUsersService> lazyUsersService = new(ServiceManager.Default.GetRequiredService<IUsersService>);
 
@@ -36,7 +46,6 @@ public partial class MainWindowViewModel : ObservableObject
     public MainWindowViewModel(Frame navigationFrame)
     {
         NavigationFrame = navigationFrame;
-
         NavigationFrame.Navigate(new HomePage());
 
         NavigationItems.Add(new NavigationViewItem()
@@ -47,15 +56,9 @@ public partial class MainWindowViewModel : ObservableObject
         });
         NavigationItems.Add(new NavigationViewItem
         {
-            Content = "Профиль",
-            Tag = PageCode.Profile,
-            Icon = new FontIcon(FluentSystemIcons.PersonAccounts_20_Regular)
-        });
-        NavigationItems.Add(new NavigationViewItem
-        {
-            Content = "Помощь",
-            Tag = PageCode.Help,
-            Icon = new FontIcon(SegoeFluentIcons.Help)
+            Content = "Предметы",
+            Tag = PageCode.Subjects,
+            Icon = new FontIcon(SegoeFluentIcons.Bookmarks)
         });
         NavigationItems.Add(new NavigationViewItem
         {
@@ -63,63 +66,108 @@ public partial class MainWindowViewModel : ObservableObject
             Tag = PageCode.Groups,
             Icon = new FontIcon(FluentSystemIcons.PeopleTeam_20_Regular)
         });
-        NavigationItems.Add(new NavigationViewItem
+
+        var notificationsItem = new NavigationViewItem
         {
             Content = "Уведомления",
-            Tag = PageCode.Announcements,
             Icon = new FontIcon(SegoeFluentIcons.Ringer)
-        });
+        };
 
-        var service = ServiceManager.Default.GetRequiredService<IUsersService>();
+        var usersService = ServiceManager.Default.GetRequiredService<IUsersService>();
+        IsAuthenticated = usersService.IsAuthenticated();
 
-        switch (service.GetRole())
+        switch (usersService.GetRole())
         {
+            case Role.Гость:
+                notificationsItem.Tag = PageCode.Announcements;
+                NavigationItems.Add(notificationsItem);
+                break;
+
             case Role.Администратор:
-                NavigationItems.Add(new NavigationViewItem
+                // Для администраторов "Уведомления" как меню с подэлементами
+                notificationsItem.MenuItems.Add(new NavigationViewItem
                 {
-                    Tag = PageCode.CreateSchedule,
-                    Content = "Добавление расписания",
-                    Icon = new FontIcon(SegoeFluentIcons.Add)
+                    Content = "Просмотр уведомлений",
+                    Tag = PageCode.Announcements,
+                    Icon = new FontIcon(SegoeFluentIcons.View)
                 });
-                NavigationItems.Add(new NavigationViewItem
-                {
-                    Tag = PageCode.EditSchedule,
-                    Content = "Правка расписания",
-                    Icon = new FontIcon(SegoeFluentIcons.Edit)
-                });
-                NavigationItems.Add(new NavigationViewItem
-                {
-                    Content = "Управление аудиториями",
-                    Tag = PageCode.ClassroomsManagement,
-                    Icon = new FontIcon(FluentSystemIcons.Class_20_Regular)
-                });
-                NavigationItems.Add(new NavigationViewItem
-                {
-                    Tag = PageCode.SubjectsManagement,
-                    Content = "Управление предметами",
-                    Icon = new FontIcon(FluentSystemIcons.Book_20_Regular)
-                });
-                NavigationItems.Add(new NavigationViewItem
-                {
-                    Tag = PageCode.GroupsManagement,
-                    Content = "Управление группами",
-                    Icon = new FontIcon(FluentSystemIcons.PeopleTeamToolbox_20_Regular)
-                });
-                NavigationItems.Add(new NavigationViewItem
-                {
-                    Tag = PageCode.TeachersManagement,
-                    Content = "Управление преподавателями",
-                    Icon = new FontIcon(FluentSystemIcons.Clipboard_20_Regular)
-                });
-                NavigationItems.Add(new NavigationViewItem
+                notificationsItem.MenuItems.Add(new NavigationViewItem
                 {
                     Content = "Регистрация уведомлений",
                     Tag = PageCode.RegisterAnnouncements,
-                    Icon = new FontIcon(FluentSystemIcons.Checkmark_20_Regular)
+                    Icon = new FontIcon(SegoeFluentIcons.CheckMark)
                 });
+                NavigationItems.Add(notificationsItem);
+
+                var scheduleItem = new NavigationViewItem()
+                {
+                    Tag = PageCode.Schedule,
+                    Content = "Расписание",
+                    Icon = new FontIcon(SegoeFluentIcons.Calendar)
+                };
+                scheduleItem.MenuItems.Add(new NavigationViewItem()
+                {
+                    Content = "Добавление расписания",
+                    Tag = PageCode.CreateSchedule,
+                    Icon = new FontIcon(SegoeFluentIcons.Add)
+                });
+                scheduleItem.MenuItems.Add(new NavigationViewItem()
+                {
+                    Content = "Правка расписания",
+                    Tag = PageCode.EditSchedule,
+                    Icon = new FontIcon(SegoeFluentIcons.Edit)
+                });
+                NavigationItems.Add(scheduleItem);
+
+                // Management Section
+                var managementItem = new NavigationViewItem()
+                {
+                    Content = "Управление",
+                    Icon = new FontIcon(FluentSystemIcons.Toolbox_20_Regular)
+                };
+                managementItem.MenuItems.Add(new NavigationViewItem()
+                {
+                    Content = "Аудитории",
+                    Tag = PageCode.ClassroomsManagement,
+                    Icon = new FontIcon(FluentSystemIcons.Class_20_Regular)
+                });
+                managementItem.MenuItems.Add(new NavigationViewItem()
+                {
+                    Content = "Предметы",
+                    Tag = PageCode.SubjectsManagement,
+                    Icon = new FontIcon(FluentSystemIcons.Book_20_Regular)
+                });
+                managementItem.MenuItems.Add(new NavigationViewItem()
+                {
+                    Content = "Группы",
+                    Tag = PageCode.GroupsManagement,
+                    Icon = new FontIcon(FluentSystemIcons.PeopleTeamToolbox_20_Regular)
+                });
+                managementItem.MenuItems.Add(new NavigationViewItem()
+                {
+                    Content = "Преподаватели",
+                    Tag = PageCode.TeachersManagement,
+                    Icon = new FontIcon(FluentSystemIcons.Clipboard_20_Regular)
+                });
+                NavigationItems.Add(managementItem);
                 break;
 
             case Role.Преподаватель:
+                // Для преподавателей "Уведомления" как меню с подэлементами
+                notificationsItem.MenuItems.Add(new NavigationViewItem
+                {
+                    Tag = PageCode.Announcements,
+                    Content = "Просмотр уведомлений",
+                    Icon = new FontIcon(SegoeFluentIcons.View)
+                });
+                notificationsItem.MenuItems.Add(new NavigationViewItem
+                {
+                    Content = "Создание уведомлений",
+                    Tag = PageCode.CreateAnnouncements,
+                    Icon = new FontIcon(SegoeFluentIcons.Add)
+                });
+                NavigationItems.Add(notificationsItem);
+
                 NavigationItems.Add(new NavigationViewItem
                 {
                     Tag = PageCode.MyGroup,
@@ -136,6 +184,35 @@ public partial class MainWindowViewModel : ObservableObject
         }
 
         NavigationItem = NavigationItems[0];
+    }
+
+    [RelayCommand]
+    public void GoBack()
+    {
+        NavigationFrame.GoBack();
+    }
+
+    [RelayCommand]
+    public void GoForward()
+    {
+        NavigationFrame.GoForward();
+    }
+
+    [RelayCommand]
+    private void GoToProfile()
+    {
+        NavigateTo(new ProfilePage());
+    }
+
+    [RelayCommand]
+    private void GoToParameters()
+    {
+        NavigateTo(new SettingsPage());
+    }
+
+    public void NavigateTo(Page page)
+    {
+        NavigationFrame.Navigate(page);
     }
 
     [RelayCommand]

@@ -24,7 +24,7 @@ public class Workload
     public string? GroupCode { get; set; } // Нагрузка на студентов
     public StudentGroup? Group { get; set; }
 
-    [StringLength(50)]
+    [StringLength(20)]
     [ForeignKey(nameof(Subject))]
     public string SubjectCode { get; set; } = null!;
     public Subject? Subject { get; set; }

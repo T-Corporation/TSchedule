@@ -1,11 +1,8 @@
-﻿using iNKORE.UI.WPF.Modern.Controls;
+﻿using System.Windows.Navigation;
 using TSchedule.Extensions;
 using TSchedule.Managers;
 using TSchedule.Persistence.Enums;
 using TSchedule.ViewModels;
-using TSchedule.Views.Pages.MainWindow;
-using TSchedule.Views.Pages.MainWindow.Administrators;
-using TSchedule.Views.Pages.MainWindow.Teachers;
 
 namespace TSchedule.Views;
 
@@ -17,36 +14,17 @@ public partial class MainWindow
         DataContext = new MainWindowViewModel(ContentFrame);
     }
 
-    #pragma warning disable CA1822
-    private void NavigationView_ItemInvoked(NavigationView _, NavigationViewItemInvokedEventArgs args)
-    #pragma warning restore CA1822
+    private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
     {
-        WindowManager.Default.GetViewModel<MainWindow>()
-            !.As<MainWindowViewModel>()
-            !.NavigationFrame.Navigate((PageCode)args.InvokedItemContainer.Tag switch
-                {
-                    PageCode.ClassroomsManagement => new ClassroomsManagementPage(),
-                    PageCode.CreateSchedule => new CreateSchedulePage(),
-                    PageCode.EditSchedule => new EditSchedulePage(),
-                    PageCode.GroupsManagement => new GroupsManagementPage(),
-                    PageCode.RegisterAnnouncements => new RegisterAnnouncementsPage(),
-                    PageCode.SubjectsManagement => new SubjectsManagementPage(),
-                    PageCode.TeachersManagement => new TeachersManagementPage(),
+        var viewModel = WindowManager.Default.GetViewModel<MainWindow>()!
+            .As<MainWindowViewModel>()!;
 
-                    PageCode.CreateAnnouncements => new CreateAnnouncementPage(),
-                    PageCode.MyGroup => new MyGroupPage(),
+        // Определяем, какой элемент должен быть выделен на основе навигации
+        var pageCode = e.Content.ToPageCode();
 
-                    PageCode.Announcements => new AnnouncementsPage(),
-                    PageCode.Classrooms => new ClassroomsPage(),
-                    PageCode.Groups => new GroupsPage(),
-                    PageCode.Help => new HelpPage(),
-                    PageCode.Profile => new ProfilePage(),
-                    PageCode.Schedule => new SchedulePage(),
-                    PageCode.Settings => new SettingsPage(),
-                    PageCode.Subjects => new SubjectsPage(),
-                    PageCode.Teachers => new TeachersPage(),
-
-                    _ => new HomePage()
-                });
+        viewModel.NavigationItem = viewModel.NavigationItems
+            .FirstOrDefault(item => item.Tag is PageCode pc
+                && pc == pageCode
+                && pageCode is not PageCode.Profile and not PageCode.Settings);
     }
 }

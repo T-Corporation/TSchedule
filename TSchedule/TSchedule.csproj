@@ -25,9 +25,9 @@
 		<RepositoryUrl>https://github.com/T-Corporation/TSchedule</RepositoryUrl>
 		<RepositoryType>Public</RepositoryType>
 		<PackageTags>Scheduling, Education, Timetable, WPF, .NET</PackageTags>
-		<PackageIconUrl>Images/Icon.ico</PackageIconUrl>
+		<PackageIconUrl>Images/favicon.ico</PackageIconUrl>
 		<AssemblyName>TSchedule</AssemblyName>
-		<ApplicationIcon>Images/Icon.ico</ApplicationIcon>
+		<ApplicationIcon>Images/favicon.ico</ApplicationIcon>
 		
 		<UseWPF>true</UseWPF>
 		<Nullable>enable</Nullable>
@@ -37,8 +37,16 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="Images\Icon.ico" />
-	  <None Remove="Images\Icon.png" />
+	  <None Remove="Images\admin_375.png" />
+	  <None Remove="Images\bell_375.png" />
+	  <None Remove="Images\calendar_375.png" />
+	  <None Remove="Images\classroom_375.png" />
+	  <None Remove="Images\clock_375.png" />
+	  <None Remove="Images\faq_375.png" />
+	  <None Remove="Images\favicon.ico" />
+	  <None Remove="Images\favicon_square.png" />
+	  <None Remove="Images\group_375.png" />
+	  <None Remove="Images\settings_375.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -52,8 +60,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Resource Include="Images\Icon.ico" />
-	  <Resource Include="Images\Icon.png" />
+	  <Resource Include="Images\admin_375.png" />
+	  <Resource Include="Images\bell_375.png" />
+	  <Resource Include="Images\calendar_375.png" />
+	  <Resource Include="Images\classroom_375.png" />
+	  <Resource Include="Images\clock_375.png" />
+	  <Resource Include="Images\faq_375.png" />
+	  <Resource Include="Images\group_375.png" />
+	  <Resource Include="Images\favicon.ico" />
+	  <Resource Include="Images\favicon_square.png" />
+	  <Resource Include="Images\settings_375.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -69,6 +85,10 @@
 	    <Generator>PublicSettingsSingleFileGenerator</Generator>
 	    <LastGenOutput>Preferences.Designer.cs</LastGenOutput>
 	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="ViewModels\Pages\MainWindow\Teachers\" />
 	</ItemGroup>
 
 </Project>

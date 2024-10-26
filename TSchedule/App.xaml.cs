@@ -19,7 +19,8 @@ public partial class App
 
         await using ApplicationDbContext context = new();
 		await context.WarmUpAsync();
-        /*await context.Administrators.AddAsync(new()
+        /*context.Administrators.RemoveRange(context.Administrators);
+        await context.Administrators.AddAsync(new()
         {
             Id = Guid.NewGuid(),
             UserName = "roman",
