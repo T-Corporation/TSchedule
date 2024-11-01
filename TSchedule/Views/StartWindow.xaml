@@ -5,8 +5,8 @@
         Width="400"
         Height="500"
         ResizeMode="NoResize"
+        ui:TitleBar.Height="60"
         Title="Добро пожаловать"
-        ui:TitleBar.Height="100"
         WindowStartupLocation="CenterScreen"
         ui:WindowHelper.CornerStyle="RoundSmall"
         ui:WindowHelper.SystemBackdropType="Mica"
@@ -19,7 +19,7 @@
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="60"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
@@ -28,25 +28,25 @@
                   Background="{DynamicResource SystemControlBackgroundAccentBrush}">
                   <!--Background="#FF5D4ABC">-->
 
-                <TextBlock Text="TS"
-                           Margin="33,0"
-                           FontSize="48"
-                           Panel.ZIndex="1"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Left" />
+                <StackPanel Margin="20,0"
+                            Panel.ZIndex="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            ui:PanelHelper.Spacing="2">
+                    
+                    <TextBlock Text="TS"
+                               FontSize="36"/>
+                    
+                    <TextBlock FontSize="36"
+                               Text="chedule"/>
+                    
+                </StackPanel>
 
-                <TextBlock Margin="33,0"
-                           FontSize="48"
-                           Text="chedule"
-                           Panel.ZIndex="1"
-                           Padding="54,0,0,0"
+                <Rectangle Width="40"
+                           Height="40"
+                           Margin="18,0"
                            VerticalAlignment="Center"
-                           HorizontalAlignment="Left" />
-
-                <Rectangle Width="55"
-                           Height="55"
-                           Margin="30,24"
-                           VerticalAlignment="Top"
                            HorizontalAlignment="Left"
                            Fill="{DynamicResource SystemControlBackgroundAltHighBrush}" />
 

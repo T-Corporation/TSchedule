@@ -56,12 +56,7 @@ public class UsersService(IUsersRepository repository) : IUsersService
 
     public string GetUserFullName() => IsAuthenticated() ? ApplicationUser!.FullName : "Гость";
 
-    public Role GetRole() => ApplicationUser switch
-    {
-        Administrator => Role.Администратор,
-        Teacher => Role.Преподаватель,
-        _ => Role.Гость
-    };
+    public Role GetRole() => ApplicationUser?.Role ?? Role.Гость;
 
     public Guid GetUserGuid() => IsAuthenticated() ? ApplicationUser!.Id : Guid.Empty;
 }

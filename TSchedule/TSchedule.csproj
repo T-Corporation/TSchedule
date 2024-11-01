@@ -50,6 +50,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Azure.Identity" Version="1.13.1" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
 		<PackageReference Include="iNKORE.UI.WPF.Modern" Version="0.9.30" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" />
@@ -82,13 +83,9 @@
 
 	<ItemGroup>
 	  <None Update="Properties\Preferences.settings">
-	    <Generator>PublicSettingsSingleFileGenerator</Generator>
 	    <LastGenOutput>Preferences.Designer.cs</LastGenOutput>
+	    <Generator>PublicSettingsSingleFileGenerator</Generator>
 	  </None>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="ViewModels\Pages\MainWindow\Teachers\" />
 	</ItemGroup>
 
 </Project>

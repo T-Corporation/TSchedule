@@ -1,25 +1,38 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using TSchedule.Persistence.Models;
 
 namespace TSchedule.Persistence.Entities;
 
 [Table("Subjects", Schema = "Academic")]
 public class Subject
 {
-    [Key]
+    [Key] public int Id { get; set; }
+
     [StringLength(20, MinimumLength = 3)]
     [Required(AllowEmptyStrings = false)]
     public string Code { get; set; } = null!;
 
-    [Required(AllowEmptyStrings = false)]
     [StringLength(255)]
+    [Required(AllowEmptyStrings = false)]
     public string Name { get; set; } = string.Empty;
 
     [Range(1, int.MaxValue)]
-    public int WeeklyHours { get; set; }
+    public int SemesterHours { get; set; }
 
-    [StringLength(50)]
     [ForeignKey(nameof(Specialty))]
-    public string SpecialtyCode { get; set; } = null!;
+    public int SpecialtyId { get; set; }
     public Specialty? Specialty { get; set; }
+
+    public ICollection<GroupSubject> GroupSubjects { get; set; } = [];
+
+    public SubjectModel ToModel()
+        => new()
+        {
+            Id = Id,
+            Code = Code,
+            Name = Name,
+            SemesterHours = SemesterHours,
+            Specialty = Specialty is not null ? Specialty.ToModel() : null
+        };
 }

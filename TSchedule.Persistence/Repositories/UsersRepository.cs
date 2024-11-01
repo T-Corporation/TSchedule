@@ -204,7 +204,7 @@ public class UsersRepository : IUsersRepository
             };
 
             if (existingUser is null)
-                throw new UserNotFoundException("Id", user.Id);
+                throw new UserNotFoundException(nameof(user.Id), user.Id);
 
             context.Entry(existingUser).CurrentValues.SetValues(user);
             await context.SaveChangesAsync();

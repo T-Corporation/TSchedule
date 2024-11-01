@@ -1,59 +1,72 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using TSchedule.Persistence.Models;
 
 namespace TSchedule.Persistence.Entities;
 
 [Table("Schedule", Schema = "Timetable")]
+[Index(nameof(WeekDayId), nameof(StartTime), nameof(TeacherId), IsUnique = true, Name = "IX_Schedule_Teacher_Time")]
+[Index(nameof(WeekDayId), nameof(StartTime), nameof(ClassroomId), IsUnique = true, Name = "IX_Schedule_Classroom_Time")]
 public class Schedule
 {
-    [Key]
-    public int Id { get; set; }
+    [Key] public int Id { get; set; }
 
     [Required]
-    [StringLength(20)]
-    public string DayOfWeek { get; set; } = string.Empty; // День недели
+    public TimeOnly StartTime { get; set; }
 
     [Required]
-    public TimeSpan StartTime { get; set; } // Время начала занятия
-
-    [Required]
-    public TimeSpan EndTime { get; set; } // Время окончания занятия
+    public TimeOnly EndTime { get; set; }
 
     [Required]
     [Range(1, 2)]
-    public byte Semester { get; set; } // Полугодие (1 или 2 семестр)
+    public byte Semester { get; set; }
 
     [Required]
-    public short Year { get; set; } // Год обучения
+    [Range(1, 6)]
+    public byte LessonNumber { get; set; }
 
-    public bool IsDenominator { get; set; } // Занятие проходит в знаменателе
+    [Required]
+    public short Year { get; set; }
 
-    // Ссылка на преподавателя
+    public bool IsDenominator { get; set; }
+
     [ForeignKey(nameof(Teacher))]
     public Guid TeacherId { get; set; }
-
-    [DeleteBehavior(DeleteBehavior.NoAction)]
     public Teacher? Teacher { get; set; }
 
-    // Ссылка на группу
-    [StringLength(50)]
     [ForeignKey(nameof(Group))]
-    public string GroupCode { get; set; } = null!;
-    public StudentGroup? Group { get; set; }
+    public int GroupId { get; set; }
+    public Group? Group { get; set; }
 
-    // Ссылка на предмет
-    [StringLength(20)]
     [ForeignKey(nameof(Subject))]
-    public string SubjectCode { get; set; } = null!;
-
+    public int SubjectId { get; set; }
     [DeleteBehavior(DeleteBehavior.NoAction)]
     public Subject? Subject { get; set; }
 
-    // Ссылка на аудиторию
     [ForeignKey(nameof(Classroom))]
     public int ClassroomId { get; set; }
-
     [DeleteBehavior(DeleteBehavior.NoAction)]
     public Classroom? Classroom { get; set; }
+
+    [ForeignKey(nameof(WeekDay))]
+    public int WeekDayId { get; set; }
+    public WeekDay? WeekDay { get; set; }
+
+    public ScheduleModel ToModel()
+        => new()
+        {
+            Id = Id,
+            WeekDay = WeekDay,
+            StartTime = StartTime,
+            EndTime = EndTime,
+            Semester = Semester,
+            LessonNumber = LessonNumber,
+            Year = Year,
+            IsDenominator = IsDenominator,
+            Teacher = Teacher?.ToModel(),
+            Group = Group?.ToModel(),
+            Subject = Subject?.ToModel(),
+            Classroom = Classroom?.ToModel(),
+        };
 }

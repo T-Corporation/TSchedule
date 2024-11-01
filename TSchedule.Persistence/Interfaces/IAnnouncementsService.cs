@@ -9,9 +9,14 @@ public interface IAnnouncementsService : IService
     Task<IEnumerable<Announcement>> GetAllAnnouncements();
     Task<IEnumerable<Announcement>> GetAnnouncementsByTeacherId(Guid id);
 
-    Task<bool> RegisterAnnouncement(Announcement announcement);
+    Task<Announcement> GetRegisteredAnnouncementById(int id);
+    Task<IEnumerable<Announcement>> GetAllRegisteredAnnouncements();
 
-    Task<bool> AddAnnouncement(Announcement announcement);
-    Task<bool> UpdateAnnouncement(Announcement announcement);
-    Task<bool> RemoveAnnouncement(int id);
+    Task<bool> IsAnnouncementRegistered(int id);
+    Task RegisterAnnouncement(Announcement announcement);
+    Task UnregisterAnnouncement(Announcement announcement);
+
+    Task AddAnnouncement(Announcement announcement);
+    Task UpdateAnnouncement(Announcement announcement);
+    Task RemoveAnnouncement(int id);
 }

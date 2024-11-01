@@ -15,14 +15,13 @@ public static class PageCodes
     public static PageCode ToPageCode(this object page) => page switch
     {
         ClassroomsManagementPage => PageCode.ClassroomsManagement,
-        CreateSchedulePage => PageCode.CreateSchedule,
-        EditSchedulePage => PageCode.EditSchedule,
+        GroupSelectionPage => PageCode.GroupSelection,
         GroupsManagementPage => PageCode.GroupsManagement,
         RegisterAnnouncementsPage => PageCode.RegisterAnnouncements,
+        SpecialtiesManagementPage => PageCode.SpecialtiesManagement,
         SubjectsManagementPage => PageCode.SubjectsManagement,
         TeachersManagementPage => PageCode.TeachersManagement,
         CreateAnnouncementPage => PageCode.CreateAnnouncements,
-        MyGroupPage => PageCode.MyGroup,
         AnnouncementsPage => PageCode.Announcements,
         ClassroomsPage => PageCode.Classrooms,
         GroupsPage => PageCode.Groups,
@@ -30,6 +29,7 @@ public static class PageCodes
         ProfilePage => PageCode.Profile,
         SchedulePage => PageCode.Schedule,
         SettingsPage => PageCode.Settings,
+        SpecialtiesPage => PageCode.Specialties,
         SubjectsPage => PageCode.Subjects,
         TeachersPage => PageCode.Teachers,
         _ => PageCode.Home // По умолчанию — главная страница
@@ -43,14 +43,13 @@ public static class PageCodes
     public static object ToPage(this PageCode pageCode) => pageCode switch
     {
         PageCode.ClassroomsManagement => new ClassroomsManagementPage(),
-        PageCode.CreateSchedule => new CreateSchedulePage(),
-        PageCode.EditSchedule => new EditSchedulePage(),
+        PageCode.GroupSelection => new GroupSelectionPage(),
         PageCode.GroupsManagement => new GroupsManagementPage(),
         PageCode.RegisterAnnouncements => new RegisterAnnouncementsPage(),
+        PageCode.SpecialtiesManagement => new SpecialtiesManagementPage(),
         PageCode.SubjectsManagement => new SubjectsManagementPage(),
         PageCode.TeachersManagement => new TeachersManagementPage(),
         PageCode.CreateAnnouncements => new CreateAnnouncementPage(),
-        PageCode.MyGroup => new MyGroupPage(),
         PageCode.Announcements => new AnnouncementsPage(),
         PageCode.Classrooms => new ClassroomsPage(),
         PageCode.Groups => new GroupsPage(),
@@ -58,6 +57,7 @@ public static class PageCodes
         PageCode.Profile => new ProfilePage(),
         PageCode.Schedule => new SchedulePage(),
         PageCode.Settings => new SettingsPage(),
+        PageCode.Specialties => new SpecialtiesPage(),
         PageCode.Subjects => new SubjectsPage(),
         PageCode.Teachers => new TeachersPage(),
         _ => new HomePage() // По умолчанию — главная страница

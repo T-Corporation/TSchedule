@@ -23,15 +23,15 @@ public abstract class ApplicationUser : IUser
 
     [EmailAddress]
     [StringLength(255)]
-    [Required(AllowEmptyStrings = false)]
-    public string Email { get; set; } = string.Empty;
+    public string? Email { get; set; }
 
     [Phone]
-    [Required(AllowEmptyStrings = false)]
-    [StringLength(15, MinimumLength = 15)]
-    public string PhoneNumber { get; set; } = string.Empty;
+    [StringLength(11, MinimumLength = 11)]
+    public string? PhoneNumber { get; set; }
 
     public bool IsDeleted { get; set; }
 
     public abstract Role Role { get; }
+
+    public override string ToString() => UserName;
 }

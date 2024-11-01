@@ -8,5 +8,5 @@ public partial class TeachersManagementPage
     public TeachersManagementPage() => InitializeComponent();
 
     private async void Page_Loaded(object sender, RoutedEventArgs e)
-        => DataContext = await TeachersManagementViewModel.CreateInstanceAsync();
+        => DataContext = await TeachersManagementViewModel.CreateInstanceAsync(AddButton, TeacherFlyout);
 }

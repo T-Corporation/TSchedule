@@ -10,7 +10,7 @@ public interface IUser
 
     string PasswordHash { get; set; }
 
-    string Email { get; set; }
+    string? Email { get; set; }
 
-    string PhoneNumber { get; set; }
+    string? PhoneNumber { get; set; }
 }

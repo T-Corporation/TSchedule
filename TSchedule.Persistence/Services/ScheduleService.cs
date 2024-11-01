@@ -1,33 +1,28 @@
-﻿using TSchedule.Persistence.Interfaces;
+﻿using TSchedule.Persistence.Entities;
+using TSchedule.Persistence.Interfaces;
 
 namespace TSchedule.Persistence.Services;
 
-public class ScheduleService(IScheduleRepository repository)
+public class ScheduleService(IScheduleRepository repository) : IScheduleService
 {
-    // Проверка корректности расписания
-    public async Task<bool> CheckScheduleConflict(Guid teacherId, TimeSpan startTime, TimeSpan endTime)
+    public async Task<IEnumerable<Schedule>> GetAllSchedules()
     {
-        var schedules = await repository.FindWeeklyByTeacher(teacherId);
-
-        // Проверяем пересечение времени
-        foreach (var schedule in schedules)
-            if ((startTime >= schedule.StartTime && startTime < schedule.EndTime) ||
-                (endTime > schedule.StartTime && endTime <= schedule.EndTime))
-                return true; // Конфликт
-
-        return false; // Конфликтов нет
+        var numeratorSchedules = await repository.GetSchedulesAsync(false);
+        var denominatorSchedules = await repository.GetSchedulesAsync(true);
+        return numeratorSchedules.Concat(denominatorSchedules);
     }
 
-    // Проверка доступность аудитории
-    public async Task<bool> CheckClassroomAvailability(int classroomId, TimeSpan startTime, TimeSpan endTime)
+    public async Task<IEnumerable<Schedule>> GetSchedules(bool isDenominator)
+        => await repository.GetSchedulesAsync(isDenominator);
+
+    public async Task AddSchedule(Schedule schedule)
     {
-        var schedules = await repository.FindAll();
-
-        foreach (var schedule in schedules.Where(s => s.ClassroomId == classroomId))
-            if ((startTime >= schedule.StartTime && startTime < schedule.EndTime) ||
-                (endTime > schedule.StartTime && endTime <= schedule.EndTime))
-                return false; // Аудитория занята
-
-        return true; // Аудитория свободна
+        if (schedule.Id == 0)
+            await repository.AddScheduleAsync(schedule);
+        else
+            await repository.UpdateScheduleAsync(schedule);
     }
+
+    public async Task RemoveSchedule(int id)
+        => await repository.DeleteScheduleAsync(id);
 }

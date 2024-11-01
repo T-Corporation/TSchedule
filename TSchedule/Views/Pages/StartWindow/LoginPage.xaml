@@ -33,12 +33,12 @@
                 <ComboBox Padding="10"
                           IsReadOnly="True"
                           IsEditable="False"
+                          ItemsSource="{Binding Roles}"
+                          SelectedItem="{Binding Role}"
                           HorizontalAlignment="Stretch"
                           ui:ControlHelper.CornerRadius="4"
                           ui:ControlHelper.Header="Войти как"
-                          ui:ControlHelper.PlaceholderText="Выберите роль"
-                          ItemsSource="{Binding Roles}"
-                          SelectedItem="{Binding Role}"/>
+                          ui:ControlHelper.PlaceholderText="Выберите роль"/>
 
                 <TextBox Padding="10"
                          TextWrapping="Wrap"
@@ -59,12 +59,12 @@
 
                 <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
                 <Button Padding="10"
-                        Content="Войти в систему"
                         Margin="0,6,0,0"
+                        Content="Войти в систему"
                         HorizontalAlignment="Stretch"
+                        Command="{Binding LoginCommand}"
                         ToolTipService.HasDropShadow="True"
                         Style="{StaticResource AccentButtonStyle}"
-                        Command="{Binding LoginCommand}"
                         ToolTipService.ToolTip="Нажмите, чтобы войти в систему"/>
 
 

@@ -1,4 +1,6 @@
 ﻿<ui:Page x:Class="TSchedule.Views.Pages.MainWindow.Administrators.TeachersManagementPage"
+         xmlns:c="clr-namespace:TSchedule.Converters"
+         xmlns:e="clr-namespace:TSchedule.Extensions"
          xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,9 +9,17 @@
          mc:Ignorable="d"
          d:DesignWidth="800"
          Loaded="Page_Loaded"
-         d:DesignHeight="450"
          d:Background="White"
+         d:DesignHeight="450"
          Title="Управление преподавателями">
+    
+    <ui:Page.Resources>
+        <c:ValueToOpacityConverter x:Key="ValueToOpacityConverter"/>
+        <c:StringToInitialsConverter x:Key="StringToInitialsConverter"/>
+        <c:NullableToBooleanConverter x:Key="NullableToBooleanConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <c:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+    </ui:Page.Resources>
 
     <Grid Margin="20"
           VerticalAlignment="Stretch"
@@ -19,69 +29,283 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
-        
-        <ui:ListView Margin="4"
+
+        <ui:FlyoutBase.AttachedFlyout>
+            <ui:Flyout x:Name="TeacherFlyout">
+                <Border Padding="20">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <ScrollViewer ui:ScrollViewerBehavior.IsAnimating="True">
+                                <StackPanel ui:PanelHelper.Spacing="16">
+                                    <TextBox Width="360"
+                                             ui:ControlHelper.Header="ФИО"
+                                             Text="{Binding TeacherFullName}"
+                                             ui:ControlHelper.CornerRadius="8"
+                                             ui:TextBoxHelper.IsDeleteButtonVisible="True"
+                                             ui:TextContextMenu.UsingTextContextMenu="True"
+                                             ui:ControlHelper.PlaceholderText="Иванов Иван Иванович"
+                                             ToolTipService.ToolTip="Введите полное имя преподавателя в формате: Фамилия Имя Отчество"/>
+                                    <TextBox Width="360"
+                                             Text="{Binding TeacherUserName}"
+                                             ui:ControlHelper.CornerRadius="8"
+                                             ui:ControlHelper.Header="Имя пользователя"
+                                             ui:TextBoxHelper.IsDeleteButtonVisible="True"
+                                             ui:TextContextMenu.UsingTextContextMenu="True"
+                                             ui:ControlHelper.PlaceholderText="Введите логин для входа"
+                                             ToolTipService.ToolTip="Имя пользователя должно быть уникальным и не содержать пробелов."/>
+                                    <TextBox Width="360"
+                                             Text="{Binding TeacherEmail}"
+                                             ui:ControlHelper.CornerRadius="8"
+                                             ui:ControlHelper.Header="Электронная почта"
+                                             ui:TextBoxHelper.IsDeleteButtonVisible="True"
+                                             ui:TextContextMenu.UsingTextContextMenu="True"
+                                             ui:ControlHelper.PlaceholderText="mail@example.com"
+                                             ToolTipService.ToolTip="Электронная почта должна быть уникальной, список поддерживаемых доменов: @mail.ru, @gmail.com или @icloud.com."/>
+                                    <TextBox Width="360"
+                                             MaxLength="11"
+                                             ui:ControlHelper.CornerRadius="8"
+                                             Text="{Binding TeacherPhoneNumber}"
+                                             ui:ControlHelper.Header="Номер телефона"
+                                             ui:TextBoxHelper.IsDeleteButtonVisible="True"
+                                             ui:ControlHelper.PlaceholderText="79999999999"
+                                             ui:TextContextMenu.UsingTextContextMenu="True"
+                                             ToolTipService.ToolTip="Номер телефона должен быть уникальным в формате: 7xxxxxxxxxx."/>
+                                    <e:BindablePasswordBox Width="360"
+                                                           Header="Пароль"
+                                                           CornerRadius="8"
+                                                           x:Name="TeacherPassword"
+                                                           UsingTextContextMenu="True"
+                                                           PlaceholderText="Введите пароль для входа"
+                                                           Password="{Binding TeacherPassword, Mode=TwoWay}"
+                                                           ToolTipService.ToolTip="Пароль должен содержать не менее 8 символов, включая буквы и цифры."/>
+                                    <DatePicker Width="360"
+                                                IsTodayHighlighted="True"
+                                                ui:ControlHelper.CornerRadius="8"
+                                                ui:ControlHelper.Header="Дата рождения"
+                                                SelectedDate="{Binding TeacherDateOfBirth}"
+                                                ToolTipService.ToolTip="Выберите дату рождения преподавателя в формате: ДД.ММ.ГГГГ"
+                                                ui:ControlHelper.PlaceholderText="{Binding TeacherDateOfBirthPlaceholder, Mode=OneTime}"/>
+                                    <ComboBox Width="360"
+                                              IsReadOnly="True"
+                                              DisplayMemberPath="Number"
+                                              ItemsSource="{Binding Classrooms}"
+                                              ui:ControlHelper.Header="Аудитория"
+                                              IsSynchronizedWithCurrentItem="True"
+                                              SelectedItem="{Binding TeacherClassroom, Mode=TwoWay}"
+                                              ui:ControlHelper.PlaceholderText="Выберите номер аудитории"
+                                              ToolTipService.ToolTip="Выберите номер аудитории из списка доступных."/>
+                                    <StackPanel ToolTipService.ToolTip="Выберите предмет из списка доступных.">
+                                        <TextBlock Text="Предмет"
+                                                   Padding="0,0,0,4"/>
+                                        <ui:ListView Width="360"
+                                                     MaxHeight="120"
+                                                     SelectionMode="Single"
+                                                     IsSelectionEnabled="True"
+                                                     IsItemClickEnabled="True"
+                                                     ItemsSource="{Binding Subjects}"
+                                                     ui:ControlHelper.CornerRadius="8"
+                                                     ui:ControlHelper.Header="Предметы"
+                                                     ToolTipService.ToolTip="Нажмите, чтобы выбрать
+                                                     Зажмите Ctrl + Клик, чтобы убрать выделение."
+                                                     SelectedItem="{Binding TeacherSubject, Mode=TwoWay}"
+                                                     ui:ControlHelper.PlaceholderText="Название предмета">
+                                            <ui:ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Padding="4"
+                                                               Text="{Binding Name}"/>
+                                                </DataTemplate>
+                                            </ui:ListView.ItemTemplate>
+                                        </ui:ListView>
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <TextBlock Text="Время"
+                                                   Padding="0,0,0,4"/>
+                                        <ui:ListView Width="360"
+                                                     MaxHeight="160"
+                                                     ui:ControlHelper.CornerRadius="8"
+                                                     ui:ScrollViewerBehavior.IsAnimating="True"
+                                                     ui:ScrollViewerBehavior.VerticalOffset="0"
+                                                     ItemsSource="{Binding TeacherPreferredTimes}"
+                                                     BorderBrush="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}">
+                                            <ui:ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel ui:PanelHelper.Spacing="8">
+                                                        <TextBlock FontWeight="Bold"
+                                                                   Text="{Binding DayOfWeek.Name}"/>
+                                                        <ui:TimePicker Culture="ru"
+                                                                       Padding="0,0,12,0"
+                                                                       HourPlaceholderText="Час"
+                                                                       HorizontalAlignment="Stretch"
+                                                                       MinutePlaceholderText="Минута"
+                                                                       ui:ControlHelper.Header="Начало"
+                                                                       ui:ControlHelper.CornerRadius="8"
+                                                                       SelectedDateTime="{Binding PreferredStart, Mode=TwoWay}"
+                                                                       ToolTipService.ToolTip="Выберите предпочтительное время начала рабочего дня."/>
+                                                        <ui:TimePicker Culture="ru"
+                                                                       Padding="0,0,12,0"
+                                                                       HourPlaceholderText="Час"
+                                                                       HorizontalAlignment="Stretch"
+                                                                       MinutePlaceholderText="Минута"
+                                                                       ui:ControlHelper.Header="Конец"
+                                                                       ui:ControlHelper.CornerRadius="8"
+                                                                       SelectedDateTime="{Binding PreferredEnd, Mode=TwoWay}"
+                                                                       ToolTipService.ToolTip="Выберите предпочтительное время конца рабочего дня."/>
+                                                        <Separator Margin="0,2,12,0"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ui:ListView.ItemTemplate>
+                                        </ui:ListView>
+                                    </StackPanel>
+
+                                    <TextBlock MaxWidth="360"
+                                               TextWrapping="Wrap"
+                                               Foreground="#CC3300"
+                                               TextAlignment="Center"
+                                               Text="{Binding ErrorMessage}"
+                                               Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}"/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
+
+                        <StackPanel Grid.Row="1"
+                                    Margin="0,16,0,0"
+                                    ui:PanelHelper.Spacing="8">
+                            <Button Content="Сохранить"
+                                    HorizontalAlignment="Stretch"
+                                    Command="{Binding AddOrEditCommand}"
+                                    Style="{StaticResource AccentButtonStyle}"/>
+                            <Button Content="Отмена"
+                                    HorizontalAlignment="Stretch"
+                                    Command="{Binding HideFlyoutCommand}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </ui:Flyout>
+        </ui:FlyoutBase.AttachedFlyout>
+
+        <ui:ListView Padding="4"
                      Grid.Column="0"
+                     x:Name="TeacherList"
                      SelectionMode="Single"
                      ItemsSource="{Binding Teachers}"
                      SelectedItem="{Binding Teacher}">
-                     <!--IsSelectionEnabled="False"-->
-            
             <ui:ListView.ItemTemplate>
-
                 <DataTemplate>
-                    
-                    <StackPanel>
-                        
-                        <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
-                        <TextBlock Padding="2"
-                                   Text="{Binding FullName}"/>
-                        
-                        <TextBlock Padding="2"
-                                   Text="{Binding UserName, StringFormat='@{0}'}"/>
-                        
-                        <TextBlock Padding="2"
-                                   Text="{Binding Email}"/>
-                        
-                        <TextBlock Padding="2"
-                                   Text="{Binding Phone}"/>
-                        
-                    </StackPanel>
-                    
-                </DataTemplate>
+                    <Border Margin="4"
+                            CornerRadius="8"
+                            BorderThickness="1">
+                        <Grid Margin="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
 
+                            <!-- Teacher Icon or Placeholder -->
+                            <ui:PersonPicture Width="96"
+                                              Height="96"
+                                              HorizontalAlignment="Left"
+                                              Initials="{Binding FullName, Converter={StaticResource StringToInitialsConverter}}"/>
+
+                            <!-- Teacher Information -->
+                            <StackPanel Margin="20,0"
+                                        Grid.Column="1">
+                                
+                                <!-- Full Name -->
+                                <TextBox FontSize="16"
+                                         Padding="4,0"
+                                         Cursor="Arrow"
+                                         IsReadOnly="True"
+                                         BorderThickness="0"
+                                         Background="Transparent"
+                                         HorizontalAlignment="Left"
+                                         Text="{Binding FullName}"/>
+
+                                <!-- Classroom -->
+                                <TextBox FontSize="12"
+                                         Padding="4,0"
+                                         Cursor="Arrow"
+                                         IsReadOnly="True"
+                                         BorderThickness="0"
+                                         Background="Transparent"
+                                         HorizontalAlignment="Left"
+                                         Text="{Binding Classroom.Number, StringFormat='Аудитория {0}'}"/>
+
+                                <!-- Username -->
+                                <TextBox FontSize="12"
+                                         Padding="4,0"
+                                         Cursor="Arrow"
+                                         IsReadOnly="True"
+                                         BorderThickness="0"
+                                         Background="Transparent"
+                                         HorizontalAlignment="Left"
+                                         Text="{Binding UserName, StringFormat='Логин: {0}'}"/>
+
+                                <!-- Email with conditional visibility -->
+                                <TextBox FontSize="12"
+                                         Padding="4,0"
+                                         Cursor="Arrow"
+                                         IsReadOnly="True"
+                                         BorderThickness="0"
+                                         Background="Transparent"
+                                         HorizontalAlignment="Left"
+                                         Text="{Binding Email, TargetNullValue='Почта не указана'}" 
+                                         Opacity="{Binding Email, Converter={StaticResource ValueToOpacityConverter}, ConverterParameter=.7}"/>
+
+                                <!-- Phone Number with conditional visibility -->
+                                <TextBox FontSize="12"
+                                         Padding="4,0"
+                                         Cursor="Arrow"
+                                         IsReadOnly="True"
+                                         BorderThickness="0"
+                                         Background="Transparent"
+                                         HorizontalAlignment="Left"
+                                         Text="{Binding PhoneNumber, TargetNullValue='Телефон не указан'}" 
+                                         Opacity="{Binding PhoneNumber, Converter={StaticResource ValueToOpacityConverter}, ConverterParameter=.7}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
             </ui:ListView.ItemTemplate>
-            
         </ui:ListView>
-        
+
         <StackPanel Margin="8"
                     Grid.Column="1"
-                    ui:PanelHelper.Spacing="16"
+                    ui:PanelHelper.Spacing="8"
                     HorizontalAlignment="Stretch">
 
-            <Button HorizontalAlignment="Stretch"
+            <Button x:Name="AddButton"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ShowFlyoutCommand}"
                     Style="{DynamicResource AccentButtonStyle}">
-                
+
                 <ui:IconAndText Padding="8"
                                 Content="Добавить"
                                 Icon="{x:Static ui:SegoeFluentIcons.Add}"/>
-                
+
             </Button>
-            
-            <Button HorizontalAlignment="Stretch">
-                    <!--Foreground="{DynamicResource SystemControlAccentBrush}">-->
+
+            <Button x:Name="EditButton"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ShowEditFlyoutCommand}">
                 <ui:IconAndText Content="Изменить"
                                 Icon="{x:Static ui:SegoeFluentIcons.Edit}"/>
             </Button>
-            
-            <Button Foreground="#CC3300"
-                    HorizontalAlignment="Stretch">
+
+            <Button x:Name="DeleteButton"
+                    Foreground="#CC3360"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding DeleteCommand}">
                 <ui:IconAndText Content="Удалить"
                                 Icon="{x:Static ui:SegoeFluentIcons.Delete}"/>
             </Button>
 
         </StackPanel>
-        
+
     </Grid>
     
 </ui:Page>

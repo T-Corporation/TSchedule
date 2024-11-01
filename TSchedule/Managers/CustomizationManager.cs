@@ -3,6 +3,7 @@ using System.Windows.Media;
 using System.Windows;
 using TSchedule.Persistence.Interfaces.Bases;
 using iNKORE.UI.WPF.Modern;
+using Windows.UI.ViewManagement;
 
 namespace TSchedule.Managers;
 
@@ -42,14 +43,37 @@ public class CustomizationManager : IManager
     /// Устанавливает тему, которая указана в настройках
     /// </summary>
     /// <returns>Менеджер кастомизации</returns>
-    public CustomizationManager ApplyCurrentTheme()
+    public CustomizationManager ApplyThemeFromPreferences(UISettings uiSettings)
     {
-        ThemeManager.Current.ApplicationTheme = PreferencesManager.Default.GetTheme() switch
-        {
-            "Dark" => ApplicationTheme.Dark,
-            "Light" => ApplicationTheme.Light,
-            _ => PreferencesManager.Default.IsDarkModeEnabled ? ApplicationTheme.Dark : ApplicationTheme.Light
-        };
+        string theme = PreferencesManager.Default.GetTheme();
+        ApplySystemAccent(uiSettings);
+
+        if (theme is "System")
+            ApplySystemTheme();
+        else if (theme is "Dark")
+            ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark;
+        else
+            ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light;
+        
+        return this;
+    }
+
+    public CustomizationManager ApplySystemTheme()
+    {
+        ThemeManager.Current.ApplicationTheme = PreferencesManager.Default.IsDarkModeEnabled
+            ? ApplicationTheme.Dark
+            : ApplicationTheme.Light;
+
+        return this;
+    }
+
+    public CustomizationManager ApplySystemAccent(UISettings uiSettings)
+    {
+        #pragma warning disable CA1416 // Проверка совместимости платформы
+        var accent = uiSettings.GetColorValue(UIColorType.Accent);
+        #pragma warning restore CA1416 // Проверка совместимости платформы
+        var accentColor = Color.FromArgb(accent.A, accent.R, accent.G, accent.B);
+        ThemeManager.Current.AccentColor = accentColor;
         return this;
     }
 }

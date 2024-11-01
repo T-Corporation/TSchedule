@@ -5,15 +5,15 @@ public enum PageCode
     None,
 
     ClassroomsManagement,
-    CreateSchedule,
-    EditSchedule,
+    GroupSelection,
+    ScheduleManagement,
     GroupsManagement,
     RegisterAnnouncements,
+    SpecialtiesManagement,
     SubjectsManagement,
     TeachersManagement,
 
     CreateAnnouncements,
-    MyGroup,
 
     Announcements,
     Classrooms,
@@ -23,6 +23,7 @@ public enum PageCode
     Profile,
     Schedule,
     Settings,
+    Specialties,
     Subjects,
     Teachers
 }
