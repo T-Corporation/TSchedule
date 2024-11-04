@@ -49,7 +49,3 @@ jobs:
         Appx_Bundle: Always
         Appx_Bundle_Platforms: x86|x64
         Configuration: ${{ matrix.configuration }}
-
-    # Clean up by removing the PFX file
-    - name: Clean Up Signing Certificate
-      run: Remove-Item -Path "${{ env.Wap_Project_Path }}/SigningCertificate.pfx"
