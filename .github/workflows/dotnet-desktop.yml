@@ -15,7 +15,7 @@ jobs:
     runs-on: windows-latest
 
     env:
-      Solution_Name: TSchedule.
+      Solution_Name: TSchedule.sln
 
     steps:
     - name: Checkout Code
@@ -33,13 +33,13 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
+    # Restore dependencies for the solution
+    - name: Restore Dependencies
+      run: dotnet restore ${{ env.Solution_Name }}
+
     # Run unit tests
     - name: Execute Unit Tests
       run: dotnet test ${{ env.Test_Project_Path }} --configuration ${{ matrix.configuration }}
-
-    # Restore dependencies for the solution
-    - name: Restore Dependencies
-      run: dotnet restore ${{ env.Solution_Name }} --configuration ${{ matrix.configuration }}
 
     # Build and package the application
     - name: Build and Package Application
@@ -52,4 +52,4 @@ jobs:
 
     # Clean up by removing the PFX file
     - name: Clean Up Signing Certificate
-      run: Remove-Item -Path "$env:Wap_Project_Directory\SigningCertificate.pfx"
+      run: Remove-Item -Path "${{ env.Wap_Project_Path }}/SigningCertificate.pfx"
