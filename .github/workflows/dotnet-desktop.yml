@@ -52,5 +52,4 @@ jobs:
 
     # Clean up by removing the PFX file
     - name: Clean Up Signing Certificate
-      if: ${{ secrets.Base64_Encoded_Pfx && secrets.Pfx_Key }}
       run: Remove-Item -Path "$env:Wap_Project_Directory\SigningCertificate.pfx"
