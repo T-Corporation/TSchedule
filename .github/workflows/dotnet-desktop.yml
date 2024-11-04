@@ -1,0 +1,72 @@
+name: .NET 8 Desktop Build
+
+on:
+  push:
+    branches: [ "test" ]
+  pull_request:
+    branches: [ "test" ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+
+    runs-on: windows-latest
+
+    env:
+      Solution_Name: TSchedule.
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    # Install the .NET 8 SDK
+    - name: Install .NET 8 SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    # Add MSBuild to the PATH
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    # Run unit tests
+    - name: Execute Unit Tests
+      run: dotnet test ${{ env.Test_Project_Path }} --configuration ${{ matrix.configuration }}
+
+    # Restore dependencies for the solution
+    - name: Restore Dependencies
+      run: dotnet restore ${{ env.Solution_Name }} --configuration ${{ matrix.configuration }}
+
+    # Decode the Base64-encoded PFX certificate and save it as a file
+    - name: Decode and Save Signing Certificate
+      if: ${{ secrets.Base64_Encoded_Pfx && secrets.Pfx_Key }}
+      shell: pwsh
+      run: |
+        $pfxBytes = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
+        $certPath = Join-Path -Path $env:Wap_Project_Directory -ChildPath "SigningCertificate.pfx"
+        [System.IO.File]::WriteAllBytes($certPath, $pfxBytes)
+
+    # Build and package the application
+    - name: Build and Package Application
+      run: |
+        msbuild ${{ env.Wap_Project_Path }} /p:Configuration=${{ matrix.configuration }} /p:UapAppxPackageBuildMode=StoreUpload /p:AppxBundle=Always /p:PackageCertificateKeyFile=SigningCertificate.pfx /p:PackageCertificatePassword=${{ secrets.Pfx_Key }}
+      env:
+        Appx_Bundle: Always
+        Appx_Bundle_Platforms: x86|x64
+        Configuration: ${{ matrix.configuration }}
+
+    # Clean up by removing the PFX file
+    - name: Clean Up Signing Certificate
+      if: ${{ secrets.Base64_Encoded_Pfx && secrets.Pfx_Key }}
+      run: Remove-Item -Path "$env:Wap_Project_Directory\SigningCertificate.pfx"
+
+    # Upload the MSIX package artifacts
+    - name: Upload Package Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: MSIX Package
+        path: ${{ env.Wap_Project_Directory }}\AppPackages
