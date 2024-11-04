@@ -82,7 +82,7 @@
                                                            UsingTextContextMenu="True"
                                                            PlaceholderText="Введите пароль для входа"
                                                            Password="{Binding TeacherPassword, Mode=TwoWay}"
-                                                           ToolTipService.ToolTip="Пароль должен содержать не менее 8 символов, включая буквы и цифры."/>
+                                                           ToolTipService.ToolTip="Пароль должен содержать не менее 8 символов, включая заглавные и строчные буквы, цифры и спец-символы."/>
                                     <DatePicker Width="360"
                                                 IsTodayHighlighted="True"
                                                 ui:ControlHelper.CornerRadius="8"

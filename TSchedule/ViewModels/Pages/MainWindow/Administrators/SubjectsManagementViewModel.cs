@@ -95,7 +95,7 @@ public partial class SubjectsManagementViewModel : ObservableObject
         ErrorMessage = string.Empty;
         SubjectCode = Subject!.Code;
         SubjectName = Subject.Name;
-        SubjectWeeklyHours = Subject.SemesterHours.ToString();
+        SubjectWeeklyHours = Subject.WeeklyHours.ToString();
         Specialty = Subject.Specialty;
         AttachedFlyout.ShowAt(Target);
     }
@@ -121,6 +121,12 @@ public partial class SubjectsManagementViewModel : ObservableObject
             return;
         }
 
+        if (string.IsNullOrEmpty(SubjectWeeklyHours))
+        {
+            ErrorMessage = string.Format(pleaseFillField, "Часы в неделю");
+            return;
+        }
+
         if (Specialty is null)
         {
             ErrorMessage = string.Format(pleaseFillField, "Специальность");
@@ -132,7 +138,7 @@ public partial class SubjectsManagementViewModel : ObservableObject
             Code = SubjectCode,
             Name = SubjectName,
             SpecialtyId = Specialty.Id,
-            SemesterHours = int.Parse(SubjectWeeklyHours)
+            WeeklyHours = byte.Parse(SubjectWeeklyHours)
         };
 
         if (IsEditing)
@@ -154,7 +160,7 @@ public partial class SubjectsManagementViewModel : ObservableObject
                 var foundSubject = Subjects.First(s => s.Id == Subject.Id);
                 foundSubject.Code = subject.Code;
                 foundSubject.Name = subject.Name;
-                foundSubject.SemesterHours = subject.SemesterHours;
+                foundSubject.WeeklyHours = subject.WeeklyHours;
                 foundSubject.Specialty = Specialty;
                 HideFlyout();
             }

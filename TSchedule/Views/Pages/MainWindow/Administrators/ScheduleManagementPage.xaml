@@ -10,163 +10,40 @@
          Loaded="Page_Loaded"
          d:Background="White"
          d:DesignHeight="450"
-         Title="Управление расписанием"
-         WindowTitle="TSchedule. Управление расписанием">
+         Title="Управление расписанием">
     
     <ui:Page.Resources>
-        <c:StringToInitialsConverter x:Key="StringToInitialsConverter"/>
+        <c:ValueToOpacityConverter x:Key="ValueToOpacityConverter"/>
         <c:NullableToBooleanConverter x:Key="NullableToBooleanConverter"/>
+        <c:EmptyToPlaceholderConverter x:Key="EmptyToPlaceholderConverter"/>
         <c:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
     </ui:Page.Resources>
 
     <Grid>
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
-
             <TabControl x:Name="TabControl"
-                        VerticalAlignment="Stretch"
-                        HorizontalAlignment="Stretch"
                         ui:TabControlHelper.IsAddTabButtonVisible="False"
                         ui:TabControlHelper.ContentBackground="{DynamicResource SystemControlPageBackgroundChromeLowBrush}">
-                
-                <ui:FlyoutBase.AttachedFlyout>
-                    <ui:Flyout x:Name="EditFlyout"
-                               ShowMode="Transient"
-                               Placement="RightEdgeAlignedTop">
-                        <StackPanel Width="300"
-                                    Margin="10"
-                                    x:Name="FormPanel"
-                                    ui:PanelHelper.Spacing="8">
-                            <TextBlock FontSize="16"
-                                       FontWeight="Bold"
-                                       Text="Редактирование занятия"/>
-                            <ComboBox DisplayMemberPath="Name"
-                                      HorizontalAlignment="Stretch"
-                                      ItemsSource="{Binding Subjects}"
-                                      ui:ControlHelper.Header="Предмет"
-                                      ui:ControlHelper.PlaceholderText="Выберите предмет"
-                                      ui:ComboBoxHelper.KeepInteriorCornersSquare="False"
-                                      SelectedItem="{Binding SelectedSubject, Mode=TwoWay}"/>
-                            <ComboBox DisplayMemberPath="FullName"
-                                      HorizontalAlignment="Stretch"
-                                      ItemsSource="{Binding Teachers}"
-                                      ui:ControlHelper.Header="Преподаватель"
-                                      ui:ComboBoxHelper.KeepInteriorCornersSquare="False"
-                                      ui:ControlHelper.PlaceholderText="Выберите преподавателя"
-                                      SelectedItem="{Binding SelectedTeacher, Mode=TwoWay}"/>
-                            <ComboBox DisplayMemberPath="Number"
-                                      HorizontalAlignment="Stretch"
-                                      ItemsSource="{Binding Classrooms}"
-                                      ui:ControlHelper.Header="Аудитория"
-                                      ui:ComboBoxHelper.KeepInteriorCornersSquare="False"
-                                      ui:ControlHelper.PlaceholderText="Выберите аудиторию"
-                                      SelectedItem="{Binding SelectedClassroom, Mode=TwoWay}"/>
-                            <TextBlock MaxWidth="240"
-                                       TextWrapping="Wrap"
-                                       Foreground="#CC3300"
-                                       TextAlignment="Center"
-                                       HorizontalAlignment="Stretch"
-                                       Text="{Binding ErrorMessage, Mode=TwoWay}"
-                                       Visibility="{Binding ErrorMessage, Mode=TwoWay, Converter={StaticResource StringToVisibilityConverter}}"/>
-                            <Button Content="Сохранить"
-                                    HorizontalAlignment="Stretch"
-                                    Command="{Binding SaveCommand}"
-                                    Style="{DynamicResource AccentButtonStyle}"/>
-                        </StackPanel>
-                    </ui:Flyout>
-                </ui:FlyoutBase.AttachedFlyout>
-
                 <!-- Вкладка для числителя -->
-                <TabItem IsSelected="True"
-                            Header="Числитель">
+                <TabItem Header="Числитель" IsSelected="True">
                     <DataGrid IsReadOnly="True"
+                              SelectionUnit="Cell"
                               SelectionMode="Single"
                               CanUserAddRows="False"
-                              HeadersVisibility="All"
+                              CanUserDeleteRows="False"
                               AutoGenerateColumns="False"
-                              ui:ControlHelper.CornerRadius="8"
-                              ItemsSource="{Binding NumeratorSchedule}"
-                              ui:DataGridHelper.UseModernColumnStyles="True"
-                              SelectedItem="{Binding SelectedSchedule, Mode=TwoWay}">
+                              PreviewKeyDown="DataGrid_PreviewKeyDown"
+                              ItemsSource="{Binding NumeratorDailySchedule}"
+                              ui:DataGridHelper.UseModernColumnStyles="True">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="№ занятия"
-                                                Binding="{Binding LessonNumber}"/>
-                            <DataGridTemplateColumn Header="Понедельник">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ui:HyperlinkButton VerticalAlignment="Stretch"
-                                                            CommandParameter="ПН;0"
-                                                            HorizontalAlignment="Stretch"
-                                                            Content="{Binding Subject.Name, FallbackValue='&lt;null>'}"
-                                                            Command="{Binding DataContext.ShowFlyoutCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Вторник">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ui:HyperlinkButton VerticalAlignment="Stretch"
-                                                            CommandParameter="ВТ;0"
-                                                            HorizontalAlignment="Stretch"
-                                                            Content="{Binding Subject.Name, FallbackValue='&lt;null>'}"
-                                                            Command="{Binding DataContext.ShowFlyoutCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Среда">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ui:HyperlinkButton VerticalAlignment="Stretch"
-                                                            CommandParameter="СР;0"
-                                                            HorizontalAlignment="Stretch"
-                                                            Content="{Binding Subject.Name, FallbackValue='&lt;null>'}"
-                                                            Command="{Binding DataContext.ShowFlyoutCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Четверг">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ui:HyperlinkButton VerticalAlignment="Stretch"
-                                                            CommandParameter="ЧТ;0"
-                                                            HorizontalAlignment="Stretch"
-                                                            Content="{Binding Subject.Name, FallbackValue='&lt;null>'}"
-                                                            Command="{Binding DataContext.ShowFlyoutCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Пятница">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ui:HyperlinkButton VerticalAlignment="Stretch"
-                                                            CommandParameter="ПТ;0"
-                                                            HorizontalAlignment="Stretch"
-                                                            Content="{Binding Subject.Name, FallbackValue='&lt;null>'}"
-                                                            Command="{Binding DataContext.ShowFlyoutCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Суббота">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ui:HyperlinkButton VerticalAlignment="Stretch"
-                                                            CommandParameter="СБ;0"
-                                                            HorizontalAlignment="Stretch"
-                                                            Content="{Binding Subject.Name, FallbackValue='&lt;null>'}"
-                                                            Command="{Binding DataContext.ShowFlyoutCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Воскресенье">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ui:HyperlinkButton VerticalAlignment="Stretch"
-                                                            CommandParameter="ВС;0"
-                                                            HorizontalAlignment="Stretch"
-                                                            Content="{Binding Subject.Name, FallbackValue='&lt;null>'}"
-                                                            Command="{Binding DataContext.ShowFlyoutCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Selector.IsSelected="False" Header="Урок" Binding="{Binding Lesson.Id}"/>
+                            <DataGridTextColumn Header="Понедельник" Binding="{Binding Monday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Вторник" Binding="{Binding Tuesday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Среда" Binding="{Binding Wednesday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Четверг" Binding="{Binding Thursday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Пятница" Binding="{Binding Friday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Суббота" Binding="{Binding Saturday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Воскресенье" Binding="{Binding Sunday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
@@ -174,97 +51,87 @@
                 <!-- Вкладка для знаменателя -->
                 <TabItem Header="Знаменатель">
                     <DataGrid IsReadOnly="True"
-                                SelectionMode="Single"
-                                CanUserAddRows="False"
-                                HeadersVisibility="All"
-                                AutoGenerateColumns="False"
-                                ui:ControlHelper.CornerRadius="8"
-                                ItemsSource="{Binding DenominatorSchedule}">
+                              SelectionUnit="Cell"
+                              SelectionMode="Single"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False"
+                              AutoGenerateColumns="False"
+                              PreviewKeyDown="DataGrid_PreviewKeyDown"
+                              ui:DataGridHelper.UseModernColumnStyles="True"
+                              ItemsSource="{Binding DenominatorDailySchedule}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="№ занятия"
-                                                Binding="{Binding LessonNumber}"/>
-                            <!-- Аналогичная структура столбцов для расписания знаменателя -->
-                            <DataGridTemplateColumn Header="Понедельник">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ui:HyperlinkButton VerticalAlignment="Stretch"
-                                                            CommandParameter="ПН;1"
-                                                            HorizontalAlignment="Stretch"
-                                                            Content="{Binding Subject.Name, FallbackValue='&lt;null>'}"
-                                                            Command="{Binding DataContext.ShowFlyoutCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Вторник">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ui:HyperlinkButton VerticalAlignment="Stretch"
-                                                            CommandParameter="ВТ;1"
-                                                            HorizontalAlignment="Stretch"
-                                                            Content="{Binding Subject.Name, FallbackValue='&lt;null>'}"
-                                                            Command="{Binding DataContext.ShowFlyoutCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Среда">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ui:HyperlinkButton VerticalAlignment="Stretch"
-                                                            CommandParameter="СР;1"
-                                                            HorizontalAlignment="Stretch"
-                                                            Content="{Binding Subject.Name, FallbackValue='&lt;null>'}"
-                                                            Command="{Binding DataContext.ShowFlyoutCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Четверг">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ui:HyperlinkButton VerticalAlignment="Stretch"
-                                                            CommandParameter="ЧТ;1"
-                                                            HorizontalAlignment="Stretch"
-                                                            Content="{Binding Subject.Name, FallbackValue='&lt;null>'}"
-                                                            Command="{Binding DataContext.ShowFlyoutCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Пятница">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ui:HyperlinkButton VerticalAlignment="Stretch"
-                                                            CommandParameter="ПТ;1"
-                                                            HorizontalAlignment="Stretch"
-                                                            Content="{Binding Subject.Name, FallbackValue='&lt;null>'}"
-                                                            Command="{Binding DataContext.ShowFlyoutCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Суббота">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ui:HyperlinkButton VerticalAlignment="Stretch"
-                                                            CommandParameter="СБ;1"
-                                                            HorizontalAlignment="Stretch"
-                                                            Content="{Binding Subject.Name, FallbackValue='&lt;null>'}"
-                                                            Command="{Binding DataContext.ShowFlyoutCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Воскресенье">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <ui:HyperlinkButton VerticalAlignment="Stretch"
-                                                            CommandParameter="ВС;1"
-                                                            HorizontalAlignment="Stretch"
-                                                            Content="{Binding Subject.Name, FallbackValue='&lt;null>'}"
-                                                            Command="{Binding DataContext.ShowFlyoutCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Selector.IsSelected="False" Header="Урок" Binding="{Binding Lesson.Id}"/>
+                            <DataGridTextColumn Header="Понедельник" Binding="{Binding Monday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Вторник" Binding="{Binding Tuesday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Среда" Binding="{Binding Wednesday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Четверг" Binding="{Binding Thursday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Пятница" Binding="{Binding Friday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Суббота" Binding="{Binding Saturday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Воскресенье" Binding="{Binding Sunday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
             </TabControl>
         </ScrollViewer>
+
+        <ui:ContentDialog IsShadowEnabled="True"
+                          PrimaryButtonText="ОК"
+                          CloseButtonText="Отмена"
+                          x:Name="GroupSelectionDialog"
+                          Title="Выберите группу студентов"
+                          CloseButtonCommand="{Binding GoBackCommand}"
+                          PrimaryButtonCommand="{Binding ContinueCommand}"
+                          PrimaryButtonStyle="{DynamicResource AccentButtonStyle}"
+                          IsPrimaryButtonEnabled="{Binding SelectedGroup, Converter={StaticResource NullableToBooleanConverter}}">
+            <ComboBox ItemsSource="{Binding Groups}"
+                      IsSynchronizedWithCurrentItem="True"
+                      ui:ControlHelper.Header="Группа студентов"
+                      ui:ControlHelper.PlaceholderText="Выберите группу"
+                      SelectedItem="{Binding SelectedGroup, Mode=TwoWay}"/>
+        </ui:ContentDialog>
+
+        <ui:FlyoutBase.AttachedFlyout>
+            <ui:Flyout x:Name="EditFlyout"
+                       Placement="BottomEdgeAlignedRight">
+                <Grid Margin="20">
+                    <ScrollViewer>
+                        <StackPanel ui:PanelHelper.Spacing="8">
+                            <ComboBox DisplayMemberPath="Name"
+                                      HorizontalAlignment="Stretch"
+                                      ui:ControlHelper.Header="Предмет"
+                                      IsSynchronizedWithCurrentItem="True"
+                                      ui:ControlHelper.PlaceholderText="Выберите предмет"
+                                      ItemsSource="{Binding Subjects, Mode=TwoWay}"
+                                      SelectedItem="{Binding SelectedSubject, Mode=TwoWay}"/>
+                            <ComboBox IsEnabled="False"
+                                      DisplayMemberPath="FullName"
+                                      HorizontalAlignment="Stretch"
+                                      IsSynchronizedWithCurrentItem="True"
+                                      ui:ControlHelper.Header="Преподаватель"
+                                      ui:ControlHelper.PlaceholderText="Выберите преподавателя"
+                                      ItemsSource="{Binding Teachers, Mode=TwoWay}"
+                                      SelectedItem="{Binding SelectedTeacher, Mode=TwoWay}"/>
+                            <ComboBox IsEnabled="False"
+                                      DisplayMemberPath="Number"
+                                      HorizontalAlignment="Stretch"
+                                      ui:ControlHelper.Header="Аудитория"
+                                      IsSynchronizedWithCurrentItem="True"
+                                      ui:ControlHelper.PlaceholderText="Выберите аудиторию"
+                                      ItemsSource="{Binding Classrooms, Mode=TwoWay}"
+                                      SelectedItem="{Binding SelectedClassroom, Mode=TwoWay}"/>
+                            <TextBlock Foreground="#CC3300"
+                                       TextAlignment="Center"
+                                       HorizontalAlignment="Stretch"
+                                       Text="{Binding ErrorMessage, Mode=TwoWay}"
+                                       Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}"/>
+                            <Button Content="Сохранить"
+                                    HorizontalAlignment="Stretch"
+                                    Style="{DynamicResource AccentButtonStyle}"
+                                    Command="{Binding SaveCommand}"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </ui:Flyout>
+        </ui:FlyoutBase.AttachedFlyout>
     </Grid>
 </ui:Page>

@@ -44,19 +44,19 @@ public static class WeekDays
 
     public static WeekDay Friday => _friday;
 
-    private static readonly WeekDay _sunday = new()
+    private static readonly WeekDay _saturday = new()
     {
         Id = 6,
         Name = "Суббота"
     };
 
-    public static WeekDay Sunday => _sunday;
+    public static WeekDay Saturday => _saturday;
 
-    private static readonly WeekDay _saturday = new()
+    private static readonly WeekDay _sunday = new()
     {
         Id = 7,
         Name = "Воскресенье"
     };
 
-    public static WeekDay Saturday => _saturday;
+    public static WeekDay Sunday => _sunday;
 }

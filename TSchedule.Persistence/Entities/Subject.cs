@@ -17,8 +17,8 @@ public class Subject
     [Required(AllowEmptyStrings = false)]
     public string Name { get; set; } = string.Empty;
 
-    [Range(1, int.MaxValue)]
-    public int SemesterHours { get; set; }
+    [Range(1, 36)]
+    public byte WeeklyHours { get; set; }
 
     [ForeignKey(nameof(Specialty))]
     public int SpecialtyId { get; set; }
@@ -32,7 +32,7 @@ public class Subject
             Id = Id,
             Code = Code,
             Name = Name,
-            SemesterHours = SemesterHours,
-            Specialty = Specialty is not null ? Specialty.ToModel() : null
+            WeeklyHours = WeeklyHours,
+            Specialty = Specialty?.ToModel()
         };
 }

@@ -3,6 +3,8 @@ using CommunityToolkit.Mvvm.Input;
 using iNKORE.UI.WPF.Modern.Common.IconKeys;
 using iNKORE.UI.WPF.Modern.Controls;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Windows;
 using TSchedule.Extensions;
 using TSchedule.Managers;
 using TSchedule.Persistence.Enums;
@@ -10,6 +12,7 @@ using TSchedule.Persistence.Interfaces;
 using TSchedule.Persistence.Managers;
 using TSchedule.Views;
 using TSchedule.Views.Pages.MainWindow;
+using TSchedule.Views.Pages.MainWindow.Administrators;
 
 namespace TSchedule.ViewModels;
 
@@ -75,8 +78,8 @@ public partial class MainWindowViewModel : ObservableObject
     {
         return new NavigationViewItem
         {
-            Content = content,
             Tag = pageCode,
+            Content = content,
             Icon = new FontIcon(iconData)
         };
     }
@@ -84,18 +87,14 @@ public partial class MainWindowViewModel : ObservableObject
     private void AddGuestNavigationItems(params NavigationViewItem[] items)
     {
         foreach (var item in items)
-        {
             NavigationItems.Add(item);
-        }
     }
 
     private void AddTeacherNavigationItems(params NavigationViewItem[] items)
     {
         foreach (var item in items)
-        {
             NavigationItems.Add(item);
-        }
-
+        
         items[^1].MenuItems.Add(CreateNavigationItem("Просмотр уведомлений", PageCode.Announcements, SegoeFluentIcons.View));
         items[^1].MenuItems.Add(CreateNavigationItem("Создать уведомление", PageCode.CreateAnnouncements, SegoeFluentIcons.Add));
     }
@@ -106,7 +105,7 @@ public partial class MainWindowViewModel : ObservableObject
         notificationsItem.MenuItems.Add(CreateNavigationItem("Регистрация уведомлений", PageCode.RegisterAnnouncements, SegoeFluentIcons.CheckMark));
         NavigationItems.Add(notificationsItem);
 
-        scheduleItem.MenuItems.Add(CreateNavigationItem("Добавление расписания", PageCode.GroupSelection, SegoeFluentIcons.Add));
+        scheduleItem.MenuItems.Add(CreateNavigationItem("Добавление расписания", PageCode.ScheduleManagement, SegoeFluentIcons.Add));
         NavigationItems.Add(scheduleItem);
 
         var managementItem = new NavigationViewItem

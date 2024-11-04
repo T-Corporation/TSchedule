@@ -25,6 +25,7 @@ public class ScheduleRepository : IScheduleRepository
                 .ThenInclude(g => g!.Specialty)
             .Include(s => s.Group)
                 .ThenInclude(g => g!.GroupSubjects)
+            .Include(s => s.Lesson)
             .ToListAsync();
     }
 
@@ -46,6 +47,7 @@ public class ScheduleRepository : IScheduleRepository
                 .ThenInclude(g => g!.Specialty)
             .Include(s => s.Group)
                 .ThenInclude(g => g!.GroupSubjects)
+            .Include(s => s.Lesson)
             .FirstOrDefaultAsync(s => s.Id == id);
     }
 
@@ -67,10 +69,8 @@ public class ScheduleRepository : IScheduleRepository
     {
         await using ApplicationDbContext context = new();
         var schedule = await context.Schedules.FindAsync(id);
-        if (schedule is not null)
-        {
-            context.Schedules.Remove(schedule);
-            await context.SaveChangesAsync();
-        }
+        if (schedule is null) return;
+        context.Schedules.Remove(schedule);
+        await context.SaveChangesAsync();
     }
 }

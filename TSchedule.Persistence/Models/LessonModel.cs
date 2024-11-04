@@ -3,30 +3,28 @@ using TSchedule.Persistence.Entities;
 
 namespace TSchedule.Persistence.Models;
 
-public partial class ClassroomModel : ObservableObject
+public partial class LessonModel : ObservableObject
 {
     [ObservableProperty]
     private int _id;
 
     [ObservableProperty]
-    private string _number = string.Empty;
+    private TimeOnly _startTime;
 
     [ObservableProperty]
-    private string _type = string.Empty;
+    private TimeOnly _endTime;
 
-    public Classroom ToEntity()
+    public Lesson ToEntity()
         => new()
         {
             Id = Id,
-            Number = Number,
-            Type = Type
+            StartTime = StartTime,
+            EndTime = EndTime
         };
-
-    public override string ToString() => Number;
 
     public override int GetHashCode()
         => Id.GetHashCode();
 
     public override bool Equals(object? obj)
-        => obj is ClassroomModel cm && cm.GetHashCode() == GetHashCode();
+        => obj is LessonModel lm && lm.GetHashCode() == GetHashCode();
 }

@@ -32,5 +32,4 @@ public class ApplicationDbContext : DbContext
     public DbSet<Subject> Subjects { get; set; }
     public DbSet<Teacher> Teachers { get; set; }
     public DbSet<TeacherPreferredTime> TeacherPreferredTimes { get; set; }
-    public DbSet<Workload> Workloads { get; set; }
 }

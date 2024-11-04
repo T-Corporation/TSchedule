@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.ObjectModel;
 using TSchedule.Persistence.Entities;
 
 namespace TSchedule.Persistence.Models;
@@ -7,11 +6,26 @@ namespace TSchedule.Persistence.Models;
 public partial class DailyScheduleModel : ObservableObject
 {
     [ObservableProperty]
-    public WeekDay _day;
+    private WeekDay _day = null!;
 
     [ObservableProperty]
-    public ObservableCollection<ScheduleModel> _lessons = [];
+    private ScheduleModel _monday = null!;
 
-    public string GetScheduleDetails()
-        => string.Join(", ", Lessons.Select(l => $"{l.Subject?.Name} ({l.Teacher?.FullName})"));
+    [ObservableProperty]
+    private ScheduleModel _tuesday = null!;
+
+    [ObservableProperty]
+    private ScheduleModel _wednesday = null!;
+
+    [ObservableProperty]
+    private ScheduleModel _thursday = null!;
+
+    [ObservableProperty]
+    private ScheduleModel _friday = null!;
+
+    [ObservableProperty]
+    private ScheduleModel _sunday = null!;
+
+    [ObservableProperty]
+    private ScheduleModel _saturday = null!;
 }

@@ -5,7 +5,6 @@ public enum PageCode
     None,
 
     ClassroomsManagement,
-    GroupSelection,
     ScheduleManagement,
     GroupsManagement,
     RegisterAnnouncements,

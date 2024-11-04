@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TSchedule.Persistence;
 
@@ -11,9 +12,11 @@ using TSchedule.Persistence;
 namespace TSchedule.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241103125658_LessonsTable")]
+    partial class LessonsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,6 +260,9 @@ namespace TSchedule.Persistence.Migrations
                     b.Property<int>("ClassroomId")
                         .HasColumnType("int");
 
+                    b.Property<TimeOnly>("EndTime")
+                        .HasColumnType("time");
+
                     b.Property<int>("GroupId")
                         .HasColumnType("int");
 
@@ -268,6 +274,9 @@ namespace TSchedule.Persistence.Migrations
 
                     b.Property<byte>("Semester")
                         .HasColumnType("tinyint");
+
+                    b.Property<TimeOnly>("StartTime")
+                        .HasColumnType("time");
 
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
@@ -293,10 +302,10 @@ namespace TSchedule.Persistence.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.HasIndex(new[] { "WeekDayId", "LessonId", "ClassroomId" }, "IX_Schedule_Classroom_Time")
+                    b.HasIndex(new[] { "WeekDayId", "StartTime", "ClassroomId" }, "IX_Schedule_Classroom_Time")
                         .IsUnique();
 
-                    b.HasIndex(new[] { "WeekDayId", "LessonId", "TeacherId" }, "IX_Schedule_Teacher_Time")
+                    b.HasIndex(new[] { "WeekDayId", "StartTime", "TeacherId" }, "IX_Schedule_Teacher_Time")
                         .IsUnique();
 
                     b.ToTable("Schedule", "Timetable");
@@ -346,11 +355,11 @@ namespace TSchedule.Persistence.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("SpecialtyId")
+                    b.Property<int>("SemesterHours")
                         .HasColumnType("int");
 
-                    b.Property<byte>("WeeklyHours")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("SpecialtyId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -508,6 +517,42 @@ namespace TSchedule.Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("TSchedule.Persistence.Entities.Workload", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("GroupId")
+                        .HasMaxLength(50)
+                        .HasColumnType("int");
+
+                    b.Property<short>("Hours")
+                        .HasColumnType("smallint");
+
+                    b.Property<bool>("IsForSemester")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SubjectId")
+                        .HasMaxLength(20)
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("TeacherId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("Workload", "Timetable");
+                });
+
             modelBuilder.Entity("TSchedule.Persistence.Entities.Announcement", b =>
                 {
                     b.HasOne("TSchedule.Persistence.Entities.Teacher", "Teacher")
@@ -645,6 +690,29 @@ namespace TSchedule.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("DayOfWeek");
+
+                    b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("TSchedule.Persistence.Entities.Workload", b =>
+                {
+                    b.HasOne("TSchedule.Persistence.Entities.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId");
+
+                    b.HasOne("TSchedule.Persistence.Entities.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TSchedule.Persistence.Entities.Teacher", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId");
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Subject");
 
                     b.Navigation("Teacher");
                 });

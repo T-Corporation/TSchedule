@@ -9,11 +9,7 @@ namespace TSchedule.ViewModels.Pages.MainWindow;
 
 public partial class HomePageViewModel(Frame navigationFrame) : ObservableObject
 {
-    private readonly Lazy<IUsersService> _usersService = new(ServiceManager.Default.GetRequiredService<IUsersService>);
-
-    public IUsersService UsersService => _usersService.Value;
-
-    public string FullName => UsersService.GetUserFullName();
+    public string FullName => ServiceManager.Default.GetRequiredService<IUsersService>().GetUserFullName();
 
     [RelayCommand]
     private void GoToAnnouncements() => navigationFrame.Navigate(new AnnouncementsPage());

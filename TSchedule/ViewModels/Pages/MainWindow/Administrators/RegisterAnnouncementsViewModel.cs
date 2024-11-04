@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.Windows;
+using TSchedule.Managers;
 using TSchedule.Persistence.Entities;
 using TSchedule.Persistence.Enums;
 using TSchedule.Persistence.Interfaces;
@@ -46,5 +48,18 @@ public partial class RegisterAnnouncementsViewModel : ObservableObject
             _announcementsService.UnregisterAnnouncement(announcementModel.ToEntity());
         else
             _announcementsService.RegisterAnnouncement(announcementModel.ToEntity());
+    }
+
+    [RelayCommand]
+    private void Delete(AnnouncementModel announcementModel)
+    {
+        if (WindowManager.ShowMessageBox(
+            "Вы уверены, что хотите удалить это уведомление?",
+            "Подтверждение",
+            MessageBoxButton.YesNo,
+            MessageBoxImage.Question) is not MessageBoxResult.Yes) return;
+
+        _announcementsService.RemoveAnnouncement(announcementModel.Id);
+        Announcements.Remove(Announcements.First(a => a.Id == announcementModel.Id));
     }
 }

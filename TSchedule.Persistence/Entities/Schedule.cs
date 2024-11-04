@@ -6,25 +6,19 @@ using TSchedule.Persistence.Models;
 namespace TSchedule.Persistence.Entities;
 
 [Table("Schedule", Schema = "Timetable")]
-[Index(nameof(WeekDayId), nameof(StartTime), nameof(TeacherId), IsUnique = true, Name = "IX_Schedule_Teacher_Time")]
-[Index(nameof(WeekDayId), nameof(StartTime), nameof(ClassroomId), IsUnique = true, Name = "IX_Schedule_Classroom_Time")]
+[Index(nameof(WeekDayId), nameof(LessonId), nameof(TeacherId), IsUnique = true, Name = "IX_Schedule_Teacher_Time")]
+[Index(nameof(WeekDayId), nameof(LessonId), nameof(ClassroomId), IsUnique = true, Name = "IX_Schedule_Classroom_Time")]
 public class Schedule
 {
     [Key] public int Id { get; set; }
 
     [Required]
-    public TimeOnly StartTime { get; set; }
-
-    [Required]
-    public TimeOnly EndTime { get; set; }
-
-    [Required]
     [Range(1, 2)]
     public byte Semester { get; set; }
 
-    [Required]
-    [Range(1, 6)]
-    public byte LessonNumber { get; set; }
+    [ForeignKey(nameof(Lesson))]
+    public int LessonId { get; set; }
+    public Lesson? Lesson { get; set; }
 
     [Required]
     public short Year { get; set; }
@@ -58,10 +52,8 @@ public class Schedule
         {
             Id = Id,
             WeekDay = WeekDay,
-            StartTime = StartTime,
-            EndTime = EndTime,
             Semester = Semester,
-            LessonNumber = LessonNumber,
+            Lesson = Lesson?.ToModel(),
             Year = Year,
             IsDenominator = IsDenominator,
             Teacher = Teacher?.ToModel(),

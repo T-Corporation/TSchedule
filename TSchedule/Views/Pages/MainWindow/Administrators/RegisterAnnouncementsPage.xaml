@@ -24,30 +24,61 @@
 
         <!-- Список уведомлений с активным чекбоксом -->
         <ui:ListView Padding="4"
-                     IsSelectionEnabled="False"
-                     IsItemClickEnabled="False"
                      x:Name="RegisteredAnnouncementsList"
                      ItemsSource="{Binding Announcements}">
             <ui:ListView.ItemTemplate>
                 <DataTemplate>
                     <Border Margin="4" CornerRadius="8" BorderThickness="1">
+                        <Border.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem CommandParameter="{Binding}"
+                                          Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=ui:ListView}}">
+                                    <MenuItem.Header>
+                                        <ui:IconAndText Cursor="Hand"
+                                                        Content="Удалить"
+                                                        Foreground="#CC3300"
+                                                        Icon="{x:Static ui:SegoeFluentIcons.Delete}"/>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                            </ContextMenu>
+                        </Border.ContextMenu>
+                        
                         <Grid Margin="8">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="100"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
 
                             <CheckBox Grid.Column="0"
-                                      VerticalAlignment="Top"
+                                      VerticalAlignment="Center"
                                       HorizontalAlignment="Left"
                                       CommandParameter="{Binding}"
                                       IsChecked="{Binding IsRegistered, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Command="{Binding DataContext.UpdateRegistrationCommand, RelativeSource={RelativeSource AncestorType=ui:Page}}"/>
 
+                            <ui:PersonPicture Width="96"
+                                              Height="96"
+                                              Grid.Column="1"
+                                              HorizontalAlignment="Left"
+                                              Initials="{Binding Teacher.FullName, Converter={StaticResource StringToInitialsConverter}}"/>
+    
                             <StackPanel Margin="20,0"
-                                        Grid.Column="1"
+                                        Grid.Column="2"
                                         ui:PanelHelper.Spacing="8">
-                                <TextBlock Padding="4"
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center"
+                                            ui:PanelHelper.Spacing="4">
+                                    <TextBlock Padding="4"
+                                               FontSize="16"
+                                               Text="Отсутствует"/>
+                                    <TextBlock Padding="0,4"
+                                               FontSize="16"
+                                               FontWeight="SemiBold"
+                                               Text="{Binding Teacher.FullName}"/>
+                                </StackPanel>
+                                <TextBlock FontSize="16"
+                                           Padding="4"
                                            Text="{Binding Reason, StringFormat='Причина: &quot;{0}&quot;'}"/>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock FontSize="16"
@@ -58,10 +89,10 @@
                                                Text="{Binding AbsentTo, StringFormat={}{0:dd.MM.yyyy HH:mm}}"/>
                                 </StackPanel>
                                 <TextBlock FontSize="12"
-                                           Padding="4,0"
+                                           Padding="4"
                                            Text="{Binding CreatedAt, StringFormat='Создано: {0:dd.MM.yyyy HH:mm}'}"/>
                                 <TextBlock FontSize="12"
-                                           Padding="4,0"
+                                           Padding="4"
                                            Text="{Binding UpdatedAt, StringFormat='Обновлено: {0:dd.MM.yyyy HH:mm}'}"/>
                             </StackPanel>
                         </Grid>

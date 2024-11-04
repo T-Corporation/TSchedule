@@ -12,14 +12,14 @@ public static class PageCodes
     /// </summary>
     /// <param name="page">Страница</param>
     /// <returns>Код страницы</returns>
-    public static PageCode ToPageCode(this object page) => page switch
+    public static PageCode? ToPageCode(this object page) => page switch
     {
         ClassroomsManagementPage => PageCode.ClassroomsManagement,
-        GroupSelectionPage => PageCode.GroupSelection,
         GroupsManagementPage => PageCode.GroupsManagement,
         RegisterAnnouncementsPage => PageCode.RegisterAnnouncements,
         SpecialtiesManagementPage => PageCode.SpecialtiesManagement,
         SubjectsManagementPage => PageCode.SubjectsManagement,
+        ScheduleManagementPage => PageCode.ScheduleManagement,
         TeachersManagementPage => PageCode.TeachersManagement,
         CreateAnnouncementPage => PageCode.CreateAnnouncements,
         AnnouncementsPage => PageCode.Announcements,
@@ -32,7 +32,8 @@ public static class PageCodes
         SpecialtiesPage => PageCode.Specialties,
         SubjectsPage => PageCode.Subjects,
         TeachersPage => PageCode.Teachers,
-        _ => PageCode.Home // По умолчанию — главная страница
+        HomePage => PageCode.Home,
+        _ => null
     };
 
     /// <summary>
@@ -43,10 +44,10 @@ public static class PageCodes
     public static object ToPage(this PageCode pageCode) => pageCode switch
     {
         PageCode.ClassroomsManagement => new ClassroomsManagementPage(),
-        PageCode.GroupSelection => new GroupSelectionPage(),
         PageCode.GroupsManagement => new GroupsManagementPage(),
         PageCode.RegisterAnnouncements => new RegisterAnnouncementsPage(),
         PageCode.SpecialtiesManagement => new SpecialtiesManagementPage(),
+        PageCode.ScheduleManagement => new ScheduleManagementPage(),
         PageCode.SubjectsManagement => new SubjectsManagementPage(),
         PageCode.TeachersManagement => new TeachersManagementPage(),
         PageCode.CreateAnnouncements => new CreateAnnouncementPage(),

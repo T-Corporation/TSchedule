@@ -57,16 +57,17 @@
                                              ui:TextContextMenu.UsingTextContextMenu="True"/>
                                     <ComboBox Width="240"
                                               ui:ControlHelper.CornerRadius="8"
+                                              ItemsSource="{Binding Specialties}"
                                               IsSynchronizedWithCurrentItem="True"
                                               ui:ControlHelper.Header="Специальность"
                                               ui:ControlHelper.PlaceholderText="Для какой специальности"
-                                              SelectedItem="{Binding Specialty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"
-                                              ItemsSource="{Binding Specialties}"/>
+                                              SelectedItem="{Binding Specialty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}"/>
                                     <ui:NumberBox Width="240"
                                                   Minimum="1"
-                                                  Maximum="1000"
+                                                  Maximum="36"
                                                   ui:ControlHelper.CornerRadius="8"
                                                   Text="{Binding SubjectWeeklyHours}"
+                                                  TextOptions.TextHintingMode="Animated"
                                                   ui:ControlHelper.Header="Часы на неделю"
                                                   ui:TextContextMenu.UsingTextContextMenu="True"
                                                   ui:ControlHelper.PlaceholderText="Введите, сколько часов в неделю"/>

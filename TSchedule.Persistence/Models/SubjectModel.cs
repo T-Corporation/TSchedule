@@ -15,7 +15,7 @@ public partial class SubjectModel : ObservableObject
     private string _name = string.Empty;
 
     [ObservableProperty]
-    private int _semesterHours;
+    private byte _weeklyHours;
 
     [ObservableProperty]
     private SpecialtyModel? _specialty;
@@ -29,7 +29,7 @@ public partial class SubjectModel : ObservableObject
             Id = Id,
             Code = Code,
             Name = Name,
-            SemesterHours = SemesterHours,
+            WeeklyHours = WeeklyHours,
             SpecialtyId = Specialty?.Id ?? 0
         };
 
@@ -39,4 +39,5 @@ public partial class SubjectModel : ObservableObject
     public override bool Equals(object? obj)
         => obj is SubjectModel sm && sm.GetHashCode() == GetHashCode();
 
+    public override string ToString() => Name;
 }

@@ -26,14 +26,22 @@ public partial class TeacherModel : ApplicationUserModel
         {
             Id = Id,
             DateOfBirth = DateOfBirth,
-            ClassroomId = Classroom.Id,
+            ClassroomId = Classroom!.Id,
             PreferredTimes = [.. PreferredTimes.Select(tpt => tpt.ToEntity())],
             IsDeleted = IsDeleted,
             UserName = UserName,
             PasswordHash = PasswordHash,
             PhoneNumber = PhoneNumber,
             Email = Email,
-            Subject = Subject.ToEntity(),
+            Subject = Subject!.ToEntity(),
             FullName = FullName
         };
+
+    public override string ToString() => FullName;
+
+    public override int GetHashCode()
+        => Id.GetHashCode();
+
+    public override bool Equals(object? obj)
+        => obj is TeacherModel tm && tm.GetHashCode() == GetHashCode();
 }

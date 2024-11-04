@@ -15,8 +15,8 @@ public class DayOfWeekConfiguration : IEntityTypeConfiguration<WeekDay>
             WeekDays.Wednesday,
             WeekDays.Thursday,
             WeekDays.Friday,
-            WeekDays.Sunday,
-            WeekDays.Saturday
+            WeekDays.Saturday,
+            WeekDays.Sunday
         );
     }
 }

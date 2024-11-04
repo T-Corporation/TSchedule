@@ -28,7 +28,7 @@ public class TeachersService : ITeachersService
         return await context.Teachers.AsNoTracking()
             .Include(t => t.Classroom)
             .Include(t => t.Subject)
-                .ThenInclude(s => s.Specialty)
+                .ThenInclude(s => s!.Specialty)
             .Include(t => t.PreferredTimes)
             .FirstOrDefaultAsync(t => t.Email == email)
             ?? throw new EntityNotFoundException<Teacher>(nameof(email), email);
@@ -40,7 +40,7 @@ public class TeachersService : ITeachersService
         return await context.Teachers.AsNoTracking()
             .Include(t => t.Classroom)
             .Include(t => t.Subject)
-                .ThenInclude(s => s.Specialty)
+                .ThenInclude(s => s!.Specialty)
             .Include(t => t.PreferredTimes)
             .FirstOrDefaultAsync(t => t.PhoneNumber == phoneNumber)
             ?? throw new EntityNotFoundException<Teacher>(nameof(phoneNumber), phoneNumber);
@@ -52,7 +52,7 @@ public class TeachersService : ITeachersService
         return await context.Teachers.AsNoTracking()
             .Include(t => t.Classroom)
             .Include(t => t.Subject)
-                .ThenInclude(s => s.Specialty)
+                .ThenInclude(s => s!.Specialty)
             .Include(t => t.PreferredTimes)
             .FirstOrDefaultAsync(t => t.UserName == userName)
             ?? throw new EntityNotFoundException<Teacher>(nameof(userName), userName);
@@ -65,7 +65,7 @@ public class TeachersService : ITeachersService
             .Where(t => !t.IsDeleted)
             .Include(t => t.Classroom)
             .Include(t => t.Subject)
-                .ThenInclude(s => s.Specialty)
+                .ThenInclude(s => s!.Specialty)
             .Include(t => t.PreferredTimes)
             .ToListAsync();
     }
@@ -76,7 +76,7 @@ public class TeachersService : ITeachersService
         return await context.Teachers.AsNoTracking()
             .Include(t => t.Classroom)
             .Include(t => t.Subject)
-                .ThenInclude(s => s.Specialty)
+                .ThenInclude(s => s!.Specialty)
             .Include(t => t.PreferredTimes)
             .FirstOrDefaultAsync(t => !t.IsDeleted && t.Id == id)
             ?? throw new EntityNotFoundException<Teacher>(nameof(id), id);
@@ -88,7 +88,7 @@ public class TeachersService : ITeachersService
         var teacher = await context.Teachers
             .Include(t => t.Classroom)
             .Include(t => t.Subject)
-                .ThenInclude(s => s.Specialty)
+                .ThenInclude(s => s!.Specialty)
             .Include(t => t.PreferredTimes)
             .FirstOrDefaultAsync(t => !t.IsDeleted && t.Id == id)
             ?? throw new EntityNotFoundException<Teacher>(nameof(id), id);
@@ -108,7 +108,7 @@ public class TeachersService : ITeachersService
             var existingTeacher = await context.Teachers
                 .Include(t => t.Classroom)
                 .Include(t => t.Subject)
-                    .ThenInclude(s => s.Specialty)
+                    .ThenInclude(s => s!.Specialty)
                 .Include(t => t.PreferredTimes)
                 .FirstOrDefaultAsync(t => !t.IsDeleted && t.Id == teacher.Id)
                 ?? throw new EntityNotFoundException<Teacher>(nameof(teacher.Id), teacher.Id);
@@ -134,5 +134,17 @@ public class TeachersService : ITeachersService
         {
             throw new UniqueException($"Преподаватель с именем для входа \"{teacher.UserName}\" уже существует");
         }
+    }
+
+    public async Task<Teacher> GetTeacherBySubjectId(int subjectId)
+    {
+        await using ApplicationDbContext context = new();
+        return await context.Teachers
+                .Include(t => t.Classroom)
+                .Include(t => t.Subject)
+                    .ThenInclude(s => s!.Specialty)
+                .Include(t => t.PreferredTimes)
+                .FirstOrDefaultAsync(t => t.SubjectId == subjectId)
+            ?? throw new EntityNotFoundException<Teacher>(nameof(subjectId), subjectId);
     }
 }

@@ -9,11 +9,13 @@
         Title="TSchedule"
         BorderThickness="0"
         ui:TitleBar.Height="40"
+        ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterScreen"
         ui:WindowHelper.CornerStyle="RoundSmall"
         ui:TitleBar.ExtendViewIntoTitleBar="True"
         ui:WindowHelper.FixMaximizedWindow="True"
-        ui:WindowHelper.UseModernWindowStyle="True">
+        ui:WindowHelper.UseModernWindowStyle="True"
+        Background="{DynamicResource SystemControlPageBackgroundChromeLowBrush}">
 
     <Window.Resources>
         <Style TargetType="ui:NavigationViewItem" BasedOn="{StaticResource {x:Type ui:NavigationViewItem}}">
@@ -147,6 +149,7 @@
 
             <ui:Frame Padding="20"
                       x:Name="ContentFrame"
+                      NavigationUIVisibility="Visible"
                       Navigated="ContentFrame_Navigated"
                       Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"/>
 

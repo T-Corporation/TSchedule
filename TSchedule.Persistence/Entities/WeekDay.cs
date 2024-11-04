@@ -12,6 +12,12 @@ public class WeekDay : IComparable<WeekDay>
     [Required(AllowEmptyStrings = false)]
     public string Name { get; set; } = string.Empty;
 
+    public override int GetHashCode()
+        => Id.GetHashCode();
+
+    public override bool Equals(object? obj)
+        => obj is WeekDay wd && wd.GetHashCode() == GetHashCode();
+
     public int CompareTo(WeekDay? other)
     {
         if (other is null) return 1; // Или 0 в зависимости от вашей логики

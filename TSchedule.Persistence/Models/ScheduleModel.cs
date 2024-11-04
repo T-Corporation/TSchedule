@@ -13,16 +13,10 @@ public partial class ScheduleModel : ObservableObject
     private WeekDay? _weekDay; // День недели
 
     [ObservableProperty]
-    private TimeOnly _startTime; // Время начала занятия
-
-    [ObservableProperty]
-    private TimeOnly _endTime; // Время окончания занятия
-
-    [ObservableProperty]
     private byte _semester; // Полугодие (1 или 2 семестр)
 
     [ObservableProperty]
-    private byte _lessonNumber; // Номер урока (1 - 6)
+    private LessonModel? _lesson; // Номер урока (1 - 6)
 
     [ObservableProperty]
     private short _year; // Год обучения
@@ -47,10 +41,8 @@ public partial class ScheduleModel : ObservableObject
         {
             Id = Id,
             WeekDayId = WeekDay!.Id,
-            StartTime = StartTime,
-            EndTime = EndTime,
             Semester = Semester,
-            LessonNumber = LessonNumber,
+            LessonId = Lesson!.Id,
             Year = Year,
             IsDenominator = IsDenominator,
             TeacherId = Teacher!.Id,
