@@ -41,15 +41,6 @@ jobs:
     - name: Restore Dependencies
       run: dotnet restore ${{ env.Solution_Name }} --configuration ${{ matrix.configuration }}
 
-    # Decode the Base64-encoded PFX certificate and save it as a file
-    - name: Decode and Save Signing Certificate
-      if: ${{ secrets.Base64_Encoded_Pfx && secrets.Pfx_Key }}
-      shell: pwsh
-      run: |
-        $pfxBytes = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
-        $certPath = Join-Path -Path $env:Wap_Project_Directory -ChildPath "SigningCertificate.pfx"
-        [System.IO.File]::WriteAllBytes($certPath, $pfxBytes)
-
     # Build and package the application
     - name: Build and Package Application
       run: |
@@ -63,10 +54,3 @@ jobs:
     - name: Clean Up Signing Certificate
       if: ${{ secrets.Base64_Encoded_Pfx && secrets.Pfx_Key }}
       run: Remove-Item -Path "$env:Wap_Project_Directory\SigningCertificate.pfx"
-
-    # Upload the MSIX package artifacts
-    - name: Upload Package Artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: MSIX Package
-        path: ${{ env.Wap_Project_Directory }}\AppPackages
