@@ -23,14 +23,14 @@ public partial class PreferencesManager : IManager
     /// <summary>
     /// Словарь заводских настроек
     /// </summary>
-    private static readonly Dictionary<string, dynamic> _defaultSettings = new()
+    private static readonly Dictionary<string, dynamic?> _defaultSettings = new()
     {
         { "UserGuid", Guid.Empty },
         { "Role", Role.Гость.ToString() },
         { "IsLoggedIn", false },
         { "Theme", "System" },
         { "FontFamily", "Segoe UI" },
-        { "UpdateRate", TimeSpan.FromMinutes(30) }
+        { "UserConnectionString", null }
     };
 
     /// <summary>
@@ -216,29 +216,29 @@ public partial class PreferencesManager : IManager
     // UpdateRate
 
     /// <summary>
-    /// Получает частоту обновлений
+    /// Получает строку подключения
     /// </summary>
     /// <returns>Частота обновлений</returns>
-    public TimeSpan GetUpdateRate() => Preferences.Default.UpdateRate;
+    public string? GetConnectionString() => Preferences.Default.UserConnectionString;
 
     /// <summary>
-    /// Устанавливает частоту обновлений
+    /// Устанавливает строку подключения
     /// </summary>
-    /// <param name="updateRate">Частота обновлений</param>
+    /// <param name="connectionString">Строка подключения</param>
     /// <returns>Менеджер пользовательских настроек</returns>
-    public PreferencesManager SetUpdateRate(TimeSpan updateRate)
+    public PreferencesManager SetConnectionString(string connectionString)
     {
-        Preferences.Default.UpdateRate = updateRate;
+        Preferences.Default.UserConnectionString = connectionString;
         return this;
     }
 
     /// <summary>
-    /// Возвращает частоту обновлений к заводским настройкам
+    /// Возвращает строку подключения к заводским настройкам
     /// </summary>
     /// <returns>Менеджер пользовательских настроек</returns>
-    public PreferencesManager ClearUpdateRate()
+    public PreferencesManager ClearConnectionString()
     {
-        Preferences.Default.UpdateRate = _defaultSettings["UpdateRate"];
+        Preferences.Default.UserConnectionString = _defaultSettings["UserConnectionString"];
         return this;
     }
 

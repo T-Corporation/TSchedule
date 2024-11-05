@@ -1,9 +1,9 @@
 ﻿<ui:Page x:Class="TSchedule.Views.Pages.StartWindow.LoginPage"
          xmlns:c="clr-namespace:TSchedule.Converters"
-         xmlns:vm="clr-namespace:TSchedule.ViewModels"
          xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+         xmlns:vm="clr-namespace:TSchedule.ViewModels.Pages.StartWindow"
          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
          mc:Ignorable="d"
@@ -18,7 +18,7 @@
     </Page.Resources>
     
     <ui:Page.DataContext>
-        <vm:LoginPageViewModel/>
+        <vm:LoginViewModel/>
     </ui:Page.DataContext>
 
     <Grid VerticalAlignment="Stretch">

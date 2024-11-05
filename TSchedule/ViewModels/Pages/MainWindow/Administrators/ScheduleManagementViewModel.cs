@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using TSchedule.Persistence.Entities;
-using TSchedule.Persistence.Extensions;
 using TSchedule.Persistence.Interfaces;
 using TSchedule.Persistence.Managers;
 using TSchedule.Persistence.Models;
@@ -55,8 +54,8 @@ public partial class ScheduleManagementViewModel : ObservableObject
         }
         
         // Заполнить поля, если выбранное расписание уже существует (редактирование)
-        SelectedClassroom = value.Classroom;
-        SelectedSubject = value.Subject;
+        SelectedClassroom = value.Teacher?.Classroom;
+        SelectedSubject = value.Teacher?.Subject;
         SelectedTeacher = value.Teacher;
         SelectedDayOfWeek = value.WeekDay;
         SelectedLesson = value.Lesson;
@@ -84,10 +83,10 @@ public partial class ScheduleManagementViewModel : ObservableObject
     
     private async Task UpdateComboboxes(SubjectModel value)
     {
-        SelectedTeacher = (await TeachersService.GetTeacherBySubjectId(value.Id))
+        SelectedTeacher = (await TeachersService.GetTeacherBySubjectId(value.Id))?
             .ToModel();
 
-        SelectedClassroom = SelectedTeacher.Classroom;
+        SelectedClassroom = SelectedTeacher?.Classroom;
     }
 
     [ObservableProperty]
@@ -190,8 +189,11 @@ public partial class ScheduleManagementViewModel : ObservableObject
         && SelectedSubject is not null
         && SelectedTeacher is not null;
 
+    /// <summary>
+    /// Команда для сохранения расписания. Проверяет заполненность полей и валидирует расписание перед сохранением.
+    /// </summary>
     [RelayCommand(CanExecute = nameof(IsFieldsNotEmpty))]
-    private void Save()
+    private async Task Save()
     {
         if (!ValidateSchedule(out var validationErrorMessage))
         {
@@ -199,14 +201,16 @@ public partial class ScheduleManagementViewModel : ObservableObject
             return;
         }
 
+        var scheduleCollection = IsDenominator ? DenominatorDailySchedule : NumeratorDailySchedule;
+
+        // Создаем или обновляем расписание
         if (SelectedSchedule is null)
         {
+            // Создание нового расписания
             SelectedSchedule = new ScheduleModel
             {
                 WeekDay = SelectedDayOfWeek,
-                Subject = SelectedSubject,
                 Teacher = SelectedTeacher,
-                Classroom = SelectedClassroom,
                 Semester = CurrentSemester,
                 Year = CurrentYear,
                 IsDenominator = IsDenominator,
@@ -214,44 +218,109 @@ public partial class ScheduleManagementViewModel : ObservableObject
                 Lesson = SelectedLesson
             };
 
-            // Добавить расписание в коллекцию (Numerator или Denominator)
-            return;
+            // Добавление расписания в коллекцию и БД
+            scheduleCollection.Add(CreateLessonScheduleModel(SelectedSchedule));
+            await ScheduleService.AddSchedule(SelectedSchedule.ToEntity());
         }
-        
-        // Обновить существующее расписание
-        SelectedSchedule.WeekDay = SelectedDayOfWeek;
-        SelectedSchedule.Subject = SelectedSubject;
-        SelectedSchedule.Teacher = SelectedTeacher;
-        SelectedSchedule.Classroom = SelectedClassroom;
-        SelectedSchedule.Semester = CurrentSemester;
-        SelectedSchedule.Year = CurrentYear;
-        SelectedSchedule.IsDenominator = IsDenominator;
-        SelectedSchedule.Group = SelectedGroup;
-        SelectedSchedule.Lesson = SelectedLesson;
+        else
+        {
+            // Обновление существующего расписания
+            UpdateExistingSchedule(SelectedSchedule);
 
-        // Ваша бизнес-логика для проверки и обновления расписания осталась аналогичной...
+            // Обновление в БД
+            await ScheduleService.UpdateSchedule(SelectedSchedule.ToEntity());
+
+            // Обновление расписания в коллекции
+            UpdateLessonInCollection(scheduleCollection, SelectedSchedule);
+        }
     }
 
+    /// <summary>
+    /// Создает объект <see cref="LessonScheduleModel"/> на основе переданного расписания.
+    /// </summary>
+    /// <param name="schedule">Расписание одного занятия.</param>
+    /// <returns>Объект LessonScheduleModel, содержащий расписание для конкретного дня.</returns>
+    private LessonScheduleModel CreateLessonScheduleModel(ScheduleModel schedule)
+    {
+        var lessonSchedule = new LessonScheduleModel { Lesson = schedule.Lesson! };
+        switch (schedule.WeekDay?.Id)
+        {
+            case 1: lessonSchedule.Monday = schedule; break;
+            case 2: lessonSchedule.Tuesday = schedule; break;
+            case 3: lessonSchedule.Wednesday = schedule; break;
+            case 4: lessonSchedule.Thursday = schedule; break;
+            case 5: lessonSchedule.Friday = schedule; break;
+            case 6: lessonSchedule.Saturday = schedule; break;
+            case 7: lessonSchedule.Sunday = schedule; break;
+        }
+        return lessonSchedule;
+    }
+
+    /// <summary>
+    /// Обновляет поля выбранного расписания на основе текущих данных.
+    /// </summary>
+    /// <param name="schedule">Расписание, которое необходимо обновить.</param>
+    private void UpdateExistingSchedule(ScheduleModel schedule)
+    {
+        schedule.WeekDay = SelectedDayOfWeek;
+        schedule.Teacher = SelectedTeacher;
+        schedule.Semester = CurrentSemester;
+        schedule.Year = CurrentYear;
+        schedule.IsDenominator = IsDenominator;
+        schedule.Group = SelectedGroup;
+        schedule.Lesson = SelectedLesson;
+    }
+
+    /// <summary>
+    /// Обновляет объект расписания в указанной коллекции расписаний.
+    /// </summary>
+    /// <param name="scheduleCollection">Коллекция расписаний.</param>
+    /// <param name="schedule">Расписание, которое необходимо обновить.</param>
+    private void UpdateLessonInCollection(
+        ObservableCollection<LessonScheduleModel> scheduleCollection, 
+        ScheduleModel schedule)
+    {
+        var lessonSchedule = scheduleCollection.FirstOrDefault(ls => ls.Lesson?.Id == schedule.Lesson?.Id);
+        if (lessonSchedule is not null)
+        {
+            switch (schedule.WeekDay?.Id)
+            {
+                case 1: lessonSchedule.Monday = schedule; break;
+                case 2: lessonSchedule.Tuesday = schedule; break;
+                case 3: lessonSchedule.Wednesday = schedule; break;
+                case 4: lessonSchedule.Thursday = schedule; break;
+                case 5: lessonSchedule.Friday = schedule; break;
+                case 6: lessonSchedule.Saturday = schedule; break;
+                case 7: lessonSchedule.Sunday = schedule; break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Проверяет корректность расписания на отсутствие конфликтов и соответствие требованиям.
+    /// </summary>
+    /// <param name="errorMessage">Сообщение об ошибке, если проверка не пройдена.</param>
+    /// <returns>Истина, если расписание корректно, иначе ложь.</returns>
     private bool ValidateSchedule(out string errorMessage)
     {
         errorMessage = string.Empty;
 
-        // Проверка на непересечение занятий одного преподавателя
-        if (IsTeacherBusy(SelectedTeacher!, SelectedDayOfWeek!, SelectedLesson!, IsDenominator))
+        // Проверка на отсутствие пересечения занятий одного преподавателя
+        if (IsTeacherBusy(SelectedTeacher, SelectedDayOfWeek, SelectedLesson, IsDenominator))
         {
             errorMessage = "Преподаватель уже занят в это время.";
             return false;
         }
 
         // Проверка на доступность аудитории
-        if (IsClassroomOccupied(SelectedClassroom!, SelectedDayOfWeek!, SelectedLesson!, IsDenominator))
+        if (IsClassroomOccupied(SelectedClassroom, SelectedDayOfWeek, SelectedLesson, IsDenominator))
         {
             errorMessage = "Аудитория уже занята в это время.";
             return false;
         }
 
         // Проверка на соответствие требованиям учебной нагрузки
-        if (!MeetsScheduleRequirements(SelectedGroup!, SelectedSubject!))
+        if (!MeetsScheduleRequirements(SelectedSubject))
         {
             errorMessage = "Суммарное количество часов для данного предмета превышает допустимую учебную нагрузку.";
             return false;
@@ -260,22 +329,28 @@ public partial class ScheduleManagementViewModel : ObservableObject
         return true;
     }
 
-    // Проверка на соответствие требованиям учебной нагрузки
-    private bool MeetsScheduleRequirements(GroupModel group, SubjectModel subject)
+    /// <summary>
+    /// Проверяет, не превышает ли суммарное количество часов по предмету допустимую учебную нагрузку.
+    /// </summary>
+    /// <param name="subject">Предмет, для которого проверяется нагрузка.</param>
+    /// <returns>Истина, если нагрузка не превышена, иначе ложь.</returns>
+    private bool MeetsScheduleRequirements(SubjectModel subject)
     {
         int weeklyHours = subject.WeeklyHours;
         int currentHours = CalculateCurrentWeeklyHours(subject.Id);
 
         // Проверка, что добавление занятия не превысит допустимое количество часов
         if (currentHours + 2 > weeklyHours)
-        {
-            return false; // Добавление невозможно, если превышены часы
-        }
+            return false;
 
         return true;
     }
 
-    // Расчет текущего количества часов для предмета за неделю (числитель и знаменатель)
+    /// <summary>
+    /// Рассчитывает текущее количество часов для предмета за неделю, учитывая числитель и знаменатель.
+    /// </summary>
+    /// <param name="subjectId">Идентификатор предмета.</param>
+    /// <returns>Среднее количество часов в неделю для данного предмета.</returns>
     private int CalculateCurrentWeeklyHours(int subjectId)
     {
         int numeratorHours = CalculateHoursForSchedule(NumeratorDailySchedule, subjectId);
@@ -285,42 +360,53 @@ public partial class ScheduleManagementViewModel : ObservableObject
         return (numeratorHours + denominatorHours) / 2;
     }
 
-    // Вспомогательный метод для расчета часов по расписанию (числитель или знаменатель)
+    /// <summary>
+    /// Вычисляет общее количество часов по расписанию для указанного предмета.
+    /// </summary>
+    /// <param name="schedule">Коллекция расписаний.</param>
+    /// <param name="subjectId">Идентификатор предмета.</param>
+    /// <returns>Общее количество часов для указанного предмета.</returns>
     private int CalculateHoursForSchedule(ObservableCollection<LessonScheduleModel> schedule, int subjectId)
     {
         int totalHours = 0;
 
         foreach (var daySchedule in schedule)
-        {
             foreach (var lesson in daySchedule.GetLessons()) // Предполагается метод GetLessons(), возвращающий расписания по всем дням недели
-            {
-                if (lesson != null && lesson.Subject?.Id == subjectId)
-                {
-                    totalHours += 2; // Каждое занятие длится 2 часа
-                }
-            }
-        }
+                if (lesson is not null && lesson.Teacher?.Subject?.Id == subjectId)
+                    totalHours += 2;
 
         return totalHours;
     }
 
-    // Проверка занятости преподавателя в указанное время
+    /// <summary>
+    /// Проверяет, занят ли преподаватель в указанное время.
+    /// </summary>
+    /// <param name="teacher">Модель преподавателя.</param>
+    /// <param name="dayOfWeek">День недели.</param>
+    /// <param name="lesson">Занятие.</param>
+    /// <param name="isDenominator">Флаг, указывающий на знаменатель или числитель.</param>
+    /// <returns>Истина, если преподаватель занят, иначе ложь.</returns>
     private bool IsTeacherBusy(TeacherModel teacher, WeekDay dayOfWeek, LessonModel lesson, bool isDenominator)
     {
         var schedules = isDenominator ? DenominatorDailySchedule : NumeratorDailySchedule;
         foreach (var daySchedule in schedules)
         {
-            if (daySchedule.Lesson is null) continue;
-            if (daySchedule.Lesson.Id == lesson.Id)
-            {
-                var lessonSchedule = GetLessonScheduleByDayOfWeek(daySchedule, dayOfWeek);
-                if (lessonSchedule is not null && lessonSchedule.Teacher?.Id == teacher.Id)
-                    return true;
-            }
+            if (daySchedule.Lesson is null || daySchedule.Lesson.Id != lesson.Id)
+                continue;
+
+            var lessonSchedule = GetLessonScheduleByDayOfWeek(daySchedule, dayOfWeek);
+            if (lessonSchedule is not null && lessonSchedule.Teacher?.Id == teacher.Id)
+                return true;
         }
         return false;
     }
 
+    /// <summary>
+    /// Получает расписание занятия для конкретного дня недели.
+    /// </summary>
+    /// <param name="daySchedule">Модель расписания для дня.</param>
+    /// <param name="dayOfWeek">День недели.</param>
+    /// <returns>Расписание для указанного дня недели.</returns>
     private ScheduleModel? GetLessonScheduleByDayOfWeek(LessonScheduleModel daySchedule, WeekDay dayOfWeek) => dayOfWeek.Id switch
     {
         1 => daySchedule.Monday,
@@ -333,18 +419,25 @@ public partial class ScheduleManagementViewModel : ObservableObject
         _ => null
     };
 
-    // Проверка занятости аудитории в указанное время
+    /// <summary>
+    /// Проверяет, занята ли аудитория в указанное время.
+    /// </summary>
+    /// <param name="classroom">Модель аудитории.</param>
+    /// <param name="dayOfWeek">День недели.</param>
+    /// <param name="lesson">Занятие.</param>
+    /// <param name="isDenominator">Флаг, указывающий на знаменатель или числитель.</param>
+    /// <returns>Истина, если аудитория занята, иначе ложь.</returns>
     private bool IsClassroomOccupied(ClassroomModel classroom, WeekDay dayOfWeek, LessonModel lesson, bool isDenominator)
     {
         var schedules = isDenominator ? DenominatorDailySchedule : NumeratorDailySchedule;
         foreach (var daySchedule in schedules)
         {
-            if (daySchedule.Lesson.Id == lesson.Id)
-            {
-                var lessonSchedule = GetLessonScheduleByDayOfWeek(daySchedule, dayOfWeek);
-                if (lessonSchedule != null && lessonSchedule.Classroom?.Id == classroom.Id)
-                    return true;
-            }
+            if (daySchedule.Lesson is null || daySchedule.Lesson.Id != lesson.Id)
+                continue;
+
+            var lessonSchedule = GetLessonScheduleByDayOfWeek(daySchedule, dayOfWeek);
+            if (lessonSchedule is not null && lessonSchedule.Teacher?.Classroom?.Id == classroom.Id)
+                return true;
         }
         return false;
     }

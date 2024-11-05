@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using TSchedule.Persistence.Entities;
-using WeekDay = TSchedule.Persistence.Entities.WeekDay;
 
 namespace TSchedule.Persistence.Models;
 
@@ -29,12 +28,6 @@ public partial class ScheduleModel : ObservableObject
     
     [ObservableProperty]
     private GroupModel? _group;
-    
-    [ObservableProperty]
-    private SubjectModel? _subject;
-    
-    [ObservableProperty]
-    private ClassroomModel? _classroom;
 
     public Schedule ToEntity()
         => new()
@@ -46,8 +39,6 @@ public partial class ScheduleModel : ObservableObject
             Year = Year,
             IsDenominator = IsDenominator,
             TeacherId = Teacher!.Id,
-            GroupId = Group!.Id,
-            SubjectId = Subject!.Id,
-            ClassroomId = Classroom!.Id,
+            GroupId = Group!.Id
         };
 }

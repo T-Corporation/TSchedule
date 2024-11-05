@@ -24,17 +24,12 @@ public partial class App
     {
         try
         {
-            #if DEBUG
-            PreferencesManager.Default.PrintValues();
-            #endif
+            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+            DispatcherUnhandledException += OnDispatcherUnhandledException;
 
             uiSettings.ColorValuesChanged += OnColorValuesChanged;
-
             CustomizationManager.Default.LoadStyleFromSettings()
                 .ApplyThemeFromPreferences(uiSettings);
-
-            await using ApplicationDbContext context = new();
-            await context.WarmUpAsync();
 
             ServiceManager.Default
                 .AddSingleton<IUsersService, UsersService>(() => new UsersService(new UsersRepository()))
@@ -47,32 +42,17 @@ public partial class App
                 .AddSingleton<ISpecialtiesService, SpecialtiesService>()
                 .AddSingleton<ISubjectsService, SubjectsService>();
 
-            var isLoggedIn = PreferencesManager.Default.IsLoggedIn();
-
-            if (!isLoggedIn)
-            {
-                WindowManager.Default.CreateWindow<StartWindow>();
-                return;
-            }
-
-            var id = PreferencesManager.Default.GetUserGuid();
-            var role = PreferencesManager.Default.GetRole();
-
-            var usersService = ServiceManager.Default.GetRequiredService<IUsersService>();
-            await usersService.AuthenticateById(id, role switch
-            {
-                "Преподаватель" => Role.Преподаватель,
-                "Администратор" => Role.Администратор,
-                _ => Role.Гость
-            });
-
-            WindowManager.Default.CreateWindow<MainWindow>();
-            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-            DispatcherUnhandledException += OnDispatcherUnhandledException;
-
             #if DEBUG
-            // throw new Exception("Соси бибу");
+            PreferencesManager.Default.PrintValues();
             #endif
+
+            if (Environment.GetCommandLineArgs().Contains("User-Connection"))
+                WindowManager.Default.CreateWindow<UserConnectionWindow>(showDialog: true);
+
+            await using ApplicationDbContext context = new(PreferencesManager.Default.GetConnectionString());
+            await context.WarmUpAsync();
+
+            await InitializeEntry();
         }
         catch (SqlException sqlEx)
         {
@@ -94,6 +74,34 @@ public partial class App
 
             throw;
         }
+    }
+
+    /// <summary>
+    /// Инициализирует вход в приложение
+    /// </summary>
+    /// <returns>Задача</returns>
+    public static async Task InitializeEntry()
+    {
+        var isLoggedIn = PreferencesManager.Default.IsLoggedIn();
+
+        if (!isLoggedIn)
+        {
+            WindowManager.Default.CreateWindow<StartWindow>();
+            return;
+        }
+
+        var id = PreferencesManager.Default.GetUserGuid();
+        var role = PreferencesManager.Default.GetRole();
+
+        var usersService = ServiceManager.Default.GetRequiredService<IUsersService>();
+        await usersService.AuthenticateById(id, role switch
+        {
+            "Преподаватель" => Role.Преподаватель,
+            "Администратор" => Role.Администратор,
+            _ => Role.Гость
+        });
+
+        WindowManager.Default.CreateWindow<MainWindow>();
     }
 
     private void OnColorValuesChanged(UISettings sender, object args)

@@ -89,7 +89,7 @@ public partial class CreateAnnouncementsViewModel : ObservableObject
                 button: MessageBoxButton.YesNo,
                 icon: MessageBoxImage.Error) is not MessageBoxResult.Yes) throw new Exception("Извините, вы не смогли подтвердить свой статус");
             
-            WindowManager.Default.CreateWindow<StartWindow>();
+            WindowManager.Default.CreateWindow<Views.StartWindow>();
             WindowManager.Default.CloseWindow<Views.MainWindow>();
         }
 

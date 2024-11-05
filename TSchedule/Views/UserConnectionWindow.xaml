@@ -1,0 +1,38 @@
+﻿<Window x:Class="TSchedule.Views.UserConnectionWindow"
+        xmlns:vm="clr-namespace:TSchedule.ViewModels"
+        xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        Width="500"
+        Height="280"
+        Topmost="True"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        Title="Пользовательская настройка"
+        WindowStartupLocation="CenterScreen"
+        ui:WindowHelper.UseModernWindowStyle="True">
+    
+    <Window.DataContext>
+        <vm:UserConnectionViewModel/>
+    </Window.DataContext>
+    
+    <StackPanel Margin="40"
+                VerticalAlignment="Center"
+                ui:PanelHelper.Spacing="8">
+        <TextBox FontSize="16"
+                 Text="{Binding ConnectionString}"
+                 ui:TextBoxHelper.IsDeleteButtonVisible="True"
+                 ui:TextContextMenu.UsingTextContextMenu="True"
+                 ui:ControlHelper.Header="Новая строка подключения SQL Server"
+                 ui:ControlHelper.PlaceholderText="Введите строку подключения..."/>
+        <Button FontSize="16"
+                Content="Провести миграцию"
+                HorizontalAlignment="Stretch"
+                Command="{Binding MigrateCommand}"
+                Style="{DynamicResource AccentButtonStyle}"/>
+        <Button FontSize="16"
+                HorizontalAlignment="Stretch"
+                Command="{Binding ResetCommand}"
+                Content="Сброс до заводских настроек"/>
+    </StackPanel>
+</Window>

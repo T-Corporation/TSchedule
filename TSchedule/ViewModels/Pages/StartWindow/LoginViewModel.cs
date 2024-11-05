@@ -7,9 +7,9 @@ using TSchedule.Persistence.Interfaces;
 using TSchedule.Persistence.Managers;
 using TSchedule.Views;
 
-namespace TSchedule.ViewModels;
+namespace TSchedule.ViewModels.Pages.StartWindow;
 
-public partial class LoginPageViewModel : ObservableObject
+public partial class LoginViewModel : ObservableObject
 {
     [ObservableProperty]
     private string _userName = string.Empty;
@@ -31,7 +31,7 @@ public partial class LoginPageViewModel : ObservableObject
 
     [RelayCommand]
     private void GoBack()
-        => WindowManager.Default.GetViewModel<StartWindow>()!
+        => WindowManager.Default.GetViewModel<Views.StartWindow>()!
             .As<StartWindowViewModel>()!
             .GoBack();
 
@@ -66,7 +66,7 @@ public partial class LoginPageViewModel : ObservableObject
         PreferencesManager.Default.SetLoggedIn(true);
         PreferencesManager.Default.Save();
 
-        WindowManager.Default.CreateWindow<MainWindow>();
-        WindowManager.Default.CloseWindow<StartWindow>();
+        WindowManager.Default.CreateWindow<Views.MainWindow>();
+        WindowManager.Default.CloseWindow<Views.StartWindow>();
     }
 }

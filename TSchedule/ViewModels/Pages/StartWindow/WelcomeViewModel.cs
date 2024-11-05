@@ -2,23 +2,22 @@
 using CommunityToolkit.Mvvm.Input;
 using TSchedule.Extensions;
 using TSchedule.Managers;
-using TSchedule.Views;
 using TSchedule.Views.Pages.StartWindow;
 
-namespace TSchedule.ViewModels;
+namespace TSchedule.ViewModels.Pages.StartWindow;
 
-public partial class WelcomePageViewModel : ObservableObject
+public partial class WelcomeViewModel : ObservableObject
 {
     [RelayCommand]
     private void ContinueWithoutAuthentication()
     {
-        WindowManager.Default.CreateWindow<MainWindow>();
-        WindowManager.Default.CloseWindow<StartWindow>();
+        WindowManager.Default.CreateWindow<Views.MainWindow>();
+        WindowManager.Default.CloseWindow<Views.StartWindow>();
     }
 
     [RelayCommand]
     private void ContinueWithAuthentication()
-        => WindowManager.Default.GetViewModel<StartWindow>()!
+        => WindowManager.Default.GetViewModel<Views.StartWindow>()!
             .As<StartWindowViewModel>()!
             .NavigateTo(new LoginPage());
 }

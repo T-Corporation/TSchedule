@@ -17,8 +17,8 @@
     <Setting Name="FontFamily" Type="System.String" Scope="User">
       <Value Profile="(Default)">Segoe UI</Value>
     </Setting>
-    <Setting Name="UpdateRate" Type="System.TimeSpan" Scope="User">
-      <Value Profile="(Default)">00:30:00</Value>
+    <Setting Name="UserConnectionString" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

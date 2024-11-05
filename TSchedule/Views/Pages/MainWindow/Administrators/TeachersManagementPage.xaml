@@ -93,35 +93,22 @@
                                     <ComboBox Width="360"
                                               IsReadOnly="True"
                                               DisplayMemberPath="Number"
+                                              ui:ControlHelper.CornerRadius="8"
                                               ItemsSource="{Binding Classrooms}"
                                               ui:ControlHelper.Header="Аудитория"
                                               IsSynchronizedWithCurrentItem="True"
                                               SelectedItem="{Binding TeacherClassroom, Mode=TwoWay}"
                                               ui:ControlHelper.PlaceholderText="Выберите номер аудитории"
                                               ToolTipService.ToolTip="Выберите номер аудитории из списка доступных."/>
-                                    <StackPanel ToolTipService.ToolTip="Выберите предмет из списка доступных.">
-                                        <TextBlock Text="Предмет"
-                                                   Padding="0,0,0,4"/>
-                                        <ui:ListView Width="360"
-                                                     MaxHeight="120"
-                                                     SelectionMode="Single"
-                                                     IsSelectionEnabled="True"
-                                                     IsItemClickEnabled="True"
-                                                     ItemsSource="{Binding Subjects}"
-                                                     ui:ControlHelper.CornerRadius="8"
-                                                     ui:ControlHelper.Header="Предметы"
-                                                     ToolTipService.ToolTip="Нажмите, чтобы выбрать
-                                                     Зажмите Ctrl + Клик, чтобы убрать выделение."
-                                                     SelectedItem="{Binding TeacherSubject, Mode=TwoWay}"
-                                                     ui:ControlHelper.PlaceholderText="Название предмета">
-                                            <ui:ListView.ItemTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Padding="4"
-                                                               Text="{Binding Name}"/>
-                                                </DataTemplate>
-                                            </ui:ListView.ItemTemplate>
-                                        </ui:ListView>
-                                    </StackPanel>
+                                    <ComboBox Width="360"
+                                              MaxHeight="120"
+                                              DisplayMemberPath="Name"
+                                              ItemsSource="{Binding Subjects}"
+                                              ui:ControlHelper.Header="Предмет"
+                                              ui:ControlHelper.CornerRadius="8"
+                                              ui:ControlHelper.PlaceholderText="Выберите предмет"
+                                              SelectedItem="{Binding TeacherSubject, Mode=TwoWay}"
+                                              ToolTipService.ToolTip="Выберите предмет из списка доступных."/>
                                     <StackPanel>
                                         <TextBlock Text="Время"
                                                    Padding="0,0,0,4"/>

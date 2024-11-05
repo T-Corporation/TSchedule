@@ -16,13 +16,11 @@ public class ScheduleService(IScheduleRepository repository) : IScheduleService
         => await repository.GetSchedulesAsync(isDenominator);
 
     public async Task AddSchedule(Schedule schedule)
-    {
-        if (schedule.Id == 0)
-            await repository.AddScheduleAsync(schedule);
-        else
-            await repository.UpdateScheduleAsync(schedule);
-    }
+        => await repository.AddScheduleAsync(schedule);
 
     public async Task RemoveSchedule(int id)
         => await repository.DeleteScheduleAsync(id);
+
+    public async Task UpdateSchedule(Schedule schedule)
+        => await repository.UpdateScheduleAsync(schedule);
 }

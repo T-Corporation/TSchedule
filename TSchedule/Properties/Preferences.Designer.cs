@@ -85,13 +85,13 @@ namespace TSchedule.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("00:30:00")]
-        public global::System.TimeSpan UpdateRate {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string UserConnectionString {
             get {
-                return ((global::System.TimeSpan)(this["UpdateRate"]));
+                return ((string)(this["UserConnectionString"]));
             }
             set {
-                this["UpdateRate"] = value;
+                this["UserConnectionString"] = value;
             }
         }
     }

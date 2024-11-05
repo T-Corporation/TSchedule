@@ -8,6 +8,7 @@ public interface IScheduleService : IService
     Task<IEnumerable<Schedule>> GetAllSchedules();
     Task<IEnumerable<Schedule>> GetSchedules(bool isDenominator);
     Task AddSchedule(Schedule schedule);
+    Task UpdateSchedule(Schedule schedule);
     Task RemoveSchedule(int id);
 }
 

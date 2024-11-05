@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TSchedule.Persistence.Entities;
 using TSchedule.Persistence.Managers;
-using WeekDay = TSchedule.Persistence.Entities.WeekDay;
 
 namespace TSchedule.Persistence;
 
@@ -11,13 +10,34 @@ namespace TSchedule.Persistence;
 public class ApplicationDbContext : DbContext
 {
     /// <summary>
+    /// Строка подключения
+    /// </summary>
+    private static string _connectionString = string.Empty;
+
+    /// <summary>
+    /// Ссылка на строку подключения
+    /// </summary>
+    public static string? ConnectionString
+    {
+        get => _connectionString;
+        set => _connectionString = value ?? ConnectionManager.Default.GetConnectionString();
+    }
+
+    public ApplicationDbContext(string? connectionString = null)
+    {
+        ConnectionString = connectionString;
+    }
+
+    /// <summary>
 	/// Совершает прогрев БД простым запросом
 	/// </summary>
 	public async Task WarmUpAsync() => await Teachers.AnyAsync();
 
+    /// <inheritdoc/>
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer(ConnectionManager.Default.GetConnectionString());
+        => optionsBuilder.UseSqlServer(ConnectionString);
 
+    /// <inheritdoc/>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
         => modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 

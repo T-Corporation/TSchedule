@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using iNKORE.UI.WPF.Modern.Controls;
 using System.Collections.ObjectModel;
 using System.Windows;
+using TSchedule.Extensions;
 using TSchedule.Managers;
 using TSchedule.Persistence.Entities;
 using TSchedule.Persistence.Exceptions;
@@ -162,7 +163,9 @@ public partial class TeachersManagementViewModel : ObservableObject
 
         for (int i = 0; i < DaysOfWeek.Count; i++)
         {
-            var preferredTime = Teacher.PreferredTimes[i];
+            // Если предпочтительное время не было заполнено, то Teacher.PreferredTimes.Length == 0.
+            // Поэтому вылетает исключение ArgumentOutOfRangeException! Для обхода было создано собственное расширение.
+            var preferredTime = Teacher.PreferredTimes.TryGetValue(i);
             TeacherPreferredTimes.Add(new TeacherPreferredTimeModel
             {
                 Teacher = Teacher,
@@ -241,6 +244,23 @@ public partial class TeachersManagementViewModel : ObservableObject
         if (TeacherSubject is null)
         {
             ErrorMessage = string.Format(pleaseFillField, "Предмет");
+            return;
+        }
+
+        // Получаем актуальный список преподавателей
+        var allTeachers = await TeachersService.GetAllTeachers();
+
+        // Проверяем, занята ли выбранная аудитория другим преподавателем
+        if (allTeachers.Any(t => t.ClassroomId == TeacherClassroom.Id && t.Id != Teacher?.Id))
+        {
+            ErrorMessage = "Выбранная аудитория уже занята другим преподавателем";
+            return;
+        }
+
+        // Проверяем, преподается ли выбранный предмет другим преподавателем
+        if (allTeachers.Any(t => t.SubjectId == TeacherSubject.Id && t.Id != Teacher?.Id))
+        {
+            ErrorMessage = "Выбранный предмет уже ведётся другим преподавателем";
             return;
         }
 
