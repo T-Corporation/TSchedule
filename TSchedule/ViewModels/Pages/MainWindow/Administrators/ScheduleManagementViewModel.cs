@@ -321,20 +321,17 @@ public partial class ScheduleManagementViewModel : ObservableObject
         return false;
     }
 
-    private ScheduleModel? GetLessonScheduleByDayOfWeek(LessonScheduleModel daySchedule, WeekDay dayOfWeek)
+    private ScheduleModel? GetLessonScheduleByDayOfWeek(LessonScheduleModel daySchedule, WeekDay dayOfWeek) => dayOfWeek.Id switch
     {
-        return dayOfWeek.Id switch
-        {
-            1 => daySchedule.Monday,
-            2 => daySchedule.Tuesday,
-            3 => daySchedule.Wednesday,
-            4 => daySchedule.Thursday,
-            5 => daySchedule.Friday,
-            6 => daySchedule.Saturday,
-            7 => daySchedule.Sunday,
-            _ => null
-        };
-    }
+        1 => daySchedule.Monday,
+        2 => daySchedule.Tuesday,
+        3 => daySchedule.Wednesday,
+        4 => daySchedule.Thursday,
+        5 => daySchedule.Friday,
+        6 => daySchedule.Saturday,
+        7 => daySchedule.Sunday,
+        _ => null
+    };
 
     // Проверка занятости аудитории в указанное время
     private bool IsClassroomOccupied(ClassroomModel classroom, WeekDay dayOfWeek, LessonModel lesson, bool isDenominator)
