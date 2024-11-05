@@ -1,6 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using iNKORE.UI.WPF.Modern.Controls;
 using System.Collections.ObjectModel;
+using System.Windows;
+using TSchedule.Managers;
 using TSchedule.Persistence.Entities;
 using TSchedule.Persistence.Interfaces;
 using TSchedule.Persistence.Managers;
@@ -24,16 +27,18 @@ public partial class ScheduleManagementViewModel : ObservableObject
     private static readonly IClassroomsService ClassroomsService = 
         ServiceManager.Default.GetRequiredService<IClassroomsService>();
 
+    public Flyout Flyout { get; }
+
     private static readonly byte CurrentSemester = (byte)(DateTime.Now.Month is >= 9 and <= 12 ? 1 : 2);
 
     private static readonly short CurrentYear = (short)DateTime.Now.Year;
 
     // Список данных для числителя и знаменателя
     [ObservableProperty]
-    private ObservableCollection<LessonScheduleModel> _numeratorDailySchedule = new();
+    private ObservableCollection<LessonScheduleModel> _numeratorDailySchedule = [];
 
     [ObservableProperty]
-    private ObservableCollection<LessonScheduleModel> _denominatorDailySchedule = new();
+    private ObservableCollection<LessonScheduleModel> _denominatorDailySchedule = [];
 
     // Выбранные значения
     [ObservableProperty]
@@ -110,18 +115,19 @@ public partial class ScheduleManagementViewModel : ObservableObject
     private bool _isPopupOpen;
 
     [ObservableProperty]
-    private ObservableCollection<SubjectModel> _subjects = new();
+    private ObservableCollection<SubjectModel> _subjects = [];
 
     [ObservableProperty]
-    private ObservableCollection<TeacherModel> _teachers = new();
+    private ObservableCollection<TeacherModel> _teachers = [];
 
     [ObservableProperty]
-    private ObservableCollection<ClassroomModel> _classrooms = new();
+    private ObservableCollection<ClassroomModel> _classrooms = [];
 
     [ObservableProperty]
     private string _errorMessage = string.Empty;
 
     public ScheduleManagementViewModel(
+        Flyout flyout,
         GroupModel selectedGroup,
         IEnumerable<Subject> subjects,
         IEnumerable<Teacher> teachers,
@@ -131,6 +137,7 @@ public partial class ScheduleManagementViewModel : ObservableObject
     {
         // Группируем расписания по дням и создаем DailyScheduleModel
 
+        Flyout = flyout;
         SelectedGroup = selectedGroup;
 
         foreach (var subject in subjects)
@@ -146,8 +153,9 @@ public partial class ScheduleManagementViewModel : ObservableObject
         PopulateLessonSchedules(denominatorSchedules, DenominatorDailySchedule);
     }
 
-    public static async Task<ScheduleManagementViewModel> CreateInstanceAsync(GroupModel selectedGroup)
-        => new(selectedGroup,
+    public static async Task<ScheduleManagementViewModel> CreateInstanceAsync(Flyout flyout, GroupModel selectedGroup)
+        => new(flyout,
+            selectedGroup,
             await SubjectsService.GetSubjectsBySpecialtyId(selectedGroup.Specialty!.Id),
             await TeachersService.GetAllTeachers(),
             await ClassroomsService.GetAllClassrooms(),
@@ -219,20 +227,21 @@ public partial class ScheduleManagementViewModel : ObservableObject
             };
 
             // Добавление расписания в коллекцию и БД
-            scheduleCollection.Add(CreateLessonScheduleModel(SelectedSchedule));
-            await ScheduleService.AddSchedule(SelectedSchedule.ToEntity());
-        }
-        else
-        {
-            // Обновление существующего расписания
-            UpdateExistingSchedule(SelectedSchedule);
-
-            // Обновление в БД
-            await ScheduleService.UpdateSchedule(SelectedSchedule.ToEntity());
-
-            // Обновление расписания в коллекции
+            SelectedSchedule.Id = (await ScheduleService.AddSchedule(SelectedSchedule.ToEntity())).Id;
             UpdateLessonInCollection(scheduleCollection, SelectedSchedule);
+            Flyout.Hide();
+            return;
         }
+        
+        // Обновление существующего расписания
+        UpdateExistingSchedule(SelectedSchedule);
+
+        // Обновление в БД
+        await ScheduleService.UpdateSchedule(SelectedSchedule.ToEntity());
+
+        // Обновление расписания в коллекции
+        UpdateLessonInCollection(scheduleCollection, SelectedSchedule);
+        Flyout.Hide();
     }
 
     /// <summary>
@@ -240,7 +249,7 @@ public partial class ScheduleManagementViewModel : ObservableObject
     /// </summary>
     /// <param name="schedule">Расписание одного занятия.</param>
     /// <returns>Объект LessonScheduleModel, содержащий расписание для конкретного дня.</returns>
-    private LessonScheduleModel CreateLessonScheduleModel(ScheduleModel schedule)
+    private static LessonScheduleModel CreateLessonScheduleModel(ScheduleModel schedule)
     {
         var lessonSchedule = new LessonScheduleModel { Lesson = schedule.Lesson! };
         switch (schedule.WeekDay?.Id)
@@ -276,7 +285,7 @@ public partial class ScheduleManagementViewModel : ObservableObject
     /// </summary>
     /// <param name="scheduleCollection">Коллекция расписаний.</param>
     /// <param name="schedule">Расписание, которое необходимо обновить.</param>
-    private void UpdateLessonInCollection(
+    private static void UpdateLessonInCollection(
         ObservableCollection<LessonScheduleModel> scheduleCollection, 
         ScheduleModel schedule)
     {
@@ -306,23 +315,23 @@ public partial class ScheduleManagementViewModel : ObservableObject
         errorMessage = string.Empty;
 
         // Проверка на отсутствие пересечения занятий одного преподавателя
-        if (IsTeacherBusy(SelectedTeacher, SelectedDayOfWeek, SelectedLesson, IsDenominator))
+        if (IsTeacherBusy(SelectedTeacher!, SelectedDayOfWeek!, SelectedLesson!, IsDenominator))
         {
             errorMessage = "Преподаватель уже занят в это время.";
             return false;
         }
 
         // Проверка на доступность аудитории
-        if (IsClassroomOccupied(SelectedClassroom, SelectedDayOfWeek, SelectedLesson, IsDenominator))
+        if (IsClassroomOccupied(SelectedClassroom!, SelectedDayOfWeek!, SelectedLesson!, IsDenominator))
         {
             errorMessage = "Аудитория уже занята в это время.";
             return false;
         }
 
         // Проверка на соответствие требованиям учебной нагрузки
-        if (!MeetsScheduleRequirements(SelectedSubject))
+        if (!MeetsScheduleRequirements(SelectedSubject!))
         {
-            errorMessage = "Суммарное количество часов для данного предмета превышает допустимую учебную нагрузку.";
+            errorMessage = "Кол-во часов превышает учебную нагрузку.";
             return false;
         }
 
@@ -340,7 +349,7 @@ public partial class ScheduleManagementViewModel : ObservableObject
         int currentHours = CalculateCurrentWeeklyHours(subject.Id);
 
         // Проверка, что добавление занятия не превысит допустимое количество часов
-        if (currentHours + 2 > weeklyHours)
+        if (++currentHours > weeklyHours)
             return false;
 
         return true;
@@ -366,7 +375,7 @@ public partial class ScheduleManagementViewModel : ObservableObject
     /// <param name="schedule">Коллекция расписаний.</param>
     /// <param name="subjectId">Идентификатор предмета.</param>
     /// <returns>Общее количество часов для указанного предмета.</returns>
-    private int CalculateHoursForSchedule(ObservableCollection<LessonScheduleModel> schedule, int subjectId)
+    private static int CalculateHoursForSchedule(ObservableCollection<LessonScheduleModel> schedule, int subjectId)
     {
         int totalHours = 0;
 
@@ -395,7 +404,9 @@ public partial class ScheduleManagementViewModel : ObservableObject
                 continue;
 
             var lessonSchedule = GetLessonScheduleByDayOfWeek(daySchedule, dayOfWeek);
-            if (lessonSchedule is not null && lessonSchedule.Teacher?.Id == teacher.Id)
+            if (lessonSchedule is not null
+                && lessonSchedule.IsDenominator == isDenominator
+                && lessonSchedule.Teacher?.Id == teacher.Id)
                 return true;
         }
         return false;
@@ -407,7 +418,7 @@ public partial class ScheduleManagementViewModel : ObservableObject
     /// <param name="daySchedule">Модель расписания для дня.</param>
     /// <param name="dayOfWeek">День недели.</param>
     /// <returns>Расписание для указанного дня недели.</returns>
-    private ScheduleModel? GetLessonScheduleByDayOfWeek(LessonScheduleModel daySchedule, WeekDay dayOfWeek) => dayOfWeek.Id switch
+    private static ScheduleModel? GetLessonScheduleByDayOfWeek(LessonScheduleModel daySchedule, WeekDay dayOfWeek) => dayOfWeek.Id switch
     {
         1 => daySchedule.Monday,
         2 => daySchedule.Tuesday,
@@ -440,5 +451,33 @@ public partial class ScheduleManagementViewModel : ObservableObject
                 return true;
         }
         return false;
+    }
+
+    [RelayCommand]
+    private async Task Delete()
+    {
+        await ScheduleService.RemoveSchedule(SelectedSchedule!.Id);
+        var scheduleCollection = IsDenominator ? DenominatorDailySchedule : NumeratorDailySchedule;
+        SetToNullLessonInCollection(scheduleCollection, SelectedSchedule);
+    }
+
+    private static void SetToNullLessonInCollection(
+        ObservableCollection<LessonScheduleModel> scheduleCollection,
+        ScheduleModel schedule)
+    {
+        var lessonSchedule = scheduleCollection.FirstOrDefault(ls => ls.Lesson?.Id == schedule.Lesson?.Id);
+        if (lessonSchedule is not null)
+        {
+            switch (schedule.WeekDay?.Id)
+            {
+                case 1: lessonSchedule.Monday = null; break;
+                case 2: lessonSchedule.Tuesday = null; break;
+                case 3: lessonSchedule.Wednesday = null; break;
+                case 4: lessonSchedule.Thursday = null; break;
+                case 5: lessonSchedule.Friday = null; break;
+                case 6: lessonSchedule.Saturday = null; break;
+                case 7: lessonSchedule.Sunday = null; break;
+            }
+        }
     }
 }

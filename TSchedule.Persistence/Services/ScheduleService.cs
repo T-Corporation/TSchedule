@@ -15,7 +15,7 @@ public class ScheduleService(IScheduleRepository repository) : IScheduleService
     public async Task<IEnumerable<Schedule>> GetSchedules(bool isDenominator)
         => await repository.GetSchedulesAsync(isDenominator);
 
-    public async Task AddSchedule(Schedule schedule)
+    public async Task<Schedule> AddSchedule(Schedule schedule)
         => await repository.AddScheduleAsync(schedule);
 
     public async Task RemoveSchedule(int id)

@@ -7,7 +7,7 @@ public interface IScheduleRepository : IRepository
 {
     Task<IEnumerable<Schedule>> GetSchedulesAsync(bool isDenominator);
     Task<Schedule?> GetScheduleByIdAsync(int id);
-    Task AddScheduleAsync(Schedule schedule);
+    Task<Schedule> AddScheduleAsync(Schedule schedule);
     Task UpdateScheduleAsync(Schedule schedule);
     Task DeleteScheduleAsync(int id);
 }

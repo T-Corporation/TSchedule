@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
 using TSchedule.Persistence.Models;
 
 namespace TSchedule.Persistence.Entities;
 
 [Table("Schedule", Schema = "Timetable")]
-[Index(nameof(WeekDayId), nameof(LessonId), nameof(TeacherId), IsUnique = true, Name = "IX_Schedule_Teacher_Time")]
 public class Schedule
 {
     [Key] public int Id { get; set; }

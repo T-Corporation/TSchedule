@@ -25,7 +25,9 @@
                         ui:TabControlHelper.IsAddTabButtonVisible="False"
                         ui:TabControlHelper.ContentBackground="{DynamicResource SystemControlPageBackgroundChromeLowBrush}">
                 <!-- Вкладка для числителя -->
-                <TabItem Header="Числитель" IsSelected="True">
+                <TabItem IsSelected="True"
+                         Header="Числитель"
+                         x:Name="NumeratorTab">
                     <DataGrid IsReadOnly="True"
                               SelectionUnit="Cell"
                               SelectionMode="Single"
@@ -37,19 +39,20 @@
                               ui:DataGridHelper.UseModernColumnStyles="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Selector.IsSelected="False" Header="Урок" Binding="{Binding Lesson.Id}"/>
-                            <DataGridTextColumn Header="Понедельник" Binding="{Binding Monday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Вторник" Binding="{Binding Tuesday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Среда" Binding="{Binding Wednesday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Четверг" Binding="{Binding Thursday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Пятница" Binding="{Binding Friday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Суббота" Binding="{Binding Saturday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Воскресенье" Binding="{Binding Sunday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Понедельник" Binding="{Binding Monday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Вторник" Binding="{Binding Tuesday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Среда" Binding="{Binding Wednesday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Четверг" Binding="{Binding Thursday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Пятница" Binding="{Binding Friday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Суббота" Binding="{Binding Saturday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Воскресенье" Binding="{Binding Sunday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
 
                 <!-- Вкладка для знаменателя -->
-                <TabItem Header="Знаменатель">
+                <TabItem Header="Знаменатель"
+                         x:Name="DenominatorTab">
                     <DataGrid IsReadOnly="True"
                               SelectionUnit="Cell"
                               SelectionMode="Single"
@@ -61,13 +64,13 @@
                               ItemsSource="{Binding DenominatorDailySchedule}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Selector.IsSelected="False" Header="Урок" Binding="{Binding Lesson.Id}"/>
-                            <DataGridTextColumn Header="Понедельник" Binding="{Binding Monday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Вторник" Binding="{Binding Tuesday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Среда" Binding="{Binding Wednesday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Четверг" Binding="{Binding Thursday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Пятница" Binding="{Binding Friday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Суббота" Binding="{Binding Saturday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Воскресенье" Binding="{Binding Sunday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Понедельник" Binding="{Binding Monday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Вторник" Binding="{Binding Tuesday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Среда" Binding="{Binding Wednesday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Четверг" Binding="{Binding Thursday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Пятница" Binding="{Binding Friday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Суббота" Binding="{Binding Saturday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Воскресенье" Binding="{Binding Sunday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>

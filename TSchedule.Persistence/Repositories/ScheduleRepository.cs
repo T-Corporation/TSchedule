@@ -45,11 +45,12 @@ public class ScheduleRepository : IScheduleRepository
             .FirstOrDefaultAsync(s => s.Id == id);
     }
 
-    public async Task AddScheduleAsync(Schedule schedule)
+    public async Task<Schedule> AddScheduleAsync(Schedule schedule)
     {
         await using ApplicationDbContext context = new();
-        await context.Schedules.AddAsync(schedule);
+        var newSchedule = await context.Schedules.AddAsync(schedule);
         await context.SaveChangesAsync();
+        return newSchedule.Entity;
     }
 
     public async Task UpdateScheduleAsync(Schedule schedule)
