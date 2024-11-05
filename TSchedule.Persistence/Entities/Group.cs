@@ -24,13 +24,14 @@ public class Group
 
     public override string ToString() => Code;
 
+    // Почему-то ошибка при генерации Subjects: s.Subject is null
     public GroupModel ToModel()
         => new()
         {
             Id = Id,
             Code = Code,
             Course = Course,
-            Subjects = [.. GroupSubjects.Select(s => s.Subject.ToModel())],
+            Subjects = [.. GroupSubjects.Select(s => s.Subject?.ToModel())],
             Specialty = Specialty?.ToModel(),
         };
 }

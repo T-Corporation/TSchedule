@@ -12,20 +12,13 @@ public class ApplicationDbContext : DbContext
     /// <summary>
     /// Строка подключения
     /// </summary>
-    private static string _connectionString = string.Empty;
-
-    /// <summary>
-    /// Ссылка на строку подключения
-    /// </summary>
-    public static string? ConnectionString
-    {
-        get => _connectionString;
-        set => _connectionString = value ?? ConnectionManager.Default.GetConnectionString();
-    }
+    public static string? ConnectionString { get; set; }
 
     public ApplicationDbContext(string? connectionString = null)
     {
-        ConnectionString = connectionString;
+        ConnectionString = string.IsNullOrEmpty(connectionString)
+            ? ConnectionManager.Default.GetConnectionString()
+            : connectionString;
     }
 
     /// <summary>

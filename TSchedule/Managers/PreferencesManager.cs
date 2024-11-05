@@ -30,7 +30,7 @@ public partial class PreferencesManager : IManager
         { "IsLoggedIn", false },
         { "Theme", "System" },
         { "FontFamily", "Segoe UI" },
-        { "UserConnectionString", null }
+        { "UserConnectionString", string.Empty }
     };
 
     /// <summary>
@@ -219,7 +219,7 @@ public partial class PreferencesManager : IManager
     /// Получает строку подключения
     /// </summary>
     /// <returns>Частота обновлений</returns>
-    public string? GetConnectionString() => Preferences.Default.UserConnectionString;
+    public string GetConnectionString() => Preferences.Default.UserConnectionString;
 
     /// <summary>
     /// Устанавливает строку подключения

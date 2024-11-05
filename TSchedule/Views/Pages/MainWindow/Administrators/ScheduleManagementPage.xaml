@@ -37,13 +37,13 @@
                               ui:DataGridHelper.UseModernColumnStyles="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Selector.IsSelected="False" Header="Урок" Binding="{Binding Lesson.Id}"/>
-                            <DataGridTextColumn Header="Понедельник" Binding="{Binding Monday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Вторник" Binding="{Binding Tuesday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Среда" Binding="{Binding Wednesday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Четверг" Binding="{Binding Thursday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Пятница" Binding="{Binding Friday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Суббота" Binding="{Binding Saturday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Воскресенье" Binding="{Binding Sunday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Понедельник" Binding="{Binding Monday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Вторник" Binding="{Binding Tuesday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Среда" Binding="{Binding Wednesday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Четверг" Binding="{Binding Thursday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Пятница" Binding="{Binding Friday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Суббота" Binding="{Binding Saturday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Воскресенье" Binding="{Binding Sunday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
@@ -61,13 +61,13 @@
                               ItemsSource="{Binding DenominatorDailySchedule}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Selector.IsSelected="False" Header="Урок" Binding="{Binding Lesson.Id}"/>
-                            <DataGridTextColumn Header="Понедельник" Binding="{Binding Monday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Вторник" Binding="{Binding Tuesday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Среда" Binding="{Binding Wednesday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Четверг" Binding="{Binding Thursday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Пятница" Binding="{Binding Friday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Суббота" Binding="{Binding Saturday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Воскресенье" Binding="{Binding Sunday.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Понедельник" Binding="{Binding Monday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Вторник" Binding="{Binding Tuesday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Среда" Binding="{Binding Wednesday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Четверг" Binding="{Binding Thursday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Пятница" Binding="{Binding Friday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Суббота" Binding="{Binding Saturday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Header="Воскресенье" Binding="{Binding Sunday.Teacher.Subject, FallbackValue='&lt;пусто&gt;'}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>

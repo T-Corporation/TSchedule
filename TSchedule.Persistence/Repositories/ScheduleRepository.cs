@@ -22,8 +22,6 @@ public class ScheduleRepository : IScheduleRepository
             .Include(s => s.WeekDay)
             .Include(s => s.Group)
                 .ThenInclude(g => g!.Specialty)
-            .Include(s => s.Group)
-                .ThenInclude(g => g!.GroupSubjects)
             .Include(s => s.Lesson)
             .ToListAsync();
     }
@@ -43,8 +41,6 @@ public class ScheduleRepository : IScheduleRepository
             .Include(s => s.WeekDay)
             .Include(s => s.Group)
                 .ThenInclude(g => g!.Specialty)
-            .Include(s => s.Group)
-                .ThenInclude(g => g!.GroupSubjects)
             .Include(s => s.Lesson)
             .FirstOrDefaultAsync(s => s.Id == id);
     }

@@ -1,9 +1,9 @@
-﻿using iNKORE.UI.WPF.Modern.Controls.Primitives;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TSchedule.Managers;
+using TSchedule.Persistence.Extensions;
 using TSchedule.Persistence.Models;
 using TSchedule.ViewModels.Pages;
 using TSchedule.ViewModels.Pages.MainWindow.Administrators;
@@ -38,17 +38,59 @@ public partial class ScheduleManagementPage
                         || DataContext is not ScheduleManagementViewModel viewModel)
                         return;
 
-                    int index = cell.Column.DisplayIndex;
-                    viewModel.SelectedSchedule = index switch
+                    var columnIndex = cell.Column.DisplayIndex;
+                    var rowIndex = dataGrid.Items.IndexOf(selectedItem);
+
+                    switch (columnIndex)
                     {
-                        1 => selectedItem.Monday,
-                        2 => selectedItem.Tuesday,
-                        3 => selectedItem.Wednesday,
-                        4 => selectedItem.Thursday,
-                        5 => selectedItem.Friday,
-                        6 => selectedItem.Saturday,
-                        7 => selectedItem.Sunday,
-                        _ => throw new NotSupportedException("Неверный индекс столбца для дня недели")
+                        case 1:
+                            viewModel.SelectedSchedule = selectedItem.Monday;
+                            viewModel.SelectedDayOfWeek = WeekDays.Monday;
+                            break;
+
+                        case 2:
+                            viewModel.SelectedSchedule = selectedItem.Tuesday;
+                            viewModel.SelectedDayOfWeek = WeekDays.Tuesday;
+                            break;
+
+                        case 3:
+                            viewModel.SelectedSchedule = selectedItem.Wednesday;
+                            viewModel.SelectedDayOfWeek = WeekDays.Wednesday;
+                            break;
+
+                        case 4:
+                            viewModel.SelectedSchedule = selectedItem.Thursday;
+                            viewModel.SelectedDayOfWeek = WeekDays.Thursday;
+                            break;
+
+                        case 5:
+                            viewModel.SelectedSchedule = selectedItem.Friday;
+                            viewModel.SelectedDayOfWeek = WeekDays.Friday;
+                            break;
+
+                        case 6:
+                            viewModel.SelectedSchedule = selectedItem.Saturday;
+                            viewModel.SelectedDayOfWeek = WeekDays.Saturday;
+                            break;
+
+                        case 7:
+                            viewModel.SelectedSchedule = selectedItem.Sunday;
+                            viewModel.SelectedDayOfWeek = WeekDays.Sunday;
+                            break;
+
+                        default:
+                            throw new NotSupportedException("Неверный индекс столбца для дня недели");
+                    }
+
+                    viewModel.SelectedLesson = rowIndex switch
+                    {
+                        0 => Lessons.First,
+                        1 => Lessons.Second,
+                        2 => Lessons.Third,
+                        3 => Lessons.Fourth,
+                        4 => Lessons.Fifth,
+                        5 => Lessons.Sixth,
+                        _ => throw new NotSupportedException("Неверный индекс строки для занятия")
                     };
 
                     EditFlyout.ShowAt(TabControl);
