@@ -1,8 +1,8 @@
-﻿using System.Diagnostics;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TSchedule.Managers;
+using TSchedule.Persistence.Enums;
 using TSchedule.Persistence.Extensions;
 using TSchedule.Persistence.Models;
 using TSchedule.ViewModels.Pages;
@@ -26,56 +26,114 @@ public partial class ScheduleManagementPage
     {
         if (sender is not DataGrid dataGrid
             || e.OriginalSource is not DataGridCell cell
-            || cell.Column is null)
-            return;
-
-        if (cell.DataContext is not LessonScheduleModel selectedItem
+            || cell.Column is null
+            || cell.DataContext is not LessonScheduleModel selectedItem
             || DataContext is not ScheduleManagementViewModel viewModel)
             return;
 
-        var columnIndex = cell.Column.DisplayIndex;
-        var rowIndex = dataGrid.Items.IndexOf(selectedItem);
+        SetSelectedSchedule(viewModel, selectedItem, cell.Column.DisplayIndex, dataGrid.Items.IndexOf(selectedItem));
+        viewModel.IsDenominator = DenominatorTab.IsSelected;
 
-        switch (columnIndex)
+        if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
         {
-            case 1:
-                viewModel.SelectedSchedule = selectedItem.Monday;
-                viewModel.SelectedDayOfWeek = WeekDays.Monday;
-                break;
+            switch (e.Key)
+            {
+                case Key.C:
+                    CopyCell(selectedItem, cell.Column.DisplayIndex);
+                    break;
 
-            case 2:
-                viewModel.SelectedSchedule = selectedItem.Tuesday;
-                viewModel.SelectedDayOfWeek = WeekDays.Tuesday;
-                break;
-
-            case 3:
-                viewModel.SelectedSchedule = selectedItem.Wednesday;
-                viewModel.SelectedDayOfWeek = WeekDays.Wednesday;
-                break;
-
-            case 4:
-                viewModel.SelectedSchedule = selectedItem.Thursday;
-                viewModel.SelectedDayOfWeek = WeekDays.Thursday;
-                break;
-
-            case 5:
-                viewModel.SelectedSchedule = selectedItem.Friday;
-                viewModel.SelectedDayOfWeek = WeekDays.Friday;
-                break;
-
-            case 6:
-                viewModel.SelectedSchedule = selectedItem.Saturday;
-                viewModel.SelectedDayOfWeek = WeekDays.Saturday;
-                break;
-
-            case 7:
-                viewModel.SelectedSchedule = selectedItem.Sunday;
-                viewModel.SelectedDayOfWeek = WeekDays.Sunday;
-                break;
-
-            default:
-                throw new NotSupportedException("Неверный индекс столбца для дня недели");
+                case Key.V:
+                    await PasteCell(selectedItem, cell.Column.DisplayIndex);
+                    break;
+            }
+            return;
         }
+
+        switch (e.Key)
+        {
+            case Key.Insert:
+                EditFlyout.ShowAt(TabControl);
+                break;
+
+            case Key.Delete:
+                await TryDeleteSchedule(viewModel);
+                break;
+        }
+    }
+
+    private void CopyMenuItem_Click(object sender, RoutedEventArgs e)
+    {
+        if (!TryGetSelectedItem(sender, out var viewModel, out var selectedItem, out var columnIndex, out var rowIndex))
+            return;
+
+        SetSelectedSchedule(viewModel, selectedItem, columnIndex, rowIndex);
+        viewModel.IsDenominator = DenominatorTab.IsSelected;
+
+        CopyCell(selectedItem, columnIndex);
+    }
+
+    private async void PasteMenuItem_Click(object sender, RoutedEventArgs e)
+    {
+        if (!TryGetSelectedItem(sender, out var viewModel, out var selectedItem, out var columnIndex, out var rowIndex))
+            return;
+
+        SetSelectedSchedule(viewModel, selectedItem, columnIndex, rowIndex);
+        viewModel.IsDenominator = DenominatorTab.IsSelected;
+
+        await PasteCell(selectedItem, columnIndex);
+    }
+
+    private void EditMenuItem_Click(object sender, RoutedEventArgs e)
+    {
+        if (!TryGetSelectedItem(sender, out var viewModel, out var selectedItem, out var columnIndex, out var rowIndex))
+            return;
+
+        SetSelectedSchedule(viewModel, selectedItem, columnIndex, rowIndex);
+        viewModel.IsDenominator = DenominatorTab.IsSelected;
+
+        EditFlyout.ShowAt(TabControl);
+    }
+
+    private async void DeleteMenuItem_Click(object sender, RoutedEventArgs e)
+    {
+        if (!TryGetSelectedItem(sender, out var viewModel, out var selectedItem, out var columnIndex, out var rowIndex))
+            return;
+
+        SetSelectedSchedule(viewModel, selectedItem, columnIndex, rowIndex);
+        viewModel.IsDenominator = DenominatorTab.IsSelected;
+
+        await TryDeleteSchedule(viewModel);
+    }
+
+    private static void SetSelectedSchedule(
+        ScheduleManagementViewModel viewModel,
+        LessonScheduleModel selectedItem,
+        int columnIndex,
+        int rowIndex)
+    {
+        viewModel.SelectedSchedule = columnIndex switch
+        {
+            1 => selectedItem.Monday,
+            2 => selectedItem.Tuesday,
+            3 => selectedItem.Wednesday,
+            4 => selectedItem.Thursday,
+            5 => selectedItem.Friday,
+            6 => selectedItem.Saturday,
+            7 => selectedItem.Sunday,
+            _ => throw new NotSupportedException("Неверный индекс столбца для дня недели")
+        };
+
+        viewModel.SelectedDayOfWeek = columnIndex switch
+        {
+            1 => WeekDays.Monday,
+            2 => WeekDays.Tuesday,
+            3 => WeekDays.Wednesday,
+            4 => WeekDays.Thursday,
+            5 => WeekDays.Friday,
+            6 => WeekDays.Saturday,
+            7 => WeekDays.Sunday,
+            _ => throw new NotSupportedException("Неверный индекс столбца для дня недели")
+        };
 
         viewModel.SelectedLesson = rowIndex switch
         {
@@ -87,55 +145,168 @@ public partial class ScheduleManagementPage
             5 => Lessons.Sixth,
             _ => throw new NotSupportedException("Неверный индекс строки для занятия")
         };
+    }
 
-        viewModel.IsDenominator = DenominatorTab.IsSelected;
+    private bool TryGetSelectedItem(
+        object sender,
+        out ScheduleManagementViewModel viewModel,
+        out LessonScheduleModel selectedItem,
+        out int columnIndex,
+        out int rowIndex)
+    {
+        viewModel = null!;
+        selectedItem = null!;
+        columnIndex = -1;
+        rowIndex = -1;
 
+        if (sender is not MenuItem menuItem
+            || menuItem.Parent is not ContextMenu contextMenu
+            || contextMenu.PlacementTarget is not DataGrid dataGrid
+            || dataGrid.SelectedCells[0].Column is not DataGridTextColumn column
+            || dataGrid.SelectedCells[0].Item is not LessonScheduleModel selectedItemTemp
+            || DataContext is not ScheduleManagementViewModel viewModelTemp)
+            return false;
+
+        viewModel = viewModelTemp;
+        selectedItem = selectedItemTemp;
+        columnIndex = column.DisplayIndex;
+        rowIndex = dataGrid.Items.IndexOf(selectedItem);
+
+        return true;
+    }
+
+    private static async Task TryDeleteSchedule(ScheduleManagementViewModel viewModel)
+    {
+        if (viewModel.SelectedSchedule is null)
+        {
+            ShowWarningMessage("Не выбран предмет для удаления");
+            return;
+        }
+
+        if (viewModel.SelectedSchedule.Id == 0)
+        {
+            ShowWarningMessage("Запись ещё не сохранена в БД. Пожалуйста, перезагрузите страницу");
+            return;
+        }
+
+        if (WindowManager.ShowMessageBox(
+            text: "Вы уверены, что хотите удалить это занятие?",
+            caption: "Подтверждение",
+            button: MessageBoxButton.YesNo,
+            icon: MessageBoxImage.Question) is not MessageBoxResult.Yes)
+            return;
+
+        await viewModel.DeleteCommand.ExecuteAsync(null);
+    }
+
+    private static void ShowWarningMessage(string text, string caption = "Предупреждение")
+    {
+        WindowManager.ShowMessageBox(
+            text: text,
+            caption: caption,
+            button: MessageBoxButton.OK,
+            icon: MessageBoxImage.Warning);
+    }
+
+    private static void CopyCell(LessonScheduleModel selectedItem, int columnIndex)
+        => Clipboard.SetText(columnIndex switch
+        {
+            1 => selectedItem.Monday!.Teacher!.Subject!.Name,
+            2 => selectedItem.Tuesday!.Teacher!.Subject!.Name,
+            3 => selectedItem.Wednesday!.Teacher!.Subject!.Name,
+            4 => selectedItem.Thursday!.Teacher!.Subject!.Name,
+            5 => selectedItem.Friday!.Teacher!.Subject!.Name,
+            6 => selectedItem.Saturday!.Teacher!.Subject!.Name,
+            7 => selectedItem.Sunday!.Teacher!.Subject!.Name,
+            _ => throw new NotSupportedException("Неверный индекс столбца для дня недели"),
+        });
+
+    private async Task PasteCell(LessonScheduleModel selectedItem, int columnIndex)
+    {
+        if (DataContext is not ScheduleManagementViewModel viewModel) return;
+
+        // Чтение строки из буфера обмена
+        if (Clipboard.GetDataObject() is not DataObject dataObject || !dataObject.GetDataPresent(DataFormats.Text))
+        {
+            WindowManager.ShowMessageBox(
+                "Буфер обмена пуст или содержит неверные данные.",
+                "Ошибка",
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
+            return;
+        }
+        
+        string subjectName = Clipboard.GetText().Trim();
+        var subject = (await ScheduleManagementViewModel.SubjectsService.GetSubjectByName(subjectName))?.ToModel();
+
+        if (subject is null)
+        {
+            WindowManager.ShowMessageBox(
+                $"Предмет с названием \"{subjectName}\" не найден.",
+                "Ошибка",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+            return;
+        }
+
+        viewModel.SelectedSubject = subject;
+        
+        // Здесь вам нужно установить значение предмета, используя subjectCode
+        switch (columnIndex)
+        {
+            case 1:
+                viewModel.SelectedSchedule = selectedItem.Monday;
+                break;
+            case 2:
+                viewModel.SelectedSchedule = selectedItem.Tuesday;
+                break;
+            case 3:
+                viewModel.SelectedSchedule = selectedItem.Wednesday;
+                break;
+            case 4:
+                viewModel.SelectedSchedule = selectedItem.Thursday;
+                break;
+            case 5:
+                viewModel.SelectedSchedule = selectedItem.Friday;
+                break;
+            case 6:
+                viewModel.SelectedSchedule = selectedItem.Saturday;
+                break;
+            case 7:
+                viewModel.SelectedSchedule = selectedItem.Sunday;
+                break;
+        }
+
+        viewModel.SelectedTeacher = (await ScheduleManagementViewModel.TeachersService
+            .GetTeacherBySubjectId(viewModel.SelectedSubject.Id))?
+            .ToModel();
+
+        viewModel.SelectedClassroom = viewModel.SelectedTeacher?.Classroom;
+
+        await viewModel.SaveCommand.ExecuteAsync(null);
+
+        if (!string.IsNullOrEmpty(viewModel.ErrorMessage))
+        {
+            WindowManager.ShowMessageBox(
+                viewModel.ErrorMessage,
+                "Ошибка",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+            viewModel.ErrorMessage = string.Empty;
+        }
+    }
+
+    private void StackPanel_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if (!Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl)) return;
         switch (e.Key)
         {
-            case Key.Insert:
-                try
-                {
-                    EditFlyout.ShowAt(TabControl);
-                }
-                catch (NotSupportedException nse)
-                {
-                    Debug.WriteLine("StackTrace:");
-                    Debug.WriteLine(nse);
-                }
+            case Key.I:
+                WindowManager.Default.CreateWindowWithParameter<Views.ImportExportWindow>(showDialog: true, parameter: WizardType.Import);
                 break;
 
-            case Key.Delete:
-                if (viewModel.SelectedSchedule is null)
-                {
-                    WindowManager.ShowMessageBox(
-                        text: "Не выбран предмет для удаления",
-                        caption: "Предупреждение",
-                        button: MessageBoxButton.OK,
-                        icon: MessageBoxImage.Warning);
-                    return;
-                }
-
-                if (viewModel.SelectedSchedule.Id == 0)
-                {
-                    WindowManager.ShowMessageBox(
-                        text: "Запись ещё не сохранена в БД. Пожалуйста, перезагрузите страницу",
-                        caption: "Предупреждение",
-                        button: MessageBoxButton.OK,
-                        icon: MessageBoxImage.Warning);
-                    return;
-                }
-
-                if (WindowManager.ShowMessageBox(
-                    text: "Вы уверены, что хотите удалить это занятие?",
-                    caption: "Подтверждение",
-                    button: MessageBoxButton.YesNo,
-                    icon: MessageBoxImage.Question) is not MessageBoxResult.Yes)
-                    return;
-
-                await viewModel.DeleteCommand.ExecuteAsync(null);
-                break;
-
-            default:
+            case Key.E:
+                WindowManager.Default.CreateWindowWithParameter<Views.ImportExportWindow>(showDialog: true, parameter: WizardType.Export);
                 break;
         }
     }

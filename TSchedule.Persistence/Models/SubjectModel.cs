@@ -3,7 +3,7 @@ using TSchedule.Persistence.Entities;
 
 namespace TSchedule.Persistence.Models;
 
-public partial class SubjectModel : ObservableObject
+public partial class SubjectModel : ObservableObject, IComparable, IComparable<SubjectModel>
 {
     [ObservableProperty]
     private int _id;
@@ -40,4 +40,12 @@ public partial class SubjectModel : ObservableObject
         => obj is SubjectModel sm && sm.GetHashCode() == GetHashCode();
 
     public override string ToString() => Name;
+
+    public int CompareTo(SubjectModel? other)
+        => other?.Name.CompareTo(Name) ?? 0;
+
+    public int CompareTo(object? obj)
+        => obj is SubjectModel other
+        ? other?.Name.CompareTo(Name) ?? 0
+        : 0;
 }

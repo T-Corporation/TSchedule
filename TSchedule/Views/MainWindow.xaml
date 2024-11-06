@@ -81,7 +81,8 @@
                         HorizontalAlignment="Right"
                         WindowChrome.IsHitTestVisibleInChrome="True">
 
-                <ui:DropDownButton Background="Transparent"
+                <ui:DropDownButton ShowChevronArrow="False"
+                                   Background="Transparent"
                                    BorderBrush="Transparent"
                                    ToolTipService.HasDropShadow="True"
                                    ToolTipService.ToolTip="{Binding FullName}">

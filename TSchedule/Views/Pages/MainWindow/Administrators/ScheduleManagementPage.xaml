@@ -20,7 +20,24 @@
     </ui:Page.Resources>
 
     <Grid>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+        <StackPanel Orientation="Horizontal"
+                    PreviewKeyDown="StackPanel_PreviewKeyDown">
+            <Button>
+                <ui:IconAndText Content="Импорт"
+                                Icon="{x:Static ui:SegoeFluentIcons.Import}"
+                                ToolTipService.ToolTip="Импортировать расписание из Excel
+                                Горячие клавиши: Ctrl + I"/>
+            </Button>
+            <Button>
+                <ui:IconAndText Content="Экспорт"
+                                Icon="{x:Static ui:SegoeFluentIcons.Import}"
+                                ToolTipService.ToolTip="Экспортировать расписание в Excel
+                                Горячие клавиши: Ctrl + E"/>
+            </Button>
+        </StackPanel>
+        
+        <ScrollViewer Margin="0,8"
+                      HorizontalScrollBarVisibility="Auto">
             <TabControl x:Name="TabControl"
                         ui:TabControlHelper.IsAddTabButtonVisible="False"
                         ui:TabControlHelper.ContentBackground="{DynamicResource SystemControlPageBackgroundChromeLowBrush}">
@@ -33,19 +50,122 @@
                               SelectionMode="Single"
                               CanUserAddRows="False"
                               CanUserDeleteRows="False"
+                              CanUserSortColumns="False"
                               AutoGenerateColumns="False"
                               PreviewKeyDown="DataGrid_PreviewKeyDown"
                               ItemsSource="{Binding NumeratorDailySchedule}"
                               ui:DataGridHelper.UseModernColumnStyles="True">
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Click="CopyMenuItem_Click"
+                                          InputGestureText="Ctrl + C">
+                                    <MenuItem.Header>
+                                        <ui:IconAndText Content="Скопировать"
+                                                        HorizontalAlignment="Stretch"
+                                                        Icon="{x:Static ui:SegoeFluentIcons.Copy}"/>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <MenuItem Click="PasteMenuItem_Click"
+                                          InputGestureText="Ctrl + V">
+                                    <MenuItem.Header>
+                                        <ui:IconAndText Content="Вставить"
+                                                        HorizontalAlignment="Stretch"
+                                                        Icon="{x:Static ui:SegoeFluentIcons.Paste}"/>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <MenuItem InputGestureText="Insert"
+                                          Click="EditMenuItem_Click">
+                                    <MenuItem.Header>
+                                        <ui:IconAndText Content="Изменить"
+                                                        HorizontalAlignment="Stretch"
+                                                        Icon="{x:Static ui:SegoeFluentIcons.Edit}"/>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <MenuItem InputGestureText="Delete"
+                                          Click="DeleteMenuItem_Click">
+                                    <MenuItem.Header>
+                                        <ui:IconAndText Content="Удалить"
+                                                        Foreground="#CC3300"
+                                                        HorizontalAlignment="Stretch"
+                                                        Icon="{x:Static ui:SegoeFluentIcons.Delete}"/>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        
                         <DataGrid.Columns>
-                            <DataGridTextColumn Selector.IsSelected="False" Header="Урок" Binding="{Binding Lesson.Id}"/>
-                            <DataGridTextColumn Header="Понедельник" Binding="{Binding Monday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Вторник" Binding="{Binding Tuesday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Среда" Binding="{Binding Wednesday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Четверг" Binding="{Binding Thursday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Пятница" Binding="{Binding Friday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Суббота" Binding="{Binding Saturday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Воскресенье" Binding="{Binding Sunday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Selector.IsSelected="False" Header="Урок" Binding="{Binding Lesson.Id}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="6"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Понедельник" Binding="{Binding Monday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="12,6"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                        <Setter Property="ToolTipService.ToolTip" Value="{Binding Monday.Teacher.Subject, TargetNullValue='Пусто', FallbackValue='Пусто'}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Вторник" Binding="{Binding Tuesday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="12,6"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                        <Setter Property="ToolTipService.ToolTip" Value="{Binding Tuesday.Teacher.Subject, TargetNullValue='Пусто', FallbackValue='Пусто'}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Среда" Binding="{Binding Wednesday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="12,6"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                        <Setter Property="ToolTipService.ToolTip" Value="{Binding Wednesday.Teacher.Subject, TargetNullValue='Пусто', FallbackValue='Пусто'}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Четверг" Binding="{Binding Thursday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="12,6"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                        <Setter Property="ToolTipService.ToolTip" Value="{Binding Thursday.Teacher.Subject, TargetNullValue='Пусто', FallbackValue='Пусто'}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Пятница" Binding="{Binding Friday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="12,6"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                        <Setter Property="ToolTipService.ToolTip" Value="{Binding Friday.Teacher.Subject, TargetNullValue='Пусто', FallbackValue='Пусто'}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Суббота" Binding="{Binding Saturday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="12,6"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                        <Setter Property="ToolTipService.ToolTip" Value="{Binding Saturday.Teacher.Subject, TargetNullValue='Пусто', FallbackValue='Пусто'}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Воскресенье" Binding="{Binding Sunday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="12,6"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                        <Setter Property="ToolTipService.ToolTip" Value="{Binding Sunday.Teacher.Subject, TargetNullValue='Пусто', FallbackValue='Пусто'}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
@@ -58,19 +178,122 @@
                               SelectionMode="Single"
                               CanUserAddRows="False"
                               CanUserDeleteRows="False"
+                              CanUserSortColumns="False"
                               AutoGenerateColumns="False"
                               PreviewKeyDown="DataGrid_PreviewKeyDown"
                               ui:DataGridHelper.UseModernColumnStyles="True"
                               ItemsSource="{Binding DenominatorDailySchedule}">
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem InputGestureText="Ctrl + C"
+                                          Click="CopyMenuItem_Click">
+                                    <MenuItem.Header>
+                                        <ui:IconAndText Content="Скопировать"
+                                                        HorizontalAlignment="Stretch"
+                                                        Icon="{x:Static ui:SegoeFluentIcons.Copy}"/>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <MenuItem InputGestureText="Ctrl + V"
+                                          Click="PasteMenuItem_Click">
+                                    <MenuItem.Header>
+                                        <ui:IconAndText Content="Вставить"
+                                                        HorizontalAlignment="Stretch"
+                                                        Icon="{x:Static ui:SegoeFluentIcons.Paste}"/>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <MenuItem InputGestureText="Insert"
+                                          Click="EditMenuItem_Click">
+                                    <MenuItem.Header>
+                                        <ui:IconAndText Content="Изменить"
+                                                        HorizontalAlignment="Stretch"
+                                                        Icon="{x:Static ui:SegoeFluentIcons.Edit}"/>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                                <MenuItem InputGestureText="Delete"
+                                          Click="DeleteMenuItem_Click">
+                                    <MenuItem.Header>
+                                        <ui:IconAndText Content="Удалить"
+                                                        Foreground="#CC3300"
+                                                        HorizontalAlignment="Stretch"
+                                                        Icon="{x:Static ui:SegoeFluentIcons.Delete}"/>
+                                    </MenuItem.Header>
+                                </MenuItem>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        
                         <DataGrid.Columns>
-                            <DataGridTextColumn Selector.IsSelected="False" Header="Урок" Binding="{Binding Lesson.Id}"/>
-                            <DataGridTextColumn Header="Понедельник" Binding="{Binding Monday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Вторник" Binding="{Binding Tuesday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Среда" Binding="{Binding Wednesday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Четверг" Binding="{Binding Thursday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Пятница" Binding="{Binding Friday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Суббота" Binding="{Binding Saturday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
-                            <DataGridTextColumn Header="Воскресенье" Binding="{Binding Sunday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}"/>
+                            <DataGridTextColumn Selector.IsSelected="False" Header="Урок" Binding="{Binding Lesson.Id}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="6"/>
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Понедельник" Binding="{Binding Monday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="12,6"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                        <Setter Property="ToolTipService.ToolTip" Value="{Binding Monday.Teacher.Subject, TargetNullValue='Пусто', FallbackValue='Пусто'}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Вторник" Binding="{Binding Tuesday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="12,6"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                        <Setter Property="ToolTipService.ToolTip" Value="{Binding Tuesday.Teacher.Subject, TargetNullValue='Пусто', FallbackValue='Пусто'}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Среда" Binding="{Binding Wednesday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="12,6"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                        <Setter Property="ToolTipService.ToolTip" Value="{Binding Wednesday.Teacher.Subject, TargetNullValue='Пусто', FallbackValue='Пусто'}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Четверг" Binding="{Binding Thursday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="12,6"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                        <Setter Property="ToolTipService.ToolTip" Value="{Binding Thursday.Teacher.Subject, TargetNullValue='Пусто', FallbackValue='Пусто'}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Пятница" Binding="{Binding Friday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="12,6"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                        <Setter Property="ToolTipService.ToolTip" Value="{Binding Friday.Teacher.Subject, TargetNullValue='Пусто', FallbackValue='Пусто'}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Суббота" Binding="{Binding Saturday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="12,6"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                        <Setter Property="ToolTipService.ToolTip" Value="{Binding Saturday.Teacher.Subject, TargetNullValue='Пусто', FallbackValue='Пусто'}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Воскресенье" Binding="{Binding Sunday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Padding" Value="12,6"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                        <Setter Property="ToolTipService.ToolTip" Value="{Binding Sunday.Teacher.Subject, TargetNullValue='Пусто', FallbackValue='Пусто'}"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
@@ -129,8 +352,8 @@
                                        Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}"/>
                             <Button Content="Сохранить"
                                     HorizontalAlignment="Stretch"
-                                    Style="{DynamicResource AccentButtonStyle}"
-                                    Command="{Binding SaveCommand}"/>
+                                    Command="{Binding SaveCommand}"
+                                    Style="{DynamicResource AccentButtonStyle}"/>
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>

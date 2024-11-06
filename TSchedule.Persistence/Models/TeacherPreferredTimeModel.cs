@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using TSchedule.Persistence.Entities;
-using WeekDay = TSchedule.Persistence.Entities.WeekDay;
 
 namespace TSchedule.Persistence.Models;
 
@@ -29,4 +28,7 @@ public partial class TeacherPreferredTimeModel : ObservableObject
             PreferredEnd = PreferredEnd is not null ? TimeOnly.FromDateTime(PreferredEnd.Value) : null,
             PreferredStart = PreferredStart is not null ? TimeOnly.FromDateTime(PreferredStart.Value) : null
         };
+
+    public override string ToString()
+        => $"{DayOfWeek}. С {PreferredStart?.ToString() ?? "--:--"} до {PreferredEnd?.ToString() ?? "--:--"}";
 }

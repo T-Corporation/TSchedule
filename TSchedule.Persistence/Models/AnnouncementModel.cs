@@ -40,4 +40,6 @@ public partial class AnnouncementModel : ObservableObject
             TeacherId = Teacher!.Id,
             Reason = Reason
         };
+
+    public override string ToString() => Reason;
 }

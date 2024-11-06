@@ -24,22 +24,28 @@ public class SubjectsService : ISubjectsService
             .ToListAsync();
     }
 
-    public async Task<Subject> GetSubjectByCode(string code)
+    public async Task<Subject?> GetSubjectByCode(string code)
     {
         await using ApplicationDbContext context = new();
         return await context.Subjects.AsNoTracking()
             .Include(s => s.Specialty)
-            .FirstOrDefaultAsync(s => s.Code == code)
-            ?? throw new EntityNotFoundException<Subject>(nameof(code), code);
+            .FirstOrDefaultAsync(s => s.Code == code);
     }
 
-    public async Task<Subject> GetSubjectById(int id)
+    public async Task<Subject?> GetSubjectById(int id)
     {
         await using ApplicationDbContext context = new();
         return await context.Subjects.AsNoTracking()
             .Include(s => s.Specialty)
-            .FirstOrDefaultAsync(s => s.Id == id)
-            ?? throw new EntityNotFoundException<Subject>(nameof(id), id);
+            .FirstOrDefaultAsync(s => s.Id == id);
+    }
+
+    public async Task<Subject?> GetSubjectByName(string name)
+    {
+        await using ApplicationDbContext context = new();
+        return await context.Subjects.AsNoTracking()
+            .Include(s => s.Specialty)
+            .FirstOrDefaultAsync(s => s.Name == name);
     }
 
     public async Task<IEnumerable<Subject>> GetSubjectsByLikeQuery(string query)

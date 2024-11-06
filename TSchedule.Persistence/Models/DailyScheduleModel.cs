@@ -28,4 +28,6 @@ public partial class DailyScheduleModel : ObservableObject
 
     [ObservableProperty]
     private ScheduleModel _saturday = null!;
+
+    public override string ToString() => Day.Name;
 }

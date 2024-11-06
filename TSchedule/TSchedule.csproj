@@ -42,6 +42,8 @@
 	  <None Remove="Images\calendar_375.png" />
 	  <None Remove="Images\classroom_375.png" />
 	  <None Remove="Images\clock_375.png" />
+	  <None Remove="Images\edit_property_375.png" />
+	  <None Remove="Images\excel_48.png" />
 	  <None Remove="Images\faq_375.png" />
 	  <None Remove="Images\favicon.ico" />
 	  <None Remove="Images\favicon_square.png" />
@@ -52,6 +54,7 @@
 	<ItemGroup>
 		<PackageReference Include="Azure.Identity" Version="1.13.1" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+		<PackageReference Include="EPPlus" Version="7.4.2" />
 		<PackageReference Include="iNKORE.UI.WPF.Modern" Version="0.9.30" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" />
 	</ItemGroup>
@@ -66,6 +69,8 @@
 	  <Resource Include="Images\calendar_375.png" />
 	  <Resource Include="Images\classroom_375.png" />
 	  <Resource Include="Images\clock_375.png" />
+	  <Resource Include="Images\edit_property_375.png" />
+	  <Resource Include="Images\excel_48.png" />
 	  <Resource Include="Images\faq_375.png" />
 	  <Resource Include="Images\group_375.png" />
 	  <Resource Include="Images\favicon.ico" />

@@ -28,6 +28,8 @@ public partial class LessonScheduleModel : ObservableObject
     [ObservableProperty]
     private ScheduleModel? _sunday;
 
+    public override string ToString() => Lesson.ToString();
+
     public List<ScheduleModel> GetLessons() =>
     [
         Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday

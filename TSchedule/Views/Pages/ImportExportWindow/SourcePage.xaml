@@ -1,0 +1,104 @@
+﻿<ui:Page x:Class="TSchedule.Views.Pages.ImportExportWindow.SourcePage"
+         xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+         xmlns:vm="clr-namespace:TSchedule.ViewModels.Pages.ImportExportWindow"
+         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         mc:Ignorable="d" 
+         d:DesignWidth="600"
+         d:DesignHeight="540"
+         d:Background="White"
+         Title="Выбор источника данных">
+    
+    <ui:Page.DataContext>
+        <vm:SourceViewModel/>
+    </ui:Page.DataContext>
+
+    <Grid Margin="20,12"
+          ui:PanelHelper.Spacing="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock FontSize="18"
+                       Grid.Column="0"
+                       Text="Источник данных:"
+                       VerticalAlignment="Center"/>
+
+            <Border Padding="4"
+                    Grid.Column="1"
+                    CornerRadius="4"
+                    BorderThickness="1"
+                    Background="{DynamicResource SystemControlBackgroundAltMediumBrush}"
+                    BorderBrush="{DynamicResource SystemControlDisabledChromeHighBrush}">
+                <StackPanel Orientation="Horizontal"
+                            ui:PanelHelper.Spacing="4">
+                    
+                    <Image MaxWidth="48"
+                           MinWidth="24"
+                           MaxHeight="48"
+                           MinHeight="24"
+                           Stretch="Uniform"
+                           UseLayoutRounding="True"
+                           Source="/Images/excel_48.png"
+                           RenderOptions.BitmapScalingMode="Fant"/>
+                    
+                    <TextBlock FontSize="17"
+                               Text="Microsoft Excel"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <GroupBox Padding="8"
+                  Grid.Row="1"
+                  Style="{x:Null}"
+                  VerticalAlignment="Stretch"
+                  BorderBrush="{DynamicResource TextFillColorPrimaryBrush}">
+            <GroupBox.Header>
+                <TextBlock Padding="4"
+                           FontSize="16"
+                           Text="Параметры соединения с Excel"/>
+            </GroupBox.Header>
+
+            <StackPanel ui:PanelHelper.Spacing="8">
+                <Grid ui:PanelHelper.Spacing="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="82.4"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox HorizontalAlignment="Stretch"
+                             Text="{Binding FilePath, Mode=TwoWay}"
+                             ui:ControlHelper.Header="Путь к файлу Excel"/>
+                    
+                    <Button Grid.Column="1"
+                            Content="Обзор..."
+                            VerticalAlignment="Bottom"
+                            Command="{Binding OpenDialogCommand}"/>
+                </Grid>
+
+                <ComboBox Margin="4,0,86.4,0"
+                          HorizontalAlignment="Stretch"
+                          ItemsSource="{Binding Versions}"
+                          IsSynchronizedWithCurrentItem="True"
+                          ui:ControlHelper.Header="Версия Excel"
+                          SelectedItem="{Binding SelectedVersion}"/>
+
+                <CheckBox Margin="4"
+                          IsChecked="{Binding FirstRowContainsHeaders}">
+                    <TextBlock Text="Первая строка содержит имена столбцов"/>
+                </CheckBox>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+    
+</ui:Page>

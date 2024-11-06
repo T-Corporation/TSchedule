@@ -2,8 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using iNKORE.UI.WPF.Modern.Controls;
 using System.Collections.ObjectModel;
-using System.Windows;
-using TSchedule.Managers;
 using TSchedule.Persistence.Entities;
 using TSchedule.Persistence.Interfaces;
 using TSchedule.Persistence.Managers;
@@ -18,10 +16,10 @@ public partial class ScheduleManagementViewModel : ObservableObject
     private static readonly IScheduleService ScheduleService = 
         ServiceManager.Default.GetRequiredService<IScheduleService>();
 
-    private static readonly ISubjectsService SubjectsService = 
+    public static readonly ISubjectsService SubjectsService = 
         ServiceManager.Default.GetRequiredService<ISubjectsService>();
 
-    private static readonly ITeachersService TeachersService = 
+    public static readonly ITeachersService TeachersService = 
         ServiceManager.Default.GetRequiredService<ITeachersService>();
 
     private static readonly IClassroomsService ClassroomsService = 
@@ -86,7 +84,7 @@ public partial class ScheduleManagementViewModel : ObservableObject
         _ = UpdateComboboxes(value);
     }
     
-    private async Task UpdateComboboxes(SubjectModel value)
+    public async Task UpdateComboboxes(SubjectModel value)
     {
         SelectedTeacher = (await TeachersService.GetTeacherBySubjectId(value.Id))?
             .ToModel();
@@ -289,9 +287,10 @@ public partial class ScheduleManagementViewModel : ObservableObject
         ObservableCollection<LessonScheduleModel> scheduleCollection, 
         ScheduleModel schedule)
     {
-        var lessonSchedule = scheduleCollection.FirstOrDefault(ls => ls.Lesson?.Id == schedule.Lesson?.Id);
+        var lessonSchedule = scheduleCollection.FirstOrDefault(
+            ls => ls.Lesson?.Id == schedule.Lesson?.Id);
+
         if (lessonSchedule is not null)
-        {
             switch (schedule.WeekDay?.Id)
             {
                 case 1: lessonSchedule.Monday = schedule; break;
@@ -302,7 +301,6 @@ public partial class ScheduleManagementViewModel : ObservableObject
                 case 6: lessonSchedule.Saturday = schedule; break;
                 case 7: lessonSchedule.Sunday = schedule; break;
             }
-        }
     }
 
     /// <summary>
@@ -453,14 +451,6 @@ public partial class ScheduleManagementViewModel : ObservableObject
         return false;
     }
 
-    [RelayCommand]
-    private async Task Delete()
-    {
-        await ScheduleService.RemoveSchedule(SelectedSchedule!.Id);
-        var scheduleCollection = IsDenominator ? DenominatorDailySchedule : NumeratorDailySchedule;
-        SetToNullLessonInCollection(scheduleCollection, SelectedSchedule);
-    }
-
     private static void SetToNullLessonInCollection(
         ObservableCollection<LessonScheduleModel> scheduleCollection,
         ScheduleModel schedule)
@@ -479,5 +469,13 @@ public partial class ScheduleManagementViewModel : ObservableObject
                 case 7: lessonSchedule.Sunday = null; break;
             }
         }
+    }
+
+    [RelayCommand]
+    private async Task Delete()
+    {
+        await ScheduleService.RemoveSchedule(SelectedSchedule!.Id);
+        var scheduleCollection = IsDenominator ? DenominatorDailySchedule : NumeratorDailySchedule;
+        SetToNullLessonInCollection(scheduleCollection, SelectedSchedule);
     }
 }

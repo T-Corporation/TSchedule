@@ -22,6 +22,8 @@ public partial class LessonModel : ObservableObject
             EndTime = EndTime
         };
 
+    public override string ToString() => Id.ToString();
+
     public override int GetHashCode()
         => Id.GetHashCode();
 

@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Threading;
 using System.Text;
 using Windows.UI.ViewManagement;
+using OfficeOpenXml;
 
 namespace TSchedule;
 
@@ -24,6 +25,8 @@ public partial class App
     {
         try
         {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
             DispatcherUnhandledException += OnDispatcherUnhandledException;
 
@@ -51,6 +54,8 @@ public partial class App
 
             await using ApplicationDbContext context = new(PreferencesManager.Default.GetConnectionString());
             await context.WarmUpAsync();
+
+            await ExcelManager.Default.ParseSchedule("E:\\Расписание1.xlsx", (await new GroupsService().GetGroupByCode("ИС-3")).ToModel());
 
             await InitializeEntry();
         }

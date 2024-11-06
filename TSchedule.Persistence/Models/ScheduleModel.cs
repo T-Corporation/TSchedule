@@ -41,4 +41,15 @@ public partial class ScheduleModel : ObservableObject
             TeacherId = Teacher!.Id,
             GroupId = Group!.Id
         };
+
+    public override string ToString()
+        => $"""
+            День недели={WeekDay};
+            Семестр={Semester};
+            Урок={Lesson};
+            Год={Year};
+            Знаменатель={IsDenominator};
+            Преподаватель={Teacher};
+            Группа={Group}.
+            """;
 }
