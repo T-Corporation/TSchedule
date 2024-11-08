@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using TSchedule.Extensions;
 using TSchedule.Managers;
 using TSchedule.Persistence.Entities;
 using TSchedule.Persistence.Enums;
@@ -104,4 +105,10 @@ public partial class ScheduleViewModel : ObservableObject
                 new ExcelManager.LessonSchedules(SelectedGroup, SelectedSemester, SelectedYear, NumeratorDailySchedule, DenominatorDailySchedule)
             ]);
     }
+
+    [RelayCommand]
+    private void GoBack()
+        => WindowManager.Default.GetViewModel<Views.MainWindow>()!
+            .As<MainWindowViewModel>()!
+            .GoBack();
 }

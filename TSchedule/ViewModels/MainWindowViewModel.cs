@@ -130,6 +130,9 @@ public partial class MainWindowViewModel : ObservableObject
     public void GoForward() => NavigationFrame.GoForward();
 
     [RelayCommand]
+    private void Refresh() => NavigationFrame.Refresh();
+
+    [RelayCommand]
     private void GoToParameters() => NavigateTo(new SettingsPage());
 
     public void NavigateTo(Page page) => NavigationFrame.Navigate(page);
@@ -146,9 +149,5 @@ public partial class MainWindowViewModel : ObservableObject
 
         WindowManager.Default.CreateWindow<StartWindow>();
         WindowManager.Default.CloseWindow<MainWindow>();
-
-        #if DEBUG
-        PreferencesManager.Default.PrintValues();
-        #endif
     }
 }

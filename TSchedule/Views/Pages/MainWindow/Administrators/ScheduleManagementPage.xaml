@@ -315,9 +315,11 @@
 
         <ui:ContentDialog d:Panel.ZIndex="2"
                           IsShadowEnabled="True"
+                          CloseButtonText="Отмена"
                           PrimaryButtonText="Далее"
                           x:Name="GroupSelectionDialog"
                           Title="Выберите группу студентов"
+                          CloseButtonCommand="{Binding GoBackCommand}"
                           PrimaryButtonCommand="{Binding ContinueCommand}"
                           PrimaryButtonStyle="{DynamicResource AccentButtonStyle}"
                           IsPrimaryButtonEnabled="{Binding SelectedGroup, Converter={StaticResource NullableToBooleanConverter}}">

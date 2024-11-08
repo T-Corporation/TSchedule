@@ -38,7 +38,7 @@
                 HorizontalAlignment="Stretch"
                 Command="{Binding ResetCommand}">
             <ui:IconAndText Content="Сброс до заводских настроек"
-                            Icon="{x:Static ui:FluentSystemIcons.Settings_24_Filled}"/>
+                            Icon="{x:Static ui:SegoeFluentIcons.ResetDrive}"/>
         </Button>
     </StackPanel>
 </Window>

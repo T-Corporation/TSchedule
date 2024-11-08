@@ -55,7 +55,7 @@ public partial class UserConnectionViewModel : ObservableObject
             WindowManager.ShowMessageBox(
                 """
                 Миграция успешно проведена!
-                Пожалуйста, откройте это приложение в обычном режиме
+                Пожалуйста, перезапустите приложение.
                 """,
                 "Успех!",
                 MessageBoxButton.OK,
@@ -68,11 +68,6 @@ public partial class UserConnectionViewModel : ObservableObject
         }
         catch (Exception ex)
         {
-            #if DEBUG
-            Debug.WriteLine("StackTrace:");
-            Debug.WriteLine(ex);
-            #endif
-
             WindowManager.ShowMessageBox(
                 ex.Message,
                 "Произошла ошибка при попытке миграции",
@@ -102,8 +97,8 @@ public partial class UserConnectionViewModel : ObservableObject
 
             WindowManager.ShowMessageBox(
                 """
-                Сброс строки подключения прошёл успешно!
-                Пожалуйста, откройте это приложение в обычном режиме
+                Сброс до заводских настроек прошёл успешно!
+                Пожалуйста, перезапустите приложение.
                 """,
                 "Успех!",
                 MessageBoxButton.OK,
@@ -113,11 +108,6 @@ public partial class UserConnectionViewModel : ObservableObject
         }
         catch (Exception ex)
         {
-            #if DEBUG
-            Debug.WriteLine("StackTrace:");
-            Debug.WriteLine(ex);
-            #endif
-
             WindowManager.ShowMessageBox(
                 ex.Message,
                 "Произошла ошибка при попытке миграции",

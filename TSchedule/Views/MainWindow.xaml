@@ -59,21 +59,30 @@
                 <ui:HyperlinkButton Padding="8"
                                     Cursor="Hand"
                                     Command="{Binding GoBackCommand}"
+                                    WindowChrome.IsHitTestVisibleInChrome="True"
                                     IsEnabled="{Binding NavigationFrame.CanGoBack}">
                     <ui:IconAndText ToolTipService.ToolTip="Назад"
                                     ToolTipService.HasDropShadow="True"
-                                    Icon="{x:Static ui:SegoeFluentIcons.Back}"
-                                    WindowChrome.IsHitTestVisibleInChrome="True"/>
+                                    Icon="{x:Static ui:SegoeFluentIcons.Back}"/>
                 </ui:HyperlinkButton>
 
                 <ui:HyperlinkButton Padding="8"
                                     Cursor="Hand"
                                     Command="{Binding GoForwardCommand}"
+                                    WindowChrome.IsHitTestVisibleInChrome="True"
                                     IsEnabled="{Binding NavigationFrame.CanGoForward}">
                     <ui:IconAndText ToolTipService.ToolTip="Вперед"
                                     ToolTipService.HasDropShadow="True"
-                                    WindowChrome.IsHitTestVisibleInChrome="True"
                                     Icon="{x:Static ui:SegoeFluentIcons.Forward}"/>
+                </ui:HyperlinkButton>
+
+                <ui:HyperlinkButton Padding="8"
+                                    Cursor="Hand"
+                                    Command="{Binding RefreshCommand}"
+                                    WindowChrome.IsHitTestVisibleInChrome="True">
+                    <ui:IconAndText ToolTipService.HasDropShadow="True"
+                                    ToolTipService.ToolTip="Обновить страницу"
+                                    Icon="{x:Static ui:SegoeFluentIcons.Refresh}"/>
                 </ui:HyperlinkButton>
 
             </StackPanel>
