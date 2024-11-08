@@ -22,6 +22,6 @@ public partial class HelpViewModel : ObservableObject
         };
 
         if (dialog.ShowDialog() is null) return;
-        File.Copy($"pack://application,,,/TSchedule/Templates/Расписание2024_1_ИС-2.{ext}", dialog.FileName);
+        File.Copy($"pack://application:,,,/TSchedule;component/Templates/Расписание2024_1_ИС-2.{ext}", dialog.FileName);
     }
 }
