@@ -10,7 +10,8 @@
          Loaded="Page_Loaded"
          d:Background="White"
          d:DesignHeight="450"
-         Title="Управление расписанием">
+         Title="Управление расписанием"
+         PreviewKeyDown="Page_PreviewKeyDown">
     
     <ui:Page.Resources>
         <c:ValueToOpacityConverter x:Key="ValueToOpacityConverter"/>
@@ -20,17 +21,27 @@
     </ui:Page.Resources>
 
     <Grid>
-        <StackPanel Orientation="Horizontal"
-                    PreviewKeyDown="StackPanel_PreviewKeyDown">
-            <Button>
-                <ui:IconAndText Content="Импорт"
+        <StackPanel Margin="6"
+                    Panel.ZIndex="1"
+                    VerticalAlignment="Top"
+                    Orientation="Horizontal"
+                    ui:PanelHelper.Spacing="8"
+                    HorizontalAlignment="Right">
+            <Button CommandParameter="Import"
+                    Command="{Binding OpenWizardCommand}">
+                <ui:IconAndText FontSize="11"
+                                IconSize="11"
+                                Content="Импорт"
                                 Icon="{x:Static ui:SegoeFluentIcons.Import}"
                                 ToolTipService.ToolTip="Импортировать расписание из Excel
                                 Горячие клавиши: Ctrl + I"/>
             </Button>
-            <Button>
-                <ui:IconAndText Content="Экспорт"
-                                Icon="{x:Static ui:SegoeFluentIcons.Import}"
+            <Button CommandParameter="Export"
+                    Command="{Binding OpenWizardCommand}">
+                <ui:IconAndText FontSize="11"
+                                IconSize="11"
+                                Content="Экспорт"
+                                Icon="{x:Static ui:SegoeFluentIcons.Export}"
                                 ToolTipService.ToolTip="Экспортировать расписание в Excel
                                 Горячие клавиши: Ctrl + E"/>
             </Button>
@@ -47,12 +58,12 @@
                          x:Name="NumeratorTab">
                     <DataGrid IsReadOnly="True"
                               SelectionUnit="Cell"
+                              x:Name="NumeratorGrid"
                               SelectionMode="Single"
                               CanUserAddRows="False"
                               CanUserDeleteRows="False"
                               CanUserSortColumns="False"
                               AutoGenerateColumns="False"
-                              PreviewKeyDown="DataGrid_PreviewKeyDown"
                               ItemsSource="{Binding NumeratorDailySchedule}"
                               ui:DataGridHelper.UseModernColumnStyles="True">
                         <DataGrid.ContextMenu>
@@ -177,10 +188,10 @@
                               SelectionUnit="Cell"
                               SelectionMode="Single"
                               CanUserAddRows="False"
+                              x:Name="DenominatorGrid"
                               CanUserDeleteRows="False"
                               CanUserSortColumns="False"
                               AutoGenerateColumns="False"
-                              PreviewKeyDown="DataGrid_PreviewKeyDown"
                               ui:DataGridHelper.UseModernColumnStyles="True"
                               ItemsSource="{Binding DenominatorDailySchedule}">
                         <DataGrid.ContextMenu>
@@ -300,7 +311,8 @@
             </TabControl>
         </ScrollViewer>
 
-        <ui:ContentDialog IsShadowEnabled="True"
+        <ui:ContentDialog d:Panel.ZIndex="2"
+                          IsShadowEnabled="True"
                           PrimaryButtonText="ОК"
                           CloseButtonText="Отмена"
                           x:Name="GroupSelectionDialog"
@@ -309,11 +321,26 @@
                           PrimaryButtonCommand="{Binding ContinueCommand}"
                           PrimaryButtonStyle="{DynamicResource AccentButtonStyle}"
                           IsPrimaryButtonEnabled="{Binding SelectedGroup, Converter={StaticResource NullableToBooleanConverter}}">
-            <ComboBox ItemsSource="{Binding Groups}"
-                      IsSynchronizedWithCurrentItem="True"
-                      ui:ControlHelper.Header="Группа студентов"
-                      ui:ControlHelper.PlaceholderText="Выберите группу"
-                      SelectedItem="{Binding SelectedGroup, Mode=TwoWay}"/>
+            <StackPanel ui:PanelHelper.Spacing="8">
+                <ComboBox ItemsSource="{Binding Years}"
+                          HorizontalAlignment="Stretch"
+                          ui:ControlHelper.Header="Год"
+                          IsSynchronizedWithCurrentItem="True"
+                          SelectedItem="{Binding Year, Mode=TwoWay}"
+                          ui:ControlHelper.PlaceholderText="Выберите год"/>
+                <ComboBox HorizontalAlignment="Stretch"
+                          ItemsSource="{Binding Semesters}"
+                          ui:ControlHelper.Header="Семестр"
+                          IsSynchronizedWithCurrentItem="True"
+                          SelectedItem="{Binding Semester, Mode=TwoWay}"
+                          ui:ControlHelper.PlaceholderText="Выберите семестр"/>
+                <ComboBox HorizontalAlignment="Stretch"
+                          ItemsSource="{Binding Groups}"
+                          IsSynchronizedWithCurrentItem="True"
+                          ui:ControlHelper.Header="Группа студентов"
+                          ui:ControlHelper.PlaceholderText="Выберите группу"
+                          SelectedItem="{Binding SelectedGroup, Mode=TwoWay}"/>
+            </StackPanel>
         </ui:ContentDialog>
 
         <ui:FlyoutBase.AttachedFlyout>

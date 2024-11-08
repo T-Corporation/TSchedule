@@ -5,6 +5,15 @@ namespace TSchedule.Persistence.Models;
 
 public partial class SpecialtyModel : ObservableObject
 {
+    /// <summary>
+    /// Неизвестная специальность
+    /// </summary>
+    public static SpecialtyModel Unknown { get; } = new SpecialtyModel
+    {
+        Code = "Неизвестно",
+        Name = "Неизвестно"
+    };
+
     [ObservableProperty]
     private int _id;
 

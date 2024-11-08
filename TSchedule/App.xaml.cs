@@ -55,7 +55,14 @@ public partial class App
             await using ApplicationDbContext context = new(PreferencesManager.Default.GetConnectionString());
             await context.WarmUpAsync();
 
-            await ExcelManager.Default.ParseSchedule("E:\\Расписание1.xlsx", (await new GroupsService().GetGroupByCode("ИС-3")).ToModel());
+            /*var excelManager = new ExcelManager();
+            var schedules = await excelManager.SetFilePath("E:\\Расписание1.xlsx")
+                .SetExcelVersion(ExcelVersion.Excel2007)
+                .GetSchedulesFromFile();
+
+            if (!schedules.IsEmpty())
+                await excelManager.SetFilePath("E:\\Расписание1_Экспорт.xlsx")
+                    .ExportScheduleToFile(schedules);*/
 
             await InitializeEntry();
         }

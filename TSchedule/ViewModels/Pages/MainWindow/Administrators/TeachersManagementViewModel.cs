@@ -195,6 +195,12 @@ public partial class TeachersManagementViewModel : ObservableObject
             return;
         }
 
+        if (TeacherFullName.Split(' ').Length < 3)
+        {
+            ErrorMessage = string.Format("Пожалуйста, напишите полное ФИО преподавателя");
+            return;
+        }
+
         if (string.IsNullOrEmpty(TeacherUserName))
         {
             ErrorMessage = string.Format(pleaseFillField, "Имя для входа");

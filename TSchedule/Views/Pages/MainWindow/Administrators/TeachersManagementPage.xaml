@@ -222,6 +222,16 @@
                                          HorizontalAlignment="Left"
                                          Text="{Binding Classroom.Number, StringFormat='Аудитория {0}'}"/>
 
+                                <!-- Subject -->
+                                <TextBox FontSize="12"
+                                         Padding="4,0"
+                                         Cursor="Arrow"
+                                         IsReadOnly="True"
+                                         BorderThickness="0"
+                                         Background="Transparent"
+                                         HorizontalAlignment="Left"
+                                         Text="{Binding Subject.Name}"/>
+
                                 <!-- Username -->
                                 <TextBox FontSize="12"
                                          Padding="4,0"

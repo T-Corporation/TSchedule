@@ -6,6 +6,7 @@ using TSchedule.Persistence.Entities;
 using TSchedule.Persistence.Interfaces;
 using TSchedule.Persistence.Managers;
 using TSchedule.Persistence.Models;
+using TSchedule.ViewModels.Pages.MainWindow.Administrators;
 
 namespace TSchedule.ViewModels.Pages;
 
@@ -23,6 +24,21 @@ public partial class GroupSelectionViewModel : ObservableObject
     [NotifyCanExecuteChangedFor(nameof(ContinueCommand))]
     private GroupModel? _selectedGroup;
 
+    [ObservableProperty]
+    private byte[] _semesters = [1, 2];
+
+    [ObservableProperty]
+    private byte _selectedSemester = ScheduleManagementViewModel.CurrentSemester;
+
+    [ObservableProperty]
+    private IEnumerable<short> _years = Enumerable.Range(1991, ScheduleManagementViewModel.CurrentYear - 1990)
+        .Select(y => (short)y)
+        .ToList()
+        .Reverse<short>();
+
+    [ObservableProperty]
+    private short _selectedYear = ScheduleManagementViewModel.CurrentYear;
+
     private GroupSelectionViewModel(ContentDialog dialog, IEnumerable<Group> groups)
     {
         _groupSelectionDialog = dialog;
@@ -32,12 +48,13 @@ public partial class GroupSelectionViewModel : ObservableObject
     }
 
     public static async Task<GroupSelectionViewModel> CreateInstanceAsync(ContentDialog dialog)
-        => new(dialog,
-            await GroupsService.GetAllGroups());
+        => new(dialog, await GroupsService.GetAllGroups());
     
-    private bool IsGroupSelected() => SelectedGroup is not null;
+    private bool IsEverythingSelected() => SelectedGroup is not null
+        && SelectedYear != 0
+        && SelectedSemester != 0;
 
-    [RelayCommand(CanExecute = nameof(IsGroupSelected))]
+    [RelayCommand(CanExecute = nameof(IsEverythingSelected))]
     private void Continue()
     {
         _groupSelectionDialog.Hide();

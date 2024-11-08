@@ -2,7 +2,10 @@
 using CommunityToolkit.Mvvm.Input;
 using iNKORE.UI.WPF.Modern.Controls;
 using System.Collections.ObjectModel;
+using TSchedule.Extensions;
+using TSchedule.Managers;
 using TSchedule.Persistence.Entities;
+using TSchedule.Persistence.Enums;
 using TSchedule.Persistence.Interfaces;
 using TSchedule.Persistence.Managers;
 using TSchedule.Persistence.Models;
@@ -27,9 +30,9 @@ public partial class ScheduleManagementViewModel : ObservableObject
 
     public Flyout Flyout { get; }
 
-    private static readonly byte CurrentSemester = (byte)(DateTime.Now.Month is >= 9 and <= 12 ? 1 : 2);
+    public static readonly byte CurrentSemester = (byte)(DateTime.Now.Month is >= 9 and <= 12 ? 1 : 2);
 
-    private static readonly short CurrentYear = (short)DateTime.Now.Year;
+    public static readonly short CurrentYear = (short)DateTime.Now.Year;
 
     // Список данных для числителя и знаменателя
     [ObservableProperty]
@@ -67,6 +70,12 @@ public partial class ScheduleManagementViewModel : ObservableObject
 
     [ObservableProperty]
     private GroupModel? _selectedGroup;
+
+    [ObservableProperty]
+    private byte _selectedSemester;
+
+    [ObservableProperty]
+    private short _selectedYear;
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
@@ -127,6 +136,8 @@ public partial class ScheduleManagementViewModel : ObservableObject
     public ScheduleManagementViewModel(
         Flyout flyout,
         GroupModel selectedGroup,
+        byte selectedSemester,
+        short selectedYear,
         IEnumerable<Subject> subjects,
         IEnumerable<Teacher> teachers,
         IEnumerable<Classroom> classrooms,
@@ -137,6 +148,8 @@ public partial class ScheduleManagementViewModel : ObservableObject
 
         Flyout = flyout;
         SelectedGroup = selectedGroup;
+        SelectedSemester = selectedSemester;
+        SelectedYear = selectedYear;
 
         foreach (var subject in subjects)
             Subjects.Add(subject.ToModel());
@@ -151,9 +164,15 @@ public partial class ScheduleManagementViewModel : ObservableObject
         PopulateLessonSchedules(denominatorSchedules, DenominatorDailySchedule);
     }
 
-    public static async Task<ScheduleManagementViewModel> CreateInstanceAsync(Flyout flyout, GroupModel selectedGroup)
+    public static async Task<ScheduleManagementViewModel> CreateInstanceAsync(
+        Flyout flyout,
+        GroupModel selectedGroup,
+        byte selectedSemester,
+        short selectedYear)
         => new(flyout,
             selectedGroup,
+            selectedSemester,
+            selectedYear,
             await SubjectsService.GetSubjectsBySpecialtyId(selectedGroup.Specialty!.Id),
             await TeachersService.GetAllTeachers(),
             await ClassroomsService.GetAllClassrooms(),
@@ -165,7 +184,7 @@ public partial class ScheduleManagementViewModel : ObservableObject
         ObservableCollection<LessonScheduleModel> observableCollection)
     {
         var groupedSchedules = schedules
-            .Where(s => s.GroupId == SelectedGroup!.Id && s.Year == CurrentYear && s.Semester == CurrentSemester)
+            .Where(s => s.GroupId == SelectedGroup!.Id && s.Year == SelectedYear && s.Semester == SelectedSemester)
             .GroupBy(s => s.LessonId)
             .ToDictionary(g => g.Key, g => g.ToList());
 
@@ -217,8 +236,8 @@ public partial class ScheduleManagementViewModel : ObservableObject
             {
                 WeekDay = SelectedDayOfWeek,
                 Teacher = SelectedTeacher,
-                Semester = CurrentSemester,
-                Year = CurrentYear,
+                Semester = SelectedSemester,
+                Year = SelectedYear,
                 IsDenominator = IsDenominator,
                 Group = SelectedGroup,
                 Lesson = SelectedLesson
@@ -271,8 +290,8 @@ public partial class ScheduleManagementViewModel : ObservableObject
     {
         schedule.WeekDay = SelectedDayOfWeek;
         schedule.Teacher = SelectedTeacher;
-        schedule.Semester = CurrentSemester;
-        schedule.Year = CurrentYear;
+        schedule.Semester = SelectedSemester;
+        schedule.Year = SelectedYear;
         schedule.IsDenominator = IsDenominator;
         schedule.Group = SelectedGroup;
         schedule.Lesson = SelectedLesson;
@@ -477,5 +496,45 @@ public partial class ScheduleManagementViewModel : ObservableObject
         await ScheduleService.RemoveSchedule(SelectedSchedule!.Id);
         var scheduleCollection = IsDenominator ? DenominatorDailySchedule : NumeratorDailySchedule;
         SetToNullLessonInCollection(scheduleCollection, SelectedSchedule);
+    }
+
+    [RelayCommand]
+    private void OpenWizard(string wizardString)
+    {
+        if (SelectedGroup is null) return;
+
+        WindowManager.Default.CreateWindowWithParameters<Views.ImportExportWindow>(
+            showDialog: true,
+            parameters:
+            [
+                wizardString switch
+                {
+                    "Import" => WizardType.Import,
+                    _ => WizardType.Export
+                },
+                new ExcelManager.LessonSchedules(SelectedGroup, SelectedSemester, SelectedYear, NumeratorDailySchedule, DenominatorDailySchedule)
+            ]);
+    }
+
+    public async Task UpdateSchedules(
+        ICollection<LessonScheduleModel> numeratorDailySchedule,
+        ICollection<LessonScheduleModel> denominatorDailySchedule)
+    {
+        foreach (var lessonSchedule in NumeratorDailySchedule.Concat(DenominatorDailySchedule))
+            foreach (var schedule in lessonSchedule.GetLessons())
+                if (schedule is not null)
+                    await ScheduleService.RemoveSchedule(schedule.Id);
+
+        foreach (var lessonSchedule in numeratorDailySchedule.Concat(denominatorDailySchedule))
+            foreach (var schedule in lessonSchedule.GetLessons())
+                if (schedule is not null)
+                {
+                    schedule.Semester = SelectedSemester;
+                    schedule.Year = SelectedYear;
+                    await ScheduleService.AddSchedule(schedule.ToEntity());
+                }
+
+        NumeratorDailySchedule = [.. numeratorDailySchedule];
+        DenominatorDailySchedule = [.. denominatorDailySchedule];
     }
 }

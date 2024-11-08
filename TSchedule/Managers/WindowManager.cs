@@ -56,14 +56,14 @@ public class WindowManager : IManager
     /// <param name="owner">Владелец окна</param>
     /// <param name="parameter">Параметр для конструктора окна</param>
     /// <returns></returns>
-    public T CreateWindowWithParameter<T>(bool isModern = true, bool showDialog = false, Window? owner = null, object? parameter = null)
+    public T CreateWindowWithParameters<T>(bool isModern = true, bool showDialog = false, Window? owner = null, params object[] parameters)
         where T : Window
     {
         var windowType = typeof(T);
         if (_windows.TryGetValue(windowType, out var value))
             return (T)value;
 
-        var window = (Activator.CreateInstance(windowType, parameter) as T)!;
+        var window = (Activator.CreateInstance(windowType, parameters) as T)!;
         return CreateWindow(window, isModern, showDialog, owner);
     }
 

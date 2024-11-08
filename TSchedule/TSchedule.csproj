@@ -42,6 +42,7 @@
 	  <None Remove="Images\calendar_375.png" />
 	  <None Remove="Images\classroom_375.png" />
 	  <None Remove="Images\clock_375.png" />
+	  <None Remove="Images\conflict_375.png" />
 	  <None Remove="Images\edit_property_375.png" />
 	  <None Remove="Images\excel_48.png" />
 	  <None Remove="Images\faq_375.png" />
@@ -49,6 +50,9 @@
 	  <None Remove="Images\favicon_square.png" />
 	  <None Remove="Images\group_375.png" />
 	  <None Remove="Images\settings_375.png" />
+	  <None Remove="Images\verified_375.png" />
+	  <None Remove="Templates\Расписание2024_1_ИС-2.xls" />
+	  <None Remove="Templates\Расписание2024_1_ИС-2.xlsx" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -69,6 +73,7 @@
 	  <Resource Include="Images\calendar_375.png" />
 	  <Resource Include="Images\classroom_375.png" />
 	  <Resource Include="Images\clock_375.png" />
+	  <Resource Include="Images\conflict_375.png" />
 	  <Resource Include="Images\edit_property_375.png" />
 	  <Resource Include="Images\excel_48.png" />
 	  <Resource Include="Images\faq_375.png" />
@@ -76,6 +81,9 @@
 	  <Resource Include="Images\favicon.ico" />
 	  <Resource Include="Images\favicon_square.png" />
 	  <Resource Include="Images\settings_375.png" />
+	  <Resource Include="Images\verified_375.png" />
+	  <Resource Include="Templates\Расписание2024_1_ИС-2.xls" />
+	  <Resource Include="Templates\Расписание2024_1_ИС-2.xlsx" />
 	</ItemGroup>
 
 	<ItemGroup>

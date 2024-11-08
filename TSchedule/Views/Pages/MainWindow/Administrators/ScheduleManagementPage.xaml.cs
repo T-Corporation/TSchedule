@@ -2,7 +2,6 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using TSchedule.Managers;
-using TSchedule.Persistence.Enums;
 using TSchedule.Persistence.Extensions;
 using TSchedule.Persistence.Models;
 using TSchedule.ViewModels.Pages;
@@ -19,18 +18,39 @@ public partial class ScheduleManagementPage
         var groupSelectionViewModel = await GroupSelectionViewModel.CreateInstanceAsync(GroupSelectionDialog);
         DataContext = groupSelectionViewModel;
         await GroupSelectionDialog.ShowAsync();
-        DataContext = await ScheduleManagementViewModel.CreateInstanceAsync(EditFlyout, groupSelectionViewModel.SelectedGroup!);
+        DataContext = await ScheduleManagementViewModel.CreateInstanceAsync(
+            EditFlyout,
+            groupSelectionViewModel.SelectedGroup!,
+            groupSelectionViewModel.SelectedSemester,
+            groupSelectionViewModel.SelectedYear);
     }
 
-    private async void DataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+    private async void Page_PreviewKeyDown(object sender, KeyEventArgs e)
     {
-        if (sender is not DataGrid dataGrid
-            || e.OriginalSource is not DataGridCell cell
-            || cell.Column is null
-            || cell.DataContext is not LessonScheduleModel selectedItem
-            || DataContext is not ScheduleManagementViewModel viewModel)
+        if (DataContext is not ScheduleManagementViewModel viewModel)
             return;
 
+        if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+        {
+            switch (e.Key)
+            {
+                case Key.I:
+                    viewModel.OpenWizardCommand.Execute("Import");
+                    break;
+
+                case Key.E:
+                    viewModel.OpenWizardCommand.Execute("Export");
+                    break;
+            }
+            return;
+        }
+
+        if (e.OriginalSource is not DataGridCell cell
+            || cell.Column is null
+            || cell.DataContext is not LessonScheduleModel selectedItem)
+            return;
+
+        var dataGrid = DenominatorTab.IsSelected ? DenominatorGrid : NumeratorGrid;
         SetSelectedSchedule(viewModel, selectedItem, cell.Column.DisplayIndex, dataGrid.Items.IndexOf(selectedItem));
         viewModel.IsDenominator = DenominatorTab.IsSelected;
 
@@ -111,40 +131,47 @@ public partial class ScheduleManagementPage
         int columnIndex,
         int rowIndex)
     {
-        viewModel.SelectedSchedule = columnIndex switch
+        try
         {
-            1 => selectedItem.Monday,
-            2 => selectedItem.Tuesday,
-            3 => selectedItem.Wednesday,
-            4 => selectedItem.Thursday,
-            5 => selectedItem.Friday,
-            6 => selectedItem.Saturday,
-            7 => selectedItem.Sunday,
-            _ => throw new NotSupportedException("Неверный индекс столбца для дня недели")
-        };
+            viewModel.SelectedSchedule = columnIndex switch
+            {
+                1 => selectedItem.Monday,
+                2 => selectedItem.Tuesday,
+                3 => selectedItem.Wednesday,
+                4 => selectedItem.Thursday,
+                5 => selectedItem.Friday,
+                6 => selectedItem.Saturday,
+                7 => selectedItem.Sunday,
+                _ => throw new NotSupportedException("Неверный индекс столбца для дня недели")
+            };
 
-        viewModel.SelectedDayOfWeek = columnIndex switch
-        {
-            1 => WeekDays.Monday,
-            2 => WeekDays.Tuesday,
-            3 => WeekDays.Wednesday,
-            4 => WeekDays.Thursday,
-            5 => WeekDays.Friday,
-            6 => WeekDays.Saturday,
-            7 => WeekDays.Sunday,
-            _ => throw new NotSupportedException("Неверный индекс столбца для дня недели")
-        };
+            viewModel.SelectedDayOfWeek = columnIndex switch
+            {
+                1 => WeekDays.Monday,
+                2 => WeekDays.Tuesday,
+                3 => WeekDays.Wednesday,
+                4 => WeekDays.Thursday,
+                5 => WeekDays.Friday,
+                6 => WeekDays.Saturday,
+                7 => WeekDays.Sunday,
+                _ => throw new NotSupportedException("Неверный индекс столбца для дня недели")
+            };
 
-        viewModel.SelectedLesson = rowIndex switch
+            viewModel.SelectedLesson = rowIndex switch
+            {
+                0 => Lessons.First,
+                1 => Lessons.Second,
+                2 => Lessons.Third,
+                3 => Lessons.Fourth,
+                4 => Lessons.Fifth,
+                5 => Lessons.Sixth,
+                _ => throw new NotSupportedException("Неверный индекс строки для занятия")
+            };
+        }
+        catch (NotSupportedException)
         {
-            0 => Lessons.First,
-            1 => Lessons.Second,
-            2 => Lessons.Third,
-            3 => Lessons.Fourth,
-            4 => Lessons.Fifth,
-            5 => Lessons.Sixth,
-            _ => throw new NotSupportedException("Неверный индекс строки для занятия")
-        };
+            // ignored
+        }
     }
 
     private bool TryGetSelectedItem(
@@ -188,13 +215,6 @@ public partial class ScheduleManagementPage
             ShowWarningMessage("Запись ещё не сохранена в БД. Пожалуйста, перезагрузите страницу");
             return;
         }
-
-        if (WindowManager.ShowMessageBox(
-            text: "Вы уверены, что хотите удалить это занятие?",
-            caption: "Подтверждение",
-            button: MessageBoxButton.YesNo,
-            icon: MessageBoxImage.Question) is not MessageBoxResult.Yes)
-            return;
 
         await viewModel.DeleteCommand.ExecuteAsync(null);
     }
@@ -293,21 +313,6 @@ public partial class ScheduleManagementPage
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
             viewModel.ErrorMessage = string.Empty;
-        }
-    }
-
-    private void StackPanel_PreviewKeyDown(object sender, KeyEventArgs e)
-    {
-        if (!Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl)) return;
-        switch (e.Key)
-        {
-            case Key.I:
-                WindowManager.Default.CreateWindowWithParameter<Views.ImportExportWindow>(showDialog: true, parameter: WizardType.Import);
-                break;
-
-            case Key.E:
-                WindowManager.Default.CreateWindowWithParameter<Views.ImportExportWindow>(showDialog: true, parameter: WizardType.Export);
-                break;
         }
     }
 }

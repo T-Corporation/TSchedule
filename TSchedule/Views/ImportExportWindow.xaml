@@ -2,11 +2,12 @@
         xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        Width="600"
-        Height="540"
-        MinWidth="600"
-        MinHeight="540"
+        Width="640"
+        Height="480"
+        MinWidth="640"
+        MinHeight="480"
         Loaded="Window_Loaded"
+        Closing="Window_Closing"
         ui:TitleBar.IsIconVisible="True"
         Icon="/Images/edit_property_375.png"
         WindowStartupLocation="CenterScreen"
@@ -31,7 +32,7 @@
                            Text="Выбор источника данных"/>
                 <TextBlock Padding="16,0,0,0"
                            HorizontalAlignment="Left"
-                           Text="Выберите источник, из которого необходимо скопировать данные"/>
+                           Text="Выберите источник, из которого необходимо сделать импорт/экспорт"/>
             </StackPanel>
 
             <Rectangle Height="72"
@@ -60,7 +61,8 @@
         
         <!--Body-->
         <ui:Frame Grid.Row="1"
-                  x:Name="NavigationFrame"/>
+                  x:Name="NavigationFrame"
+                  ScrollViewer.CanContentScroll="True"/>
 
         <!--Body/Footer Splitter-->
         <GridSplitter Height="1"
@@ -77,20 +79,21 @@
                                    ShowChevronArrow="False"
                                    ToolTipService.ToolTip="Нажмите, чтобы получить помощь">
                     <ui:DropDownButton.Flyout>
-                        <ui:Flyout Placement="TopEdgeAlignedRight">
-                            <StackPanel>
-                                <TextBlock FontWeight="Bold"
-                                           TextTrimming="None"
-                                           TextWrapping="Wrap"
-                                           Text="Указываемые параметры"/>
-                                <TextBlock Text="Путь к файлу Excel:
-                                           Укажите полный путь и имя для файла Excel. Например: C:\MyData.xlsx."/>
-                                <TextBlock Text="Версия Excel:
-                                           Выберите версию Excel для исходной или целевой рабочей книги.
-                                           
-                                           Первая строка содержит имена столбцов:
-                                           Укажите, содержит ли первая строка данных имена столбцов."/>
-                            </StackPanel>
+                        <ui:Flyout Placement="TopEdgeAlignedLeft">
+                            <TextBlock TextWrapping="WrapWithOverflow"
+                                       Width="300">
+                                <Bold>Указываемые параметры</Bold>
+                                <LineBreak/>
+                                <LineBreak/>
+                                <Bold FontWeight="SemiBold">Путь к файлу Excel:</Bold>
+                                <LineBreak/>
+                                <Bold FontWeight="Regular">Укажите полный путь и имя для файла Excel.&#x0a;Например: C:\MyData.xlsx.</Bold>
+                                <LineBreak/>
+                                <LineBreak/>
+                                <Bold FontWeight="SemiBold">Версия Excel:</Bold>
+                                <LineBreak/>
+                                <Bold FontWeight="Regular">Выберите версию Excel для исходной или целевой рабочей книги.</Bold>
+                            </TextBlock>
                         </ui:Flyout>
                     </ui:DropDownButton.Flyout>
                 </ui:DropDownButton>
@@ -98,14 +101,15 @@
                 <StackPanel Orientation="Horizontal"
                             ui:PanelHelper.Spacing="4"
                             HorizontalAlignment="Right">
-                    <Button Content="&lt; Назад"
-                            ToolTipService.ToolTip="Перейти на следующую страницу мастера"/>
                     <Button Content="Далее >"
-                            ToolTipService.ToolTip="Завершить работу с мастером"/>
+                            Command="{Binding GoForwardCommand}"
+                            ToolTipService.ToolTip="Перейти на следующую страницу мастера"/>
                     <Button Content="Завершить >>|"
-                            ToolTipService.ToolTip="Отменить работу с мастером"/>
+                            Command="{Binding FinishCommand}"
+                            ToolTipService.ToolTip="Завершить работу с мастером"/>
                     <Button Content="Отмена"
-                            ToolTipService.ToolTip="Вернуться на предыдущую страницу"/>
+                            Command="{Binding CancelCommand}"
+                            ToolTipService.ToolTip="Отменить работу с мастером"/>
                 </StackPanel>
             </Grid>
         </Border>

@@ -6,6 +6,15 @@ namespace TSchedule.Persistence.Models;
 
 public partial class GroupModel : ObservableObject
 {
+    /// <summary>
+    /// Неизвестная группа
+    /// </summary>
+    public static GroupModel Unknown { get; } = new GroupModel
+    {
+        Code = "Неизвестно",
+        Specialty = SpecialtyModel.Unknown
+    };
+
     [ObservableProperty]
     private int _id;
 
