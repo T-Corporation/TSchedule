@@ -10,7 +10,7 @@
          d:DesignWidth="800"
          Loaded="Page_Loaded"
          d:Background="White"
-         d:DesignHeight="450">
+         d:DesignHeight="560">
 
     <ui:Page.Resources>
         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
@@ -38,6 +38,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <StackPanel Margin="20"
@@ -136,6 +137,15 @@
                 </StackPanel>
                 
             </Grid>
+
+            <Button Content="?"
+                    Margin="0"
+                    Grid.Row="2"
+                    FontSize="24"
+                    Padding="14,4"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Right"
+                    Command="{Binding GoToHelpCommand}"/>
 
         </Grid>
 

@@ -78,6 +78,7 @@
         </Grid>
 
         <ui:DropDownButton Padding="12"
+                           ShowChevronArrow="False"
                            VerticalAlignment="Bottom"
                            HorizontalAlignment="Right"
                            ToolTipService.HasDropShadow="True"

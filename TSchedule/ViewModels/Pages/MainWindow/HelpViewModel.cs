@@ -14,6 +14,7 @@ public partial class HelpViewModel : ObservableObject
     {
         SaveFileDialog dialog = new()
         {
+            FileName = $"Расписание2024_1_ИС-2.{ext}",
             Filter = ExcelManager.ExcelVersionToFileFilter(ext switch
             {
                 "xlsx" => ExcelVersion.Excel2007,
@@ -21,7 +22,7 @@ public partial class HelpViewModel : ObservableObject
             })
         };
 
-        if (dialog.ShowDialog() is null) return;
-        File.Copy($"pack://application:,,,/TSchedule;component/Templates/Расписание2024_1_ИС-2.{ext}", dialog.FileName);
+        if (dialog.ShowDialog() is not true) return;
+        File.Copy($"./Templates/Расписание2024_1_ИС-2.{ext}", dialog.FileName, true);
     }
 }

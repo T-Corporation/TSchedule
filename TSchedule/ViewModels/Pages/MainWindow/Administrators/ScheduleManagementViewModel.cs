@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using iNKORE.UI.WPF.Modern.Controls;
 using System.Collections.ObjectModel;
-using TSchedule.Extensions;
 using TSchedule.Managers;
 using TSchedule.Persistence.Entities;
 using TSchedule.Persistence.Enums;
@@ -119,9 +118,6 @@ public partial class ScheduleManagementViewModel : ObservableObject
     private bool _isDenominator;
 
     [ObservableProperty]
-    private bool _isPopupOpen;
-
-    [ObservableProperty]
     private ObservableCollection<SubjectModel> _subjects = [];
 
     [ObservableProperty]
@@ -169,7 +165,8 @@ public partial class ScheduleManagementViewModel : ObservableObject
         GroupModel selectedGroup,
         byte selectedSemester,
         short selectedYear)
-        => new(flyout,
+        => new(
+            flyout,
             selectedGroup,
             selectedSemester,
             selectedYear,

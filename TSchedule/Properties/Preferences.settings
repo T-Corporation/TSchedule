@@ -12,7 +12,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Theme" Type="System.String" Scope="User">
-      <Value Profile="(Default)">System</Value>
+      <Value Profile="(Default)">system</Value>
     </Setting>
     <Setting Name="FontFamily" Type="System.String" Scope="User">
       <Value Profile="(Default)">Segoe UI</Value>

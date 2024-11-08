@@ -28,7 +28,7 @@ public partial class PreferencesManager : IManager
         { "UserGuid", Guid.Empty },
         { "Role", Role.Гость.ToString() },
         { "IsLoggedIn", false },
-        { "Theme", "System" },
+        { "Theme", "system" },
         { "FontFamily", "Segoe UI" },
         { "UserConnectionString", string.Empty }
     };
@@ -36,7 +36,7 @@ public partial class PreferencesManager : IManager
     /// <summary>
     /// Доступные темы
     /// </summary>
-    private static readonly string[] _themes = ["Dark", "Light", "System"];
+    private static readonly string[] _themes = ["dark", "light", "system"];
 
     /// <summary>
     /// Доступные роли

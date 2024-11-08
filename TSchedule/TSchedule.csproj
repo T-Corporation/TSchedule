@@ -82,8 +82,12 @@
 	  <Resource Include="Images\favicon_square.png" />
 	  <Resource Include="Images\settings_375.png" />
 	  <Resource Include="Images\verified_375.png" />
-	  <Resource Include="Templates\Расписание2024_1_ИС-2.xls" />
-	  <Resource Include="Templates\Расписание2024_1_ИС-2.xlsx" />
+	  <Content Include="Templates\Расписание2024_1_ИС-2.xls">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="Templates\Расписание2024_1_ИС-2.xlsx">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 
 	<ItemGroup>

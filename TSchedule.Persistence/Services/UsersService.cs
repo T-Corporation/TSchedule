@@ -43,20 +43,27 @@ public class UsersService(IUsersRepository repository) : IUsersService
         }
     }
 
-    public async Task<bool> Register(ApplicationUser user)
-    {
-        return await repository.Create(user);
-    }
+    public async Task<bool> Register(ApplicationUser user) => await repository.Create(user);
 
     public void Logout() => ApplicationUser = null;
 
     public bool IsAuthenticated() => ApplicationUser is not null;
 
-    public string GetUserName() => IsAuthenticated() ? ApplicationUser!.UserName : "Гость" ;
+    public string GetUserName() => ApplicationUser?.UserName ?? "Гость";
 
-    public string GetUserFullName() => IsAuthenticated() ? ApplicationUser!.FullName : "Гость";
+    public string GetFullName() => ApplicationUser?.FullName ?? "Гость";
 
     public Role GetRole() => ApplicationUser?.Role ?? Role.Гость;
 
-    public Guid GetUserGuid() => IsAuthenticated() ? ApplicationUser!.Id : Guid.Empty;
+    public Guid GetId() => ApplicationUser?.Id ?? Guid.Empty;
+
+    public string GetPasswordHash() => ApplicationUser?.PasswordHash ?? string.Empty;
+
+    public string GetEmail() => ApplicationUser?.Email ?? string.Empty;
+
+    public string GetPhoneNumber() => ApplicationUser?.PhoneNumber ?? string.Empty;
+
+    public async Task DeleteAccount() => await repository.DeleteById(GetId(), GetRole());
+
+    public async Task UpdateAccount(ApplicationUser user) => await repository.Update(user);
 }

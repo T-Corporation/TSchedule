@@ -101,7 +101,6 @@
                                               ui:ControlHelper.PlaceholderText="Выберите номер аудитории"
                                               ToolTipService.ToolTip="Выберите номер аудитории из списка доступных."/>
                                     <ComboBox Width="360"
-                                              MaxHeight="120"
                                               DisplayMemberPath="Name"
                                               ItemsSource="{Binding Subjects}"
                                               ui:ControlHelper.Header="Предмет"
@@ -111,6 +110,7 @@
                                               ToolTipService.ToolTip="Выберите предмет из списка доступных."/>
                                     <StackPanel>
                                         <TextBlock Text="Время"
+                                                   FontSize="16"
                                                    Padding="0,0,0,4"/>
                                         <ui:ListView Width="360"
                                                      MaxHeight="160"
@@ -162,11 +162,13 @@
                         <StackPanel Grid.Row="1"
                                     Margin="0,16,0,0"
                                     ui:PanelHelper.Spacing="8">
-                            <Button Content="Сохранить"
+                            <Button Cursor="Hand"
+                                    Content="Сохранить"
                                     HorizontalAlignment="Stretch"
                                     Command="{Binding AddOrEditCommand}"
                                     Style="{StaticResource AccentButtonStyle}"/>
-                            <Button Content="Отмена"
+                            <Button Cursor="Hand"
+                                    Content="Отмена"
                                     HorizontalAlignment="Stretch"
                                     Command="{Binding HideFlyoutCommand}"/>
                         </StackPanel>
@@ -275,7 +277,8 @@
                     ui:PanelHelper.Spacing="8"
                     HorizontalAlignment="Stretch">
 
-            <Button x:Name="AddButton"
+            <Button Cursor="Hand"
+                    x:Name="AddButton"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ShowFlyoutCommand}"
                     Style="{DynamicResource AccentButtonStyle}">
@@ -286,14 +289,16 @@
 
             </Button>
 
-            <Button x:Name="EditButton"
+            <Button Cursor="Hand"
+                    x:Name="EditButton"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ShowEditFlyoutCommand}">
                 <ui:IconAndText Content="Изменить"
                                 Icon="{x:Static ui:SegoeFluentIcons.Edit}"/>
             </Button>
 
-            <Button x:Name="DeleteButton"
+            <Button Cursor="Hand"
+                    x:Name="DeleteButton"
                     Foreground="#CC3360"
                     HorizontalAlignment="Stretch"
                     Command="{Binding DeleteCommand}">

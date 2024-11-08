@@ -16,24 +16,29 @@
         <vm:HelpViewModel/>
     </ui:Page.DataContext>
 
-    <GroupBox Margin="8">
-        <GroupBox.Header>
-            <TextBlock Text="Помощь"
-                       FontSize="24"/>
-        </GroupBox.Header>
-        <StackPanel ui:PanelHelper.Spacing="16">
-            <TextBlock TextWrapping="Wrap"
-                       Text="Проблемы с импортом? Попробуйте сделать своё расписание по предложенному шаблону"/>
-            <Button CommandParameter="xlsx"
-                    HorizontalAlignment="Stretch"
-                    Command="{Binding DownloadCommand}"
-                    Content="Скачать шаблон расписания (xlsx)"
-                    Style="{DynamicResource AccentButtonStyle}"/>
-            <Button CommandParameter="xls"
-                    HorizontalAlignment="Stretch"
-                    Command="{Binding DownloadCommand}"
-                    Content="Скачать шаблон расписания (xls)"/>
-        </StackPanel>
-    </GroupBox>
-
+    <ScrollViewer>
+        <GroupBox Margin="8">
+            <GroupBox.Header>
+                <TextBlock Text="Администратору"
+                           FontSize="24"/>
+            </GroupBox.Header>
+            <StackPanel ui:PanelHelper.Spacing="16">
+                <TextBlock TextWrapping="Wrap"
+                           Text="Проблемы с импортом? Попробуйте сделать своё расписание по предложенному шаблону"/>
+                <Button Padding="8"
+                        Cursor="Hand"
+                        CommandParameter="xlsx"
+                        HorizontalAlignment="Stretch"
+                        Command="{Binding DownloadCommand}"
+                        Content="Скачать шаблон расписания (xlsx)"
+                        Style="{DynamicResource AccentButtonStyle}"/>
+                <Button Padding="8"
+                        Cursor="Hand"
+                        CommandParameter="xls"
+                        HorizontalAlignment="Stretch"
+                        Command="{Binding DownloadCommand}"
+                        Content="Скачать шаблон расписания (xls)"/>
+            </StackPanel>
+        </GroupBox>
+    </ScrollViewer>
 </ui:Page>

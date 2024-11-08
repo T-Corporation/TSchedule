@@ -3,8 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using iNKORE.UI.WPF.Modern.Common.IconKeys;
 using iNKORE.UI.WPF.Modern.Controls;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Windows;
 using TSchedule.Extensions;
 using TSchedule.Managers;
 using TSchedule.Persistence.Enums;
@@ -12,7 +10,6 @@ using TSchedule.Persistence.Interfaces;
 using TSchedule.Persistence.Managers;
 using TSchedule.Views;
 using TSchedule.Views.Pages.MainWindow;
-using TSchedule.Views.Pages.MainWindow.Administrators;
 
 namespace TSchedule.ViewModels;
 
@@ -21,20 +18,14 @@ public partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     private NavigationViewItem? _navigationItem;
 
-    /// <summary>
-    /// Свойство авторизации: если <b>true</b>, то пункт меню <b>Профиль</b> будет доступен
-    /// </summary>
-    public bool IsAuthenticated => ServiceManager.Default.GetRequiredService<IUsersService>()
-        .IsAuthenticated();
-
     private readonly Lazy<IUsersService> _usersService = new(ServiceManager.Default.GetRequiredService<IUsersService>);
     public Frame NavigationFrame { get; set; }
 
     public string UserName => _usersService.Value.GetUserName();
-    public string FullName => _usersService.Value.GetUserFullName();
+    public string FullName => _usersService.Value.GetFullName();
     public string Initials => FullName.ToInitials();
 
-    public ObservableCollection<NavigationViewItem> NavigationItems { get; set; } = new();
+    public ObservableCollection<NavigationViewItem> NavigationItems { get; set; } = [];
 
     public MainWindowViewModel(Frame navigationFrame)
     {
@@ -110,6 +101,7 @@ public partial class MainWindowViewModel : ObservableObject
 
         var managementItem = new NavigationViewItem
         {
+            Tag = PageCode.None,
             Content = "Управление",
             Icon = new FontIcon(FluentSystemIcons.Toolbox_20_Regular),
             MenuItems = {
@@ -136,9 +128,6 @@ public partial class MainWindowViewModel : ObservableObject
 
     [RelayCommand]
     public void GoForward() => NavigationFrame.GoForward();
-
-    [RelayCommand]
-    private void GoToProfile() => NavigateTo(new ProfilePage());
 
     [RelayCommand]
     private void GoToParameters() => NavigateTo(new SettingsPage());

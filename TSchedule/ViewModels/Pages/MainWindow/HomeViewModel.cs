@@ -7,9 +7,9 @@ using TSchedule.Views.Pages.MainWindow;
 
 namespace TSchedule.ViewModels.Pages.MainWindow;
 
-public partial class HomePageViewModel(Frame navigationFrame) : ObservableObject
+public partial class HomeViewModel(Frame navigationFrame) : ObservableObject
 {
-    public string FullName => ServiceManager.Default.GetRequiredService<IUsersService>().GetUserFullName();
+    public string FullName => ServiceManager.Default.GetRequiredService<IUsersService>().GetFullName();
 
     [RelayCommand]
     private void GoToAnnouncements() => navigationFrame.Navigate(new AnnouncementsPage());
@@ -19,4 +19,7 @@ public partial class HomePageViewModel(Frame navigationFrame) : ObservableObject
 
     [RelayCommand]
     private void GoToClassrooms() => navigationFrame.Navigate(new ClassroomsPage());
+
+    [RelayCommand]
+    private void GoToHelp() => navigationFrame.Navigate(new HelpPage());
 }

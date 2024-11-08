@@ -4,7 +4,7 @@ using System.Windows.Input;
 using TSchedule.Managers;
 using TSchedule.Persistence.Extensions;
 using TSchedule.Persistence.Models;
-using TSchedule.ViewModels.Pages;
+using TSchedule.ViewModels;
 using TSchedule.ViewModels.Pages.MainWindow.Administrators;
 
 namespace TSchedule.Views.Pages.MainWindow.Administrators;
@@ -36,13 +36,12 @@ public partial class ScheduleManagementPage
             {
                 case Key.I:
                     viewModel.OpenWizardCommand.Execute("Import");
-                    break;
+                    return;
 
                 case Key.E:
                     viewModel.OpenWizardCommand.Execute("Export");
-                    break;
+                    return;
             }
-            return;
         }
 
         if (e.OriginalSource is not DataGridCell cell

@@ -29,12 +29,14 @@
 
         <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
         <Button Padding="8"
+                Cursor="Hand"
                 Content="Вход с авторизацией"
                 HorizontalAlignment="Stretch"
                 Style="{StaticResource AccentButtonStyle}"
                 Command="{Binding ContinueWithAuthenticationCommand}"/>
 
         <Button Padding="8"
+                Cursor="Hand"
                 HorizontalAlignment="Stretch"
                 Content="Продолжить без авторизации"
                 Command="{Binding ContinueWithoutAuthenticationCommand}"/>

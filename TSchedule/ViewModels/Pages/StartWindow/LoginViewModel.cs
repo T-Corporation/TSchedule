@@ -5,7 +5,6 @@ using TSchedule.Managers;
 using TSchedule.Persistence.Enums;
 using TSchedule.Persistence.Interfaces;
 using TSchedule.Persistence.Managers;
-using TSchedule.Views;
 
 namespace TSchedule.ViewModels.Pages.StartWindow;
 
@@ -62,7 +61,7 @@ public partial class LoginViewModel : ObservableObject
         ErrorMessage = string.Empty;
 
         PreferencesManager.Default.SetRole(Role.Value.ToString());
-        PreferencesManager.Default.SetUserGuid(usersService.GetUserGuid());
+        PreferencesManager.Default.SetUserGuid(usersService.GetId());
         PreferencesManager.Default.SetLoggedIn(true);
         PreferencesManager.Default.Save();
 

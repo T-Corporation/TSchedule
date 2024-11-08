@@ -11,6 +11,26 @@ using TSchedule.Extensions;
 
 namespace TSchedule.Managers;
 
+/// <summary>
+/// Менеджер для импорта и экспорта Excel-файлов
+/// Пример использования:
+/// <code>
+/// var excelManager = new ExcelManager();
+/// var schedules = await excelManager.SetFilePath("E:\\Расписание1.xlsx")
+///     .SetExcelVersion(ExcelVersion.Excel2007)
+///     .GetSchedulesFromFile();
+///
+/// if (!schedules.IsEmpty())
+///      await excelManager.SetFilePath("E:\\Расписание1_Экспорт.xlsx")
+///         .ExportScheduleToFile(schedules);
+/// </code>
+/// В указанном примере происходит:
+/// <list type="number">
+///     <item>Инициализация менеджера</item>
+///     <item>Получение расписания по числителю и знаменателю из файла</item>
+///     <item>В том случае, если результат не пустой, экспорт этого расписания в другой файл</item>
+/// </list>
+/// </summary>
 public class ExcelManager
 {
     public static readonly string AppDirectory = Path.Combine(
@@ -30,12 +50,9 @@ public class ExcelManager
 
     public ExcelVersion Version { get; protected set; }
 
-    public bool FirstRowContainsHeaders { get; protected set; } = true;
-
     public ExcelManager(
         string filePath = "",
-        ExcelVersion version = ExcelVersion.Excel97,
-        bool firstRowContainsHeaders = true)
+        ExcelVersion version = ExcelVersion.Excel97)
     {
         filePath = string.IsNullOrEmpty(filePath)
             ? Path.Combine(AppDirectory, GenerateUniqueName(version is ExcelVersion.Excel97
@@ -47,7 +64,6 @@ public class ExcelManager
 
         FilePath = filePath;
         Version = version;
-        FirstRowContainsHeaders = firstRowContainsHeaders;
     }
 
     #region Public
@@ -60,12 +76,6 @@ public class ExcelManager
     public ExcelManager SetExcelVersion(ExcelVersion version)
     {
         Version = version;
-        return this;
-    }
-
-    public ExcelManager SetFirstRowContainsHeaders(bool firstRowContainsHeaders)
-    {
-        FirstRowContainsHeaders = firstRowContainsHeaders;
         return this;
     }
 
@@ -152,8 +162,8 @@ public class ExcelManager
             throw new InvalidDataException(
                 $"Неверный формат года. Ожидалось: \"Год: 0000\", а получено: \"{scheduleInfoParts[2]}\"");
 
-        // Параметр _startRow будет определять, какую строку начинать с
-        var startRow = FirstRowContainsHeaders ? 3 : 2;
+        // Параметр startRow будет определять, с какой строки начинается расписание
+        var startRow = 3;
 
         await ParseSheets(numeratorSheet, numeratorDailySchedule, denominatorDailySchedule, group, isDenominator: false, startRow);
         await ParseSheets(denominatorSheet, numeratorDailySchedule, denominatorDailySchedule, group, isDenominator: true, startRow);

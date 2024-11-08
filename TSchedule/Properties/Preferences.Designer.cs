@@ -61,7 +61,7 @@ namespace TSchedule.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("System")]
+        [global::System.Configuration.DefaultSettingValueAttribute("system")]
         public string Theme {
             get {
                 return ((string)(this["Theme"]));

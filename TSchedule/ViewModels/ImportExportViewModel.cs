@@ -36,7 +36,7 @@ public partial class ImportExportViewModel : ObservableObject
         NavigationFrame = frame;
         WizardType = wizardType;
         Schedules = schedules;
-        NavigationFrame.Navigate(new SourcePage(wizardType));
+        NavigationFrame.Navigate(new SourcePage(schedules.Group, schedules.Semester, schedules.Year, wizardType));
     }
 
     private bool CanCancel() => IsFinished;
@@ -54,7 +54,6 @@ public partial class ImportExportViewModel : ObservableObject
 
         var filePath = sourceViewModel.FilePath.Trim();
         var version = sourceViewModel.SelectedVersion;
-        var headers = sourceViewModel.FirstRowContainsHeaders;
 
         if (string.IsNullOrWhiteSpace(filePath))
         {
@@ -80,7 +79,7 @@ public partial class ImportExportViewModel : ObservableObject
 
         try
         {
-            ExcelManager excelManager = new(filePath, version, headers);
+            ExcelManager excelManager = new(filePath, version);
             var fileName = Path.GetFileName(filePath);
 
             if (WizardType is WizardType.Export)

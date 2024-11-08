@@ -5,11 +5,11 @@ using TSchedule.Persistence.Interfaces;
 
 namespace TSchedule.Persistence.Services;
 
-public class SubjectsService : ISubjectsService
+public class SubjectsService(string connectionString) : ISubjectsService
 {
     public async Task AddSubject(Subject subject)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         if (await context.Subjects.AnyAsync(s => s.Code == subject.Code || s.Name == subject.Name))
             throw new UniqueException($"Предмет с таким кодом или названием уже существует");
         await context.Subjects.AddAsync(subject);
@@ -18,7 +18,7 @@ public class SubjectsService : ISubjectsService
 
     public async Task<IEnumerable<Subject>> GetAllSubjects()
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         return await context.Subjects.AsNoTracking()
             .Include(s => s.Specialty)
             .ToListAsync();
@@ -26,7 +26,7 @@ public class SubjectsService : ISubjectsService
 
     public async Task<Subject?> GetSubjectByCode(string code)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         return await context.Subjects.AsNoTracking()
             .Include(s => s.Specialty)
             .FirstOrDefaultAsync(s => s.Code == code);
@@ -34,7 +34,7 @@ public class SubjectsService : ISubjectsService
 
     public async Task<Subject?> GetSubjectById(int id)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         return await context.Subjects.AsNoTracking()
             .Include(s => s.Specialty)
             .FirstOrDefaultAsync(s => s.Id == id);
@@ -42,7 +42,7 @@ public class SubjectsService : ISubjectsService
 
     public async Task<Subject?> GetSubjectByName(string name)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         return await context.Subjects.AsNoTracking()
             .Include(s => s.Specialty)
             .FirstOrDefaultAsync(s => s.Name == name);
@@ -50,7 +50,7 @@ public class SubjectsService : ISubjectsService
 
     public async Task<IEnumerable<Subject>> GetSubjectsByLikeQuery(string query)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         return await context.Subjects.AsNoTracking()
             .Where(s => EF.Functions.Like(s.Code, $"%{query}%")
             || EF.Functions.Like(s.Name, $"%{query}%"))
@@ -60,7 +60,7 @@ public class SubjectsService : ISubjectsService
 
     public async Task<IEnumerable<Subject>> GetSubjectsBySpecialtyId(int id)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         return await context.Subjects.AsNoTracking()
             .Where(s => s.SpecialtyId == id)
             .Include(s => s.Specialty)
@@ -69,7 +69,7 @@ public class SubjectsService : ISubjectsService
 
     public async Task RemoveSubject(int id)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         var foundSubject = await context.Subjects
             .Include(s => s.Specialty)
             .FirstOrDefaultAsync(s => s.Id == id)
@@ -82,7 +82,7 @@ public class SubjectsService : ISubjectsService
     {
         try
         {
-            await using ApplicationDbContext context = new();
+            await using ApplicationDbContext context = new(connectionString);
             var foundSubject = await context.Subjects
                 .Include(t => t.Specialty)
                 .FirstOrDefaultAsync(s => s.Id == subject.Id)

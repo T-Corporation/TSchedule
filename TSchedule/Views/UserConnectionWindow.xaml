@@ -25,14 +25,20 @@
                  ui:TextContextMenu.UsingTextContextMenu="True"
                  ui:ControlHelper.Header="Новая строка подключения SQL Server"
                  ui:ControlHelper.PlaceholderText="Введите строку подключения..."/>
-        <Button FontSize="16"
-                Content="Провести миграцию"
+        <Button Cursor="Hand"
+                FontSize="16"
                 HorizontalAlignment="Stretch"
                 Command="{Binding MigrateCommand}"
-                Style="{DynamicResource AccentButtonStyle}"/>
-        <Button FontSize="16"
+                Style="{DynamicResource AccentButtonStyle}">
+            <ui:IconAndText Content="Провести миграцию"
+                            Icon="{x:Static ui:FluentSystemIcons.Database_24_Filled}"/>
+        </Button>
+        <Button Cursor="Hand"
+                FontSize="16"
                 HorizontalAlignment="Stretch"
-                Command="{Binding ResetCommand}"
-                Content="Сброс до заводских настроек"/>
+                Command="{Binding ResetCommand}">
+            <ui:IconAndText Content="Сброс до заводских настроек"
+                            Icon="{x:Static ui:FluentSystemIcons.Settings_24_Filled}"/>
+        </Button>
     </StackPanel>
 </Window>

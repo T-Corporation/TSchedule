@@ -93,7 +93,7 @@ public partial class CreateAnnouncementsViewModel : ObservableObject
             WindowManager.Default.CloseWindow<Views.MainWindow>();
         }
 
-        TeacherId = usersService.GetUserGuid();
+        TeacherId = usersService.GetId();
 
         return new CreateAnnouncementsViewModel(
             await AnnouncementsService.GetAnnouncementsByTeacherId(TeacherId),

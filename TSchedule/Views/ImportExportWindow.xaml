@@ -75,13 +75,14 @@
         <Border Padding="8"
                 Grid.Row="2">
             <Grid Margin="4">
-                <ui:DropDownButton Content="Помощь"
+                <ui:DropDownButton Cursor="Help"
+                                   Content="Помощь"
                                    ShowChevronArrow="False"
                                    ToolTipService.ToolTip="Нажмите, чтобы получить помощь">
                     <ui:DropDownButton.Flyout>
                         <ui:Flyout Placement="TopEdgeAlignedLeft">
-                            <TextBlock TextWrapping="WrapWithOverflow"
-                                       Width="300">
+                            <TextBlock Width="300"
+                                       TextWrapping="WrapWithOverflow">
                                 <Bold>Указываемые параметры</Bold>
                                 <LineBreak/>
                                 <LineBreak/>
@@ -101,13 +102,16 @@
                 <StackPanel Orientation="Horizontal"
                             ui:PanelHelper.Spacing="4"
                             HorizontalAlignment="Right">
-                    <Button Content="Далее >"
+                    <Button Cursor="Hand"
+                            Content="Далее >"
                             Command="{Binding GoForwardCommand}"
                             ToolTipService.ToolTip="Перейти на следующую страницу мастера"/>
-                    <Button Content="Завершить >>|"
+                    <Button Cursor="Hand"
+                            Content="Завершить >>|"
                             Command="{Binding FinishCommand}"
                             ToolTipService.ToolTip="Завершить работу с мастером"/>
-                    <Button Content="Отмена"
+                    <Button Cursor="Hand"
+                            Content="Отмена"
                             Command="{Binding CancelCommand}"
                             ToolTipService.ToolTip="Отменить работу с мастером"/>
                 </StackPanel>

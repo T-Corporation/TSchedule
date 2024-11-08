@@ -27,7 +27,8 @@
                     Orientation="Horizontal"
                     ui:PanelHelper.Spacing="8"
                     HorizontalAlignment="Right">
-            <Button CommandParameter="Import"
+            <Button Cursor="Hand"
+                    CommandParameter="Import"
                     Command="{Binding OpenWizardCommand}">
                 <ui:IconAndText FontSize="11"
                                 IconSize="11"
@@ -36,7 +37,8 @@
                                 ToolTipService.ToolTip="Импортировать расписание из Excel
                                 Горячие клавиши: Ctrl + I"/>
             </Button>
-            <Button CommandParameter="Export"
+            <Button Cursor="Hand"
+                    CommandParameter="Export"
                     Command="{Binding OpenWizardCommand}">
                 <ui:IconAndText FontSize="11"
                                 IconSize="11"
@@ -313,11 +315,9 @@
 
         <ui:ContentDialog d:Panel.ZIndex="2"
                           IsShadowEnabled="True"
-                          PrimaryButtonText="ОК"
-                          CloseButtonText="Отмена"
+                          PrimaryButtonText="Далее"
                           x:Name="GroupSelectionDialog"
                           Title="Выберите группу студентов"
-                          CloseButtonCommand="{Binding GoBackCommand}"
                           PrimaryButtonCommand="{Binding ContinueCommand}"
                           PrimaryButtonStyle="{DynamicResource AccentButtonStyle}"
                           IsPrimaryButtonEnabled="{Binding SelectedGroup, Converter={StaticResource NullableToBooleanConverter}}">
@@ -377,7 +377,8 @@
                                        HorizontalAlignment="Stretch"
                                        Text="{Binding ErrorMessage, Mode=TwoWay}"
                                        Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}"/>
-                            <Button Content="Сохранить"
+                            <Button Cursor="Hand"
+                                    Content="Сохранить"
                                     HorizontalAlignment="Stretch"
                                     Command="{Binding SaveCommand}"
                                     Style="{DynamicResource AccentButtonStyle}"/>

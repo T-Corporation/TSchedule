@@ -5,11 +5,11 @@ using TSchedule.Persistence.Interfaces;
 
 namespace TSchedule.Persistence.Services;
 
-public class GroupsService : IGroupsService
+public class GroupsService(string connectionString) : IGroupsService
 {
     public async Task AddGroupAndSubjects(Group group, IEnumerable<Subject> subjects)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         
         if (await context.Groups.AnyAsync(g => g.Code == group.Code))
             throw new UniqueException($"Группа с кодом {group.Code} уже существует");
@@ -26,7 +26,7 @@ public class GroupsService : IGroupsService
 
     public async Task<IEnumerable<Group>> GetAllGroups()
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         
         return await context.Groups
             .AsNoTracking()
@@ -38,7 +38,7 @@ public class GroupsService : IGroupsService
 
     public async Task<IEnumerable<Group>> GetAllGroupsByCourse(byte course)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         
         return await context.Groups
             .AsNoTracking()
@@ -51,7 +51,7 @@ public class GroupsService : IGroupsService
 
     public async Task<Group> GetGroupById(int id)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         
         return await context.Groups
             .AsNoTracking()
@@ -64,7 +64,7 @@ public class GroupsService : IGroupsService
 
     public async Task<IEnumerable<Group>> GetAllGroupsBySpecialtyId(int specialtyId)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         
         return await context.Groups
             .AsNoTracking()
@@ -77,7 +77,7 @@ public class GroupsService : IGroupsService
 
     public async Task<Group> GetGroupByCode(string code)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         
         return await context.Groups
             .AsNoTracking()
@@ -90,7 +90,7 @@ public class GroupsService : IGroupsService
 
     public async Task RemoveGroupAndSubjects(int id)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         
         var group = await context.Groups
             .Include(g => g.GroupSubjects)
@@ -108,7 +108,7 @@ public class GroupsService : IGroupsService
     {
         try
         {
-            await using ApplicationDbContext context = new();
+            await using ApplicationDbContext context = new(connectionString);
         
             var foundGroup = await context.Groups
                 .Include(g => g.GroupSubjects)

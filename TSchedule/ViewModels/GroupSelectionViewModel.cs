@@ -8,7 +8,7 @@ using TSchedule.Persistence.Managers;
 using TSchedule.Persistence.Models;
 using TSchedule.ViewModels.Pages.MainWindow.Administrators;
 
-namespace TSchedule.ViewModels.Pages;
+namespace TSchedule.ViewModels;
 
 public partial class GroupSelectionViewModel : ObservableObject
 {

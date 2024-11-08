@@ -9,11 +9,16 @@ public interface IUsersService : IService
     Task Authenticate(string username, string password, Role role);
     Task AuthenticateById(Guid id, Role role);
     Task<bool> Register(ApplicationUser user);
+    Task UpdateAccount(ApplicationUser user);
+    Task DeleteAccount();
 
     bool IsAuthenticated();
     void Logout();
-    Guid GetUserGuid();
+    Guid GetId();
     string GetUserName();
-    string GetUserFullName();
+    string GetFullName();
+    string GetPasswordHash();
+    string GetEmail();
+    string GetPhoneNumber();
     Role GetRole();
 }

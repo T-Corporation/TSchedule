@@ -7,13 +7,13 @@ using TSchedule.Persistence.Interfaces;
 
 namespace TSchedule.Persistence.Repositories;
 
-public class UsersRepository : IUsersRepository
+public class UsersRepository(string connectionString) : IUsersRepository
 {
     public async Task<bool> Create(ApplicationUser user, bool willThrow = false)
     {
         try
         {
-            using ApplicationDbContext context = new();
+            await using ApplicationDbContext context = new(connectionString);
 
             switch (user.Role)
             {
@@ -44,7 +44,7 @@ public class UsersRepository : IUsersRepository
     {
         try
         {
-            using ApplicationDbContext context = new();
+            await using ApplicationDbContext context = new(connectionString);
 
             ApplicationUser? user = role switch
             {
@@ -80,7 +80,7 @@ public class UsersRepository : IUsersRepository
 
     public async Task<IEnumerable<ApplicationUser>> FindAll(Role role)
     {
-        using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
 
         return role switch
         {
@@ -98,7 +98,7 @@ public class UsersRepository : IUsersRepository
 
     public async Task<IEnumerable<ApplicationUser>> FindByLikeFullName(string fullName, Role role)
     {
-        using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
 
         return role switch
         {
@@ -116,7 +116,7 @@ public class UsersRepository : IUsersRepository
 
     public async Task<ApplicationUser> FindByEmail(string email, Role role)
     {
-        using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
 
         return role switch
         {
@@ -134,7 +134,7 @@ public class UsersRepository : IUsersRepository
 
     public async Task<ApplicationUser> FindById(Guid id, Role role)
     {
-        using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
 
         return role switch
         {
@@ -152,7 +152,7 @@ public class UsersRepository : IUsersRepository
 
     public async Task<ApplicationUser> FindByPhoneNumber(string phoneNumber, Role role)
     {
-        using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
 
         return role switch
         {
@@ -170,7 +170,7 @@ public class UsersRepository : IUsersRepository
 
     public async Task<ApplicationUser> FindByUserName(string userName, Role role)
     {
-        using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
 
         return role switch
         {
@@ -190,7 +190,7 @@ public class UsersRepository : IUsersRepository
     {
         try
         {
-            using ApplicationDbContext context = new();
+            await using ApplicationDbContext context = new(connectionString);
 
             ApplicationUser? existingUser = user.Role switch
             {
@@ -206,7 +206,11 @@ public class UsersRepository : IUsersRepository
             if (existingUser is null)
                 throw new UserNotFoundException(nameof(user.Id), user.Id);
 
-            context.Entry(existingUser).CurrentValues.SetValues(user);
+            if (user.Role is Role.Преподаватель)
+                context.Teachers.Update((Teacher)existingUser);
+            else if (user.Role is Role.Администратор)
+                context.Administrators.Update((Administrator)existingUser);
+
             await context.SaveChangesAsync();
             return true;
         }

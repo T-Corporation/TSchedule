@@ -8,8 +8,8 @@
          mc:Ignorable="d" 
          d:DesignWidth="800"
          Loaded="Page_Loaded"
-         d:DesignHeight="450"
          d:Background="White"
+         d:DesignHeight="450"
          Title="Управление предметами">
 
     <ui:Page.Resources>
@@ -69,11 +69,13 @@
                         <StackPanel Grid.Row="1"
                                     Margin="0,16,0,0"
                                     ui:PanelHelper.Spacing="8">
-                            <Button Content="Сохранить"
+                            <Button Cursor="Hand"
+                                    Content="Сохранить"
                                     HorizontalAlignment="Stretch"
                                     Command="{Binding AddOrEditCommand}"
                                     Style="{DynamicResource AccentButtonStyle}"/>
-                            <Button Content="Отмена"
+                            <Button Cursor="Hand"
+                                    Content="Отмена"
                                     HorizontalAlignment="Stretch"
                                     Command="{Binding HideFlyoutCommand}"/>
                         </StackPanel>
@@ -120,7 +122,8 @@
                     ui:PanelHelper.Spacing="8"
                     HorizontalAlignment="Stretch">
 
-            <Button x:Name="AddButton"
+            <Button Cursor="Hand"
+                    x:Name="AddButton"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ShowFlyoutCommand}"
                     Style="{DynamicResource AccentButtonStyle}">
@@ -128,7 +131,8 @@
                                 Icon="{x:Static ui:SegoeFluentIcons.Add}"/>
             </Button>
 
-            <Button x:Name="EditButton"
+            <Button Cursor="Hand"
+                    x:Name="EditButton"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ShowEditFlyoutCommand}"
                     IsEnabled="{Binding Specialty, Converter={StaticResource NullableToBooleanConverter}}">
@@ -136,7 +140,8 @@
                                 Icon="{x:Static ui:SegoeFluentIcons.Edit}"/>
             </Button>
 
-            <Button x:Name="DeleteButton"
+            <Button Cursor="Hand"
+                    x:Name="DeleteButton"
                     Foreground="#CC3300"
                     HorizontalAlignment="Stretch"
                     Command="{Binding DeleteCommand}"
@@ -146,5 +151,4 @@
             </Button>
         </StackPanel>
     </Grid>
-
 </ui:Page>

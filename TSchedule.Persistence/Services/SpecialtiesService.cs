@@ -5,11 +5,11 @@ using TSchedule.Persistence.Interfaces;
 
 namespace TSchedule.Persistence.Services;
 
-public class SpecialtiesService : ISpecialtiesService
+public class SpecialtiesService(string connectionString) : ISpecialtiesService
 {
     public async Task AddSpecialty(Specialty specialty)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         if (await context.Specialties.AnyAsync(s => s.Code == specialty.Code))
             throw new UniqueException($"Специальность с кодом {specialty.Code} уже существует");
         await context.Specialties.AddAsync(specialty);
@@ -18,14 +18,14 @@ public class SpecialtiesService : ISpecialtiesService
 
     public async Task<IEnumerable<Specialty>> GetAllSpecialties()
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         return await context.Specialties.AsNoTracking()
             .ToListAsync();
     }
 
     public async Task<Specialty> GetSpecialtyById(int id)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         return await context.Specialties.AsNoTracking()
             .FirstOrDefaultAsync(s => s.Id == id)
             ?? throw new EntityNotFoundException<Specialty>(nameof(id), id);
@@ -33,7 +33,7 @@ public class SpecialtiesService : ISpecialtiesService
 
     public async Task RemoveSpecialty(int id)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         var foundSpecialty = await context.Specialties.FirstOrDefaultAsync(s => s.Id == id)
             ?? throw new EntityNotFoundException<Specialty>(nameof(id), id);
         context.Specialties.Remove(foundSpecialty);
@@ -44,7 +44,7 @@ public class SpecialtiesService : ISpecialtiesService
     {
         try
         {
-            await using ApplicationDbContext context = new();
+            await using ApplicationDbContext context = new(connectionString);
             var foundSpecialty = await context.Specialties.FirstOrDefaultAsync(s => s.Id == specialty.Id)
                 ?? throw new EntityNotFoundException<Specialty>(nameof(specialty.Id), specialty.Id);
             foundSpecialty.Code = specialty.Code;

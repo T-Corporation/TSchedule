@@ -56,17 +56,17 @@ namespace TSchedule.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DaysOfWeek",
-                schema: "Academic",
+                name: "Lesson",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    StartTime = table.Column<TimeOnly>(type: "time", nullable: false),
+                    EndTime = table.Column<TimeOnly>(type: "time", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DaysOfWeek", x => x.Id);
+                    table.PrimaryKey("PK_Lesson", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -82,6 +82,20 @@ namespace TSchedule.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Specialties", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WeekDays",
+                schema: "Academic",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WeekDays", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -116,7 +130,7 @@ namespace TSchedule.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    WeeklyHours = table.Column<int>(type: "int", nullable: false),
+                    WeeklyHours = table.Column<byte>(type: "tinyint", nullable: false),
                     SpecialtyId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -133,7 +147,6 @@ namespace TSchedule.Persistence.Migrations
 
             migrationBuilder.CreateTable(
                 name: "GroupSubjects",
-                schema: "Academic",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -149,14 +162,14 @@ namespace TSchedule.Persistence.Migrations
                         column: x => x.GroupId,
                         principalSchema: "Academic",
                         principalTable: "Groups",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_GroupSubjects_Subjects_SubjectId",
                         column: x => x.SubjectId,
                         principalSchema: "Academic",
                         principalTable: "Subjects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -200,8 +213,10 @@ namespace TSchedule.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AbsentFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AbsentTo = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsRegistered = table.Column<bool>(type: "bit", nullable: false),
                     TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Reason = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
                 },
@@ -224,26 +239,17 @@ namespace TSchedule.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DayOfWeek = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    StartTime = table.Column<TimeSpan>(type: "time", nullable: false),
-                    EndTime = table.Column<TimeSpan>(type: "time", nullable: false),
                     Semester = table.Column<byte>(type: "tinyint", nullable: false),
+                    LessonId = table.Column<int>(type: "int", nullable: false),
                     Year = table.Column<short>(type: "smallint", nullable: false),
                     IsDenominator = table.Column<bool>(type: "bit", nullable: false),
                     TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     GroupId = table.Column<int>(type: "int", nullable: false),
-                    SubjectId = table.Column<int>(type: "int", nullable: false),
-                    ClassroomId = table.Column<int>(type: "int", nullable: false)
+                    WeekDayId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Schedule", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Schedule_Classrooms_ClassroomId",
-                        column: x => x.ClassroomId,
-                        principalSchema: "School",
-                        principalTable: "Classrooms",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Schedule_Groups_GroupId",
                         column: x => x.GroupId,
@@ -252,17 +258,25 @@ namespace TSchedule.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Schedule_Subjects_SubjectId",
-                        column: x => x.SubjectId,
-                        principalSchema: "Academic",
-                        principalTable: "Subjects",
-                        principalColumn: "Id");
+                        name: "FK_Schedule_Lesson_LessonId",
+                        column: x => x.LessonId,
+                        principalTable: "Lesson",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Schedule_Teachers_TeacherId",
                         column: x => x.TeacherId,
                         principalSchema: "School",
                         principalTable: "Teachers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Schedule_WeekDays_WeekDayId",
+                        column: x => x.WeekDayId,
+                        principalSchema: "Academic",
+                        principalTable: "WeekDays",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -281,90 +295,36 @@ namespace TSchedule.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_TeachersPreferredTimes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TeachersPreferredTimes_DaysOfWeek_DayOfWeekId",
-                        column: x => x.DayOfWeekId,
-                        principalSchema: "Academic",
-                        principalTable: "DaysOfWeek",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_TeachersPreferredTimes_Teachers_TeacherId",
                         column: x => x.TeacherId,
                         principalSchema: "School",
                         principalTable: "Teachers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Workload",
-                schema: "Timetable",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Hours = table.Column<short>(type: "smallint", nullable: false),
-                    IsForSemester = table.Column<bool>(type: "bit", nullable: false),
-                    TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    GroupId = table.Column<int>(type: "int", maxLength: 50, nullable: true),
-                    SubjectId = table.Column<int>(type: "int", maxLength: 20, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Workload", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Workload_Groups_GroupId",
-                        column: x => x.GroupId,
+                        name: "FK_TeachersPreferredTimes_WeekDays_DayOfWeekId",
+                        column: x => x.DayOfWeekId,
                         principalSchema: "Academic",
-                        principalTable: "Groups",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Workload_Subjects_SubjectId",
-                        column: x => x.SubjectId,
-                        principalSchema: "Academic",
-                        principalTable: "Subjects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Workload_Teachers_TeacherId",
-                        column: x => x.TeacherId,
-                        principalSchema: "School",
-                        principalTable: "Teachers",
+                        principalTable: "WeekDays",
                         principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "RegisteredAnnouncements",
-                schema: "School",
-                columns: table => new
+            migrationBuilder.InsertData(
+                table: "Lesson",
+                columns: new[] { "Id", "EndTime", "StartTime" },
+                values: new object[,]
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AnnouncementId = table.Column<int>(type: "int", nullable: false),
-                    AdministratorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RegisteredAnnouncements", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_RegisteredAnnouncements_Administrators_AdministratorId",
-                        column: x => x.AdministratorId,
-                        principalSchema: "School",
-                        principalTable: "Administrators",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RegisteredAnnouncements_Announcements_AnnouncementId",
-                        column: x => x.AnnouncementId,
-                        principalSchema: "School",
-                        principalTable: "Announcements",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    { 1, new TimeOnly(10, 5, 0), new TimeOnly(8, 30, 0) },
+                    { 2, new TimeOnly(11, 50, 0), new TimeOnly(10, 15, 0) },
+                    { 3, new TimeOnly(14, 5, 0), new TimeOnly(12, 30, 0) },
+                    { 4, new TimeOnly(15, 50, 0), new TimeOnly(14, 15, 0) },
+                    { 5, new TimeOnly(17, 35, 0), new TimeOnly(16, 0, 0) },
+                    { 6, new TimeOnly(19, 20, 0), new TimeOnly(17, 45, 0) }
                 });
 
             migrationBuilder.InsertData(
                 schema: "Academic",
-                table: "DaysOfWeek",
+                table: "WeekDays",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
@@ -427,35 +387,20 @@ namespace TSchedule.Persistence.Migrations
                 column: "SpecialtyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GroupSubjects_GroupId_SubjectId",
-                schema: "Academic",
+                name: "IX_GroupSubjects_GroupId",
                 table: "GroupSubjects",
-                columns: new[] { "GroupId", "SubjectId" },
-                unique: true);
+                column: "GroupId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GroupSubjects_SubjectId",
-                schema: "Academic",
                 table: "GroupSubjects",
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RegisteredAnnouncements_AdministratorId",
-                schema: "School",
-                table: "RegisteredAnnouncements",
-                column: "AdministratorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RegisteredAnnouncements_AnnouncementId",
-                schema: "School",
-                table: "RegisteredAnnouncements",
-                column: "AnnouncementId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Schedule_ClassroomId",
-                schema: "Timetable",
-                table: "Schedule",
-                column: "ClassroomId");
+                name: "IX_Lesson_StartTime_EndTime",
+                table: "Lesson",
+                columns: new[] { "StartTime", "EndTime" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Schedule_GroupId",
@@ -464,16 +409,22 @@ namespace TSchedule.Persistence.Migrations
                 column: "GroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Schedule_SubjectId",
+                name: "IX_Schedule_LessonId",
                 schema: "Timetable",
                 table: "Schedule",
-                column: "SubjectId");
+                column: "LessonId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Schedule_TeacherId",
                 schema: "Timetable",
                 table: "Schedule",
                 column: "TeacherId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Schedule_WeekDayId",
+                schema: "Timetable",
+                table: "Schedule",
+                column: "WeekDayId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Specialties_Code",
@@ -542,36 +493,21 @@ namespace TSchedule.Persistence.Migrations
                 table: "TeachersPreferredTimes",
                 columns: new[] { "TeacherId", "DayOfWeekId" },
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Workload_GroupId",
-                schema: "Timetable",
-                table: "Workload",
-                column: "GroupId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Workload_SubjectId",
-                schema: "Timetable",
-                table: "Workload",
-                column: "SubjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Workload_TeacherId",
-                schema: "Timetable",
-                table: "Workload",
-                column: "TeacherId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "GroupSubjects",
-                schema: "Academic");
+                name: "Administrators",
+                schema: "School");
 
             migrationBuilder.DropTable(
-                name: "RegisteredAnnouncements",
+                name: "Announcements",
                 schema: "School");
+
+            migrationBuilder.DropTable(
+                name: "GroupSubjects");
 
             migrationBuilder.DropTable(
                 name: "Schedule",
@@ -582,28 +518,19 @@ namespace TSchedule.Persistence.Migrations
                 schema: "Academic");
 
             migrationBuilder.DropTable(
-                name: "Workload",
-                schema: "Timetable");
-
-            migrationBuilder.DropTable(
-                name: "Administrators",
-                schema: "School");
-
-            migrationBuilder.DropTable(
-                name: "Announcements",
-                schema: "School");
-
-            migrationBuilder.DropTable(
-                name: "DaysOfWeek",
-                schema: "Academic");
-
-            migrationBuilder.DropTable(
                 name: "Groups",
                 schema: "Academic");
 
             migrationBuilder.DropTable(
+                name: "Lesson");
+
+            migrationBuilder.DropTable(
                 name: "Teachers",
                 schema: "School");
+
+            migrationBuilder.DropTable(
+                name: "WeekDays",
+                schema: "Academic");
 
             migrationBuilder.DropTable(
                 name: "Classrooms",

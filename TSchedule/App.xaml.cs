@@ -19,7 +19,7 @@ namespace TSchedule;
 public partial class App
 {
     #pragma warning disable CA1416 // Проверка совместимости платформы
-    private readonly UISettings uiSettings = new();
+    public static readonly UISettings UISettings = new();
 
     private async void Application_Startup(object sender, StartupEventArgs e)
     {
@@ -30,61 +30,36 @@ public partial class App
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
             DispatcherUnhandledException += OnDispatcherUnhandledException;
 
-            uiSettings.ColorValuesChanged += OnColorValuesChanged;
+            UISettings.ColorValuesChanged += OnColorValuesChanged;
             CustomizationManager.Default.LoadStyleFromSettings()
-                .ApplyThemeFromPreferences(uiSettings);
+                .ApplyThemeFromPreferences(UISettings);
 
             ServiceManager.Default
-                .AddSingleton<IUsersService, UsersService>(() => new UsersService(new UsersRepository()))
-                .AddSingleton<IScheduleService, ScheduleService>(() => new ScheduleService(new ScheduleRepository()))
-                .AddSingleton<IAnnouncementsService, AnnouncementsService>()
-                .AddSingleton<IGroupsService, GroupsService>()
-                .AddSingleton<IWeekDaysService, WeekDaysService>()
-                .AddSingleton<ITeachersService, TeachersService>()
-                .AddSingleton<IClassroomsService, ClassroomsService>()
-                .AddSingleton<ISpecialtiesService, SpecialtiesService>()
-                .AddSingleton<ISubjectsService, SubjectsService>();
-
-            #if DEBUG
-            PreferencesManager.Default.PrintValues();
-            #endif
+                .AddSingleton<IUsersService, UsersService>(() => new UsersService(new UsersRepository(PreferencesManager.Default.GetConnectionString())))
+                .AddSingleton<IScheduleService, ScheduleService>(() => new ScheduleService(new ScheduleRepository(PreferencesManager.Default.GetConnectionString())))
+                .AddSingleton<IAnnouncementsService, AnnouncementsService>(() => new AnnouncementsService(PreferencesManager.Default.GetConnectionString()))
+                .AddSingleton<IGroupsService, GroupsService>(() => new GroupsService(PreferencesManager.Default.GetConnectionString()))
+                .AddSingleton<IWeekDaysService, WeekDaysService>(() => new WeekDaysService(PreferencesManager.Default.GetConnectionString()))
+                .AddSingleton<ITeachersService, TeachersService>(() => new TeachersService(PreferencesManager.Default.GetConnectionString()))
+                .AddSingleton<IClassroomsService, ClassroomsService>(() => new ClassroomsService(PreferencesManager.Default.GetConnectionString()))
+                .AddSingleton<ISpecialtiesService, SpecialtiesService>(() => new SpecialtiesService(PreferencesManager.Default.GetConnectionString()))
+                .AddSingleton<ISubjectsService, SubjectsService>(() => new SubjectsService(PreferencesManager.Default.GetConnectionString()));
 
             if (Environment.GetCommandLineArgs().Contains("User-Connection"))
                 WindowManager.Default.CreateWindow<UserConnectionWindow>(showDialog: true);
 
             await using ApplicationDbContext context = new(PreferencesManager.Default.GetConnectionString());
             await context.WarmUpAsync();
-
-            /*var excelManager = new ExcelManager();
-            var schedules = await excelManager.SetFilePath("E:\\Расписание1.xlsx")
-                .SetExcelVersion(ExcelVersion.Excel2007)
-                .GetSchedulesFromFile();
-
-            if (!schedules.IsEmpty())
-                await excelManager.SetFilePath("E:\\Расписание1_Экспорт.xlsx")
-                    .ExportScheduleToFile(schedules);*/
-
             await InitializeEntry();
         }
-        catch (SqlException sqlEx)
+        catch (SqlException)
         {
-            #if DEBUG
-            Debug.WriteLine("StackTrace:");
-            Debug.WriteLine(sqlEx);
-            #endif
-
-            if (sqlEx.Message.Contains("network"))
-            {
-                if (WindowManager.ShowMessageBox(
-                    "Сообщение: \"Отсутствует подключение к интернету.\"",
-                    "Ошибка, перезагрузить приложение?",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Error) is MessageBoxResult.Yes)
-                    RestartApplication();
-                return;
-            }
-
-            throw;
+            if (WindowManager.ShowMessageBox(
+                "Отсутствует подключение к интернету или указана неверная строка подключения.",
+                "Ошибка, перезагрузить приложение?",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Error) is MessageBoxResult.Yes)
+                RestartApplication();
         }
     }
 
@@ -117,9 +92,7 @@ public partial class App
     }
 
     private void OnColorValuesChanged(UISettings sender, object args)
-    {
-        Dispatcher.Invoke(() => CustomizationManager.Default.ApplyThemeFromPreferences(uiSettings));
-    }
+        => Dispatcher.Invoke(() => CustomizationManager.Default.ApplyThemeFromPreferences(UISettings));
 
     private void OnDispatcherUnhandledException(object _, DispatcherUnhandledExceptionEventArgs e)
     {
@@ -137,11 +110,6 @@ public partial class App
     {
         var fullMessage = BuildExceptionMessage(exception);
         Debug.WriteLine(fullMessage);
-
-        #if DEBUG
-        Debug.WriteLine("StackTrace:");
-        Debug.WriteLine(exception);
-        #endif
 
         // Проверка, является ли исключение SqlException
         if (exception is SqlException sqlEx)
@@ -186,17 +154,10 @@ public partial class App
 
     private void RestartApplication()
     {
-        // Получение пути к текущему исполняемому файлу
         var exePath = Process.GetCurrentProcess().MainModule?.FileName;
-        if (!string.IsNullOrEmpty(exePath))
-            // Запуск нового процесса
-            Process.Start(exePath);
-        // Завершение текущего приложения
+        if (!string.IsNullOrEmpty(exePath)) Process.Start(exePath);
         Shutdown();
     }
 
-    protected override void OnActivated(EventArgs e)
-    {
-        ServiceManager.Default.Dispose();
-    }
+    protected override void OnActivated(EventArgs e) => ServiceManager.Default.Dispose();
 }

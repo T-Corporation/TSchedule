@@ -6,11 +6,11 @@ using TSchedule.Persistence.Managers;
 
 namespace TSchedule.Persistence.Services;
 
-public class TeachersService : ITeachersService
+public class TeachersService(string connectionString) : ITeachersService
 {
     public async Task AddTeacherWithPreferredTimes(Teacher teacher, IEnumerable<TeacherPreferredTime> preferredTimes)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         if (await context.Teachers.AnyAsync(t => !t.IsDeleted && t.UserName == teacher.UserName))
             throw new UniqueException($"Преподаватель с именем для входа \"{teacher.UserName}\" уже существует");
 
@@ -24,7 +24,7 @@ public class TeachersService : ITeachersService
 
     public async Task<Teacher?> GetTeacherByEmail(string email)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         return await context.Teachers.AsNoTracking()
             .Include(t => t.Classroom)
             .Include(t => t.Subject)
@@ -35,7 +35,7 @@ public class TeachersService : ITeachersService
 
     public async Task<Teacher?> GetTeacherByPhoneNumber(string phoneNumber)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         return await context.Teachers.AsNoTracking()
             .Include(t => t.Classroom)
             .Include(t => t.Subject)
@@ -46,7 +46,7 @@ public class TeachersService : ITeachersService
 
     public async Task<Teacher?> GetTeacherByUserName(string userName)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         return await context.Teachers.AsNoTracking()
             .Include(t => t.Classroom)
             .Include(t => t.Subject)
@@ -57,7 +57,7 @@ public class TeachersService : ITeachersService
 
     public async Task<IEnumerable<Teacher>> GetAllTeachers()
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         return await context.Teachers.AsNoTracking()
             .Where(t => !t.IsDeleted)
             .Include(t => t.Classroom)
@@ -69,7 +69,7 @@ public class TeachersService : ITeachersService
 
     public async Task<Teacher?> GetTeacherById(Guid id)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         return await context.Teachers.AsNoTracking()
             .Include(t => t.Classroom)
             .Include(t => t.Subject)
@@ -80,7 +80,7 @@ public class TeachersService : ITeachersService
 
     public async Task RemoveTeacherWithPreferredTimes(Guid id)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         var teacher = await context.Teachers
             .Include(t => t.Classroom)
             .Include(t => t.Subject)
@@ -99,7 +99,7 @@ public class TeachersService : ITeachersService
     {
         try
         {
-            await using ApplicationDbContext context = new();
+            await using ApplicationDbContext context = new(connectionString);
 
             var existingTeacher = await context.Teachers
                 .Include(t => t.Classroom)
@@ -134,7 +134,7 @@ public class TeachersService : ITeachersService
 
     public async Task<Teacher?> GetTeacherBySubjectId(int subjectId)
     {
-        await using ApplicationDbContext context = new();
+        await using ApplicationDbContext context = new(connectionString);
         return await context.Teachers
             .Include(t => t.Classroom)
             .Include(t => t.Subject)

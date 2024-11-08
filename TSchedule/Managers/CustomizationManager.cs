@@ -9,6 +9,8 @@ namespace TSchedule.Managers;
 
 public class CustomizationManager : IManager
 {
+    public static readonly IEnumerable<string> FontFamilies = Fonts.SystemFontFamilies.Select(ff => ff.Source);
+
     /// <summary>
     /// "Ленивое" создание менеджера кастомизации
     /// </summary>
@@ -28,13 +30,17 @@ public class CustomizationManager : IManager
         var fontFamilyName = PreferencesManager.Default.GetFontFamily();
         var fontFamily = new FontFamily(fontFamilyName);
 
-        // На всякий случай
-        /*var controlStyle = new Style(typeof(Control));
+        /*// На всякий случай
+        var controlStyle = new Style(typeof(Control));
         controlStyle.Setters.Add(new Setter(Control.FontFamilyProperty, fontFamily));
-        Current.Resources.Add(typeof(Control), controlStyle);*/
+        if (Application.Current.Resources.Contains(typeof(Control)))
+            Application.Current.Resources.Remove(typeof(Control));
+        Application.Current.Resources.Add(typeof(Control), controlStyle);*/
 
         var textBlockStyle = new Style(typeof(TextBlock));
         textBlockStyle.Setters.Add(new Setter(TextBlock.FontFamilyProperty, fontFamily));
+        if (Application.Current.Resources.Contains(typeof(TextBlock)))
+            Application.Current.Resources.Remove(typeof(TextBlock));
         Application.Current.Resources.Add(typeof(TextBlock), textBlockStyle);
         return this;
     }
@@ -48,9 +54,9 @@ public class CustomizationManager : IManager
         string theme = PreferencesManager.Default.GetTheme();
         ApplySystemAccent(uiSettings);
 
-        if (theme is "System")
+        if (theme is "system")
             ApplySystemTheme();
-        else if (theme is "Dark")
+        else if (theme is "dark")
             ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark;
         else
             ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light;

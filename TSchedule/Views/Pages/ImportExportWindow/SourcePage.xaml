@@ -74,31 +74,30 @@
                 <Grid ui:PanelHelper.Spacing="8">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
-                        <ColumnDefinition Width="82.4"/>
+                        <ColumnDefinition Width="100"/>
                     </Grid.ColumnDefinitions>
 
                     <TextBox HorizontalAlignment="Stretch"
                              Text="{Binding FilePath, Mode=TwoWay}"
                              ui:ControlHelper.Header="Путь к файлу Excel"/>
 
-                    <Button Grid.Column="1"
+                    <Button Width="92"
+                            Padding="7"
+                            Cursor="Hand"
+                            Grid.Column="1"
                             Content="Обзор..."
                             VerticalAlignment="Bottom"
-                            Command="{Binding OpenDialogCommand}"/>
+                            ui:ControlHelper.CornerRadius="8"
+                            Command="{Binding OpenDialogCommand}"
+                            ToolTipService.ToolTip="Нажмите, чтобы выбрать файл из Проводника."/>
                 </Grid>
 
-                <ComboBox Margin="4,0,86.4,0"
+                <ComboBox Margin="4,0,100,0"
                           HorizontalAlignment="Stretch"
                           ItemsSource="{Binding Versions}"
                           IsSynchronizedWithCurrentItem="True"
                           ui:ControlHelper.Header="Версия Excel"
                           SelectedItem="{Binding SelectedVersion}"/>
-
-                <CheckBox Margin="4"
-                          IsChecked="{Binding FirstRowContainsHeaders}"
-                          Visibility="{Binding IsFirstRowContainsHeadersVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <TextBlock Text="Первая строка содержит имена столбцов"/>
-                </CheckBox>
             </StackPanel>
         </GroupBox>
     </Grid>
