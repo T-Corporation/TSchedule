@@ -5,9 +5,9 @@ namespace TSchedule.Converters;
 
 public class NullableToBooleanConverter : IValueConverter
 {
-    public object? Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         => value is not null;
 
-    public object? ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
-        => value is bool b && b ? b : null;
+    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        => value is bool b ? b : null;
 }

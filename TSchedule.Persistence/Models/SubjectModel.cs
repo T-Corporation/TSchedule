@@ -42,10 +42,9 @@ public partial class SubjectModel : ObservableObject, IComparable, IComparable<S
     public override string ToString() => Name;
 
     public int CompareTo(SubjectModel? other)
-        => other?.Name.CompareTo(Name) ?? 0;
+        => string.Compare(other?.Name, Name, StringComparison.Ordinal);
 
     public int CompareTo(object? obj)
         => obj is SubjectModel other
-        ? other?.Name.CompareTo(Name) ?? 0
-        : 0;
+        ? string.Compare(other.Name, Name, StringComparison.Ordinal) : 0;
 }

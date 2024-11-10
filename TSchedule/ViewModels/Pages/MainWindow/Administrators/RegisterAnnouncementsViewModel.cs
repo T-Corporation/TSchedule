@@ -31,7 +31,7 @@ public partial class RegisterAnnouncementsViewModel : ObservableObject
         => new(await _announcementsService.GetAllAnnouncements());
 
     [RelayCommand]
-    private void UpdateRegistration(AnnouncementModel announcementModel)
+    private void UpdateRegistration(AnnouncementModel? announcementModel)
     {
         if (announcementModel is null) return;
 

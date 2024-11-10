@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Navigation;
 using TSchedule.Extensions;
-using TSchedule.Managers;
 using TSchedule.Persistence.Enums;
 using TSchedule.ViewModels;
 

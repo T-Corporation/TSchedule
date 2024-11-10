@@ -54,9 +54,13 @@ public class WindowManager : IManager
     /// <param name="isModern">Если <b>true</b>, то современный дизайн, иначе обычный</param>
     /// <param name="showDialog">Если <b>true</b>, то запуск в диалоговом режиме, иначе – в обычном</param>
     /// <param name="owner">Владелец окна</param>
-    /// <param name="parameter">Параметр для конструктора окна</param>
+    /// <param name="parameters">Параметры для конструктора окна</param>
     /// <returns></returns>
-    public T CreateWindowWithParameters<T>(bool isModern = true, bool showDialog = false, Window? owner = null, params object[] parameters)
+    public T CreateWindowWithParameters<T>(
+        bool isModern = true,
+        bool showDialog = false,
+        Window? owner = null,
+        params object[] parameters)
         where T : Window
     {
         var windowType = typeof(T);

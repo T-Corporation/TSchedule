@@ -13,15 +13,17 @@ public partial class PhoneManager : IManager
     /// </summary>
     /// <param name="phoneNumber">Номер телефона для проверки.</param>
     /// <returns><c>true</c>, если номер телефона корректен, иначе <c>false</c>.</returns>
+    // ReSharper disable once MemberCanBeMadeStatic.Global
+    #pragma warning disable CA1822
     public bool IsPhoneNumberValid(string phoneNumber)
     {
         return PhoneRegex().IsMatch(phoneNumber);
     }
 
-    /// <summary>
+    /*/// <summary>
     /// Возвращает номер телефона в красивом виде
     /// </summary>
-    /// <param name="phoneNumber">Номер телефона в формате <code>7xxxxxxxxxx</param>
+    /// <param name="phoneNumber">Номер телефона в формате <code>7xxxxxxxxxx</code></param>
     /// <returns>Красивый номер телефона</returns>
     public string MakePhoneNumberPretty(string phoneNumber)
     {
@@ -31,7 +33,7 @@ public partial class PhoneManager : IManager
 
         // Форматирование номера
         return $"+7 ({phoneNumber.Substring(1, 3)}) {phoneNumber.Substring(4, 3)}-{phoneNumber.Substring(7, 2)}-{phoneNumber.Substring(9, 2)}";
-    }
+    }*/
 
 
     [GeneratedRegex(@"^7\d{10}$")]

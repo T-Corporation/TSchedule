@@ -1,8 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using iNKORE.UI.WPF.Modern.Controls;
-using System.Collections.ObjectModel;
-using System.Windows;
 using TSchedule.Extensions;
 using TSchedule.Managers;
 using TSchedule.Persistence.Entities;
@@ -10,23 +10,17 @@ using TSchedule.Persistence.Exceptions;
 using TSchedule.Persistence.Interfaces;
 using TSchedule.Persistence.Managers;
 using TSchedule.Persistence.Models;
-using WeekDay = TSchedule.Persistence.Entities.WeekDay;
 
-namespace TSchedule.ViewModels;
+namespace TSchedule.ViewModels.Pages.MainWindow.Administrators;
 
 public partial class TeachersManagementViewModel : ObservableObject
 {
-    public readonly ITeachersService TeachersService
+    private readonly ITeachersService TeachersService
         = ServiceManager.Default.GetRequiredService<ITeachersService>();
 
-    public readonly IWeekDaysService DaysOfWeekService
-        = ServiceManager.Default.GetRequiredService<IWeekDaysService>();
+    private Flyout AttachedFlyout { get; }
 
-    public Flyout AttachedFlyout { get; }
-
-    public FrameworkElement Target { get; }
-
-    public string TeacherDateOfBirthPlaceholder => DateOnly.FromDateTime(DateTime.Now).ToString("dd.MM.yyyy");
+    private FrameworkElement Target { get; }
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
@@ -73,12 +67,12 @@ public partial class TeachersManagementViewModel : ObservableObject
     private ObservableCollection<SubjectModel> _subjects = [];
 
     [ObservableProperty]
-    private SubjectModel? _teacherSubject = null!;
+    private SubjectModel? _teacherSubject;
 
     [ObservableProperty]
     private string _errorMessage = string.Empty;
 
-    public TeachersManagementViewModel(
+    private TeachersManagementViewModel(
         IEnumerable<Teacher> teachers,
         IEnumerable<Classroom> classrooms,
         IEnumerable<Subject> subjects,
@@ -103,7 +97,7 @@ public partial class TeachersManagementViewModel : ObservableObject
     }
 
     public static async Task<TeachersManagementViewModel> CreateInstanceAsync(FrameworkElement element, Flyout flyout)
-        => new TeachersManagementViewModel(
+        => new(
             await ServiceManager.Default.GetRequiredService<ITeachersService>().GetAllTeachers(),
             await ServiceManager.Default.GetRequiredService<IClassroomsService>().GetAllClassrooms(),
             await ServiceManager.Default.GetRequiredService<ISubjectsService>().GetAllSubjects(),
@@ -161,7 +155,7 @@ public partial class TeachersManagementViewModel : ObservableObject
 
         TeacherPreferredTimes.Clear();
 
-        for (int i = 0; i < DaysOfWeek.Count; i++)
+        for (var i = 0; i < DaysOfWeek.Count; i++)
         {
             // Если предпочтительное время не было заполнено, то Teacher.PreferredTimes.Length == 0.
             // Поэтому вылетает исключение ArgumentOutOfRangeException! Для обхода было создано собственное расширение.
@@ -197,7 +191,7 @@ public partial class TeachersManagementViewModel : ObservableObject
 
         if (TeacherFullName.Split(' ').Length < 3)
         {
-            ErrorMessage = string.Format("Пожалуйста, напишите полное ФИО преподавателя");
+            ErrorMessage = "Пожалуйста, напишите полное ФИО преподавателя";
             return;
         }
 
@@ -257,14 +251,15 @@ public partial class TeachersManagementViewModel : ObservableObject
         var allTeachers = await TeachersService.GetAllTeachers();
 
         // Проверяем, занята ли выбранная аудитория другим преподавателем
-        if (allTeachers.Any(t => t.ClassroomId == TeacherClassroom.Id && t.Id != Teacher?.Id))
+        var teachers = allTeachers as Teacher[] ?? allTeachers.ToArray();
+        if (teachers.Any(t => t.ClassroomId == TeacherClassroom.Id && t.Id != Teacher?.Id))
         {
             ErrorMessage = "Выбранная аудитория уже занята другим преподавателем";
             return;
         }
 
         // Проверяем, преподается ли выбранный предмет другим преподавателем
-        if (allTeachers.Any(t => t.SubjectId == TeacherSubject.Id && t.Id != Teacher?.Id))
+        if (teachers.Any(t => t.SubjectId == TeacherSubject.Id && t.Id != Teacher?.Id))
         {
             ErrorMessage = "Выбранный предмет уже ведётся другим преподавателем";
             return;

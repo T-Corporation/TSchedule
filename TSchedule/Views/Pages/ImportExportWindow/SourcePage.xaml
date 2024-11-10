@@ -1,5 +1,4 @@
 ﻿<ui:Page x:Class="TSchedule.Views.Pages.ImportExportWindow.SourcePage"
-         xmlns:c="clr-namespace:TSchedule.Converters"
          xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,11 +9,6 @@
          d:DesignHeight="540"
          d:Background="White"
          Title="Выбор источника данных">
-    
-    <ui:Page.Resources>
-        <c:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-    </ui:Page.Resources>
 
     <Grid Margin="20,12"
           ui:PanelHelper.Spacing="8">

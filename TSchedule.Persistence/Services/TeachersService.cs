@@ -16,9 +16,11 @@ public class TeachersService(string connectionString) : ITeachersService
 
         teacher.PasswordHash = PasswordManager.Default.HashPassword(teacher.PasswordHash);
         await context.Teachers.AddAsync(teacher);
-        foreach (var preferredTime in preferredTimes)
+        var teacherPreferredTimes = preferredTimes as TeacherPreferredTime[] ?? preferredTimes.ToArray();
+        
+        foreach (var preferredTime in teacherPreferredTimes)
             preferredTime.TeacherId = teacher.Id;
-        await context.TeacherPreferredTimes.AddRangeAsync(preferredTimes);
+        await context.TeacherPreferredTimes.AddRangeAsync(teacherPreferredTimes);
         await context.SaveChangesAsync();
     }
 

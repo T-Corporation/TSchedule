@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 using System.Windows;
 using TSchedule.Managers;
 using TSchedule.Persistence;
@@ -12,7 +11,7 @@ namespace TSchedule.ViewModels;
 public partial class UserConnectionViewModel : ObservableObject
 {
     [ObservableProperty]
-    private string _connectionString = PreferencesManager.Default.GetConnectionString() ?? string.Empty;
+    private string _connectionString = PreferencesManager.Default.GetConnectionString();
 
     [RelayCommand]
     private async Task Migrate()
@@ -57,9 +56,7 @@ public partial class UserConnectionViewModel : ObservableObject
                 Миграция успешно проведена!
                 Пожалуйста, перезапустите приложение.
                 """,
-                "Успех!",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
+                "Успех!");
 
             PreferencesManager.Default.SetConnectionString(ConnectionString);
             PreferencesManager.Default.Save();
@@ -100,9 +97,7 @@ public partial class UserConnectionViewModel : ObservableObject
                 Сброс до заводских настроек прошёл успешно!
                 Пожалуйста, перезапустите приложение.
                 """,
-                "Успех!",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
+                "Успех!");
 
             WindowManager.Default.CloseWindow<UserConnectionWindow>();
         }

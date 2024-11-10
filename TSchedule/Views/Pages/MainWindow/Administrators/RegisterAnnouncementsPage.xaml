@@ -12,25 +12,23 @@
          Title="Регистрация уведомлений">
 
     <ui:Page.Resources>
-        <c:BoolToMessageConverter x:Key="BoolToMessageConverter"/>
-        <c:ValueToOpacityConverter x:Key="ValueToOpacityConverter"/>
         <c:StringToInitialsConverter x:Key="StringToInitialsConverter"/>
-        <c:NullableToBooleanConverter x:Key="NullableToBooleanConverter"/>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <c:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
     </ui:Page.Resources>
 
-    <Grid Margin="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+    <Grid Margin="20"
+          VerticalAlignment="Stretch"
+          HorizontalAlignment="Stretch">
 
         <!-- Список уведомлений с активным чекбоксом -->
+        <!-- ReSharper disable Xaml.BindingWithoutContextNotResolved -->
         <ui:ListView Padding="4"
-                     x:Name="RegisteredAnnouncementsList"
                      ItemsSource="{Binding Announcements}">
             <ui:ListView.ItemTemplate>
                 <DataTemplate>
                     <Border Margin="4" CornerRadius="8" BorderThickness="1">
                         <Border.ContextMenu>
                             <ContextMenu>
+                                <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
                                 <MenuItem CommandParameter="{Binding}"
                                           Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=ui:ListView}}">
                                     <MenuItem.Header>

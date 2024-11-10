@@ -13,7 +13,6 @@
          Title="Управление предметами">
 
     <ui:Page.Resources>
-        <c:ValueToOpacityConverter x:Key="ValueToOpacityConverter"/>
         <c:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
     </ui:Page.Resources>
 
@@ -35,15 +34,16 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <Grid>
+                        <Grid Grid.Row="0">
                             <ScrollViewer Grid.Row="0"
                                           ui:ScrollViewerBehavior.IsAnimating="True">
                                 <StackPanel ui:PanelHelper.Spacing="16">
+                                    <!-- ReSharper disable Xaml.BindingWithoutContextNotResolved -->
                                     <TextBox Width="240"
                                              MaxLength="50"
-                                             Text="{Binding SubjectCode}"
                                              ui:ControlHelper.Header="Код"
                                              ui:ControlHelper.CornerRadius="8"
+                                             Text="{Binding SubjectCode}"
                                              ui:ControlHelper.PlaceholderText="МДК 01.03"
                                              ui:TextBoxHelper.IsDeleteButtonVisible="True"
                                              ui:TextContextMenu.UsingTextContextMenu="True"/>
@@ -101,7 +101,6 @@
 
         <ui:ListView Padding="4"
                      Grid.Column="0"
-                     x:Name="SubjectsList"
                      SelectionMode="Single"
                      ItemsSource="{Binding Subjects}"
                      SelectedItem="{Binding Subject}">
@@ -119,6 +118,7 @@
                             <StackPanel Margin="20,0"
                                         Grid.Column="1"
                                         ui:PanelHelper.Spacing="4">
+                                <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
                                 <TextBlock FontSize="16"
                                            FontWeight="Bold"
                                            Text="{Binding Name}"/>
@@ -153,7 +153,6 @@
             </Button>
 
             <Button Cursor="Hand"
-                    x:Name="EditButton"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ShowEditFlyoutCommand}">
                 <ui:IconAndText Content="Изменить"
@@ -161,7 +160,6 @@
             </Button>
 
             <Button Cursor="Hand"
-                    x:Name="DeleteButton"
                     Foreground="#CC3300"
                     HorizontalAlignment="Stretch"
                     Command="{Binding DeleteCommand}">
@@ -170,5 +168,4 @@
             </Button>
         </StackPanel>
     </Grid>
-
 </ui:Page>

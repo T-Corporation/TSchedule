@@ -15,9 +15,7 @@
     
     <ui:Page.Resources>
         <c:YearBeautifierConverter x:Key="YearBeautifierConverter"/>
-        <c:ValueToOpacityConverter x:Key="ValueToOpacityConverter"/>
         <c:NullableToBooleanConverter x:Key="NullableToBooleanConverter"/>
-        <c:EmptyToPlaceholderConverter x:Key="EmptyToPlaceholderConverter"/>
         <c:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
     </ui:Page.Resources>
 

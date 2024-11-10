@@ -13,14 +13,12 @@ public class WeekDay : IComparable<WeekDay>
     public string Name { get; set; } = string.Empty;
 
     public override int GetHashCode()
+        // ReSharper disable once NonReadonlyMemberInGetHashCode
         => Id.GetHashCode();
 
     public override bool Equals(object? obj)
         => obj is WeekDay wd && wd.GetHashCode() == GetHashCode();
 
     public int CompareTo(WeekDay? other)
-    {
-        if (other is null) return 1; // Или 0 в зависимости от вашей логики
-        return Id.CompareTo(other.Id); // Сравнение по Id или любому другому критерию
-    }
+        => other is null ? 1 : Id.CompareTo(other.Id); // Сравнение по Id
 }

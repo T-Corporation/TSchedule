@@ -16,8 +16,6 @@
     <ui:Page.Resources>
         <c:ValueToOpacityConverter x:Key="ValueToOpacityConverter"/>
         <c:StringToInitialsConverter x:Key="StringToInitialsConverter"/>
-        <c:NullableToBooleanConverter x:Key="NullableToBooleanConverter"/>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <c:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
     </ui:Page.Resources>
 
@@ -42,6 +40,7 @@
                         <Grid Grid.Row="0">
                             <ScrollViewer ui:ScrollViewerBehavior.IsAnimating="True">
                                 <StackPanel ui:PanelHelper.Spacing="16">
+                                    <!-- ReSharper disable Xaml.BindingWithoutContextNotResolved -->
                                     <TextBox Width="360"
                                              ui:ControlHelper.Header="ФИО"
                                              Text="{Binding TeacherFullName}"
@@ -122,6 +121,7 @@
                                             <ui:ListView.ItemTemplate>
                                                 <DataTemplate>
                                                     <StackPanel ui:PanelHelper.Spacing="8">
+                                                        <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
                                                         <TextBlock FontWeight="Bold"
                                                                    Text="{Binding DayOfWeek.Name}"/>
                                                         <ui:TimePicker Culture="ru"
@@ -162,6 +162,7 @@
                         <StackPanel Grid.Row="1"
                                     Margin="0,16,0,0"
                                     ui:PanelHelper.Spacing="8">
+                            <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
                             <Button Cursor="Hand"
                                     Content="Сохранить"
                                     HorizontalAlignment="Stretch"

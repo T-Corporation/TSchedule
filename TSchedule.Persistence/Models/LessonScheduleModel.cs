@@ -30,7 +30,7 @@ public partial class LessonScheduleModel : ObservableObject
 
     public override string ToString() => Lesson.ToString();
 
-    public List<ScheduleModel> GetLessons() =>
+    public List<ScheduleModel?> GetLessons() =>
     [
         Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
     ];

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using TSchedule.Persistence.Enums;
 using TSchedule.Persistence.Interfaces.Bases;
 using TSchedule.Properties;

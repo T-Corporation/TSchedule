@@ -15,13 +15,11 @@
     <ui:Page.Resources>
         <c:ValueToOpacityConverter x:Key="ValueToOpacityConverter"/>
         <c:StringToInitialsConverter x:Key="StringToInitialsConverter"/>
-        <c:NullableToBooleanConverter x:Key="NullableToBooleanConverter"/>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <c:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
     </ui:Page.Resources>
 
     <Grid Margin="20">
 
+        <!-- ReSharper disable Xaml.BindingWithoutContextNotResolved -->
         <ui:ListView Padding="4"
                      Grid.Column="0"
                      x:Name="TeacherList"
@@ -39,6 +37,7 @@
                             </Grid.ColumnDefinitions>
 
                             <!-- Teacher Icon or Placeholder -->
+                            <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
                             <ui:PersonPicture Width="96"
                                               Height="96"
                                               HorizontalAlignment="Left"

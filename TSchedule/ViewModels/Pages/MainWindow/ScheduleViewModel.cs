@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using TSchedule.Extensions;
 using TSchedule.Managers;
 using TSchedule.Persistence.Entities;
 using TSchedule.Persistence.Enums;
@@ -34,7 +33,7 @@ public partial class ScheduleViewModel : ObservableObject
     [ObservableProperty]
     private short _selectedYear;
 
-    public ScheduleViewModel(
+    private ScheduleViewModel(
         GroupModel selectedGroup,
         byte selectedSemester,
         short selectedYear,
@@ -70,7 +69,7 @@ public partial class ScheduleViewModel : ObservableObject
             .GroupBy(s => s.LessonId)
             .ToDictionary(g => g.Key, g => g.ToList());
 
-        for (int lessonNumber = 1; lessonNumber <= TotalLessonsCount; lessonNumber++)
+        for (var lessonNumber = 1; lessonNumber <= TotalLessonsCount; lessonNumber++)
         {
             var lessonSchedule = new LessonScheduleModel
             {

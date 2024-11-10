@@ -1,8 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using iNKORE.UI.WPF.Modern.Controls;
-using System.Collections.ObjectModel;
-using System.Windows;
 using TSchedule.Managers;
 using TSchedule.Persistence.Entities;
 using TSchedule.Persistence.Exceptions;
@@ -10,16 +10,16 @@ using TSchedule.Persistence.Interfaces;
 using TSchedule.Persistence.Managers;
 using TSchedule.Persistence.Models;
 
-namespace TSchedule.ViewModels;
+namespace TSchedule.ViewModels.Pages.MainWindow.Administrators;
 
 public partial class ClassroomsManagementViewModel : ObservableObject
 {
-    public readonly Lazy<IClassroomsService> ClassroomsService
+    private readonly Lazy<IClassroomsService> ClassroomsService
         = new(ServiceManager.Default.GetRequiredService<IClassroomsService>);
 
-    public Flyout AttachedFlyout { get; }
+    private Flyout AttachedFlyout { get; }
 
-    public FrameworkElement Target { get; }
+    private FrameworkElement Target { get; }
 
     [ObservableProperty]
     private ClassroomModel? _classroom;
@@ -39,12 +39,15 @@ public partial class ClassroomsManagementViewModel : ObservableObject
     [ObservableProperty]
     private string _classroomType = string.Empty;
 
-    public string[] ClassroomTypes =>
+    private string[] ClassroomTypes =>
     [
         "Лабораторная", "Лекционная", "Семинарская", "Компьютерная", "Арт-студия", "Музыкальная", "Тренажерный зал"
     ];
 
-    public ClassroomsManagementViewModel(IEnumerable<Classroom> classrooms, FrameworkElement element, Flyout flyout)
+    private ClassroomsManagementViewModel(
+        IEnumerable<Classroom> classrooms,
+        FrameworkElement element,
+        Flyout flyout)
     {
         Target = element;
         AttachedFlyout = flyout;
@@ -57,7 +60,7 @@ public partial class ClassroomsManagementViewModel : ObservableObject
             .GetAllClassrooms(), element, flyout);
 
     [RelayCommand]
-    public void ShowFlyout()
+    private void ShowFlyout()
     {
         IsEditing = false;
         ClassroomNumber = string.Empty;
@@ -66,7 +69,7 @@ public partial class ClassroomsManagementViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public void ShowEditFlyout()
+    private void ShowEditFlyout()
     {
         if (Classroom is null)
         {
@@ -86,7 +89,7 @@ public partial class ClassroomsManagementViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public void HideFlyout() => AttachedFlyout.Hide();
+    private void HideFlyout() => AttachedFlyout.Hide();
 
     [RelayCommand]
     private async Task AddOrEdit()

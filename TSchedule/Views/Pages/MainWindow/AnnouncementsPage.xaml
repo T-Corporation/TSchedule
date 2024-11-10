@@ -12,12 +12,7 @@
          d:DesignHeight="450">
 
     <ui:Page.Resources>
-        <c:BoolToMessageConverter x:Key="BoolToMessageConverter"/>
-        <c:ValueToOpacityConverter x:Key="ValueToOpacityConverter"/>
         <c:StringToInitialsConverter x:Key="StringToInitialsConverter"/>
-        <c:NullableToBooleanConverter x:Key="NullableToBooleanConverter"/>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <c:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
     </ui:Page.Resources>
 
     <Grid Margin="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
@@ -37,6 +32,7 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             
+                            <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
                             <ui:PersonPicture Width="96"
                                               Height="96"
                                               Grid.Column="0"

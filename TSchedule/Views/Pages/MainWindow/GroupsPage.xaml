@@ -1,5 +1,4 @@
 ﻿<ui:Page x:Class="TSchedule.Views.Pages.MainWindow.GroupsPage"
-         xmlns:c="clr-namespace:TSchedule.Converters"
          xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,12 +9,6 @@
          d:DesignWidth="800"
          Loaded="Page_Loaded"
          d:DesignHeight="450">
-
-    <ui:Page.Resources>
-        <c:ValueToOpacityConverter x:Key="ValueToOpacityConverter"/>
-        <c:NullableToBooleanConverter x:Key="NullableToBooleanConverter"/>
-        <c:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
-    </ui:Page.Resources>
 
     <Grid Margin="20"
           VerticalAlignment="Stretch"
@@ -34,6 +27,7 @@
                         <Grid Margin="8">
                             <StackPanel Margin="20,0"
                                         ui:PanelHelper.Spacing="4">
+                                <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
                                 <TextBlock FontSize="16"
                                            FontWeight="Bold"
                                            Text="{Binding Code}"/>

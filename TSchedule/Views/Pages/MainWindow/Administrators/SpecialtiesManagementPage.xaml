@@ -13,7 +13,6 @@
          Title="Управление предметами">
 
     <ui:Page.Resources>
-        <c:ValueToOpacityConverter x:Key="ValueToOpacityConverter"/>
         <c:NullableToBooleanConverter x:Key="NullableToBooleanConverter"/>
         <c:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
     </ui:Page.Resources>
@@ -36,10 +35,11 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <Grid>
+                        <Grid Grid.Row="0">
                             <ScrollViewer Grid.Row="0"
                                           ui:ScrollViewerBehavior.IsAnimating="True">
                                 <StackPanel ui:PanelHelper.Spacing="16">
+                                    <!-- ReSharper disable Xaml.BindingWithoutContextNotResolved -->
                                     <TextBox Width="240"
                                              MaxLength="50"
                                              ui:ControlHelper.Header="Код"
@@ -86,7 +86,6 @@
 
         <ui:ListView Padding="4"
                      Grid.Column="0"
-                     x:Name="SubjectsList"
                      SelectionMode="Single"
                      SelectedItem="{Binding Specialty}"
                      ItemsSource="{Binding Specialties}">
@@ -101,13 +100,13 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
 
-                            <StackPanel Margin="20,0"
-                                        Grid.Column="1"
+                            <StackPanel Grid.Column="1"
+                                        Margin="20,0"
                                         ui:PanelHelper.Spacing="4">
+                                <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
                                 <TextBlock FontSize="16"
                                            FontWeight="Bold"
                                            Text="{Binding Name}"/>
-
                                 <TextBlock FontSize="12"
                                            Text="{Binding Code}"/>
                             </StackPanel>
@@ -132,7 +131,6 @@
             </Button>
 
             <Button Cursor="Hand"
-                    x:Name="EditButton"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ShowEditFlyoutCommand}"
                     IsEnabled="{Binding Specialty, Converter={StaticResource NullableToBooleanConverter}}">
@@ -141,7 +139,6 @@
             </Button>
 
             <Button Cursor="Hand"
-                    x:Name="DeleteButton"
                     Foreground="#CC3300"
                     HorizontalAlignment="Stretch"
                     Command="{Binding DeleteCommand}"

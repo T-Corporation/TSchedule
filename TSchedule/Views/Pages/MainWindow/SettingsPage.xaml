@@ -39,12 +39,12 @@
 
         <ScrollViewer VerticalScrollBarVisibility="Auto"
                       HorizontalScrollBarVisibility="Auto">
-            <Grid Margin="20">
+            <Grid Margin="20,20,40,20">
                 <StackPanel ui:PanelHelper.Spacing="12">
                     <ComboBox Padding="8"
                               HorizontalAlignment="Stretch"
-                              ItemsSource="{Binding Themes}"
                               ui:ControlHelper.Header="Тема приложения"
+                              ItemsSource="{Binding Themes}"
                               SelectedItem="{Binding Theme, Mode=TwoWay}"
                               ui:ControlHelper.PlaceholderText="Выберите тему"/>
                     <ui:ToggleSwitch OnContent="Вкл"
@@ -66,7 +66,6 @@
                               SelectedItem="{Binding FontSize, Mode=TwoWay}"
                               ItemsSource="{Binding FontSizes, Mode=OneTime}"
                               ui:ControlHelper.PlaceholderText="Выберите размер шрифта"/>
-
                     <Button Cursor="Hand"
                             HorizontalAlignment="Stretch"
                             ui:ControlHelper.Header="Подключение"
@@ -75,7 +74,6 @@
                         <ui:IconAndText Content="Настроить подключение"
                                         Icon="{x:Static ui:SegoeFluentIcons.Connect}"/>
                     </Button>
-
                     <Button Cursor="Hand"
                             HorizontalAlignment="Stretch"
                             Command="{Binding SaveSettingsCommand}"
@@ -84,7 +82,6 @@
                         <ui:IconAndText Content="Сохранить"
                                         Icon="{x:Static ui:SegoeFluentIcons.Save}"/>
                     </Button>
-
                     <Button Cursor="Hand"
                             HorizontalAlignment="Stretch"
                             Command="{Binding ResetSettingsCommand}"
@@ -95,34 +92,31 @@
                     
                     <StackPanel>
                         <TextBlock FontSize="14"
-                                   Text="Саундтреки" />
-                        <ScrollViewer Padding="0,8"
-                                      CanContentScroll="True">
-                            <ui:ListView IsItemClickEnabled="True"
-                                         IsSelectionEnabled="True"
-                                         ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                         SelectedItem="{Binding SelectedTrack}"
-                                         ItemsSource="{Binding Source={StaticResource GroupedSoundtracks}}">
-                                <ui:ListView.GroupStyle>
-                                    <GroupStyle>
-                                        <GroupStyle.HeaderTemplate>
-                                            <DataTemplate>
-                                                <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                                                <TextBlock Text="{Binding Name}"/>
-                                            </DataTemplate>
-                                        </GroupStyle.HeaderTemplate>
-                                    </GroupStyle>
-                                </ui:ListView.GroupStyle>
-                                
-                                <ui:ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock TextTrimming="CharacterEllipsis"
-                                                   Text="{Binding Name}"
-                                                   ToolTipService.ToolTip="{Binding Name}"/>
-                                    </DataTemplate>
-                                </ui:ListView.ItemTemplate>
-                            </ui:ListView>
-                        </ScrollViewer>
+                                   Text="Саундтреки"/>
+                        <ui:ListView IsItemClickEnabled="True"
+                                     IsSelectionEnabled="True"
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                     SelectedItem="{Binding SelectedTrack}"
+                                     ItemsSource="{Binding Source={StaticResource GroupedSoundtracks}}">
+                            <ui:ListView.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.HeaderTemplate>
+                                        <DataTemplate>
+                                            <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                            <TextBlock Text="{Binding Name}"/>
+                                        </DataTemplate>
+                                    </GroupStyle.HeaderTemplate>
+                                </GroupStyle>
+                            </ui:ListView.GroupStyle>
+                            
+                            <ui:ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextTrimming="CharacterEllipsis"
+                                               Text="{Binding Name}"
+                                               ToolTipService.ToolTip="{Binding Name}"/>
+                                </DataTemplate>
+                            </ui:ListView.ItemTemplate>
+                        </ui:ListView>
                     </StackPanel>
 
                     <Grid ui:PanelHelper.Spacing="8">

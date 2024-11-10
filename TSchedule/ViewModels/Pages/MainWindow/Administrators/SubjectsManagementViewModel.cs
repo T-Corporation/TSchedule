@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using iNKORE.UI.WPF.Modern.Controls;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows;
 using TSchedule.Managers;
 using TSchedule.Persistence.Entities;
@@ -18,9 +17,9 @@ public partial class SubjectsManagementViewModel : ObservableObject
     private readonly ISubjectsService SubjectsService
         = ServiceManager.Default.GetRequiredService<ISubjectsService>();
 
-    public Flyout AttachedFlyout { get; }
+    private Flyout AttachedFlyout { get; }
 
-    public FrameworkElement Target { get; }
+    private FrameworkElement Target { get; }
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
@@ -51,7 +50,7 @@ public partial class SubjectsManagementViewModel : ObservableObject
     [ObservableProperty]
     private string _errorMessage = string.Empty;
 
-    public SubjectsManagementViewModel(
+    private SubjectsManagementViewModel(
         IEnumerable<Subject> subjects,
         IEnumerable<Specialty> specialties,
         FrameworkElement element,
@@ -68,7 +67,7 @@ public partial class SubjectsManagementViewModel : ObservableObject
     }
 
     public static async Task<SubjectsManagementViewModel> CreateInstanceAsync(FrameworkElement element, Flyout flyout)
-        => new SubjectsManagementViewModel(
+        => new(
             await ServiceManager.Default.GetRequiredService<ISubjectsService>().GetAllSubjects(),
             await ServiceManager.Default.GetRequiredService<ISpecialtiesService>().GetAllSpecialties(),
             element,

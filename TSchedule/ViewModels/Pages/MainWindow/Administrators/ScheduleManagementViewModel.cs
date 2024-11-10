@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using iNKORE.UI.WPF.Modern.Controls;
 using System.Collections.ObjectModel;
-using TSchedule.Extensions;
 using TSchedule.Managers;
 using TSchedule.Persistence.Entities;
 using TSchedule.Persistence.Enums;
@@ -28,7 +27,7 @@ public partial class ScheduleManagementViewModel : ObservableObject
     private static readonly IClassroomsService ClassroomsService = 
         ServiceManager.Default.GetRequiredService<IClassroomsService>();
 
-    public Flyout Flyout { get; }
+    private Flyout Flyout { get; }
 
     public static readonly byte CurrentSemester = (byte)(DateTime.Now.Month is >= 9 and <= 12 ? 1 : 2);
 
@@ -92,8 +91,8 @@ public partial class ScheduleManagementViewModel : ObservableObject
 
         _ = UpdateComboboxes(value);
     }
-    
-    public async Task UpdateComboboxes(SubjectModel value)
+
+    private async Task UpdateComboboxes(SubjectModel value)
     {
         SelectedTeacher = (await TeachersService.GetTeacherBySubjectId(value.Id))?
             .ToModel();
@@ -113,7 +112,7 @@ public partial class ScheduleManagementViewModel : ObservableObject
     private WeekDay? _selectedDayOfWeek;
 
     [ObservableProperty]
-    public LessonModel? _selectedLesson;
+    private LessonModel? _selectedLesson;
 
     [ObservableProperty]
     private bool _isDenominator;
@@ -130,7 +129,7 @@ public partial class ScheduleManagementViewModel : ObservableObject
     [ObservableProperty]
     private string _errorMessage = string.Empty;
 
-    public ScheduleManagementViewModel(
+    private ScheduleManagementViewModel(
         Flyout flyout,
         GroupModel selectedGroup,
         byte selectedSemester,
@@ -260,27 +259,6 @@ public partial class ScheduleManagementViewModel : ObservableObject
     }
 
     /// <summary>
-    /// Создает объект <see cref="LessonScheduleModel"/> на основе переданного расписания.
-    /// </summary>
-    /// <param name="schedule">Расписание одного занятия.</param>
-    /// <returns>Объект LessonScheduleModel, содержащий расписание для конкретного дня.</returns>
-    private static LessonScheduleModel CreateLessonScheduleModel(ScheduleModel schedule)
-    {
-        var lessonSchedule = new LessonScheduleModel { Lesson = schedule.Lesson! };
-        switch (schedule.WeekDay?.Id)
-        {
-            case 1: lessonSchedule.Monday = schedule; break;
-            case 2: lessonSchedule.Tuesday = schedule; break;
-            case 3: lessonSchedule.Wednesday = schedule; break;
-            case 4: lessonSchedule.Thursday = schedule; break;
-            case 5: lessonSchedule.Friday = schedule; break;
-            case 6: lessonSchedule.Saturday = schedule; break;
-            case 7: lessonSchedule.Sunday = schedule; break;
-        }
-        return lessonSchedule;
-    }
-
-    /// <summary>
     /// Обновляет поля выбранного расписания на основе текущих данных.
     /// </summary>
     /// <param name="schedule">Расписание, которое необходимо обновить.</param>
@@ -305,7 +283,7 @@ public partial class ScheduleManagementViewModel : ObservableObject
         ScheduleModel schedule)
     {
         var lessonSchedule = scheduleCollection.FirstOrDefault(
-            ls => ls.Lesson?.Id == schedule.Lesson?.Id);
+            ls => ls.Lesson.Id == schedule.Lesson?.Id);
 
         if (lessonSchedule is not null)
             switch (schedule.WeekDay?.Id)
@@ -344,13 +322,10 @@ public partial class ScheduleManagementViewModel : ObservableObject
         }
 
         // Проверка на соответствие требованиям учебной нагрузки
-        if (!MeetsScheduleRequirements(SelectedSubject!))
-        {
-            errorMessage = "Кол-во часов превышает учебную нагрузку.";
-            return false;
-        }
+        if (MeetsScheduleRequirements(SelectedSubject!)) return true;
+        errorMessage = "Кол-во часов превышает учебную нагрузку.";
+        return false;
 
-        return true;
     }
 
     /// <summary>
@@ -413,18 +388,10 @@ public partial class ScheduleManagementViewModel : ObservableObject
     private bool IsTeacherBusy(TeacherModel teacher, WeekDay dayOfWeek, LessonModel lesson, bool isDenominator)
     {
         var schedules = isDenominator ? DenominatorDailySchedule : NumeratorDailySchedule;
-        foreach (var daySchedule in schedules)
-        {
-            if (daySchedule.Lesson is null || daySchedule.Lesson.Id != lesson.Id)
-                continue;
-
-            var lessonSchedule = GetLessonScheduleByDayOfWeek(daySchedule, dayOfWeek);
-            if (lessonSchedule is not null
-                && lessonSchedule.IsDenominator == isDenominator
-                && lessonSchedule.Teacher?.Id == teacher.Id)
-                return true;
-        }
-        return false;
+        return (from daySchedule in schedules
+            where daySchedule.Lesson.Id == lesson.Id
+            select GetLessonScheduleByDayOfWeek(daySchedule, dayOfWeek)).Any(lessonSchedule =>
+            lessonSchedule.IsDenominator == isDenominator && lessonSchedule.Teacher?.Id == teacher.Id);
     }
 
     /// <summary>
@@ -456,35 +423,27 @@ public partial class ScheduleManagementViewModel : ObservableObject
     private bool IsClassroomOccupied(ClassroomModel classroom, WeekDay dayOfWeek, LessonModel lesson, bool isDenominator)
     {
         var schedules = isDenominator ? DenominatorDailySchedule : NumeratorDailySchedule;
-        foreach (var daySchedule in schedules)
-        {
-            if (daySchedule.Lesson is null || daySchedule.Lesson.Id != lesson.Id)
-                continue;
-
-            var lessonSchedule = GetLessonScheduleByDayOfWeek(daySchedule, dayOfWeek);
-            if (lessonSchedule is not null && lessonSchedule.Teacher?.Classroom?.Id == classroom.Id)
-                return true;
-        }
-        return false;
+        return (from daySchedule in schedules
+            where daySchedule.Lesson.Id == lesson.Id
+            select GetLessonScheduleByDayOfWeek(daySchedule, dayOfWeek)).Any(lessonSchedule =>
+            lessonSchedule.Teacher?.Classroom?.Id == classroom.Id);
     }
 
     private static void SetToNullLessonInCollection(
         ObservableCollection<LessonScheduleModel> scheduleCollection,
         ScheduleModel schedule)
     {
-        var lessonSchedule = scheduleCollection.FirstOrDefault(ls => ls.Lesson?.Id == schedule.Lesson?.Id);
-        if (lessonSchedule is not null)
+        var lessonSchedule = scheduleCollection.FirstOrDefault(ls => ls.Lesson.Id == schedule.Lesson?.Id);
+        if (lessonSchedule is null) return;
+        switch (schedule.WeekDay?.Id)
         {
-            switch (schedule.WeekDay?.Id)
-            {
-                case 1: lessonSchedule.Monday = null; break;
-                case 2: lessonSchedule.Tuesday = null; break;
-                case 3: lessonSchedule.Wednesday = null; break;
-                case 4: lessonSchedule.Thursday = null; break;
-                case 5: lessonSchedule.Friday = null; break;
-                case 6: lessonSchedule.Saturday = null; break;
-                case 7: lessonSchedule.Sunday = null; break;
-            }
+            case 1: lessonSchedule.Monday = null; break;
+            case 2: lessonSchedule.Tuesday = null; break;
+            case 3: lessonSchedule.Wednesday = null; break;
+            case 4: lessonSchedule.Thursday = null; break;
+            case 5: lessonSchedule.Friday = null; break;
+            case 6: lessonSchedule.Saturday = null; break;
+            case 7: lessonSchedule.Sunday = null; break;
         }
     }
 

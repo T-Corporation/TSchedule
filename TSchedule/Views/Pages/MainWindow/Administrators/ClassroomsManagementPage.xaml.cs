@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using TSchedule.ViewModels;
+using ClassroomsManagementViewModel = TSchedule.ViewModels.Pages.MainWindow.Administrators.ClassroomsManagementViewModel;
 
 namespace TSchedule.Views.Pages.MainWindow.Administrators;
 

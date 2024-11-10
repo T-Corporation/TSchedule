@@ -31,7 +31,7 @@ public class Group
             Id = Id,
             Code = Code,
             Course = Course,
-            Subjects = [.. GroupSubjects.Select(s => s.Subject?.ToModel())],
+            Subjects = [.. GroupSubjects.Select(s => s.Subject.ToModel())],
             Specialty = Specialty?.ToModel(),
         };
 }

@@ -13,8 +13,6 @@
          Title="Управление группами">
 
     <ui:Page.Resources>
-        <c:ValueToOpacityConverter x:Key="ValueToOpacityConverter"/>
-        <c:NullableToBooleanConverter x:Key="NullableToBooleanConverter"/>
         <c:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
     </ui:Page.Resources>
 
@@ -97,6 +95,7 @@
                                                             <ColumnDefinition Width="92"/>
                                                         </Grid.ColumnDefinitions>
 
+                                                        <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
                                                         <ComboBox MinWidth="80"
                                                                   MaxWidth="200"
                                                                   Grid.Column="0"

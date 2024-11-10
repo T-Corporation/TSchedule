@@ -1,9 +1,8 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 
 namespace TSchedule.Extensions;
 
-public partial class BindablePasswordBox : UserControl
+public partial class BindablePasswordBox
 {
     public BindablePasswordBox()
     {
@@ -12,7 +11,7 @@ public partial class BindablePasswordBox : UserControl
 
     // Зависимое свойство для двусторонней привязки пароля
     public static readonly DependencyProperty PasswordProperty =
-        DependencyProperty.Register("Password", typeof(string), typeof(BindablePasswordBox),
+        DependencyProperty.Register(nameof(Password), typeof(string), typeof(BindablePasswordBox),
             new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnBindablePasswordChanged));
 
     public string Password
@@ -23,7 +22,7 @@ public partial class BindablePasswordBox : UserControl
 
     // Свойство для заголовка
     public static readonly DependencyProperty HeaderProperty =
-        DependencyProperty.Register("Header", typeof(string), typeof(BindablePasswordBox), new PropertyMetadata(string.Empty));
+        DependencyProperty.Register(nameof(Header), typeof(string), typeof(BindablePasswordBox), new PropertyMetadata(string.Empty));
 
     public string Header
     {
@@ -33,7 +32,7 @@ public partial class BindablePasswordBox : UserControl
 
     // Свойство для подсказки
     public static readonly DependencyProperty PlaceholderTextProperty =
-        DependencyProperty.Register("PlaceholderText", typeof(string), typeof(BindablePasswordBox), new PropertyMetadata(string.Empty));
+        DependencyProperty.Register(nameof(PlaceholderText), typeof(string), typeof(BindablePasswordBox), new PropertyMetadata(string.Empty));
 
     public string PlaceholderText
     {
@@ -43,7 +42,7 @@ public partial class BindablePasswordBox : UserControl
 
     // Свойство для радиуса углов
     public static readonly DependencyProperty CornerRadiusProperty =
-        DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(BindablePasswordBox), new PropertyMetadata(new CornerRadius(0)));
+        DependencyProperty.Register(nameof(CornerRadius), typeof(CornerRadius), typeof(BindablePasswordBox), new PropertyMetadata(new CornerRadius(0)));
 
     public CornerRadius CornerRadius
     {
@@ -53,7 +52,7 @@ public partial class BindablePasswordBox : UserControl
 
     // Свойство для режима показа пароля
     public static readonly DependencyProperty PasswordRevealModeProperty =
-        DependencyProperty.Register("PasswordRevealMode", typeof(bool), typeof(BindablePasswordBox), new PropertyMetadata(false));
+        DependencyProperty.Register(nameof(PasswordRevealMode), typeof(bool), typeof(BindablePasswordBox), new PropertyMetadata(false));
 
     public bool PasswordRevealMode
     {
@@ -63,7 +62,7 @@ public partial class BindablePasswordBox : UserControl
 
     // Свойство для контекстного меню
     public static readonly DependencyProperty UsingTextContextMenuProperty =
-        DependencyProperty.Register("UsingTextContextMenu", typeof(bool), typeof(BindablePasswordBox), new PropertyMetadata(false));
+        DependencyProperty.Register(nameof(UsingTextContextMenu), typeof(bool), typeof(BindablePasswordBox), new PropertyMetadata(false));
 
     public bool UsingTextContextMenu
     {
@@ -74,22 +73,17 @@ public partial class BindablePasswordBox : UserControl
     // Обработчик изменения свойства BindablePassword
     private static void OnBindablePasswordChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is BindablePasswordBox passwordBox)
-        {
-            passwordBox.passwordBox.PasswordChanged -= passwordBox.PasswordBox_PasswordChanged;
+        if (d is not BindablePasswordBox passwordBox) return;
+        
+        passwordBox.passwordBox.PasswordChanged -= passwordBox.PasswordBox_PasswordChanged;
 
-            if (e.NewValue is string newPassword && passwordBox.passwordBox.Password != newPassword)
-            {
-                passwordBox.passwordBox.Password = newPassword;
-            }
+        if (e.NewValue is string newPassword && passwordBox.passwordBox.Password != newPassword)
+            passwordBox.passwordBox.Password = newPassword;
 
-            passwordBox.passwordBox.PasswordChanged += passwordBox.PasswordBox_PasswordChanged;
-        }
+        passwordBox.passwordBox.PasswordChanged += passwordBox.PasswordBox_PasswordChanged;
     }
 
     // Синхронизация BindablePassword при изменении пароля
     private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-    {
-        Password = passwordBox.Password;
-    }
+        => Password = passwordBox.Password;
 }

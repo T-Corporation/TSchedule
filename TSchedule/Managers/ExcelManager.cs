@@ -34,22 +34,22 @@ namespace TSchedule.Managers;
 /// </summary>
 public class ExcelManager : IManager
 {
-    public static readonly string AppDirectory = Path.Combine(
+    private static readonly string AppDirectory = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 
         "TSchedule");
 
-    public static readonly ISubjectsService SubjectsService = 
+    private static readonly ISubjectsService SubjectsService = 
         ServiceManager.Default.GetRequiredService<ISubjectsService>();
 
-    public static readonly ITeachersService TeachersService = 
+    private static readonly ITeachersService TeachersService = 
         ServiceManager.Default.GetRequiredService<ITeachersService>();
 
-    public static readonly IGroupsService GroupsService =
+    private static readonly IGroupsService GroupsService =
         ServiceManager.Default.GetRequiredService<IGroupsService>();
 
-    public string FilePath { get; protected set; }
+    private string FilePath { get; set; }
 
-    public ExcelVersion Version { get; protected set; }
+    private ExcelVersion Version { get; set; }
 
     public ExcelManager(
         string filePath = "",
@@ -356,6 +356,8 @@ public class ExcelManager : IManager
     /// Проверяет, не превышает ли суммарное количество часов по предмету допустимую учебную нагрузку.
     /// </summary>
     /// <param name="subject">Предмет, для которого проверяется нагрузка.</param>
+    /// <param name="numeratorDailySchedule">Расписания по числителю (по занятиям)</param>
+    /// <param name="denominatorDailySchedule">Расписания по знаменателю (по занятиям)</param>
     /// <returns>Истина, если нагрузка не превышена, иначе ложь.</returns>
     private static bool MeetsScheduleRequirements(
         SubjectModel subject,
@@ -376,6 +378,8 @@ public class ExcelManager : IManager
     /// Рассчитывает текущее количество часов для предмета за неделю, учитывая числитель и знаменатель.
     /// </summary>
     /// <param name="subjectId">Идентификатор предмета.</param>
+    /// <param name="numeratorDailySchedule">Расписания по числителю (по занятиям)</param>
+    /// <param name="denominatorDailySchedule">Расписания по знаменателю (по занятиям)</param>
     /// <returns>Среднее количество часов в неделю для данного предмета.</returns>
     private static int CalculateCurrentWeeklyHours(
         int subjectId,
@@ -414,6 +418,8 @@ public class ExcelManager : IManager
     /// <param name="dayOfWeek">День недели.</param>
     /// <param name="lesson">Занятие.</param>
     /// <param name="isDenominator">Флаг, указывающий на знаменатель или числитель.</param>
+    /// <param name="numeratorDailySchedule">Расписания по числителю (по занятиям)</param>
+    /// <param name="denominatorDailySchedule">Расписания по знаменателю (по занятиям)</param>
     /// <returns>Истина, если преподаватель занят, иначе ложь.</returns>
     private static bool IsTeacherBusy(
         TeacherModel teacher,
@@ -424,18 +430,10 @@ public class ExcelManager : IManager
         ICollection<LessonScheduleModel> denominatorDailySchedule)
     {
         var schedules = isDenominator ? denominatorDailySchedule : numeratorDailySchedule;
-        foreach (var daySchedule in schedules)
-        {
-            if (daySchedule.Lesson is null || daySchedule.Lesson.Id != lesson.Id)
-                continue;
-
-            var lessonSchedule = GetLessonScheduleByDayOfWeek(daySchedule, dayOfWeek);
-            if (lessonSchedule is not null
-                && lessonSchedule.IsDenominator == isDenominator
-                && lessonSchedule.Teacher?.Id == teacher.Id)
-                return true;
-        }
-        return false;
+        return (from daySchedule in schedules
+            where daySchedule.Lesson.Id == lesson.Id
+            select GetLessonScheduleByDayOfWeek(daySchedule, dayOfWeek)).Any(lessonSchedule =>
+            lessonSchedule.IsDenominator == isDenominator && lessonSchedule.Teacher?.Id == teacher.Id);
     }
 
     /// <summary>
@@ -444,7 +442,9 @@ public class ExcelManager : IManager
     /// <param name="daySchedule">Модель расписания для дня.</param>
     /// <param name="dayOfWeek">День недели.</param>
     /// <returns>Расписание для указанного дня недели.</returns>
-    private static ScheduleModel? GetLessonScheduleByDayOfWeek(LessonScheduleModel daySchedule, WeekDay dayOfWeek) => dayOfWeek.Id switch
+    private static ScheduleModel? GetLessonScheduleByDayOfWeek(
+        LessonScheduleModel daySchedule,
+        WeekDay dayOfWeek) => dayOfWeek.Id switch
     {
         1 => daySchedule.Monday,
         2 => daySchedule.Tuesday,
@@ -463,6 +463,8 @@ public class ExcelManager : IManager
     /// <param name="dayOfWeek">День недели.</param>
     /// <param name="lesson">Занятие.</param>
     /// <param name="isDenominator">Флаг, указывающий на знаменатель или числитель.</param>
+    /// <param name="numeratorDailySchedule">Расписания по числителю (по занятиям)</param>
+    /// <param name="denominatorDailySchedule">Расписания по знаменателю (по занятиям)</param>
     /// <returns>Истина, если аудитория занята, иначе ложь.</returns>
     private static bool IsClassroomOccupied(
         ClassroomModel classroom,
@@ -475,7 +477,7 @@ public class ExcelManager : IManager
         var schedules = isDenominator ? denominatorDailySchedule : numeratorDailySchedule;
         foreach (var daySchedule in schedules)
         {
-            if (daySchedule.Lesson is null || daySchedule.Lesson.Id != lesson.Id)
+            if (daySchedule.Lesson.Id != lesson.Id)
                 continue;
 
             var lessonSchedule = GetLessonScheduleByDayOfWeek(daySchedule, dayOfWeek);
@@ -525,10 +527,10 @@ public class ExcelManager : IManager
         ICollection<LessonScheduleModel> dailySchedule,
         int startRow)
     {
-        for (int i = 0; i < dailySchedule.Count; i++)
+        for (var i = 0; i < dailySchedule.Count; i++)
         {
             var lessonSchedule = dailySchedule.ElementAt(i);
-            sheet.Cells[startRow + i, 1].Value = lessonSchedule.Lesson?.Id;
+            sheet.Cells[startRow + i, 1].Value = lessonSchedule.Lesson.Id;
 
             // Заполняем расписание для каждого дня недели
             sheet.Cells[startRow + i, 2].Value = ScheduleToCellInfo(lessonSchedule.Monday);
@@ -540,7 +542,7 @@ public class ExcelManager : IManager
             sheet.Cells[startRow + i, 8].Value = ScheduleToCellInfo(lessonSchedule.Sunday);
 
             // Выравнивание и поддержка переноса текста в ячейках
-            for (int col = 1; col <= 8; col++)
+            for (var col = 1; col <= 8; col++)
             {
                 sheet.Cells[startRow + i, col].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 sheet.Cells[startRow + i, col].Style.VerticalAlignment = ExcelVerticalAlignment.Center;

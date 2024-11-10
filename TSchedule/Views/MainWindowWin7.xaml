@@ -28,8 +28,6 @@
         <Style TargetType="ui:FontIcon">
             <Setter Property="FontSize" Value="18"/>
         </Style>
-
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
 
     <Grid>

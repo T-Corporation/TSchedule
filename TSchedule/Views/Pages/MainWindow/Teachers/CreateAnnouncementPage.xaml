@@ -13,10 +13,6 @@
     
     <ui:Page.Resources>
         <c:BoolToMessageConverter x:Key="BoolToMessageConverter"/>
-        <c:ValueToOpacityConverter x:Key="ValueToOpacityConverter"/>
-        <c:StringToInitialsConverter x:Key="StringToInitialsConverter"/>
-        <c:NullableToBooleanConverter x:Key="NullableToBooleanConverter"/>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <c:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
     </ui:Page.Resources>
 
@@ -92,6 +88,8 @@
                         <StackPanel Grid.Row="1"
                                     Margin="0,16,0,0"
                                     ui:PanelHelper.Spacing="8">
+                            <!-- ReSharper disable Xaml.BindingWithoutContextNotResolved -->
+                            <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
                             <Button Cursor="Hand"
                                     Content="Сохранить"
                                     HorizontalAlignment="Stretch"
@@ -124,6 +122,7 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             
+                            <!-- ReSharper disable Xaml.BindingWithContextNotResolved -->
                             <CheckBox Grid.Column="0"
                                       IsEnabled="False"
                                       VerticalAlignment="Top"
