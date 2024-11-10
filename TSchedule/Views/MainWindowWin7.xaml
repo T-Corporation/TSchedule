@@ -1,0 +1,162 @@
+﻿<Window x:Class="TSchedule.Views.MainWindowWin7"
+        xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        Width="960"
+        Height="690"
+        MinWidth="640"
+        MinHeight="480"
+        Title="TSchedule"
+        ui:TitleBar.Height="40"
+        ResizeMode="CanResizeWithGrip"
+        WindowStartupLocation="CenterScreen"
+        ui:TitleBar.ExtendViewIntoTitleBar="True"
+        ui:WindowHelper.FixMaximizedWindow="True"
+        ui:WindowHelper.UseModernWindowStyle="True"
+        Background="{DynamicResource SystemControlPageBackgroundChromeLowBrush}">
+
+    <Window.Resources>
+        <Style TargetType="ui:NavigationViewItem" BasedOn="{StaticResource {x:Type ui:NavigationViewItem}}">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="ui:FontIcon">
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+
+    <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="0"
+              Margin="16,0,136,0">
+
+            <StackPanel Orientation="Horizontal"
+                        ui:PanelHelper.Spacing="16">
+
+                <Image Width="30"
+                       Height="30"
+                       Margin="16,8"
+                       Source="/Images/favicon.ico"
+                       ToolTipService.ToolTip="TSchedule"
+                       ToolTipService.HasDropShadow="True"
+                       ToolTipService.BetweenShowDelay="1000"
+                       WindowChrome.IsHitTestVisibleInChrome="True"/>
+
+                <ui:HyperlinkButton Padding="8"
+                                    Cursor="Hand"
+                                    Command="{Binding GoBackCommand}"
+                                    WindowChrome.IsHitTestVisibleInChrome="True"
+                                    IsEnabled="{Binding NavigationFrame.CanGoBack}">
+                    <ui:IconAndText ToolTipService.ToolTip="Назад"
+                                    ToolTipService.HasDropShadow="True"
+                                    Icon="{x:Static ui:SegoeFluentIcons.Back}"/>
+                </ui:HyperlinkButton>
+
+                <ui:HyperlinkButton Padding="8"
+                                    Cursor="Hand"
+                                    Command="{Binding GoForwardCommand}"
+                                    WindowChrome.IsHitTestVisibleInChrome="True"
+                                    IsEnabled="{Binding NavigationFrame.CanGoForward}">
+                    <ui:IconAndText ToolTipService.ToolTip="Вперед"
+                                    ToolTipService.HasDropShadow="True"
+                                    Icon="{x:Static ui:SegoeFluentIcons.Forward}"/>
+                </ui:HyperlinkButton>
+
+                <ui:HyperlinkButton Padding="8"
+                                    Cursor="Hand"
+                                    Command="{Binding RefreshCommand}"
+                                    WindowChrome.IsHitTestVisibleInChrome="True">
+                    <ui:IconAndText ToolTipService.HasDropShadow="True"
+                                    ToolTipService.ToolTip="Обновить страницу"
+                                    Icon="{x:Static ui:SegoeFluentIcons.Refresh}"/>
+                </ui:HyperlinkButton>
+
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        WindowChrome.IsHitTestVisibleInChrome="True">
+
+                <ui:DropDownButton Cursor="Hand"
+                                   CornerRadius="0"
+                                   ShowChevronArrow="False"
+                                   Background="Transparent"
+                                   BorderBrush="Transparent"
+                                   ToolTipService.HasDropShadow="True"
+                                   ToolTipService.ToolTip="{Binding FullName}"
+                                   ui:ElevationBorder.IsElevationEnabled="False">
+
+                    <ui:PersonPicture Width="28"
+                                      Margin="0"
+                                      Height="28"
+                                      Padding="0"
+                                      Initials="{Binding Initials}"
+                                      DisplayName="{Binding UserName}"/>
+
+                    <ui:DropDownButton.Flyout>
+                        <ui:MenuFlyout Placement="Bottom"
+                                       ShowMode="Transient"
+                                       AreOpenCloseAnimationsEnabled="True">
+                            <MenuItem Cursor="Hand"
+                                      Command="{Binding GoToParametersCommand}">
+                                <MenuItem.Header>
+                                    <ui:IconAndText Content="Параметры"
+                                                    HorizontalAlignment="Left"
+                                                    Icon="{x:Static ui:SegoeFluentIcons.Settings}"/>
+                                </MenuItem.Header>
+                            </MenuItem>
+                            
+                            <MenuItem Cursor="Hand"
+                                      Foreground="#CC3300"
+                                      Command="{Binding LogoutCommand}">
+                                <MenuItem.Header>
+                                    <ui:IconAndText Content="Выйти"
+                                                    HorizontalAlignment="Left"
+                                                    Icon="{x:Static ui:SegoeFluentIcons.SignOut}"/>
+                                </MenuItem.Header>
+                            </MenuItem>
+                            
+                        </ui:MenuFlyout>
+                    </ui:DropDownButton.Flyout>
+                </ui:DropDownButton>
+                
+            </StackPanel>
+
+        </Grid>
+
+        <ui:NavigationView Grid.Row="1"
+                           Padding="8"
+                           CompactPaneLength="60"
+                           IsSettingsVisible="False"
+                           PaneDisplayMode="LeftCompact"
+                           IsBackButtonVisible="Collapsed"
+                           IsFooterSeparatorVisible="False"
+                           IsPaneToggleButtonVisible="False"
+                           IsTitleBarAutoPaddingEnabled="False"
+                           SelectedItem="{Binding NavigationItem, Mode=TwoWay}"
+                           MenuItemsSource="{Binding NavigationItems, Mode=OneTime}">
+
+            <ui:Frame Padding="20"
+                      x:Name="ContentFrame"
+                      NavigationUIVisibility="Visible"
+                      Navigated="ContentFrame_Navigated"
+                      Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"/>
+
+        </ui:NavigationView>
+
+    </Grid>
+
+</Window>
