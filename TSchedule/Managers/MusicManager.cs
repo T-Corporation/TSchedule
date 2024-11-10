@@ -15,32 +15,27 @@ public class MusicManager
 
     public static MusicManager Default { get; } = new();
 
-    public ObservableCollection<MusicFolder> LoadMusicFolders()
+    public ObservableCollection<Soundtrack> LoadSoundtracks()
     {
-        ObservableCollection<MusicFolder> musicFolders = [LoadCoreMusicFolders()];
+        ObservableCollection<Soundtrack> soundtracks = [.. LoadCoreMusicFolders()];
 
-        foreach (var userMusicFolder in LoadUserMusicFolders())
-            musicFolders.Add(userMusicFolder);
+        foreach (var userSoundTrack in LoadUserSoundtracks())
+            soundtracks.Add(userSoundTrack);
 
-        return musicFolders;
+        return soundtracks;
     }
 
-    private MusicFolder LoadCoreMusicFolders()
-    {
-        var coreTracks = GetEmbeddedTracks(CoreMusicNamespace)
-            .Select(file => 
+    private ICollection<Soundtrack> LoadCoreMusicFolders()
+        => GetEmbeddedTracks(CoreMusicNamespace)
+            .Select(file =>
             {
                 var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(file);
-                return new Track(Path.GetFileNameWithoutExtension(file).Replace($"{CoreMusicNamespace}.", string.Empty), stream!); // Используем поток
+                return new Soundtrack(
+                    Path.GetFileNameWithoutExtension(file).Replace($"{CoreMusicNamespace}.", string.Empty),
+                    "Встроенные саундтреки",
+                    stream!); // Используем поток
             })
             .ToList();
-
-        return new MusicFolder
-        {
-            Name = "Встроенные саундтреки",
-            Tracks = [.. coreTracks]
-        };
-    }
 
     // ReSharper disable once MemberCanBeMadeStatic.Local
     private IEnumerable<string> GetEmbeddedTracks(string coreNamespace)
@@ -50,31 +45,27 @@ public class MusicManager
             .Where(name => name.StartsWith(coreNamespace) && name.EndsWith(".wav"));
     }
 
-    private ObservableCollection<MusicFolder> LoadUserMusicFolders()
+    private ICollection<Soundtrack> LoadUserSoundtracks()
     {
         if (!Directory.Exists(UserMusicFolderPath))
             Directory.CreateDirectory(UserMusicFolderPath);
 
-        ObservableCollection<MusicFolder> userFolders = [];
+        ObservableCollection<Soundtrack> userSoundtracks = [];
 
-        var directories = Directory.GetDirectories(UserMusicFolderPath)
+        var catalogs = Directory.GetDirectories(UserMusicFolderPath)
             .Where(dir => IsValidFolderName(Path.GetFileName(dir)))
             .ToList();
 
-        foreach (var directory in directories)
-        {
-            var tracks = Directory.GetFiles(directory, "*.wav")
-                .Select(file => new Track(Path.GetFileNameWithoutExtension(file), file)) // Используем путь к файлу
-                .ToList();
-                
-            userFolders.Add(new MusicFolder
-            {
-                Name = Path.GetFileName(directory),
-                Tracks = [.. tracks]
-            });
-        }
+        foreach (var track in catalogs.Select(
+                     catalog => Directory.GetFiles(catalog, "*.wav")
+                     .Select(file => new Soundtrack(
+                         Path.GetFileNameWithoutExtension(file),
+                         catalog.Split(@"\", 4)[3],
+                         file)) // Используем путь к файлу
+                     .ToList()).SelectMany(tracks => tracks))
+            userSoundtracks.Add(track);
 
-        return userFolders;
+        return userSoundtracks;
     }
 
     // ReSharper disable once MemberCanBeMadeStatic.Local
@@ -91,7 +82,7 @@ public class MusicManager
         return folderName.All(c => char.IsLetterOrDigit(c) || c is '_' or ' ');
     }
 
-    public void PlayTrack(Track? track, bool loop)
+    public void PlayTrack(Soundtrack? track, bool loop)
     {
         if (track is null) return;
 

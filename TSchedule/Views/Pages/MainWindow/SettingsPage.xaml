@@ -12,6 +12,15 @@
          d:Background="White"
          d:DesignHeight="450">
     
+    <ui:Page.Resources>
+        <CollectionViewSource x:Key="GroupedSoundtracks"
+                              Source="{Binding Tracks}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Catalog"/>
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+    </ui:Page.Resources>
+    
     <ui:Page.DataContext>
         <vm:SettingsViewModel/>
     </ui:Page.DataContext>
@@ -57,72 +66,6 @@
                               SelectedItem="{Binding FontSize, Mode=TwoWay}"
                               ItemsSource="{Binding FontSizes, Mode=OneTime}"
                               ui:ControlHelper.PlaceholderText="Выберите размер шрифта"/>
-                    <StackPanel>
-                        <TextBlock FontSize="14"
-                                   Text="Саундтреки" />
-                        <ScrollViewer MaxHeight="240"
-                                      Padding="0,8"
-                                      CanContentScroll="True">
-                            <ui:ListView IsItemClickEnabled="True"
-                                         IsSelectionEnabled="False"
-                                         ItemsSource="{Binding MusicFolders}"
-                                         ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                                <ui:ListView.ItemTemplate>
-                                    <HierarchicalDataTemplate>
-                                        <Expander>
-                                            <Expander.Header>
-                                                <TextBlock Padding="0,8"
-                                                           Text="{Binding Name}"/>
-                                            </Expander.Header>
-                                            <ScrollViewer CanContentScroll="True">
-                                                <ui:ListView IsSynchronizedWithCurrentItem="True"
-                                                             ItemsSource="{Binding Tracks}"
-                                                             ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                                                             SelectedItem="{Binding DataContext.SelectedTrack, RelativeSource={RelativeSource AncestorType=ui:Page}}">
-                                                    <ui:ListView.ItemTemplate>
-                                                        <DataTemplate>
-                                                            <TextBlock Text="{Binding Name}"
-                                                                       TextTrimming="CharacterEllipsis"
-                                                                       ToolTipService.ToolTip="{Binding Name}"/>
-                                                        </DataTemplate>
-                                                    </ui:ListView.ItemTemplate>
-                                                </ui:ListView>
-                                            </ScrollViewer>
-                                        </Expander>
-                                    </HierarchicalDataTemplate>
-                                </ui:ListView.ItemTemplate>
-                            </ui:ListView>
-                        </ScrollViewer>
-                    </StackPanel>
-
-                    <Grid ui:PanelHelper.Spacing="8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Button Cursor="Hand"
-                                HorizontalAlignment="Stretch"
-                                Style="{DynamicResource AccentButtonStyle}"
-                                Command="{Binding PlaySelectedTrackCommand}"
-                                ToolTipService.ToolTip="Нажмите, чтобы воспроизвести саундтрек">
-                            <ui:IconAndText Content="Играть"
-                                            Icon="{x:Static ui:SegoeFluentIcons.Play}"/>
-                        </Button>
-                        <Button Cursor="Hand"
-                                Grid.Column="1"
-                                HorizontalAlignment="Stretch"
-                                Command="{Binding StopCommand}"
-                                ToolTipService.ToolTip="Нажмите, чтобы остановить саундтрек">
-                            <ui:IconAndText Content="Стоп"
-                                            Icon="{x:Static ui:SegoeFluentIcons.Stop}"/>
-                        </Button>
-                        <ui:ToggleSwitch Grid.Column="2"
-                                         IsOn="{Binding Loop}"
-                                         OnContent="На повторе"
-                                         OffContent="Без повтора"/>
-                    </Grid>
 
                     <Button Cursor="Hand"
                             HorizontalAlignment="Stretch"
@@ -149,6 +92,68 @@
                         <ui:IconAndText Content="Сбросить до заводских настроек"
                                         Icon="{x:Static ui:SegoeFluentIcons.ResetDrive}"/>
                     </Button>
+                    
+                    <StackPanel>
+                        <TextBlock FontSize="14"
+                                   Text="Саундтреки" />
+                        <ScrollViewer Padding="0,8"
+                                      CanContentScroll="True">
+                            <ui:ListView IsItemClickEnabled="True"
+                                         IsSelectionEnabled="True"
+                                         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                         SelectedItem="{Binding SelectedTrack}"
+                                         ItemsSource="{Binding Source={StaticResource GroupedSoundtracks}}">
+                                <ui:ListView.GroupStyle>
+                                    <GroupStyle>
+                                        <GroupStyle.HeaderTemplate>
+                                            <DataTemplate>
+                                                <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                                                <TextBlock Text="{Binding Name}"/>
+                                            </DataTemplate>
+                                        </GroupStyle.HeaderTemplate>
+                                    </GroupStyle>
+                                </ui:ListView.GroupStyle>
+                                
+                                <ui:ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextTrimming="CharacterEllipsis"
+                                                   Text="{Binding Name}"
+                                                   ToolTipService.ToolTip="{Binding Name}"/>
+                                    </DataTemplate>
+                                </ui:ListView.ItemTemplate>
+                            </ui:ListView>
+                        </ScrollViewer>
+                    </StackPanel>
+
+                    <Grid ui:PanelHelper.Spacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Cursor="Hand"
+                                Grid.Column="0"
+                                HorizontalAlignment="Stretch"
+                                Style="{DynamicResource AccentButtonStyle}"
+                                Command="{Binding PlaySelectedTrackCommand}"
+                                ToolTipService.ToolTip="Нажмите, чтобы воспроизвести саундтрек">
+                            <ui:IconAndText Content="Играть"
+                                            Icon="{x:Static ui:SegoeFluentIcons.Play}"/>
+                        </Button>
+                        <Button Cursor="Hand"
+                                Grid.Column="1"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding StopCommand}"
+                                ToolTipService.ToolTip="Нажмите, чтобы остановить саундтрек">
+                            <ui:IconAndText Content="Стоп"
+                                            Icon="{x:Static ui:SegoeFluentIcons.Stop}"/>
+                        </Button>
+                        <ui:ToggleSwitch Grid.Column="2"
+                                         OnContent="На повторе"
+                                         OffContent="Без повтора"
+                                         IsOn="{Binding Loop}"/>
+                    </Grid>
                 </StackPanel>
             </Grid>
         </ScrollViewer>

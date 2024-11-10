@@ -65,12 +65,13 @@ public partial class SettingsViewModel : ObservableObject
     public ObservableCollection<byte> FontSizes => CustomizationManager.FontSizes;
 
     [ObservableProperty]
-    private ObservableCollection<MusicFolder> _musicFolders = MusicManager.Default.LoadMusicFolders();
+    private ObservableCollection<Soundtrack> _tracks = MusicManager.Default.LoadSoundtracks();
 
     [ObservableProperty]
-    private Track? _selectedTrack;
+    private ObservableCollection<IGrouping<string, Soundtrack>> _groupedSoundtracks;
 
-    partial void OnSelectedTrackChanged(Track? value) => PlaySelectedTrack(value);
+    [ObservableProperty]
+    private Soundtrack? _selectedTrack;
 
     [ObservableProperty]
     private bool _loop;
@@ -82,6 +83,9 @@ public partial class SettingsViewModel : ObservableObject
     public SettingsViewModel()
     {
         FontFamily = FontFamilies.First(ff => ff == PreferencesManager.Default.GetFontFamily());
+        GroupedSoundtracks = [..
+            from soundtrack in Tracks
+            group soundtrack by soundtrack.Catalog];
     }
 
     #endregion
@@ -137,8 +141,8 @@ public partial class SettingsViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void PlaySelectedTrack(Track? track)
-        => MusicManager.Default.PlayTrack(track ?? SelectedTrack, Loop);
+    private void PlaySelectedTrack()
+        => MusicManager.Default.PlayTrack(SelectedTrack, Loop);
 
     [RelayCommand]
     private void Stop() => MusicManager.Default.Stop();
