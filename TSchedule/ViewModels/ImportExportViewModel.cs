@@ -12,6 +12,7 @@ using System.IO;
 using TSchedule.Extensions;
 using TSchedule.Views.Pages.MainWindow.Administrators;
 using TSchedule.ViewModels.Pages.MainWindow.Administrators;
+using iNKORE.UI.WPF.Helpers;
 
 namespace TSchedule.ViewModels;
 
@@ -94,10 +95,14 @@ public partial class ImportExportViewModel : ObservableObject
             {
                 var schedules = await excelManager.GetSchedulesFromFile();
 
+                var viewModel = OSVersionHelper.IsWindows10OrGreater && PreferencesManager.Default.IsModernUIEnabled()
+                    ? WindowManager.Default.GetViewModel<MainWindow>()!
+                        .As<MainWindowViewModel>()!
+                    : WindowManager.Default.GetViewModel<MainWindowWin7>()!
+                        .As<MainWindowViewModel>()!;
+
                 // Расписания на числитель, знаменатель и группа получены, далее нужно обновить UI и БД в ScheduleManagementPage
-                if (WindowManager.Default.GetViewModel<MainWindow>()!
-                    .As<MainWindowViewModel>()!
-                    .NavigationFrame.Content is ScheduleManagementPage scheduleManagement
+                if (viewModel.NavigationFrame.Content is ScheduleManagementPage scheduleManagement
                     && scheduleManagement.DataContext is ScheduleManagementViewModel scheduleViewModel)
                 {
                     await scheduleViewModel.UpdateSchedules(schedules.NumeratorDailySchedule, schedules.DenominatorDailySchedule);

@@ -30,7 +30,9 @@ public partial class PreferencesManager : IManager
         { "IsLoggedIn", false },
         { "Theme", "system" },
         { "FontFamily", "Segoe UI" },
-        { "UserConnectionString", string.Empty }
+        { "UserConnectionString", string.Empty },
+        { "FontSize", (byte)14 },
+        { "ModernUIEnabled", false }
     };
 
     /// <summary>
@@ -242,23 +244,63 @@ public partial class PreferencesManager : IManager
         return this;
     }
 
+    /// <summary>
+    /// Получает размер шрифта
+    /// </summary>
+    /// <returns>Размер шрифта</returns>
+    public byte GetFontSize() => Preferences.Default.FontSize;
+
+    /// <summary>
+    /// Устанавливает размер шрифта
+    /// </summary>
+    /// <param name="fontSize">Размер шрифта</param>
+    /// <returns>Менеджер пользовательских настроек</returns>
+    public PreferencesManager SetFontSize(byte fontSize)
+    {
+        Preferences.Default.FontSize = fontSize;
+        return this;
+    }
+
+    /// <summary>
+    /// Возвращает размер шрифта к заводским настройкам
+    /// </summary>
+    /// <returns>Менеджер пользовательских настроек</returns>
+    public PreferencesManager ClearFontSize()
+    {
+        Preferences.Default.FontSize = _defaultSettings["FontSize"];
+        return this;
+    }
+
+    /// <summary>
+    /// Проверяет, выбран ли современный интерфейс
+    /// </summary>
+    /// <returns>Размер шрифта</returns>
+    public bool IsModernUIEnabled() => Preferences.Default.ModernUIEnabled;
+
+    /// <summary>
+    /// Устанавливает современный интерфейс
+    /// </summary>
+    /// <param name="modernUIEnabled">Флаг современного интерфейса</param>
+    /// <returns>Менеджер пользовательских настроек</returns>
+    public PreferencesManager SetModernUIEnabled(bool modernUIEnabled)
+    {
+        Preferences.Default.ModernUIEnabled = modernUIEnabled;
+        return this;
+    }
+
+    /// <summary>
+    /// Возвращает размер шрифта к заводским настройкам
+    /// </summary>
+    /// <returns>Менеджер пользовательских настроек</returns>
+    public PreferencesManager ClearModernUIEnabled()
+    {
+        Preferences.Default.ModernUIEnabled = _defaultSettings["ModernUIEnabled"];
+        return this;
+    }
+
     #endregion
 
     #region Changing state
-
-    /// <summary>
-    /// Выводит все настройки
-    /// </summary>
-    [Conditional("DEBUG")]
-    public void PrintValues()
-    {
-        var preferences = Preferences.Default;
-        Type settingsType = preferences.GetType();
-
-        foreach (var property in settingsType.GetProperties())
-            if (_defaultSettings.ContainsKey(property.Name))
-                Debug.WriteLine($"{property.Name} = {property.GetValue(preferences)}");
-    }
 
     /// <summary>
     /// Сохраняет настройки

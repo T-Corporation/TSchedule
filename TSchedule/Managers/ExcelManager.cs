@@ -8,6 +8,7 @@ using TSchedule.Persistence.Extensions;
 using TSchedule.Persistence.Entities;
 using TSchedule.Persistence.Enums;
 using TSchedule.Extensions;
+using TSchedule.Persistence.Interfaces.Bases;
 
 namespace TSchedule.Managers;
 
@@ -31,7 +32,7 @@ namespace TSchedule.Managers;
 ///     <item>В том случае, если результат не пустой, экспорт этого расписания в другой файл</item>
 /// </list>
 /// </summary>
-public class ExcelManager
+public class ExcelManager : IManager
 {
     public static readonly string AppDirectory = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 

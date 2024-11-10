@@ -20,27 +20,27 @@
     <StackPanel Margin="12"
                 ui:PanelHelper.Spacing="12"
                 HorizontalAlignment="Center">
-        
         <TextBlock FontSize="24"
                    Margin="0,0,0,12"
                    TextWrapping="Wrap"
                    TextAlignment="Center"
                    Text="Вход в систему TSchedule"/>
-
         <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
         <Button Padding="8"
                 Cursor="Hand"
                 Content="Вход с авторизацией"
                 HorizontalAlignment="Stretch"
                 Style="{StaticResource AccentButtonStyle}"
+                ToolTipService.ToolTip="Нажмите, чтобы перейти на страницу авторизации."
                 Command="{Binding ContinueWithAuthenticationCommand}"/>
 
         <Button Padding="8"
                 Cursor="Hand"
                 HorizontalAlignment="Stretch"
                 Content="Продолжить без авторизации"
-                Command="{Binding ContinueWithoutAuthenticationCommand}"/>
-        
+                Command="{Binding ContinueWithoutAuthenticationCommand}"
+                ToolTipService.ToolTip="Нажмите, чтобы войти в систему
+                в качестве гостя."/>
     </StackPanel>
     
 </ui:Page>

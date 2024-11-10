@@ -13,6 +13,7 @@ using System.Windows.Threading;
 using System.Text;
 using Windows.UI.ViewManagement;
 using OfficeOpenXml;
+using iNKORE.UI.WPF.Helpers;
 
 namespace TSchedule;
 
@@ -46,7 +47,13 @@ public partial class App
                 .AddSingleton<ISubjectsService, SubjectsService>(() => new SubjectsService(PreferencesManager.Default.GetConnectionString()));
 
             if (Environment.GetCommandLineArgs().Contains("User-Connection"))
-                WindowManager.Default.CreateWindow<UserConnectionWindow>(showDialog: true);
+            {
+                if (OSVersionHelper.IsWindows10OrGreater && PreferencesManager.Default.IsModernUIEnabled())
+                    WindowManager.Default.CreateWindow<UserConnectionWindow>(showDialog: true);
+                else
+                    WindowManager.Default.CreateWindow<UserConnectionWindowWin7>(showDialog: true);
+                return;
+            }
 
             await using ApplicationDbContext context = new(PreferencesManager.Default.GetConnectionString());
             await context.WarmUpAsync();
@@ -54,12 +61,17 @@ public partial class App
         }
         catch (SqlException)
         {
+            if (OSVersionHelper.IsWindows10OrGreater && PreferencesManager.Default.IsModernUIEnabled())
+                WindowManager.Default.CreateWindow<StartWindow>();
+            else
+                WindowManager.Default.CreateWindow<StartWindowWin7>();
+
             if (WindowManager.ShowMessageBox(
                 "Отсутствует подключение к интернету или указана неверная строка подключения.",
                 "Ошибка, перезагрузить приложение?",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Error) is MessageBoxResult.Yes)
-                RestartApplication();
+                Restart();
         }
     }
 
@@ -67,13 +79,16 @@ public partial class App
     /// Инициализирует вход в приложение
     /// </summary>
     /// <returns>Задача</returns>
-    public static async Task InitializeEntry()
+    private static async Task InitializeEntry()
     {
         var isLoggedIn = PreferencesManager.Default.IsLoggedIn();
 
         if (!isLoggedIn)
         {
-            WindowManager.Default.CreateWindow<StartWindow>();
+            if (OSVersionHelper.IsWindows10OrGreater && PreferencesManager.Default.IsModernUIEnabled())
+                WindowManager.Default.CreateWindow<StartWindow>();
+            else
+                WindowManager.Default.CreateWindow<StartWindowWin7>();
             return;
         }
 
@@ -88,7 +103,10 @@ public partial class App
             _ => Role.Гость
         });
 
-        WindowManager.Default.CreateWindow<MainWindow>();
+        if (OSVersionHelper.IsWindows10OrGreater && PreferencesManager.Default.IsModernUIEnabled())
+            WindowManager.Default.CreateWindow<MainWindow>();
+        else
+            WindowManager.Default.CreateWindow<MainWindowWin7>();
     }
 
     private void OnColorValuesChanged(UISettings sender, object args)
@@ -121,7 +139,7 @@ public partial class App
                 "Ошибка работы БД. Перезапустить приложение?",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Error) is MessageBoxResult.Yes)
-                RestartApplication();
+                Restart();
             return;
         }
         
@@ -152,12 +170,18 @@ public partial class App
         return messageBuilder.ToString();
     }
 
-    private void RestartApplication()
+    public static void Restart()
     {
         var exePath = Process.GetCurrentProcess().MainModule?.FileName;
         if (!string.IsNullOrEmpty(exePath)) Process.Start(exePath);
-        Shutdown();
+        Current.Shutdown();
     }
 
     protected override void OnActivated(EventArgs e) => ServiceManager.Default.Dispose();
+
+    protected override void OnExit(ExitEventArgs e)
+    {
+        MusicManager.Default.SoundPlayer.Stop();
+        MusicManager.Default.SoundPlayer.Dispose();
+    }
 }

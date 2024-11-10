@@ -94,5 +94,29 @@ namespace TSchedule.Properties {
                 this["UserConnectionString"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("14")]
+        public byte FontSize {
+            get {
+                return ((byte)(this["FontSize"]));
+            }
+            set {
+                this["FontSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ModernUIEnabled {
+            get {
+                return ((bool)(this["ModernUIEnabled"]));
+            }
+            set {
+                this["ModernUIEnabled"] = value;
+            }
+        }
     }
 }

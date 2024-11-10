@@ -535,10 +535,4 @@ public partial class ScheduleManagementViewModel : ObservableObject
         NumeratorDailySchedule = [.. numeratorDailySchedule];
         DenominatorDailySchedule = [.. denominatorDailySchedule];
     }
-
-    [RelayCommand]
-    private void GoBack()
-        => WindowManager.Default.GetViewModel<Views.MainWindow>()!
-            .As<MainWindowViewModel>()!
-            .GoBack();
 }

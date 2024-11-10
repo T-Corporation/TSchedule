@@ -1,4 +1,5 @@
-﻿using System.Windows.Navigation;
+﻿using System.Windows;
+using System.Windows.Navigation;
 using TSchedule.Extensions;
 using TSchedule.Managers;
 using TSchedule.Persistence.Enums;
@@ -12,12 +13,14 @@ public partial class MainWindow
     {
         InitializeComponent();
         DataContext = new MainWindowViewModel(ContentFrame);
+        MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
+        MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
     }
 
     private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
     {
-        var viewModel = WindowManager.Default.GetViewModel<MainWindow>()!
-            .As<MainWindowViewModel>()!;
+        if (DataContext is not MainWindowViewModel viewModel)
+            return;
 
         // Определяем, какой элемент должен быть выделен на основе навигации
         var pageCode = e.Content.ToPageCode();
@@ -25,6 +28,6 @@ public partial class MainWindow
         viewModel.NavigationItem = viewModel.NavigationItems
             .FirstOrDefault(item => item.Tag is PageCode pc
                 && pc == pageCode
-                && pageCode is not PageCode.Profile and not PageCode.Settings);
+                && pageCode is not PageCode.Settings);
     }
 }

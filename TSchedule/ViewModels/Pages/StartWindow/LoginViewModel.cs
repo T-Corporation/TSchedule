@@ -1,10 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using iNKORE.UI.WPF.Helpers;
 using TSchedule.Extensions;
 using TSchedule.Managers;
 using TSchedule.Persistence.Enums;
 using TSchedule.Persistence.Interfaces;
 using TSchedule.Persistence.Managers;
+using TSchedule.Views;
 
 namespace TSchedule.ViewModels.Pages.StartWindow;
 
@@ -30,9 +32,15 @@ public partial class LoginViewModel : ObservableObject
 
     [RelayCommand]
     private void GoBack()
-        => WindowManager.Default.GetViewModel<Views.StartWindow>()!
-            .As<StartWindowViewModel>()!
-            .GoBack();
+    {
+        var viewModel = OSVersionHelper.IsWindows10OrGreater && PreferencesManager.Default.IsModernUIEnabled()
+            ? WindowManager.Default.GetViewModel<Views.StartWindow>()!
+                .As<StartWindowViewModel>()!
+            : WindowManager.Default.GetViewModel<StartWindowWin7>()!
+                .As<StartWindowViewModel>()!;
+
+        viewModel.GoBack();
+    } 
 
     [RelayCommand]
     private async Task Login()
@@ -65,7 +73,13 @@ public partial class LoginViewModel : ObservableObject
         PreferencesManager.Default.SetLoggedIn(true);
         PreferencesManager.Default.Save();
 
-        WindowManager.Default.CreateWindow<Views.MainWindow>();
-        WindowManager.Default.CloseWindow<Views.StartWindow>();
+        if (OSVersionHelper.IsWindows10OrGreater && PreferencesManager.Default.IsModernUIEnabled())
+        {
+            WindowManager.Default.CreateWindow<Views.MainWindow>();
+            WindowManager.Default.CloseWindow<Views.StartWindow>();
+            return;
+        }
+        WindowManager.Default.CreateWindow<MainWindowWin7>();
+        WindowManager.Default.CloseWindow<StartWindowWin7>();
     }
 }

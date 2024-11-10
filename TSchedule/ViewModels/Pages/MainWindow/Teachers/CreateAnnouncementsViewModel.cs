@@ -5,28 +5,23 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using TSchedule.Managers;
 using TSchedule.Persistence.Entities;
-using TSchedule.Persistence.Enums;
 using TSchedule.Persistence.Exceptions;
 using TSchedule.Persistence.Interfaces;
 using TSchedule.Persistence.Managers;
 using TSchedule.Persistence.Models;
-using TSchedule.Views;
 
 namespace TSchedule.ViewModels.Pages.MainWindow.Teachers;
 
 public partial class CreateAnnouncementsViewModel : ObservableObject
 {
-    private static readonly ISubjectsService SubjectsService
-        = ServiceManager.Default.GetRequiredService<ISubjectsService>();
-
     private static readonly IAnnouncementsService AnnouncementsService
         = ServiceManager.Default.GetRequiredService<IAnnouncementsService>();
 
     private static Guid TeacherId { get; set; }
 
-    public Flyout AttachedFlyout { get; }
+    private Flyout AttachedFlyout { get; }
 
-    public FrameworkElement Target { get; }
+    private FrameworkElement Target { get; }
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(DeleteCommand))]
@@ -54,13 +49,13 @@ public partial class CreateAnnouncementsViewModel : ObservableObject
     [ObservableProperty]
     private DateTime _absentToTime = DateTime.Now.AddHours(1);
 
-    public DateTime AbsentFrom => AbsentFromDate.Date + AbsentFromTime.TimeOfDay;
-    public DateTime AbsentTo => AbsentToDate.Date + AbsentToTime.TimeOfDay;
+    private DateTime AbsentFrom => AbsentFromDate.Date + AbsentFromTime.TimeOfDay;
+    private DateTime AbsentTo => AbsentToDate.Date + AbsentToTime.TimeOfDay;
 
     [ObservableProperty]
     private string _errorMessage = string.Empty;
 
-    public CreateAnnouncementsViewModel(
+    private CreateAnnouncementsViewModel(
         IEnumerable<Announcement> announcements,
         FrameworkElement element,
         Flyout flyout)
@@ -75,23 +70,6 @@ public partial class CreateAnnouncementsViewModel : ObservableObject
     public static async Task<CreateAnnouncementsViewModel> CreateInstanceAsync(FrameworkElement element, Flyout flyout)
     {
         var usersService = ServiceManager.Default.GetRequiredService<IUsersService>();
-        var isAuthenticated = usersService.IsAuthenticated();
-        var role = usersService.GetRole();
-
-        if (!isAuthenticated || role is not Role.Преподаватель)
-        {
-            if (WindowManager.ShowMessageBox(
-                text: """
-                      Вы не авторизованы, пожалуйста, подтвердите свою принадлежность к роли Преподавателя.
-                      Перейти к авторизации?
-                      """,
-                caption: "Ошибка авторизации",
-                button: MessageBoxButton.YesNo,
-                icon: MessageBoxImage.Error) is not MessageBoxResult.Yes) throw new Exception("Извините, вы не смогли подтвердить свой статус");
-            
-            WindowManager.Default.CreateWindow<Views.StartWindow>();
-            WindowManager.Default.CloseWindow<Views.MainWindow>();
-        }
 
         TeacherId = usersService.GetId();
 

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using iNKORE.UI.WPF.Helpers;
+using System.Windows;
 using TSchedule.Extensions;
 using TSchedule.Managers;
 using TSchedule.ViewModels;
@@ -11,6 +12,12 @@ public partial class HomePage
     public HomePage() => InitializeComponent();
 
     private void Page_Loaded(object sender, RoutedEventArgs e)
-        => DataContext = new HomeViewModel(WindowManager.Default.GetViewModel<Views.MainWindow>()!
-            .As<MainWindowViewModel>()!.NavigationFrame);
+    {
+        if (OSVersionHelper.IsWindows10OrGreater && PreferencesManager.Default.IsModernUIEnabled())
+            DataContext = new HomeViewModel(WindowManager.Default.GetViewModel<Views.MainWindow>()!
+                .As<MainWindowViewModel>()!.NavigationFrame);
+        else
+            DataContext = new HomeViewModel(WindowManager.Default.GetViewModel<MainWindowWin7>()!
+                .As<MainWindowViewModel>()!.NavigationFrame);
+    }
 }

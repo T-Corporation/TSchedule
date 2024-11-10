@@ -100,12 +100,37 @@ public class WindowManager : IManager
     public void ShowWindow<T>(bool showDialog = false)
         where T : Window, new()
     {
-        var window = CreateWindow<T>();
+        var window = GetWindow<T>();
+        if (window is null) return;
         ShowWindow(window, showDialog);
     }
 
     /// <summary>
     /// Скрывает окно
+    /// </summary>
+    /// <typeparam name="T">Тип окна</typeparam>
+    public void HideWindow<T>()
+        where T : Window
+    {
+        var window = GetWindow<T>();
+        window?.Hide();
+    }
+
+    /// <summary>
+    /// Восстанавливает изначальный статус окна
+    /// </summary>
+    /// <typeparam name="T">Тип окна</typeparam>
+    public void NormalizeWindow<T>()
+        where T : Window
+    {
+        var window = GetWindow<T>();
+        if (window is null) return;
+        window.WindowState = WindowState.Normal;
+        window.Activate();
+    }
+
+    /// <summary>
+    /// Делает статус окна скрытым
     /// </summary>
     /// <typeparam name="T">Тип окна, которое создано через менеджер</typeparam>
     public void MinimizeWindow<T>()

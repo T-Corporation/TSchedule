@@ -22,14 +22,11 @@
     </ui:Page.DataContext>
 
     <Grid VerticalAlignment="Stretch">
-
         <Grid>
-
             <StackPanel MinWidth="300"
                         VerticalAlignment="Top"
                         ui:PanelHelper.Spacing="12"
                         HorizontalAlignment="Stretch">
-
                 <ComboBox Padding="10"
                           IsReadOnly="True"
                           IsEditable="False"
@@ -39,7 +36,6 @@
                           ui:ControlHelper.CornerRadius="4"
                           ui:ControlHelper.Header="Войти как"
                           ui:ControlHelper.PlaceholderText="Выберите роль"/>
-
                 <TextBox Padding="10"
                          TextWrapping="Wrap"
                          Text="{Binding UserName}"
@@ -47,7 +43,6 @@
                          ui:ControlHelper.CornerRadius="4"
                          ui:TextBoxHelper.IsDeleteButtonVisible="True"
                          ui:ControlHelper.PlaceholderText="Введите имя пользователя"/>
-
                 <PasswordBox Padding="10"
                              x:Name="PasswordBox"
                              VerticalAlignment="Top"
@@ -56,9 +51,9 @@
                              PasswordChanged="PasswordBox_PasswordChanged"
                              ui:PasswordBoxHelper.PasswordRevealMode="Peek"
                              ui:ControlHelper.PlaceholderText="Введите ваш пароль"/>
-
                 <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
                 <Button Padding="10"
+                        Cursor="Hand"
                         Margin="0,6,0,0"
                         Content="Войти в систему"
                         HorizontalAlignment="Stretch"
@@ -66,18 +61,15 @@
                         ToolTipService.HasDropShadow="True"
                         Style="{StaticResource AccentButtonStyle}"
                         ToolTipService.ToolTip="Нажмите, чтобы войти в систему"/>
-
-
                 <TextBlock Foreground="#cc3300"
                            TextAlignment="Center"
                            Text="{Binding ErrorMessage}"
                            Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}"/>
-
             </StackPanel>
-
         </Grid>
 
         <ui:DropDownButton Padding="12"
+                           Cursor="Help"
                            ShowChevronArrow="False"
                            VerticalAlignment="Bottom"
                            HorizontalAlignment="Right"
@@ -98,15 +90,14 @@
 
         <Button FontSize="36"
                 Padding="16"
+                Cursor="Hand"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Left"
-                ToolTipService.ToolTip="Назад"
+                Command="{Binding GoBackCommand}"
                 ToolTipService.HasDropShadow="True"
-                Command="{Binding GoBackCommand}">
+                ToolTipService.ToolTip="Нажмите, чтобы вернуться назад">
             <ui:IconAndText IconSize="16"
                             Icon="{x:Static ui:SegoeFluentIcons.Back}"/>
         </Button>
-
     </Grid>
-
 </ui:Page>

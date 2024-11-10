@@ -12,18 +12,18 @@
 		<DefineConstants>TRACE;RELEASE</DefineConstants>
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		
-		<Version>1.0.0.0</Version>
-		<Authors>RomanStalinist, MarkRockord, Sokolovsky-projects, Lexa256</Authors>
+		<Version>1.1.0.0</Version>
+		<Authors>RomanStalinist, MarkRockord, Lexa256</Authors>
 		<Company>T-Corporation</Company>
 		<Product>TSchedule</Product>
-		<PackageId>com.tcorporation.TSchedule</PackageId>
-		<AssemblyVersion>1.0.0.0</AssemblyVersion>
-		<FileVersion>1.0.0.0</FileVersion>
+		<PackageId>com.romanjava.TSchedule</PackageId>
+		<AssemblyVersion>1.1.0.0</AssemblyVersion>
+		<FileVersion>1.1.0.0</FileVersion>
 		<NeutralLanguage>ru</NeutralLanguage>
 		<Description>Программа для ведения расписания в образовательных учреждениях среднего и высшего образований</Description>
 		<Copyright>© TCorporation (RomanJava)</Copyright>
 		<RepositoryUrl>https://github.com/T-Corporation/TSchedule</RepositoryUrl>
-		<RepositoryType>Public</RepositoryType>
+		<RepositoryType>git</RepositoryType>
 		<PackageTags>Scheduling, Education, Timetable, WPF, .NET</PackageTags>
 		<PackageIconUrl>Images/favicon.ico</PackageIconUrl>
 		<AssemblyName>TSchedule</AssemblyName>
@@ -34,6 +34,25 @@
 		<OutputType>WinExe</OutputType>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<ApplicationName>TSchedule</ApplicationName>
+		<SignAssembly>False</SignAssembly>
+		<PackageIcon>favicon_square.png</PackageIcon>
+		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+		<AnalysisLevel>latest-recommended</AnalysisLevel>
+		<StartupObject>TSchedule.App</StartupObject>
+		<RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
+		<RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <WarningLevel>8</WarningLevel>
+	  <NoWarn>1701;1702;NETSDK1057</NoWarn>
+	  <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <WarningLevel>8</WarningLevel>
+	  <NoWarn>1701;1702;NETSDK1057</NoWarn>
+	  <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -47,10 +66,50 @@
 	  <None Remove="Images\excel_48.png" />
 	  <None Remove="Images\faq_375.png" />
 	  <None Remove="Images\favicon.ico" />
-	  <None Remove="Images\favicon_square.png" />
 	  <None Remove="Images\group_375.png" />
 	  <None Remove="Images\settings_375.png" />
 	  <None Remove="Images\verified_375.png" />
+	  <None Remove="Music\Core\Akiko Toyama Trio – From The Beginning.wav" />
+	  <None Remove="Music\Core\Deep Purple – Smoke on the Water.wav" />
+	  <None Remove="Music\Core\DK – ГНОЙНЫЙ DISS CHALLANGE.wav" />
+	  <None Remove="Music\Core\DK – Плёнка в порядке.wav" />
+	  <None Remove="Music\Core\doombreaker – кристальный just dance.wav" />
+	  <None Remove="Music\Core\Fnaf – эмбиент вентилятора.wav" />
+	  <None Remove="Music\Core\Ghost – Mary On A Cross.wav" />
+	  <None Remove="Music\Core\Linkin Park – Numb.wav" />
+	  <None Remove="Music\Core\Lynyrd Skynyrd – Free Bird guitar solo.wav" />
+	  <None Remove="Music\Core\Mr Kitty The Neighbourhood – After dark x Sweater Weather [Mashup].wav" />
+	  <None Remove="Music\Core\mzlff, CMH – catharsis %28prod. by spbwaves%29.wav" />
+	  <None Remove="Music\Core\NAMCO SOUNDS – Only One Fight %28Noh Theater%29.wav" />
+	  <None Remove="Music\Core\pieruun supertrap + redda + grime type beat silly.wav" />
+	  <None Remove="Music\Core\Piwson TSC – PIWO HARDSTYLE.wav" />
+	  <None Remove="Music\Core\PLOHOYPAREN feat. JesusAVGN, Feint – Майнкафт ХИТ! Dnb Remix Prod.TripSauce.wav" />
+	  <None Remove="Music\Core\precoil – Лпсайз.wav" />
+	  <None Remove="Music\Core\Rammstein – Позови Меня с Собой Cover by ROCK.wav" />
+	  <None Remove="Music\Core\RiGO feat. Milana Star, Милана Хаметова, buster – полный лп %28mashup%29.wav" />
+	  <None Remove="Music\Core\RiGO feat. MZLFF. T2x2 – полный bread.wav" />
+	  <None Remove="Music\Core\Rohan off x kerbal – У плохих свинок зазвонил мобильник.wav" />
+	  <None Remove="Music\Core\sadness112 – Dora is there.wav" />
+	  <None Remove="Music\Core\Sector – Роботы не плачут.wav" />
+	  <None Remove="Music\Core\SORRELL – BASSLINE DESIRE.wav" />
+	  <None Remove="Music\Core\SORRELL – GOD%27S AFTER PARTY.wav" />
+	  <None Remove="Music\Core\SORRELL – ОПА КОЗА.wav" />
+	  <None Remove="Music\Core\The Boys – Homelander Theme.wav" />
+	  <None Remove="Music\Core\tranzipone – after bike.wav" />
+	  <None Remove="Music\Core\Valve Studio Orchestra – Misfortune teller.wav" />
+	  <None Remove="Music\Core\Valve Studio Orchestra – Right Behind you %28Meet the Spy theme%29.wav" />
+	  <None Remove="Music\Core\Wouji – Run.wav" />
+	  <None Remove="Music\Core\Xxtristanxo – Glamorous x 9 Am In Calabasas.wav" />
+	  <None Remove="Music\Core\адидь – Страсть к Голосованию.wav" />
+	  <None Remove="Music\Core\Валентин Дядька – Космический Мусор.wav" />
+	  <None Remove="Music\Core\Валентин Дядька – Моисей Угрин.wav" />
+	  <None Remove="Music\Core\Валентин Дядька – Операция Преемник.wav" />
+	  <None Remove="Music\Core\Валентин Дядька – Свинское Регги.wav" />
+	  <None Remove="Music\Core\ГРИГОРИЙ ЛЕПС x БЕСКОНЕЧНОЕ ЛЕТО – ЛЕПС ЗАСТРЯЛ В ЛЕТНЕМ ЛАГЕРЕ.wav" />
+	  <None Remove="Music\Core\До связи – Uno-uno-uno este es hardbass.wav" />
+	  <None Remove="Music\Core\курск – Я когда-нибудь дождусь.wav" />
+	  <None Remove="Music\Core\маск битс – ЕДЕМ В СОСЕДНЕЕ ДУЛО.wav" />
+	  <None Remove="Music\Core\Мелодия – В мире животных.wav" />
 	  <None Remove="Templates\Расписание2024_1_ИС-2.xls" />
 	  <None Remove="Templates\Расписание2024_1_ИС-2.xlsx" />
 	</ItemGroup>
@@ -82,6 +141,47 @@
 	  <Resource Include="Images\favicon_square.png" />
 	  <Resource Include="Images\settings_375.png" />
 	  <Resource Include="Images\verified_375.png" />
+	  <EmbeddedResource Include="Music\Core\Akiko Toyama Trio – From The Beginning.wav" />
+	  <EmbeddedResource Include="Music\Core\Deep Purple – Smoke on the Water.wav" />
+	  <EmbeddedResource Include="Music\Core\DK – ГНОЙНЫЙ DISS CHALLANGE.wav" />
+	  <EmbeddedResource Include="Music\Core\DK – Плёнка в порядке.wav" />
+	  <EmbeddedResource Include="Music\Core\doombreaker – кристальный just dance.wav" />
+	  <EmbeddedResource Include="Music\Core\Fnaf – эмбиент вентилятора.wav" />
+	  <EmbeddedResource Include="Music\Core\Ghost – Mary On A Cross.wav" />
+	  <EmbeddedResource Include="Music\Core\Linkin Park – Numb.wav" />
+	  <EmbeddedResource Include="Music\Core\Lynyrd Skynyrd – Free Bird guitar solo.wav" />
+	  <EmbeddedResource Include="Music\Core\Mr Kitty The Neighbourhood – After dark x Sweater Weather [Mashup].wav" />
+	  <EmbeddedResource Include="Music\Core\mzlff, CMH – catharsis (prod. by spbwaves).wav" />
+	  <EmbeddedResource Include="Music\Core\NAMCO SOUNDS – Only One Fight (Noh Theater).wav" />
+	  <EmbeddedResource Include="Music\Core\pieruun supertrap + redda + grime type beat silly.wav" />
+	  <EmbeddedResource Include="Music\Core\Piwson TSC – PIWO HARDSTYLE.wav" />
+	  <EmbeddedResource Include="Music\Core\PLOHOYPAREN feat. JesusAVGN, Feint – Майнкафт ХИТ! Dnb Remix Prod.TripSauce.wav" />
+	  <EmbeddedResource Include="Music\Core\precoil – Лпсайз.wav" />
+	  <EmbeddedResource Include="Music\Core\Rammstein – Позови Меня с Собой Cover by ROCK.wav" />
+	  <EmbeddedResource Include="Music\Core\RiGO feat. Milana Star, Милана Хаметова, buster – полный лп (mashup).wav" />
+	  <EmbeddedResource Include="Music\Core\RiGO feat. MZLFF. T2x2 – полный bread.wav" />
+	  <EmbeddedResource Include="Music\Core\Rohan off x kerbal – У плохих свинок зазвонил мобильник.wav" />
+	  <EmbeddedResource Include="Music\Core\sadness112 – Dora is there.wav" />
+	  <EmbeddedResource Include="Music\Core\Sector – Роботы не плачут.wav" />
+	  <EmbeddedResource Include="Music\Core\SORRELL – BASSLINE DESIRE.wav" />
+	  <EmbeddedResource Include="Music\Core\SORRELL – GOD'S AFTER PARTY.wav" />
+	  <EmbeddedResource Include="Music\Core\SORRELL – ОПА КОЗА.wav" />
+	  <EmbeddedResource Include="Music\Core\The Boys – Homelander Theme.wav" />
+	  <EmbeddedResource Include="Music\Core\tranzipone – after bike.wav" />
+	  <EmbeddedResource Include="Music\Core\Valve Studio Orchestra – Misfortune teller.wav" />
+	  <EmbeddedResource Include="Music\Core\Valve Studio Orchestra – Right Behind you (Meet the Spy theme).wav" />
+	  <EmbeddedResource Include="Music\Core\Wouji – Run.wav" />
+	  <EmbeddedResource Include="Music\Core\Xxtristanxo – Glamorous x 9 Am In Calabasas.wav" />
+	  <EmbeddedResource Include="Music\Core\адидь – Страсть к Голосованию.wav" />
+	  <EmbeddedResource Include="Music\Core\Валентин Дядька – Космический Мусор.wav" />
+	  <EmbeddedResource Include="Music\Core\Валентин Дядька – Моисей Угрин.wav" />
+	  <EmbeddedResource Include="Music\Core\Валентин Дядька – Операция Преемник.wav" />
+	  <EmbeddedResource Include="Music\Core\Валентин Дядька – Свинское Регги.wav" />
+	  <EmbeddedResource Include="Music\Core\ГРИГОРИЙ ЛЕПС x БЕСКОНЕЧНОЕ ЛЕТО – ЛЕПС ЗАСТРЯЛ В ЛЕТНЕМ ЛАГЕРЕ.wav" />
+	  <EmbeddedResource Include="Music\Core\До связи – Uno-uno-uno este es hardbass.wav" />
+	  <EmbeddedResource Include="Music\Core\курск – Я когда-нибудь дождусь.wav" />
+	  <EmbeddedResource Include="Music\Core\маск битс – ЕДЕМ В СОСЕДНЕЕ ДУЛО.wav" />
+	  <EmbeddedResource Include="Music\Core\Мелодия – В мире животных.wav" />
 	  <Content Include="Templates\Расписание2024_1_ИС-2.xls">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Content>
@@ -99,10 +199,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Update="Images\favicon_square.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	  <None Update="Properties\Preferences.settings">
 	    <LastGenOutput>Preferences.Designer.cs</LastGenOutput>
 	    <Generator>PublicSettingsSingleFileGenerator</Generator>
 	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Music\User\" />
 	</ItemGroup>
 
 </Project>

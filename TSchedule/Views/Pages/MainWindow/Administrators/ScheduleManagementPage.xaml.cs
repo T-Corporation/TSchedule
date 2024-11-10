@@ -1,10 +1,13 @@
-﻿using System.Windows;
+﻿using iNKORE.UI.WPF.Helpers;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using TSchedule.Extensions;
 using TSchedule.Managers;
 using TSchedule.Persistence.Extensions;
 using TSchedule.Persistence.Models;
 using TSchedule.ViewModels;
+using TSchedule.ViewModels.Pages.MainWindow;
 using TSchedule.ViewModels.Pages.MainWindow.Administrators;
 
 namespace TSchedule.Views.Pages.MainWindow.Administrators;
@@ -18,9 +21,22 @@ public partial class ScheduleManagementPage
         var groupSelectionViewModel = await GroupSelectionViewModel.CreateInstanceAsync(GroupSelectionDialog);
         DataContext = groupSelectionViewModel;
         await GroupSelectionDialog.ShowAsync();
+
+        if (groupSelectionViewModel.SelectedGroup is null)
+        {
+            var viewModel = OSVersionHelper.IsWindows10OrGreater && PreferencesManager.Default.IsModernUIEnabled()
+                ? WindowManager.Default.GetViewModel<Views.MainWindow>()!
+                    .As<MainWindowViewModel>()!
+                : WindowManager.Default.GetViewModel<MainWindowWin7>()!
+                    .As<MainWindowViewModel>()!;
+
+            viewModel.GoBack();
+            return;
+        }
+
         DataContext = await ScheduleManagementViewModel.CreateInstanceAsync(
             EditFlyout,
-            groupSelectionViewModel.SelectedGroup!,
+            groupSelectionViewModel.SelectedGroup,
             groupSelectionViewModel.SelectedSemester,
             groupSelectionViewModel.SelectedYear);
     }

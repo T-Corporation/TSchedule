@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using iNKORE.UI.WPF.Helpers;
 using iNKORE.UI.WPF.Modern.Common.IconKeys;
 using iNKORE.UI.WPF.Modern.Controls;
 using System.Collections.ObjectModel;
@@ -101,7 +102,6 @@ public partial class MainWindowViewModel : ObservableObject
 
         var managementItem = new NavigationViewItem
         {
-            Tag = PageCode.None,
             Content = "Управление",
             Icon = new FontIcon(FluentSystemIcons.Toolbox_20_Regular),
             MenuItems = {
@@ -147,7 +147,14 @@ public partial class MainWindowViewModel : ObservableObject
         PreferencesManager.Default.SetLoggedIn(false);
         PreferencesManager.Default.Save();
 
-        WindowManager.Default.CreateWindow<StartWindow>();
-        WindowManager.Default.CloseWindow<MainWindow>();
+        if (OSVersionHelper.IsWindows10OrGreater && PreferencesManager.Default.IsModernUIEnabled())
+        {
+            WindowManager.Default.CreateWindow<StartWindow>();
+            WindowManager.Default.CloseWindow<MainWindow>();
+            return;
+        }
+
+        WindowManager.Default.CreateWindow<StartWindowWin7>();
+        WindowManager.Default.CloseWindow<MainWindowWin7>();
     }
 }

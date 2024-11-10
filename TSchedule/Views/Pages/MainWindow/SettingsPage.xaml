@@ -8,6 +8,7 @@
          mc:Ignorable="d"
          Title="Параметры"
          d:DesignWidth="800"
+         Loaded="Page_Loaded"
          d:Background="White"
          d:DesignHeight="450">
     
@@ -15,41 +16,141 @@
         <vm:SettingsViewModel/>
     </ui:Page.DataContext>
 
-    <Grid Margin="20">
-        <StackPanel MaxWidth="400"
-                    ui:PanelHelper.Spacing="8">
-            <ComboBox Padding="8"
-                      HorizontalAlignment="Stretch"
-                      ItemsSource="{Binding Themes}"
-                      ui:ControlHelper.Header="Тема приложения"
-                      SelectedItem="{Binding Theme, Mode=TwoWay}"
-                      ui:ControlHelper.PlaceholderText="Выберите тему"/>
-            <ComboBox Padding="8"
-                      HorizontalAlignment="Stretch"
-                      ui:ControlHelper.Header="Шрифт"
-                      IsSynchronizedWithCurrentItem="True"
-                      SelectedItem="{Binding FontFamily, Mode=TwoWay}"
-                      ui:ControlHelper.PlaceholderText="Выберите шрифт"
-                      ItemsSource="{Binding FontFamilies, Mode=OneTime}"/>
-            <Button HorizontalAlignment="Stretch"
-                    ui:ControlHelper.Header="Подключение"
-                    Command="{Binding SetConnectionCommand}"
-                    ToolTipService.ToolTip="Нажмите, чтобы добавить свою строку подключения">
-                <ui:IconAndText Content="Настроить подключение"
-                                Icon="{x:Static ui:SegoeFluentIcons.Connect}"/>
-            </Button>
-            <Button HorizontalAlignment="Stretch"
-                    Command="{Binding SaveSettingsCommand}"
-                    Style="{DynamicResource AccentButtonStyle}">
-                <ui:IconAndText Content="Сохранить"
-                                Icon="{x:Static ui:SegoeFluentIcons.Save}"/>
-            </Button>
-            <Button HorizontalAlignment="Stretch"
-                    Command="{Binding ResetSettingsCommand}">
-                <ui:IconAndText Content="Сбросить до заводских настроек"
-                                Icon="{x:Static ui:SegoeFluentIcons.ResetDrive}"/>
-            </Button>
-        </StackPanel>
+    <Grid>
+        <ui:ContentDialog d:Panel.ZIndex="1"
+                          x:Name="ResetDialog"
+                          CloseButtonText="Позже"
+                          d:Visibility="Collapsed"
+                          TextBlock.TextAlignment="Justify"
+                          PrimaryButtonText="Перезагрузить сейчас"
+                          PrimaryButtonStyle="{DynamicResource AccentButtonStyle}"
+                          PrimaryButtonCommand="{Binding RebootApplicationCommand}"
+                          CloseButtonCommand="{Binding AlterModernUIEnabledCommand}"
+                          Content="Рекомендуется перезапустить приложение&#x0a;для смены текущего интерфейса."/>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Auto">
+            <Grid Margin="20">
+                <StackPanel ui:PanelHelper.Spacing="12">
+                    <ComboBox Padding="8"
+                              HorizontalAlignment="Stretch"
+                              ItemsSource="{Binding Themes}"
+                              ui:ControlHelper.Header="Тема приложения"
+                              SelectedItem="{Binding Theme, Mode=TwoWay}"
+                              ui:ControlHelper.PlaceholderText="Выберите тему"/>
+                    <ui:ToggleSwitch OnContent="Вкл"
+                                     OffContent="Выкл"
+                                     Header="Современный интерфейс*"
+                                     IsOn="{Binding IsModernUIEnabled, Mode=TwoWay}"
+                                     ToolTipService.ToolTip="Может потребоваться перезагрузка приложения"/>
+                    <ComboBox Padding="8"
+                              HorizontalAlignment="Stretch"
+                              ui:ControlHelper.Header="Шрифт"
+                              IsSynchronizedWithCurrentItem="True"
+                              SelectedItem="{Binding FontFamily, Mode=TwoWay}"
+                              ui:ControlHelper.PlaceholderText="Выберите шрифт"
+                              ItemsSource="{Binding FontFamilies, Mode=OneTime}"/>
+                    <ComboBox Padding="8"
+                              HorizontalAlignment="Stretch"
+                              IsSynchronizedWithCurrentItem="True"
+                              ui:ControlHelper.Header="Размер шрифта"
+                              SelectedItem="{Binding FontSize, Mode=TwoWay}"
+                              ItemsSource="{Binding FontSizes, Mode=OneTime}"
+                              ui:ControlHelper.PlaceholderText="Выберите размер шрифта"/>
+                    <StackPanel>
+                        <TextBlock FontSize="14"
+                                   Text="Саундтреки" />
+                        <ScrollViewer MaxHeight="240"
+                                      Padding="0,8"
+                                      CanContentScroll="True">
+                            <ui:ListView IsItemClickEnabled="True"
+                                         IsSelectionEnabled="False"
+                                         ItemsSource="{Binding MusicFolders}"
+                                         ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                <ui:ListView.ItemTemplate>
+                                    <HierarchicalDataTemplate>
+                                        <Expander>
+                                            <Expander.Header>
+                                                <TextBlock Padding="0,8"
+                                                           Text="{Binding Name}"/>
+                                            </Expander.Header>
+                                            <ScrollViewer CanContentScroll="True">
+                                                <ui:ListView IsSynchronizedWithCurrentItem="True"
+                                                             ItemsSource="{Binding Tracks}"
+                                                             ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                             SelectedItem="{Binding DataContext.SelectedTrack, RelativeSource={RelativeSource AncestorType=ui:Page}}">
+                                                    <ui:ListView.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock Text="{Binding Name}"
+                                                                       TextTrimming="CharacterEllipsis"
+                                                                       ToolTipService.ToolTip="{Binding Name}"/>
+                                                        </DataTemplate>
+                                                    </ui:ListView.ItemTemplate>
+                                                </ui:ListView>
+                                            </ScrollViewer>
+                                        </Expander>
+                                    </HierarchicalDataTemplate>
+                                </ui:ListView.ItemTemplate>
+                            </ui:ListView>
+                        </ScrollViewer>
+                    </StackPanel>
+
+                    <Grid ui:PanelHelper.Spacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Cursor="Hand"
+                                HorizontalAlignment="Stretch"
+                                Style="{DynamicResource AccentButtonStyle}"
+                                Command="{Binding PlaySelectedTrackCommand}"
+                                ToolTipService.ToolTip="Нажмите, чтобы воспроизвести саундтрек">
+                            <ui:IconAndText Content="Играть"
+                                            Icon="{x:Static ui:SegoeFluentIcons.Play}"/>
+                        </Button>
+                        <Button Cursor="Hand"
+                                Grid.Column="1"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding StopCommand}"
+                                ToolTipService.ToolTip="Нажмите, чтобы остановить саундтрек">
+                            <ui:IconAndText Content="Стоп"
+                                            Icon="{x:Static ui:SegoeFluentIcons.Stop}"/>
+                        </Button>
+                        <ui:ToggleSwitch Grid.Column="2"
+                                         IsOn="{Binding Loop}"
+                                         OnContent="На повторе"
+                                         OffContent="Без повтора"/>
+                    </Grid>
+
+                    <Button Cursor="Hand"
+                            HorizontalAlignment="Stretch"
+                            ui:ControlHelper.Header="Подключение"
+                            Command="{Binding SetConnectionCommand}"
+                            ToolTipService.ToolTip="Нажмите, чтобы добавить свою строку подключения.">
+                        <ui:IconAndText Content="Настроить подключение"
+                                        Icon="{x:Static ui:SegoeFluentIcons.Connect}"/>
+                    </Button>
+
+                    <Button Cursor="Hand"
+                            HorizontalAlignment="Stretch"
+                            Command="{Binding SaveSettingsCommand}"
+                            Style="{DynamicResource AccentButtonStyle}"
+                            ToolTipService.ToolTip="Нажмите, чтобы сохранить выбранные параметры.">
+                        <ui:IconAndText Content="Сохранить"
+                                        Icon="{x:Static ui:SegoeFluentIcons.Save}"/>
+                    </Button>
+
+                    <Button Cursor="Hand"
+                            HorizontalAlignment="Stretch"
+                            Command="{Binding ResetSettingsCommand}"
+                            ToolTipService.ToolTip="Нажмите, чтобы сбросить свои параметры до заводских настроек.">
+                        <ui:IconAndText Content="Сбросить до заводских настроек"
+                                        Icon="{x:Static ui:SegoeFluentIcons.ResetDrive}"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
     </Grid>
-    
 </ui:Page>

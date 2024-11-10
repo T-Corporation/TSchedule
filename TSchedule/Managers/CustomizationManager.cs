@@ -4,12 +4,19 @@ using System.Windows;
 using TSchedule.Persistence.Interfaces.Bases;
 using iNKORE.UI.WPF.Modern;
 using Windows.UI.ViewManagement;
+using System.Collections.ObjectModel;
+using TSchedule.Views;
 
 namespace TSchedule.Managers;
 
 public class CustomizationManager : IManager
 {
-    public static readonly IEnumerable<string> FontFamilies = Fonts.SystemFontFamilies.Select(ff => ff.Source);
+    public static readonly ObservableCollection<string> FontFamilies = [.. Fonts.SystemFontFamilies.Select(ff => ff.Source)];
+
+    public static readonly ObservableCollection<byte> FontSizes =
+    [
+        6, 7, 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 28, 32, 36, 48, 72
+    ];
 
     /// <summary>
     /// "Ленивое" создание менеджера кастомизации
@@ -29,6 +36,7 @@ public class CustomizationManager : IManager
     {
         var fontFamilyName = PreferencesManager.Default.GetFontFamily();
         var fontFamily = new FontFamily(fontFamilyName);
+        var fontSize = PreferencesManager.Default.GetFontSize();
 
         /*// На всякий случай
         var controlStyle = new Style(typeof(Control));
@@ -39,6 +47,7 @@ public class CustomizationManager : IManager
 
         var textBlockStyle = new Style(typeof(TextBlock));
         textBlockStyle.Setters.Add(new Setter(TextBlock.FontFamilyProperty, fontFamily));
+        textBlockStyle.Setters.Add(new Setter(TextBlock.FontSizeProperty, (double)fontSize));
         if (Application.Current.Resources.Contains(typeof(TextBlock)))
             Application.Current.Resources.Remove(typeof(TextBlock));
         Application.Current.Resources.Add(typeof(TextBlock), textBlockStyle);
@@ -60,7 +69,12 @@ public class CustomizationManager : IManager
             ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark;
         else
             ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light;
-        
+
+        if (WindowManager.Default.GetWindow<MainWindow>() is null)
+            return this;
+
+        WindowManager.Default.MinimizeWindow<MainWindow>();
+        WindowManager.Default.NormalizeWindow<MainWindow>();
         return this;
     }
 

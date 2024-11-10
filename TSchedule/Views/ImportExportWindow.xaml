@@ -6,13 +6,18 @@
         Height="480"
         MinWidth="640"
         MinHeight="480"
+        Background="#0000"
         Loaded="Window_Loaded"
         Closing="Window_Closing"
+        ResizeMode="CanResizeWithGrip"
         ui:TitleBar.IsIconVisible="True"
+        ui:WindowHelper.ApplyNoise="True"
+        ui:WindowHelper.CornerStyle="Round"
         Icon="/Images/edit_property_375.png"
         WindowStartupLocation="CenterScreen"
         Title="Мастер импорта и экспорта TSchedule"
-        Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}">
+        ui:WindowHelper.SystemBackdropType="Acrylic10"
+        ui:WindowHelper.Acrylic10Color="{DynamicResource SystemChromeMediumColor}">
     
     <Grid Margin="6">
         <Grid.RowDefinitions>

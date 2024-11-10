@@ -12,6 +12,7 @@ public class ConnectionManager
     private const string EncryptedConnectionString = "+UvDo3mSWN0e+NR+W68QJ5RYuR90XuPKVqbjtEAvYXyh+dYDrqQ5tSqgsvZPoDoJMxEUwJG/3yjXg0vuxJF21FzQHr9ecYVHDRbfUGabxpKBJ5mkp13O/He3ZoxE9GA6ANUGxCJFuI3/jrkcKIRmKbZU2/rzXjF+EDwraun3EEBUCGTAS1aczOWCtn36lsSp";
 
     #pragma warning disable CA1822
+    // ReSharper disable once MemberCanBeMadeStatic.Global
     public string GetConnectionString()
     #pragma warning restore CA1822
     {
@@ -33,7 +34,7 @@ public class ConnectionManager
         return reader.ReadToEnd();
     }
 
-    public static string EncryptString(string plainText)
+    /*public static string EncryptString(string plainText)
     {
         using var aes = Aes.Create();
         aes.Key = Key;
@@ -47,5 +48,5 @@ public class ConnectionManager
             writer.Write(plainText);
         }
         return Convert.ToBase64String(ms.ToArray());
-    }
+    }*/
 }

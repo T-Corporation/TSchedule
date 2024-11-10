@@ -2,20 +2,30 @@
         xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        Margin="0"
         Width="960"
+        Padding="0"
         Height="690"
         MinWidth="640"
         MinHeight="480"
         Title="TSchedule"
-        BorderThickness="0"
+        WindowStyle="None"
         ui:TitleBar.Height="40"
+        AllowsTransparency="True"
+        Background="Transparent"
         ResizeMode="CanResizeWithGrip"
+        ui:WindowHelper.ApplyNoise="True"
+        ui:WindowHelper.CornerStyle="Round"
         WindowStartupLocation="CenterScreen"
-        ui:WindowHelper.CornerStyle="RoundSmall"
+        ui:WindowHelper.ApplyBackground="True"
         ui:TitleBar.ExtendViewIntoTitleBar="True"
         ui:WindowHelper.FixMaximizedWindow="True"
         ui:WindowHelper.UseModernWindowStyle="True"
-        Background="{DynamicResource SystemControlPageBackgroundChromeLowBrush}">
+        ui:TitleBar.CloseButtonAvailability="Enabled"
+        ui:WindowHelper.SystemBackdropType="Acrylic10"
+        ui:TitleBar.MaximizeButtonAvailability="Enabled"
+        ui:TitleBar.MinimizeButtonAvailability="Enabled"
+        ui:WindowHelper.Acrylic10Color="{DynamicResource SystemChromeLowColor}">
 
     <Window.Resources>
         <Style TargetType="ui:NavigationViewItem" BasedOn="{StaticResource {x:Type ui:NavigationViewItem}}">
@@ -40,104 +50,107 @@
             <RowDefinition Height="40"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        
-        <Grid Grid.Row="0"
-              Margin="16,0,136,0">
 
-            <StackPanel Orientation="Horizontal"
-                        ui:PanelHelper.Spacing="16">
+        <Border Grid.Row="0">
 
-                <Image Width="30"
-                       Height="30"
-                       Margin="16,8"
-                       Source="/Images/favicon.ico"
-                       ToolTipService.ToolTip="TSchedule"
-                       ToolTipService.HasDropShadow="True"
-                       ToolTipService.BetweenShowDelay="1000"
-                       WindowChrome.IsHitTestVisibleInChrome="True"/>
+            <Grid Margin="16,0,136,0">
 
-                <ui:HyperlinkButton Padding="8"
-                                    Cursor="Hand"
-                                    Command="{Binding GoBackCommand}"
-                                    WindowChrome.IsHitTestVisibleInChrome="True"
-                                    IsEnabled="{Binding NavigationFrame.CanGoBack}">
-                    <ui:IconAndText ToolTipService.ToolTip="Назад"
-                                    ToolTipService.HasDropShadow="True"
-                                    Icon="{x:Static ui:SegoeFluentIcons.Back}"/>
-                </ui:HyperlinkButton>
+                <StackPanel Orientation="Horizontal"
+                            ui:PanelHelper.Spacing="16">
 
-                <ui:HyperlinkButton Padding="8"
-                                    Cursor="Hand"
-                                    Command="{Binding GoForwardCommand}"
-                                    WindowChrome.IsHitTestVisibleInChrome="True"
-                                    IsEnabled="{Binding NavigationFrame.CanGoForward}">
-                    <ui:IconAndText ToolTipService.ToolTip="Вперед"
-                                    ToolTipService.HasDropShadow="True"
-                                    Icon="{x:Static ui:SegoeFluentIcons.Forward}"/>
-                </ui:HyperlinkButton>
+                    <Image Width="30"
+                           Height="30"
+                           Margin="16,8"
+                           Source="/Images/favicon.ico"
+                           ToolTipService.ToolTip="TSchedule"
+                           ToolTipService.HasDropShadow="True"
+                           ToolTipService.BetweenShowDelay="1000"
+                           WindowChrome.IsHitTestVisibleInChrome="True"/>
 
-                <ui:HyperlinkButton Padding="8"
-                                    Cursor="Hand"
-                                    Command="{Binding RefreshCommand}"
-                                    WindowChrome.IsHitTestVisibleInChrome="True">
-                    <ui:IconAndText ToolTipService.HasDropShadow="True"
-                                    ToolTipService.ToolTip="Обновить страницу"
-                                    Icon="{x:Static ui:SegoeFluentIcons.Refresh}"/>
-                </ui:HyperlinkButton>
+                    <ui:HyperlinkButton Padding="8"
+                                        Cursor="Hand"
+                                        Command="{Binding GoBackCommand}"
+                                        WindowChrome.IsHitTestVisibleInChrome="True"
+                                        IsEnabled="{Binding NavigationFrame.CanGoBack}">
+                        <ui:IconAndText ToolTipService.ToolTip="Назад"
+                                        ToolTipService.HasDropShadow="True"
+                                        Icon="{x:Static ui:SegoeFluentIcons.Back}"/>
+                    </ui:HyperlinkButton>
 
-            </StackPanel>
-            
-            <StackPanel Orientation="Horizontal"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Right"
-                        WindowChrome.IsHitTestVisibleInChrome="True">
+                    <ui:HyperlinkButton Padding="8"
+                                        Cursor="Hand"
+                                        Command="{Binding GoForwardCommand}"
+                                        WindowChrome.IsHitTestVisibleInChrome="True"
+                                        IsEnabled="{Binding NavigationFrame.CanGoForward}">
+                        <ui:IconAndText ToolTipService.ToolTip="Вперед"
+                                        ToolTipService.HasDropShadow="True"
+                                        Icon="{x:Static ui:SegoeFluentIcons.Forward}"/>
+                    </ui:HyperlinkButton>
 
-                <ui:DropDownButton Cursor="Hand"
-                                   CornerRadius="0"
-                                   ShowChevronArrow="False"
-                                   Background="Transparent"
-                                   BorderBrush="Transparent"
-                                   ToolTipService.HasDropShadow="True"
-                                   ToolTipService.ToolTip="{Binding FullName}"
-                                   ui:ElevationBorder.IsElevationEnabled="False">
+                    <ui:HyperlinkButton Padding="8"
+                                        Cursor="Hand"
+                                        Command="{Binding RefreshCommand}"
+                                        WindowChrome.IsHitTestVisibleInChrome="True">
+                        <ui:IconAndText ToolTipService.HasDropShadow="True"
+                                        ToolTipService.ToolTip="Обновить страницу"
+                                        Icon="{x:Static ui:SegoeFluentIcons.Refresh}"/>
+                    </ui:HyperlinkButton>
 
-                    <ui:PersonPicture Width="28"
-                                      Margin="0"
-                                      Height="28"
-                                      Padding="0"
-                                      Initials="{Binding Initials}"
-                                      DisplayName="{Binding UserName}"/>
+                </StackPanel>
 
-                    <ui:DropDownButton.Flyout>
-                        <ui:MenuFlyout Placement="Bottom"
-                                       ShowMode="Transient"
-                                       AreOpenCloseAnimationsEnabled="True">
-                            <MenuItem Cursor="Hand"
-                                      Command="{Binding GoToParametersCommand}">
-                                <MenuItem.Header>
-                                    <ui:IconAndText Content="Параметры"
-                                                    HorizontalAlignment="Left"
-                                                    Icon="{x:Static ui:SegoeFluentIcons.Settings}"/>
-                                </MenuItem.Header>
-                            </MenuItem>
-                            
-                            <MenuItem Cursor="Hand"
-                                      Foreground="#CC3300"
-                                      Command="{Binding LogoutCommand}">
-                                <MenuItem.Header>
-                                    <ui:IconAndText Content="Выйти"
-                                                    HorizontalAlignment="Left"
-                                                    Icon="{x:Static ui:SegoeFluentIcons.SignOut}"/>
-                                </MenuItem.Header>
-                            </MenuItem>
-                            
-                        </ui:MenuFlyout>
-                    </ui:DropDownButton.Flyout>
-                </ui:DropDownButton>
-                
-            </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right"
+                            WindowChrome.IsHitTestVisibleInChrome="True">
 
-        </Grid>
+                    <ui:DropDownButton Cursor="Hand"
+                                       CornerRadius="0"
+                                       ShowChevronArrow="False"
+                                       Background="Transparent"
+                                       BorderBrush="Transparent"
+                                       ToolTipService.HasDropShadow="True"
+                                       ToolTipService.ToolTip="{Binding FullName}"
+                                       ui:ElevationBorder.IsElevationEnabled="False">
+
+                        <ui:PersonPicture Width="28"
+                                          Margin="0"
+                                          Height="28"
+                                          Padding="0"
+                                          Initials="{Binding Initials}"
+                                          DisplayName="{Binding UserName}"/>
+
+                        <ui:DropDownButton.Flyout>
+                            <ui:MenuFlyout Placement="Bottom"
+                                           ShowMode="Transient"
+                                           AreOpenCloseAnimationsEnabled="True">
+                                <MenuItem Cursor="Hand"
+                                          Command="{Binding GoToParametersCommand}">
+                                    <MenuItem.Header>
+                                        <ui:IconAndText Content="Параметры"
+                                                        HorizontalAlignment="Left"
+                                                        Icon="{x:Static ui:SegoeFluentIcons.Settings}"/>
+                                    </MenuItem.Header>
+                                </MenuItem>
+
+                                <MenuItem Cursor="Hand"
+                                          Foreground="#CC3300"
+                                          Command="{Binding LogoutCommand}">
+                                    <MenuItem.Header>
+                                        <ui:IconAndText Content="Выйти"
+                                                        HorizontalAlignment="Left"
+                                                        Icon="{x:Static ui:SegoeFluentIcons.SignOut}"/>
+                                    </MenuItem.Header>
+                                </MenuItem>
+
+                            </ui:MenuFlyout>
+                        </ui:DropDownButton.Flyout>
+                    </ui:DropDownButton>
+
+                </StackPanel>
+
+            </Grid>
+
+        </Border>
 
         <ui:NavigationView Grid.Row="1"
                            Padding="8"
@@ -153,9 +166,11 @@
 
             <ui:Frame Padding="20"
                       x:Name="ContentFrame"
+                      Background="Transparent"
+                      ui:AcrylicPanel.NoiseOpacity="1"
                       NavigationUIVisibility="Visible"
                       Navigated="ContentFrame_Navigated"
-                      Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"/>
+                      ui:AcrylicPanel.TintColor="{DynamicResource SystemChromeMediumLowColor}"/>
 
         </ui:NavigationView>
 

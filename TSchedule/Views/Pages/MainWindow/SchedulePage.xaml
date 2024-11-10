@@ -14,6 +14,7 @@
          PreviewKeyDown="Page_PreviewKeyDown">
 
     <ui:Page.Resources>
+        <c:YearBeautifierConverter x:Key="YearBeautifierConverter"/>
         <c:ValueToOpacityConverter x:Key="ValueToOpacityConverter"/>
         <c:NullableToBooleanConverter x:Key="NullableToBooleanConverter"/>
         <c:EmptyToPlaceholderConverter x:Key="EmptyToPlaceholderConverter"/>
@@ -47,11 +48,16 @@
                          Header="Числитель"
                          x:Name="NumeratorTab">
                     <DataGrid IsReadOnly="True"
+                              MinRowHeight="32"
+                              MinColumnWidth="20"
+                              CellStyle="{x:Null}"
                               SelectionUnit="Cell"
                               x:Name="NumeratorGrid"
                               SelectionMode="Single"
                               CanUserAddRows="False"
                               CanUserDeleteRows="False"
+                              GridLinesVisibility="All"
+                              HeadersVisibility="Column"
                               CanUserSortColumns="False"
                               AutoGenerateColumns="False"
                               ItemsSource="{Binding NumeratorDailySchedule}"
@@ -66,7 +72,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Понедельник" Binding="{Binding Monday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                            <DataGridTextColumn Header="Понедельник" Binding="{Binding Monday.Teacher.Subject}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Padding" Value="12,6"/>
@@ -75,7 +81,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Вторник" Binding="{Binding Tuesday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                            <DataGridTextColumn Header="Вторник" Binding="{Binding Tuesday.Teacher.Subject}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Padding" Value="12,6"/>
@@ -84,7 +90,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Среда" Binding="{Binding Wednesday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                            <DataGridTextColumn Header="Среда" Binding="{Binding Wednesday.Teacher.Subject}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Padding" Value="12,6"/>
@@ -93,7 +99,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Четверг" Binding="{Binding Thursday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                            <DataGridTextColumn Header="Четверг" Binding="{Binding Thursday.Teacher.Subject}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Padding" Value="12,6"/>
@@ -102,7 +108,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Пятница" Binding="{Binding Friday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                            <DataGridTextColumn Header="Пятница" Binding="{Binding Friday.Teacher.Subject}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Padding" Value="12,6"/>
@@ -111,7 +117,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Суббота" Binding="{Binding Saturday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                            <DataGridTextColumn Header="Суббота" Binding="{Binding Saturday.Teacher.Subject}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Padding" Value="12,6"/>
@@ -120,7 +126,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Воскресенье" Binding="{Binding Sunday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                            <DataGridTextColumn Header="Воскресенье" Binding="{Binding Sunday.Teacher.Subject}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Padding" Value="12,6"/>
@@ -137,15 +143,20 @@
                 <TabItem Header="Знаменатель"
                      x:Name="DenominatorTab">
                     <DataGrid IsReadOnly="True"
-                          SelectionUnit="Cell"
-                          SelectionMode="Single"
-                          CanUserAddRows="False"
-                          x:Name="DenominatorGrid"
-                          CanUserDeleteRows="False"
-                          CanUserSortColumns="False"
-                          AutoGenerateColumns="False"
-                          ui:DataGridHelper.UseModernColumnStyles="True"
-                          ItemsSource="{Binding DenominatorDailySchedule}">
+                              MinRowHeight="32"
+                              MinColumnWidth="20"
+                              CellStyle="{x:Null}"
+                              SelectionUnit="Cell"
+                              SelectionMode="Single"
+                              CanUserAddRows="False"
+                              x:Name="DenominatorGrid"
+                              CanUserDeleteRows="False"
+                              GridLinesVisibility="All"
+                              HeadersVisibility="Column"
+                              CanUserSortColumns="False"
+                              AutoGenerateColumns="False"
+                              ui:DataGridHelper.UseModernColumnStyles="True"
+                              ItemsSource="{Binding DenominatorDailySchedule}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Selector.IsSelected="False" Header="Урок" Binding="{Binding Lesson.Id}">
                                 <DataGridTextColumn.ElementStyle>
@@ -156,7 +167,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Понедельник" Binding="{Binding Monday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                            <DataGridTextColumn Header="Понедельник" Binding="{Binding Monday.Teacher.Subject}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Padding" Value="12,6"/>
@@ -165,7 +176,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Вторник" Binding="{Binding Tuesday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                            <DataGridTextColumn Header="Вторник" Binding="{Binding Tuesday.Teacher.Subject}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Padding" Value="12,6"/>
@@ -174,7 +185,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Среда" Binding="{Binding Wednesday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                            <DataGridTextColumn Header="Среда" Binding="{Binding Wednesday.Teacher.Subject}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Padding" Value="12,6"/>
@@ -183,7 +194,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Четверг" Binding="{Binding Thursday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                            <DataGridTextColumn Header="Четверг" Binding="{Binding Thursday.Teacher.Subject}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Padding" Value="12,6"/>
@@ -192,7 +203,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Пятница" Binding="{Binding Friday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                            <DataGridTextColumn Header="Пятница" Binding="{Binding Friday.Teacher.Subject}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Padding" Value="12,6"/>
@@ -201,7 +212,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Суббота" Binding="{Binding Saturday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                            <DataGridTextColumn Header="Суббота" Binding="{Binding Saturday.Teacher.Subject}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Padding" Value="12,6"/>
@@ -210,7 +221,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Воскресенье" Binding="{Binding Sunday.Teacher.Subject, TargetNullValue='&lt;пусто&gt;', FallbackValue='&lt;пусто&gt;'}">
+                            <DataGridTextColumn Header="Воскресенье" Binding="{Binding Sunday.Teacher.Subject}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Padding" Value="12,6"/>
@@ -236,17 +247,17 @@
                           PrimaryButtonStyle="{DynamicResource AccentButtonStyle}"
                           IsPrimaryButtonEnabled="{Binding SelectedGroup, Converter={StaticResource NullableToBooleanConverter}}">
             <StackPanel ui:PanelHelper.Spacing="8">
-                <ComboBox ItemsSource="{Binding Years}"
+                <ComboBox SelectedItem="{Binding Year}"
                           HorizontalAlignment="Stretch"
                           ui:ControlHelper.Header="Год"
                           IsSynchronizedWithCurrentItem="True"
-                          SelectedItem="{Binding Year, Mode=TwoWay}"
-                          ui:ControlHelper.PlaceholderText="Выберите год"/>
+                          ui:ControlHelper.PlaceholderText="Выберите год"
+                          ItemsSource="{Binding Years, Converter={StaticResource YearBeautifierConverter}}"/>
                 <ComboBox HorizontalAlignment="Stretch"
                           ItemsSource="{Binding Semesters}"
+                          SelectedItem="{Binding Semester}"
                           ui:ControlHelper.Header="Семестр"
                           IsSynchronizedWithCurrentItem="True"
-                          SelectedItem="{Binding Semester, Mode=TwoWay}"
                           ui:ControlHelper.PlaceholderText="Выберите семестр"/>
                 <ComboBox HorizontalAlignment="Stretch"
                           ItemsSource="{Binding Groups}"
