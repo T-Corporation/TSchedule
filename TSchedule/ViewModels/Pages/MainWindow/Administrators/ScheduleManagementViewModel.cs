@@ -388,10 +388,18 @@ public partial class ScheduleManagementViewModel : ObservableObject
     private bool IsTeacherBusy(TeacherModel teacher, WeekDay dayOfWeek, LessonModel lesson, bool isDenominator)
     {
         var schedules = isDenominator ? DenominatorDailySchedule : NumeratorDailySchedule;
-        return (from daySchedule in schedules
-            where daySchedule.Lesson.Id == lesson.Id
-            select GetLessonScheduleByDayOfWeek(daySchedule, dayOfWeek)).Any(lessonSchedule =>
-            lessonSchedule.IsDenominator == isDenominator && lessonSchedule.Teacher?.Id == teacher.Id);
+        foreach (var daySchedule in schedules)
+        {
+            if (daySchedule.Lesson is null || daySchedule.Lesson.Id != lesson.Id)
+                continue;
+
+            var lessonSchedule = GetLessonScheduleByDayOfWeek(daySchedule, dayOfWeek);
+            if (lessonSchedule is not null
+                && lessonSchedule.IsDenominator == isDenominator
+                && lessonSchedule.Teacher?.Id == teacher.Id)
+                return true;
+        }
+        return false;
     }
 
     /// <summary>
@@ -423,10 +431,16 @@ public partial class ScheduleManagementViewModel : ObservableObject
     private bool IsClassroomOccupied(ClassroomModel classroom, WeekDay dayOfWeek, LessonModel lesson, bool isDenominator)
     {
         var schedules = isDenominator ? DenominatorDailySchedule : NumeratorDailySchedule;
-        return (from daySchedule in schedules
-            where daySchedule.Lesson.Id == lesson.Id
-            select GetLessonScheduleByDayOfWeek(daySchedule, dayOfWeek)).Any(lessonSchedule =>
-            lessonSchedule.Teacher?.Classroom?.Id == classroom.Id);
+        foreach (var daySchedule in schedules)
+        {
+            if (daySchedule.Lesson is null || daySchedule.Lesson.Id != lesson.Id)
+                continue;
+
+            var lessonSchedule = GetLessonScheduleByDayOfWeek(daySchedule, dayOfWeek);
+            if (lessonSchedule is not null && lessonSchedule.Teacher?.Classroom?.Id == classroom.Id)
+                return true;
+        }
+        return false;
     }
 
     private static void SetToNullLessonInCollection(

@@ -48,15 +48,15 @@ public partial class ScheduleManagementPage
 
         if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
         {
-            switch (e.Key)
+            if (e.Key is Key.I)
             {
-                case Key.I:
-                    viewModel.OpenWizardCommand.Execute("Import");
-                    return;
-
-                case Key.E:
-                    viewModel.OpenWizardCommand.Execute("Export");
-                    return;
+                viewModel.OpenWizardCommand.Execute("Import");
+                return;
+            }
+            if (e.Key is Key.E)
+            {
+                viewModel.OpenWizardCommand.Execute("Export");
+                return;
             }
         }
 
@@ -201,9 +201,7 @@ public partial class ScheduleManagementPage
         columnIndex = -1;
         rowIndex = -1;
 
-        if (sender is not MenuItem menuItem
-            || menuItem.Parent is not ContextMenu contextMenu
-            || contextMenu.PlacementTarget is not DataGrid dataGrid
+        if (sender is not MenuItem { Parent: ContextMenu { PlacementTarget: DataGrid dataGrid } }
             || dataGrid.SelectedCells[0].Column is not DataGridTextColumn column
             || dataGrid.SelectedCells[0].Item is not LessonScheduleModel selectedItemTemp
             || DataContext is not ScheduleManagementViewModel viewModelTemp)
@@ -271,7 +269,7 @@ public partial class ScheduleManagementPage
             return;
         }
         
-        string subjectName = Clipboard.GetText().Trim();
+        var subjectName = Clipboard.GetText().Trim();
         var subject = (await ScheduleManagementViewModel.SubjectsService.GetSubjectByName(subjectName))?.ToModel();
 
         if (subject is null)
