@@ -12,7 +12,7 @@
 
     <Grid Margin="20,12"
           ui:PanelHelper.Spacing="8">
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="6*"/>
@@ -37,7 +37,7 @@
                     BorderBrush="{DynamicResource SystemControlDisabledChromeHighBrush}">
                 <StackPanel Orientation="Horizontal"
                             ui:PanelHelper.Spacing="4">
-                    
+
                     <Image MaxWidth="48"
                            MinWidth="24"
                            MaxHeight="48"
@@ -46,7 +46,7 @@
                            UseLayoutRounding="True"
                            Source="/Images/excel_48.png"
                            RenderOptions.BitmapScalingMode="Fant"/>
-                    
+
                     <TextBlock FontSize="17"
                                Text="Microsoft Excel"
                                VerticalAlignment="Center"/>
@@ -95,5 +95,4 @@
             </StackPanel>
         </GroupBox>
     </Grid>
-    
 </ui:Page>

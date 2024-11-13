@@ -149,11 +149,13 @@ public partial class MainWindowViewModel : ObservableObject
 
         if (OSVersionHelper.IsWindows10OrGreater && PreferencesManager.Default.IsModernUIEnabled())
         {
+            WindowManager.Default.GetWindow<MainWindow>()!.Silent = true;
             WindowManager.Default.CreateWindow<StartWindow>();
             WindowManager.Default.CloseWindow<MainWindow>();
             return;
         }
 
+        WindowManager.Default.GetWindow<MainWindowWin7>()!.Silent = true;
         WindowManager.Default.CreateWindow<StartWindowWin7>();
         WindowManager.Default.CloseWindow<MainWindowWin7>();
     }

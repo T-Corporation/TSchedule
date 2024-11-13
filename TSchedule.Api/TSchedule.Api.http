@@ -1,0 +1,6 @@
+@TSchedule.Api_HostAddress = http://localhost:5260
+
+GET {{TSchedule.Api_HostAddress}}/products/
+Accept: application/json
+
+###

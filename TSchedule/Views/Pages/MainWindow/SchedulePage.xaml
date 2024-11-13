@@ -19,15 +19,14 @@
     </ui:Page.Resources>
 
     <Grid>
-        <StackPanel Margin="6"
+        <StackPanel Margin="4"
                     Panel.ZIndex="1"
                     VerticalAlignment="Top"
                     Orientation="Horizontal"
                     ui:PanelHelper.Spacing="8"
                     HorizontalAlignment="Right">
             <Button Command="{Binding OpenExportWizardCommand}">
-                <ui:IconAndText FontSize="11"
-                                IconSize="11"
+                <ui:IconAndText Cursor="Hand"
                                 Content="Экспорт"
                                 Icon="{x:Static ui:SegoeFluentIcons.Export}"
                                 ToolTipService.ToolTip="Экспортировать расписание в Excel

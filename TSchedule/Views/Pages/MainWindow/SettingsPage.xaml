@@ -7,10 +7,10 @@
          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
          mc:Ignorable="d"
          Title="Параметры"
-         d:DesignWidth="800"
+         d:DesignWidth="900"
          Loaded="Page_Loaded"
          d:Background="White"
-         d:DesignHeight="450">
+         d:DesignHeight="650">
     
     <ui:Page.Resources>
         <CollectionViewSource x:Key="GroupedSoundtracks"
@@ -37,7 +37,9 @@
                           CloseButtonCommand="{Binding AlterModernUIEnabledCommand}"
                           Content="Рекомендуется перезапустить приложение&#x0a;для смены текущего интерфейса."/>
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto"
+        <ScrollViewer x:Name="ScrollViewer"
+                      IsDeferredScrollingEnabled="True"
+                      VerticalScrollBarVisibility="Auto"
                       HorizontalScrollBarVisibility="Auto">
             <Grid Margin="20,20,40,20">
                 <StackPanel ui:PanelHelper.Spacing="12">
@@ -91,10 +93,42 @@
                     </Button>
                     
                     <StackPanel>
-                        <TextBlock FontSize="14"
-                                   Text="Саундтреки"/>
+                        <StackPanel Orientation="Horizontal"
+                                    ui:PanelHelper.Spacing="8">
+                            <TextBlock Text="Фоновая музыка"
+                                       VerticalAlignment="Center"/>
+                            <ui:DropDownButton Padding="4"
+                                               Cursor="Help"
+                                               ShowChevronArrow="False">
+                                <ui:IconAndText Icon="{x:Static ui:SegoeFluentIcons.StatusCircleQuestionMark}"/>
+                                <ui:DropDownButton.Flyout>
+                                    <ui:Flyout>
+                                        <TextBlock MaxWidth="240"
+                                                   TextWrapping="Wrap">
+                                            Чтобы добавить свои саундтреки нужно:
+                                            <LineBreak/>
+                                            <LineBreak/>
+                                            1. Открыть папку с приложением
+                                            <LineBreak/>
+                                            <LineBreak/>
+                                            2. Найти и открыть папку <Bold FontWeight="SemiBold">Music</Bold>
+                                            <LineBreak/>
+                                            <LineBreak/>
+                                            3. Добавить туда необходимые папки и внутри них добавить музыкальные файлы
+                                            <LineBreak/>
+                                            <LineBreak/>
+                                            <Bold FontStyle="Italic" FontWeight="Regular">Названия папок могут содержать: кириллицу, латиницу, цифры, пробелы и знаки подчеркивания (только в середине, например: Название_папки - верно, _Название_папки - неверно)</Bold>
+                                            <Bold FontStyle="Italic" FontWeight="Regular">Поддерживаются только файлы с расширением .wav</Bold>
+                                        </TextBlock>
+                                    </ui:Flyout>
+                                </ui:DropDownButton.Flyout>
+                            </ui:DropDownButton>
+                        </StackPanel>
+                        
                         <ui:ListView IsItemClickEnabled="True"
                                      IsSelectionEnabled="True"
+                                     ScrollViewer.CanContentScroll="False"
+                                     PreviewMouseWheel="ListView_PreviewMouseWheel"
                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                                      SelectedItem="{Binding SelectedTrack}"
                                      ItemsSource="{Binding Source={StaticResource GroupedSoundtracks}}">
@@ -103,7 +137,8 @@
                                     <GroupStyle.HeaderTemplate>
                                         <DataTemplate>
                                             <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
-                                            <TextBlock Text="{Binding Name}"/>
+                                            <TextBlock TextTrimming="CharacterEllipsis"
+                                                       Text="{Binding Name}"/>
                                         </DataTemplate>
                                     </GroupStyle.HeaderTemplate>
                                 </GroupStyle>

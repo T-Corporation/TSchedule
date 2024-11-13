@@ -8,6 +8,7 @@
         MinHeight="480"
         Title="TSchedule"
         ui:TitleBar.Height="40"
+        Closing="Window_Closing"
         ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterScreen"
         ui:TitleBar.ExtendViewIntoTitleBar="True"

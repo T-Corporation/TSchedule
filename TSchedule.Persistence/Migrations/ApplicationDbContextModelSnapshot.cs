@@ -183,7 +183,7 @@ namespace TSchedule.Persistence.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("GroupSubjects");
+                    b.ToTable("GroupSubjects", (string)null);
                 });
 
             modelBuilder.Entity("TSchedule.Persistence.Entities.Lesson", b =>
@@ -205,7 +205,7 @@ namespace TSchedule.Persistence.Migrations
                     b.HasIndex("StartTime", "EndTime")
                         .IsUnique();
 
-                    b.ToTable("Lesson");
+                    b.ToTable("Lesson", (string)null);
 
                     b.HasData(
                         new
@@ -243,6 +243,61 @@ namespace TSchedule.Persistence.Migrations
                             Id = 6,
                             EndTime = new TimeOnly(19, 20, 0),
                             StartTime = new TimeOnly(17, 45, 0)
+                        });
+                });
+
+            modelBuilder.Entity("TSchedule.Persistence.Entities.License", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasMaxLength(19)
+                        .HasColumnType("char(19)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Key");
+
+                    b.HasIndex("ProductName");
+
+                    b.ToTable("Licenses", "Commerce");
+                });
+
+            modelBuilder.Entity("TSchedule.Persistence.Entities.Product", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("Products", "Commerce");
+
+                    b.HasData(
+                        new
+                        {
+                            Name = "com.romanjava.TSchedule",
+                            CreatedAt = new DateTime(2024, 11, 11, 21, 7, 31, 57, DateTimeKind.Local).AddTicks(9472),
+                            Description = "Программа для ведения расписания в образовательных учреждениях среднего и высшего образований.",
+                            UpdatedAt = new DateTime(2024, 11, 11, 21, 7, 31, 57, DateTimeKind.Local).AddTicks(9483)
                         });
                 });
 
@@ -533,6 +588,17 @@ namespace TSchedule.Persistence.Migrations
                     b.Navigation("Group");
 
                     b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("TSchedule.Persistence.Entities.License", b =>
+                {
+                    b.HasOne("TSchedule.Persistence.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("TSchedule.Persistence.Entities.Schedule", b =>

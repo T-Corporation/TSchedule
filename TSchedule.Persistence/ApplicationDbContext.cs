@@ -40,6 +40,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<WeekDay> DaysOfWeek { get; set; }
     public DbSet<Group> Groups { get; set; }
     public DbSet<GroupSubject> GroupSubjects { get; set; }
+    public DbSet<License> Licenses { get; set; }
+    public DbSet<Product> Products { get; set; }
     public DbSet<Schedule> Schedules { get; set; }
     public DbSet<Specialty> Specialties { get; set; }
     public DbSet<Subject> Subjects { get; set; }

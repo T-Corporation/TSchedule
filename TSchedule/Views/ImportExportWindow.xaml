@@ -93,12 +93,12 @@
                                 <LineBreak/>
                                 <Bold FontWeight="SemiBold">Путь к файлу Excel:</Bold>
                                 <LineBreak/>
-                                <Bold FontWeight="Regular">Укажите полный путь и имя для файла Excel.&#x0a;Например: C:\MyData.xlsx.</Bold>
+                                Укажите полный путь и имя для файла Excel.&#x0a;Например: C:\MyData.xlsx.
                                 <LineBreak/>
                                 <LineBreak/>
                                 <Bold FontWeight="SemiBold">Версия Excel:</Bold>
                                 <LineBreak/>
-                                <Bold FontWeight="Regular">Выберите версию Excel для исходной или целевой рабочей книги.</Bold>
+                                Выберите версию Excel для исходной или целевой рабочей книги.
                             </TextBlock>
                         </ui:Flyout>
                     </ui:DropDownButton.Flyout>

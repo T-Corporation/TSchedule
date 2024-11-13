@@ -82,8 +82,9 @@
                            ShowMode="Transient"
                            AreOpenCloseAnimationsEnabled="True">
                     <TextBlock MaxWidth="200"
-                               TextWrapping="Wrap"
-                               Text="Логин и пароль предоставляются администрацией вашего учебного заведения."/>
+                               TextWrapping="Wrap">
+                        Логин и пароль предоставляются администрацией вашего учебного заведения.
+                    </TextBlock>
                 </ui:Flyout>
             </ui:DropDownButton.Flyout>
         </ui:DropDownButton>

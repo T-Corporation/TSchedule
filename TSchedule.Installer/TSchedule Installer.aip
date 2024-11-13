@@ -1,0 +1,773 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DOCUMENT Type="Advanced Installer" CreateVersion="21.7.1" version="21.7.1" Modules="enterprise" RootPath="." Language="ru" Id="{C1EE6860-C336-49D8-9192-DBC7ABC659D9}">
+  <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
+    <ROW Name="HiddenItems" Value="AppXProductDetailsComponent;AppXDependenciesComponent;AppXAppDetailsComponent;AppXVisualAssetsComponent;AppXCapabilitiesComponent;AppXAppDeclarationsComponent;AppXUriRulesComponent;SccmComponent;ActSyncAppComponent;CPLAppletComponent;AutorunComponent;GameUxComponent;SilverlightSlnComponent;SharePointSlnComponent;FixupComponent;MsiXDiffComponent;MsixManifestEditorComponent"/>
+    <ROW Name="TilesAssetGenDestFolderPath" Value="Generated Tiles" ValueType="1"/>
+    <ROW Name="TilesAssetGenScales" Value="Scale 80, Scale 200, Scale 100, Scale 125, Scale 140, Scale 150, Scale 180, Scale 400"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
+    <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
+    <ROW Property="AI_CF_FRAME_BASE_COLOR" MultiBuildValue="DefaultBuild:##008000"/>
+    <ROW Property="AI_CF_TYPE" MultiBuildValue="DefaultBuild:0"/>
+    <ROW Property="AI_IA_APPLICATION_ID" Value="673236723593c46b5cc96ccb"/>
+    <ROW Property="AI_IA_ENABLE" Value="1"/>
+    <ROW Property="AI_PREDEF_LCONDS_PROPS" Value="AI_DETECTED_ALL;AI_DETECTED_INTERNET_CONNECTION"/>
+    <ROW Property="ALLUSERS" Value="1"/>
+    <ROW Property="ARPCOMMENTS" Value="Эта база данных установщика содержит логику и данные, необходимые для установки [|ProductName]." ValueLocId="*"/>
+    <ROW Property="ARPNOMODIFY" MultiBuildValue="DefaultBuild:1"/>
+    <ROW Property="ARPPRODUCTICON" Value="TSchedule.exe" Type="8"/>
+    <ROW Property="AppLogo" Value="applogo.png" MultiBuildValue="DefaultBuild:favicon_square.png" Type="1" MsiKey="AppLogo"/>
+    <ROW Property="DefaultUIFont" Value="DfltTextStyle" Type="2" Options="65536" MsiKey="DefaultUIFont"/>
+    <ROW Property="Manufacturer" Value="TCorporation"/>
+    <ROW Property="ProductCode" Value="1049:{6E5B30DF-D2F5-4D19-9D5A-BCBE34791AC8} " Type="16"/>
+    <ROW Property="ProductLanguage" Value="1049"/>
+    <ROW Property="ProductName" Value="TSchedule"/>
+    <ROW Property="ProductVersion" Value="1.1.0" Options="32"/>
+    <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
+    <ROW Property="UpgradeCode" Value="{6B11275D-BF61-4F95-AA5B-0908A69DBD39}"/>
+    <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
+    <ROW Property="WindowsType9XDisplay" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT40" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT40Display" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT50" MultiBuildValue="DefaultBuild:Windows 2000" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT50Display" MultiBuildValue="DefaultBuild:Windows 2000" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT5X" MultiBuildValue="DefaultBuild:Windows XP/2003" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT5XDisplay" MultiBuildValue="DefaultBuild:Windows XP/2003" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT60" MultiBuildValue="DefaultBuild:Windows Vista/Server 2008" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT60Display" MultiBuildValue="DefaultBuild:Windows Vista/Server 2008" ValueLocId="-"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
+    <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
+    <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="DESKTO~1|DesktopFolder" IsPseudoRoot="1"/>
+    <ROW Directory="Music_Dir" Directory_Parent="APPDIR" DefaultDir="Music"/>
+    <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
+    <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
+    <ROW Directory="Templates_Dir" Directory_Parent="APPDIR" DefaultDir="TEMPLA~1|Templates"/>
+    <ROW Directory="User_Dir" Directory_Parent="Music_Dir" DefaultDir="User"/>
+    <ROW Directory="cs_Dir" Directory_Parent="APPDIR" DefaultDir="cs"/>
+    <ROW Directory="de_Dir" Directory_Parent="APPDIR" DefaultDir="de"/>
+    <ROW Directory="es_Dir" Directory_Parent="APPDIR" DefaultDir="es"/>
+    <ROW Directory="fr_Dir" Directory_Parent="APPDIR" DefaultDir="fr"/>
+    <ROW Directory="it_Dir" Directory_Parent="APPDIR" DefaultDir="it"/>
+    <ROW Directory="ja_Dir" Directory_Parent="APPDIR" DefaultDir="ja"/>
+    <ROW Directory="ko_Dir" Directory_Parent="APPDIR" DefaultDir="ko"/>
+    <ROW Directory="lib_1_Dir" Directory_Parent="win_Dir" DefaultDir="lib"/>
+    <ROW Directory="lib_Dir" Directory_Parent="unix_Dir" DefaultDir="lib"/>
+    <ROW Directory="native_1_Dir" Directory_Parent="winarm64_Dir" DefaultDir="native"/>
+    <ROW Directory="native_2_Dir" Directory_Parent="winx64_Dir" DefaultDir="native"/>
+    <ROW Directory="native_3_Dir" Directory_Parent="winx86_Dir" DefaultDir="native"/>
+    <ROW Directory="native_Dir" Directory_Parent="winarm_Dir" DefaultDir="native"/>
+    <ROW Directory="net6.0_1_Dir" Directory_Parent="lib_1_Dir" DefaultDir="net6.0"/>
+    <ROW Directory="net6.0_Dir" Directory_Parent="lib_Dir" DefaultDir="net6.0"/>
+    <ROW Directory="net8.0_Dir" Directory_Parent="lib_1_Dir" DefaultDir="net8.0"/>
+    <ROW Directory="pl_Dir" Directory_Parent="APPDIR" DefaultDir="pl"/>
+    <ROW Directory="ptBR_Dir" Directory_Parent="APPDIR" DefaultDir="pt-BR"/>
+    <ROW Directory="ru_Dir" Directory_Parent="APPDIR" DefaultDir="ru"/>
+    <ROW Directory="runtimes_Dir" Directory_Parent="APPDIR" DefaultDir="runtimes"/>
+    <ROW Directory="tr_Dir" Directory_Parent="APPDIR" DefaultDir="tr"/>
+    <ROW Directory="unix_Dir" Directory_Parent="runtimes_Dir" DefaultDir="unix"/>
+    <ROW Directory="win_Dir" Directory_Parent="runtimes_Dir" DefaultDir="win"/>
+    <ROW Directory="winarm64_Dir" Directory_Parent="runtimes_Dir" DefaultDir="WIN-AR~1|win-arm64"/>
+    <ROW Directory="winarm_Dir" Directory_Parent="runtimes_Dir" DefaultDir="win-arm"/>
+    <ROW Directory="winx64_Dir" Directory_Parent="runtimes_Dir" DefaultDir="win-x64"/>
+    <ROW Directory="winx86_Dir" Directory_Parent="runtimes_Dir" DefaultDir="win-x86"/>
+    <ROW Directory="zhHans_Dir" Directory_Parent="APPDIR" DefaultDir="zh-Hans"/>
+    <ROW Directory="zhHant_Dir" Directory_Parent="APPDIR" DefaultDir="zh-Hant"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.SideBySideGuidComponent">
+    <ROW Component="APPDIR" Value="{6E92B53B-43A5-44F5-9A65-49E346AEC846}"/>
+    <ROW Component="ProductInformation" Value="{42493F26-3161-4297-831F-48281833FAD2}"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
+    <ROW Component="AI_IA_ENABLE" ComponentId="{AF5297E4-959D-4C3B-B51C-1EB6CAE2AADA}" Directory_="APPDIR" Attributes="4" KeyPath="AI_IA_ENABLE" Options="1"/>
+    <ROW Component="APPDIR" ComponentId="{6E92B53B-43A5-44F5-9A65-49E346AEC846}" Directory_="APPDIR" Attributes="0"/>
+    <ROW Component="Azure.Core.dll" ComponentId="{8F8481FC-7CA6-4AE8-A6DC-C98B1C3A9EF8}" Directory_="APPDIR" Attributes="0" KeyPath="Azure.Core.dll"/>
+    <ROW Component="Azure.Identity.dll" ComponentId="{1336E71F-DFB3-49D9-A390-3E0EE0C909D8}" Directory_="APPDIR" Attributes="0" KeyPath="Azure.Identity.dll"/>
+    <ROW Component="BCrypt.NetNext.dll" ComponentId="{775D35BC-CA50-4328-8C5D-78D006F38825}" Directory_="APPDIR" Attributes="0" KeyPath="BCrypt.NetNext.dll"/>
+    <ROW Component="CommunityToolkit.Mvvm.dll" ComponentId="{550A8FF9-6D99-45A8-97F7-CD7F89C3AA93}" Directory_="APPDIR" Attributes="0" KeyPath="CommunityToolkit.Mvvm.dll"/>
+    <ROW Component="EPPlus.Interfaces.dll" ComponentId="{C946A99B-1943-434B-86DB-386B5434CB2C}" Directory_="APPDIR" Attributes="0" KeyPath="EPPlus.Interfaces.dll"/>
+    <ROW Component="EPPlus.System.Drawing.dll" ComponentId="{D251F485-938F-4A6F-95CB-68C60F1F29F3}" Directory_="APPDIR" Attributes="0" KeyPath="EPPlus.System.Drawing.dll"/>
+    <ROW Component="EPPlus.dll" ComponentId="{01E5215D-192D-4B34-AF6B-C1AD21D96C30}" Directory_="APPDIR" Attributes="0" KeyPath="EPPlus.dll"/>
+    <ROW Component="Microsoft.Bcl.AsyncInterfaces.dll" ComponentId="{AF21340C-BC1C-4686-9829-7A372AD16A5A}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Bcl.AsyncInterfaces.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.dll" ComponentId="{C91E0BA1-7C86-4EBF-B9F7-F929C2BA81CD}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resour_10_ces.dll" ComponentId="{629DFDAD-B456-4D94-9149-EAAD4F76A077}" Directory_="tr_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resour_10_ces.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resour_11_ces.dll" ComponentId="{6F030F96-99FA-42B5-992B-296C0F1B92DD}" Directory_="zhHans_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resour_11_ces.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resour_12_ces.dll" ComponentId="{B14FB3BF-F197-468E-9854-7CB2A01C96E0}" Directory_="zhHant_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resour_12_ces.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resour_1_ces.dll" ComponentId="{D0039D79-777F-4464-A493-6FED5EE74248}" Directory_="de_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resour_1_ces.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resour_2_ces.dll" ComponentId="{808CAEBF-14A6-40A7-9787-4C7DF5B64C03}" Directory_="es_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resour_2_ces.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resour_3_ces.dll" ComponentId="{A1A4DCEB-EF9F-4957-8AE2-28E7017A4D03}" Directory_="fr_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resour_3_ces.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resour_4_ces.dll" ComponentId="{EEF9425C-F6A9-48DA-816A-11522A77F50E}" Directory_="it_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resour_4_ces.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resour_5_ces.dll" ComponentId="{4CE2A39C-DEA7-4F40-BF73-7BC397EE65FB}" Directory_="ja_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resour_5_ces.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resour_6_ces.dll" ComponentId="{F4DCF972-F7F7-4191-9556-7CA83FDF4933}" Directory_="ko_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resour_6_ces.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resour_7_ces.dll" ComponentId="{BEADCA31-B26D-49DC-9D38-A677A59DCA35}" Directory_="pl_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resour_7_ces.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resour_8_ces.dll" ComponentId="{A5A66374-D59B-4878-A47E-14740158F161}" Directory_="ptBR_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resour_8_ces.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resour_9_ces.dll" ComponentId="{20773933-87E0-4890-B5AB-EB5F1D6D69BD}" Directory_="ru_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resour_9_ces.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.CSharp.resources.dll" ComponentId="{D9301010-83DB-4ED3-A133-BF7B42F0BADE}" Directory_="cs_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.CSharp.resources.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.dll" ComponentId="{FD5ED0E6-D0C8-46FC-9A9C-33B13ADC53EC}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.CodeAnalysis.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll" ComponentId="{AEC905AF-A01C-4B85-9F40-941B2163E72C}" Directory_="cs_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_1" ComponentId="{7D1BE4EF-8A57-46FC-A1F3-D4C942CDCB81}" Directory_="de_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_1"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_10" ComponentId="{76C18A80-7693-468F-B884-3D9A8AC6E74D}" Directory_="tr_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_10"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_11" ComponentId="{76748D87-E855-4259-8DBC-8A9FAC409588}" Directory_="zhHans_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_11"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_12" ComponentId="{29987719-48C9-4278-80E5-1D8A5B4B96CE}" Directory_="zhHant_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_12"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_2" ComponentId="{B3778C86-21E7-4C7B-8CD7-7AEF0431D9F9}" Directory_="es_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_2"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_3" ComponentId="{3B4024F8-A67B-4D52-BB5B-014271AA1571}" Directory_="fr_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_3"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_4" ComponentId="{F5E2B243-501A-4F47-B713-07839B715AFE}" Directory_="it_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_4"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_5" ComponentId="{04E3EDA6-F2EB-4CD3-A96C-C8BCF1CBB374}" Directory_="ja_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_5"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_6" ComponentId="{F1859B7F-B57F-4E78-B1E6-D2E4F56E0483}" Directory_="ko_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_6"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_7" ComponentId="{406250FC-EFE4-48A8-8370-7CC7B1B752A2}" Directory_="pl_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_7"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_8" ComponentId="{C7875FEE-A9A5-4E24-BF90-0A7C420148C6}" Directory_="ptBR_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_8"/>
+    <ROW Component="Microsoft.CodeAnalysis.resources.dll_9" ComponentId="{857D3121-CC28-4DB5-B877-9E6AB6807617}" Directory_="ru_Dir" Attributes="0" KeyPath="Microsoft.CodeAnalysis.resources.dll_9"/>
+    <ROW Component="Microsoft.Data.SqlClient.SNI.dll" ComponentId="{432127E5-619D-4EFF-81EE-25EF0B00E785}" Directory_="native_Dir" Attributes="0" KeyPath="Microsoft.Data.SqlClient.SNI.dll"/>
+    <ROW Component="Microsoft.Data.SqlClient.SNI.dll_1" ComponentId="{ADBA41C5-60ED-46A8-A067-7746E9D6A1DF}" Directory_="native_1_Dir" Attributes="256" KeyPath="Microsoft.Data.SqlClient.SNI.dll_1"/>
+    <ROW Component="Microsoft.Data.SqlClient.SNI.dll_2" ComponentId="{992F5C2E-E862-461F-8403-56DE98CC2A63}" Directory_="native_2_Dir" Attributes="256" KeyPath="Microsoft.Data.SqlClient.SNI.dll_2"/>
+    <ROW Component="Microsoft.Data.SqlClient.SNI.dll_3" ComponentId="{8A048B95-E029-449E-91D2-946BCE7D66C9}" Directory_="native_3_Dir" Attributes="0" KeyPath="Microsoft.Data.SqlClient.SNI.dll_3"/>
+    <ROW Component="Microsoft.Data.SqlClient.dll" ComponentId="{249C2CEA-A707-457B-A745-077E0C866AAF}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Data.SqlClient.dll"/>
+    <ROW Component="Microsoft.Data.SqlClient.dll_1" ComponentId="{D44FB70E-0DDA-483A-9D16-445A6F50B372}" Directory_="net6.0_Dir" Attributes="0" KeyPath="Microsoft.Data.SqlClient.dll_1"/>
+    <ROW Component="Microsoft.Data.SqlClient.dll_2" ComponentId="{9D61F038-EC96-4219-9067-0BF9B6827CA7}" Directory_="net6.0_1_Dir" Attributes="0" KeyPath="Microsoft.Data.SqlClient.dll_2"/>
+    <ROW Component="Microsoft.EntityFrameworkCore.Abstractions.dll" ComponentId="{169A7E31-2B42-4F13-9172-AB052BB6116D}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.EntityFrameworkCore.Abstractions.dll"/>
+    <ROW Component="Microsoft.EntityFrameworkCore.Relational.dll" ComponentId="{FE78B5DB-7DD9-438A-8763-A9981459B099}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.EntityFrameworkCore.Relational.dll"/>
+    <ROW Component="Microsoft.EntityFrameworkCore.SqlServer.dll" ComponentId="{84EDE87F-E3FF-4590-9F82-BF19660B05EC}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.EntityFrameworkCore.SqlServer.dll"/>
+    <ROW Component="Microsoft.EntityFrameworkCore.dll" ComponentId="{5E6B86B4-31ED-402F-9E4E-506A012948D6}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.EntityFrameworkCore.dll"/>
+    <ROW Component="Microsoft.Extensions.Caching.Abstractions.dll" ComponentId="{69F15AB2-8A9E-490E-AA1C-1355A57F53E1}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Extensions.Caching.Abstractions.dll"/>
+    <ROW Component="Microsoft.Extensions.Caching.Memory.dll" ComponentId="{E342BB8D-5E24-418F-9E12-5B61470557F3}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Extensions.Caching.Memory.dll"/>
+    <ROW Component="Microsoft.Extensions.Configuration.Abstractions.dll" ComponentId="{F9345E0B-3389-4EF7-898F-84326CDD9F8F}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Extensions.Configuration.Abstractions.dll"/>
+    <ROW Component="Microsoft.Extensions.Configuration.FileExtensions.dll" ComponentId="{8ECFB83B-6E72-4984-A029-F6DF0B000AC3}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Extensions.Configuration.FileExtensions.dll"/>
+    <ROW Component="Microsoft.Extensions.Configuration.Json.dll" ComponentId="{B0ACA5D8-34CC-4D6D-B772-8AA3E206CC46}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Extensions.Configuration.Json.dll"/>
+    <ROW Component="Microsoft.Extensions.Configuration.dll" ComponentId="{BCD0EC12-B543-4BAE-B10F-F871AD1519CE}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Extensions.Configuration.dll"/>
+    <ROW Component="Microsoft.Extensions.DependencyInjec_1_tion.dll" ComponentId="{E6D83112-56EF-471F-BD48-5F27A7B7E927}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Extensions.DependencyInjection.dll"/>
+    <ROW Component="Microsoft.Extensions.DependencyInjection.Abstractions.dll" ComponentId="{C2554ECE-23AC-4337-9ACE-C12E7246B41C}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Extensions.DependencyInjection.Abstractions.dll"/>
+    <ROW Component="Microsoft.Extensions.FileProviders.Abstractions.dll" ComponentId="{6EEFDE66-6C95-4C36-BDDB-A6097424469C}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Extensions.FileProviders.Abstractions.dll"/>
+    <ROW Component="Microsoft.Extensions.FileProviders.Physical.dll" ComponentId="{43CA5221-ACF8-4C44-92C6-E52BC959374F}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Extensions.FileProviders.Physical.dll"/>
+    <ROW Component="Microsoft.Extensions.FileSystemGlobbing.dll" ComponentId="{0AFADBAF-B645-4E4C-9A0E-C4C248A81185}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Extensions.FileSystemGlobbing.dll"/>
+    <ROW Component="Microsoft.Extensions.Logging.Abstractions.dll" ComponentId="{AB912CB6-2CCF-444C-A3F4-DD8299E5826B}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Extensions.Logging.Abstractions.dll"/>
+    <ROW Component="Microsoft.Extensions.Logging.dll" ComponentId="{BFD3EFDE-320A-4D61-8F67-6233096B251B}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Extensions.Logging.dll"/>
+    <ROW Component="Microsoft.Extensions.Options.dll" ComponentId="{8D766DF7-4467-4887-BC8F-E4E568DEBB17}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Extensions.Options.dll"/>
+    <ROW Component="Microsoft.Extensions.Primitives.dll" ComponentId="{4A387933-D9F9-4BBD-8765-73946E0B6B3E}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Extensions.Primitives.dll"/>
+    <ROW Component="Microsoft.IO.RecyclableMemoryStream.dll" ComponentId="{2E4767D4-BB72-453A-A922-A00433EB421E}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.IO.RecyclableMemoryStream.dll"/>
+    <ROW Component="Microsoft.Identity.Client.Extensions.Msal.dll" ComponentId="{7EC1AE98-D492-43B3-BD42-F7C81F0700C3}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Identity.Client.Extensions.Msal.dll"/>
+    <ROW Component="Microsoft.Identity.Client.dll" ComponentId="{5F3344EB-20A9-42AE-BF9F-60C141F074B6}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Identity.Client.dll"/>
+    <ROW Component="Microsoft.IdentityModel.Abstractions.dll" ComponentId="{41A223EF-1C5E-4768-9669-B563E24EBF89}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.IdentityModel.Abstractions.dll"/>
+    <ROW Component="Microsoft.IdentityModel.JsonWebTokens.dll" ComponentId="{FA2D908D-1D90-43D2-98C4-FA447F808B6C}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.IdentityModel.JsonWebTokens.dll"/>
+    <ROW Component="Microsoft.IdentityModel.Logging.dll" ComponentId="{F0418761-5EC4-414F-A36A-99873C8B7235}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.IdentityModel.Logging.dll"/>
+    <ROW Component="Microsoft.IdentityModel.Protocols.OpenIdConnect.dll" ComponentId="{E9B56E5F-0D72-4FD0-9DB0-658718389352}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.IdentityModel.Protocols.OpenIdConnect.dll"/>
+    <ROW Component="Microsoft.IdentityModel.Protocols.dll" ComponentId="{0BF71F7A-186C-471F-9674-7D9256F83B0A}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.IdentityModel.Protocols.dll"/>
+    <ROW Component="Microsoft.IdentityModel.Tokens.dll" ComponentId="{3751779E-B305-4626-B715-7F8710BAF65D}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.IdentityModel.Tokens.dll"/>
+    <ROW Component="Microsoft.SqlServer.Server.dll" ComponentId="{08272EB3-95C5-404F-8FC5-0CEE04550B2C}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.SqlServer.Server.dll"/>
+    <ROW Component="Microsoft.Windows.SDK.NET.dll" ComponentId="{A4A532DA-6D1E-4958-AA72-750C522210C9}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Windows.SDK.NET.dll"/>
+    <ROW Component="ProductInformation" ComponentId="{42493F26-3161-4297-831F-48281833FAD2}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
+    <ROW Component="SHORTCUTDIR" ComponentId="{92838D57-B25F-45EA-B7E3-67A813EF123E}" Directory_="SHORTCUTDIR" Attributes="0"/>
+    <ROW Component="System.ClientModel.dll" ComponentId="{FE322361-CFA9-40D0-B944-860FEE4D41D2}" Directory_="APPDIR" Attributes="0" KeyPath="System.ClientModel.dll"/>
+    <ROW Component="System.IdentityModel.Tokens.Jwt.dll" ComponentId="{8497ECD8-78B7-443A-80EA-F6BB56737E1C}" Directory_="APPDIR" Attributes="0" KeyPath="System.IdentityModel.Tokens.Jwt.dll"/>
+    <ROW Component="System.Memory.Data.dll" ComponentId="{76AF1460-4275-49CC-A672-FC0950844521}" Directory_="APPDIR" Attributes="0" KeyPath="System.Memory.Data.dll"/>
+    <ROW Component="System.Runtime.Caching.dll" ComponentId="{AB425F41-2901-42B2-AFF8-5893B7B63902}" Directory_="net6.0_1_Dir" Attributes="0" KeyPath="System.Runtime.Caching.dll"/>
+    <ROW Component="System.Runtime.Caching.dll_1" ComponentId="{80AFA747-A482-4AA0-B96C-B5E0FEEBAF7F}" Directory_="APPDIR" Attributes="0" KeyPath="System.Runtime.Caching.dll_1"/>
+    <ROW Component="System.Security.Cryptography.Pkcs.dll" ComponentId="{BCABA41D-CFF4-4574-B255-D9F14AC47225}" Directory_="net8.0_Dir" Attributes="0" KeyPath="System.Security.Cryptography.Pkcs.dll"/>
+    <ROW Component="System.Security.Cryptography.Pkcs.dll_1" ComponentId="{1A0F68CD-85DE-4F3A-9426-01D96178243B}" Directory_="APPDIR" Attributes="0" KeyPath="System.Security.Cryptography.Pkcs.dll_1"/>
+    <ROW Component="TSchedule.Persistence.dll" ComponentId="{8A1C537D-7968-4794-BD3E-334D67C7205A}" Directory_="APPDIR" Attributes="0" KeyPath="TSchedule.Persistence.dll"/>
+    <ROW Component="TSchedule.VisualElementsManifest.xml" ComponentId="{6750E1EB-21AD-48C6-A7C4-EE2A05CAACB2}" Directory_="APPDIR" Attributes="0" KeyPath="TSchedule.VisualElementsManifest.xml"/>
+    <ROW Component="TSchedule.deps.json" ComponentId="{12241EBA-8C6B-49A4-8E21-2ADBAE8F5C9E}" Directory_="APPDIR" Attributes="0" KeyPath="TSchedule.deps.json" Type="0"/>
+    <ROW Component="TSchedule.dll" ComponentId="{5072814E-B173-49D6-880C-564E693AA993}" Directory_="APPDIR" Attributes="0" KeyPath="TSchedule.dll"/>
+    <ROW Component="TSchedule.exe" ComponentId="{8DA77DA0-4C04-45AE-876C-C7B2A86EC069}" Directory_="APPDIR" Attributes="256" KeyPath="TSchedule.exe"/>
+    <ROW Component="User" ComponentId="{5E1B65A2-5EAB-416F-8506-DA19D912DF69}" Directory_="User_Dir" Attributes="0"/>
+    <ROW Component="WinRT.Runtime.dll" ComponentId="{AB8BF6B7-0429-4A50-8DF0-A2860C5E6FAA}" Directory_="APPDIR" Attributes="0" KeyPath="WinRT.Runtime.dll"/>
+    <ROW Component="_1_2.xls" ComponentId="{D23E73A6-AFA8-4219-AD72-5F368CC3E391}" Directory_="Templates_Dir" Attributes="0" KeyPath="_1_2.xls" Type="0"/>
+    <ROW Component="iNKORE.UI.WPF.Modern.Controls.dll" ComponentId="{8F45988F-562A-4CF6-A400-8BCF572AFD98}" Directory_="APPDIR" Attributes="0" KeyPath="iNKORE.UI.WPF.Modern.Controls.dll"/>
+    <ROW Component="iNKORE.UI.WPF.Modern.dll" ComponentId="{06934053-F8B9-4D26-9088-946C2CEA77E9}" Directory_="APPDIR" Attributes="0" KeyPath="iNKORE.UI.WPF.Modern.dll"/>
+    <ROW Component="iNKORE.UI.WPF.dll" ComponentId="{FAC4D45C-9131-461A-B54A-B00A6322E80F}" Directory_="APPDIR" Attributes="0" KeyPath="iNKORE.UI.WPF.dll"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
+    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
+    <ROW Feature="TileAssets_DefaultBuild" Title="TileAssets_DefaultBuild" Description="Описание" Display="0" Level="1" Directory_="APPDIR" Attributes="0" Options="271" Builds="DefaultBuild"/>
+    <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
+    <ROW File="Azure.Core.dll" Component_="Azure.Core.dll" FileName="AZUREC~1.DLL|Azure.Core.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Azure.Core.dll" SelfReg="false"/>
+    <ROW File="Azure.Identity.dll" Component_="Azure.Identity.dll" FileName="AZUREI~1.DLL|Azure.Identity.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Azure.Identity.dll" SelfReg="false"/>
+    <ROW File="BCrypt.NetNext.dll" Component_="BCrypt.NetNext.dll" FileName="BCRYPT~1.DLL|BCrypt.Net-Next.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\BCrypt.Net-Next.dll" SelfReg="false"/>
+    <ROW File="CommunityToolkit.Mvvm.dll" Component_="CommunityToolkit.Mvvm.dll" FileName="COMMUN~1.DLL|CommunityToolkit.Mvvm.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\CommunityToolkit.Mvvm.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resources.dll" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll" Component_="Microsoft.CodeAnalysis.resources.dll" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\cs\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resour_1_ces.dll" Component_="Microsoft.CodeAnalysis.CSharp.resour_1_ces.dll" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_1" Component_="Microsoft.CodeAnalysis.resources.dll_1" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\de\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="EPPlus.dll" Component_="EPPlus.dll" FileName="EPPlus.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\EPPlus.dll" SelfReg="false"/>
+    <ROW File="EPPlus.Interfaces.dll" Component_="EPPlus.Interfaces.dll" FileName="EPPLUS~1.DLL|EPPlus.Interfaces.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\EPPlus.Interfaces.dll" SelfReg="false"/>
+    <ROW File="EPPlus.System.Drawing.dll" Component_="EPPlus.System.Drawing.dll" FileName="EPPLUS~2.DLL|EPPlus.System.Drawing.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\EPPlus.System.Drawing.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resour_2_ces.dll" Component_="Microsoft.CodeAnalysis.CSharp.resour_2_ces.dll" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_2" Component_="Microsoft.CodeAnalysis.resources.dll_2" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\es\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resour_3_ces.dll" Component_="Microsoft.CodeAnalysis.CSharp.resour_3_ces.dll" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_3" Component_="Microsoft.CodeAnalysis.resources.dll_3" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\fr\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="iNKORE.UI.WPF.dll" Component_="iNKORE.UI.WPF.dll" FileName="INKORE~1.DLL|iNKORE.UI.WPF.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\iNKORE.UI.WPF.dll" SelfReg="false"/>
+    <ROW File="iNKORE.UI.WPF.Modern.Controls.dll" Component_="iNKORE.UI.WPF.Modern.Controls.dll" FileName="INKORE~2.DLL|iNKORE.UI.WPF.Modern.Controls.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\iNKORE.UI.WPF.Modern.Controls.dll" SelfReg="false"/>
+    <ROW File="iNKORE.UI.WPF.Modern.dll" Component_="iNKORE.UI.WPF.Modern.dll" FileName="INKORE~3.DLL|iNKORE.UI.WPF.Modern.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\iNKORE.UI.WPF.Modern.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resour_4_ces.dll" Component_="Microsoft.CodeAnalysis.CSharp.resour_4_ces.dll" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_4" Component_="Microsoft.CodeAnalysis.resources.dll_4" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\it\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resour_5_ces.dll" Component_="Microsoft.CodeAnalysis.CSharp.resour_5_ces.dll" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_5" Component_="Microsoft.CodeAnalysis.resources.dll_5" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\ja\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resour_6_ces.dll" Component_="Microsoft.CodeAnalysis.CSharp.resour_6_ces.dll" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_6" Component_="Microsoft.CodeAnalysis.resources.dll_6" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\ko\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Bcl.AsyncInterfaces.dll" Component_="Microsoft.Bcl.AsyncInterfaces.dll" FileName="MICROS~1.DLL|Microsoft.Bcl.AsyncInterfaces.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.Bcl.AsyncInterfaces.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.dll" Component_="Microsoft.CodeAnalysis.CSharp.dll" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.CSharp.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.CodeAnalysis.CSharp.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.dll" Component_="Microsoft.CodeAnalysis.dll" FileName="MICROS~3.DLL|Microsoft.CodeAnalysis.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.CodeAnalysis.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Data.SqlClient.dll" Component_="Microsoft.Data.SqlClient.dll" FileName="MICROS~4.DLL|Microsoft.Data.SqlClient.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.Data.SqlClient.dll" SelfReg="false"/>
+    <ROW File="Microsoft.EntityFrameworkCore.Abstractions.dll" Component_="Microsoft.EntityFrameworkCore.Abstractions.dll" FileName="MICROS~5.DLL|Microsoft.EntityFrameworkCore.Abstractions.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.EntityFrameworkCore.Abstractions.dll" SelfReg="false"/>
+    <ROW File="Microsoft.EntityFrameworkCore.dll" Component_="Microsoft.EntityFrameworkCore.dll" FileName="MICROS~6.DLL|Microsoft.EntityFrameworkCore.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.EntityFrameworkCore.dll" SelfReg="false"/>
+    <ROW File="Microsoft.EntityFrameworkCore.Relational.dll" Component_="Microsoft.EntityFrameworkCore.Relational.dll" FileName="MICROS~7.DLL|Microsoft.EntityFrameworkCore.Relational.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.EntityFrameworkCore.Relational.dll" SelfReg="false"/>
+    <ROW File="Microsoft.EntityFrameworkCore.SqlServer.dll" Component_="Microsoft.EntityFrameworkCore.SqlServer.dll" FileName="MICROS~8.DLL|Microsoft.EntityFrameworkCore.SqlServer.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.EntityFrameworkCore.SqlServer.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.Caching.Abstractions.dll" Component_="Microsoft.Extensions.Caching.Abstractions.dll" FileName="MICROS~9.DLL|Microsoft.Extensions.Caching.Abstractions.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.Extensions.Caching.Abstractions.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.Caching.Memory.dll" Component_="Microsoft.Extensions.Caching.Memory.dll" FileName="MICRO~10.DLL|Microsoft.Extensions.Caching.Memory.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.Extensions.Caching.Memory.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.Configuration.Abstractions.dll" Component_="Microsoft.Extensions.Configuration.Abstractions.dll" FileName="MICRO~11.DLL|Microsoft.Extensions.Configuration.Abstractions.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.Extensions.Configuration.Abstractions.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.Configuration.dll" Component_="Microsoft.Extensions.Configuration.dll" FileName="MICRO~12.DLL|Microsoft.Extensions.Configuration.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.Extensions.Configuration.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.Configuration.FileExtensions.dll" Component_="Microsoft.Extensions.Configuration.FileExtensions.dll" FileName="MICRO~13.DLL|Microsoft.Extensions.Configuration.FileExtensions.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.Extensions.Configuration.FileExtensions.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.Configuration.Json.dll" Component_="Microsoft.Extensions.Configuration.Json.dll" FileName="MICRO~14.DLL|Microsoft.Extensions.Configuration.Json.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.Extensions.Configuration.Json.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Component_="Microsoft.Extensions.DependencyInjection.Abstractions.dll" FileName="MICRO~15.DLL|Microsoft.Extensions.DependencyInjection.Abstractions.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.DependencyInjection.dll" Component_="Microsoft.Extensions.DependencyInjec_1_tion.dll" FileName="MICRO~16.DLL|Microsoft.Extensions.DependencyInjection.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.Extensions.DependencyInjection.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.FileProviders.Abstractions.dll" Component_="Microsoft.Extensions.FileProviders.Abstractions.dll" FileName="MICRO~17.DLL|Microsoft.Extensions.FileProviders.Abstractions.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.Extensions.FileProviders.Abstractions.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.FileProviders.Physical.dll" Component_="Microsoft.Extensions.FileProviders.Physical.dll" FileName="MICRO~18.DLL|Microsoft.Extensions.FileProviders.Physical.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.Extensions.FileProviders.Physical.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.FileSystemGlobbing.dll" Component_="Microsoft.Extensions.FileSystemGlobbing.dll" FileName="MICRO~19.DLL|Microsoft.Extensions.FileSystemGlobbing.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.Extensions.FileSystemGlobbing.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.Logging.Abstractions.dll" Component_="Microsoft.Extensions.Logging.Abstractions.dll" FileName="MICRO~20.DLL|Microsoft.Extensions.Logging.Abstractions.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.Extensions.Logging.Abstractions.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.Logging.dll" Component_="Microsoft.Extensions.Logging.dll" FileName="MICRO~21.DLL|Microsoft.Extensions.Logging.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.Extensions.Logging.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.Options.dll" Component_="Microsoft.Extensions.Options.dll" FileName="MICRO~22.DLL|Microsoft.Extensions.Options.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.Extensions.Options.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Extensions.Primitives.dll" Component_="Microsoft.Extensions.Primitives.dll" FileName="MICRO~23.DLL|Microsoft.Extensions.Primitives.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.Extensions.Primitives.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Identity.Client.dll" Component_="Microsoft.Identity.Client.dll" FileName="MICRO~24.DLL|Microsoft.Identity.Client.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.Identity.Client.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Identity.Client.Extensions.Msal.dll" Component_="Microsoft.Identity.Client.Extensions.Msal.dll" FileName="MICRO~25.DLL|Microsoft.Identity.Client.Extensions.Msal.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.Identity.Client.Extensions.Msal.dll" SelfReg="false"/>
+    <ROW File="Microsoft.IdentityModel.Abstractions.dll" Component_="Microsoft.IdentityModel.Abstractions.dll" FileName="MICRO~26.DLL|Microsoft.IdentityModel.Abstractions.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.IdentityModel.Abstractions.dll" SelfReg="false"/>
+    <ROW File="Microsoft.IdentityModel.JsonWebTokens.dll" Component_="Microsoft.IdentityModel.JsonWebTokens.dll" FileName="MICRO~27.DLL|Microsoft.IdentityModel.JsonWebTokens.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.IdentityModel.JsonWebTokens.dll" SelfReg="false"/>
+    <ROW File="Microsoft.IdentityModel.Logging.dll" Component_="Microsoft.IdentityModel.Logging.dll" FileName="MICRO~28.DLL|Microsoft.IdentityModel.Logging.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.IdentityModel.Logging.dll" SelfReg="false"/>
+    <ROW File="Microsoft.IdentityModel.Protocols.dll" Component_="Microsoft.IdentityModel.Protocols.dll" FileName="MICRO~29.DLL|Microsoft.IdentityModel.Protocols.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.IdentityModel.Protocols.dll" SelfReg="false"/>
+    <ROW File="Microsoft.IdentityModel.Protocols.OpenIdConnect.dll" Component_="Microsoft.IdentityModel.Protocols.OpenIdConnect.dll" FileName="MICRO~30.DLL|Microsoft.IdentityModel.Protocols.OpenIdConnect.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll" SelfReg="false"/>
+    <ROW File="Microsoft.IdentityModel.Tokens.dll" Component_="Microsoft.IdentityModel.Tokens.dll" FileName="MICRO~31.DLL|Microsoft.IdentityModel.Tokens.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.IdentityModel.Tokens.dll" SelfReg="false"/>
+    <ROW File="Microsoft.IO.RecyclableMemoryStream.dll" Component_="Microsoft.IO.RecyclableMemoryStream.dll" FileName="MICRO~32.DLL|Microsoft.IO.RecyclableMemoryStream.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.IO.RecyclableMemoryStream.dll" SelfReg="false"/>
+    <ROW File="Microsoft.SqlServer.Server.dll" Component_="Microsoft.SqlServer.Server.dll" FileName="MICRO~33.DLL|Microsoft.SqlServer.Server.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.SqlServer.Server.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Windows.SDK.NET.dll" Component_="Microsoft.Windows.SDK.NET.dll" FileName="MICRO~34.DLL|Microsoft.Windows.SDK.NET.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Microsoft.Windows.SDK.NET.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resour_7_ces.dll" Component_="Microsoft.CodeAnalysis.CSharp.resour_7_ces.dll" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_7" Component_="Microsoft.CodeAnalysis.resources.dll_7" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\pl\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resour_8_ces.dll" Component_="Microsoft.CodeAnalysis.CSharp.resour_8_ces.dll" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_8" Component_="Microsoft.CodeAnalysis.resources.dll_8" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\pt-BR\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resour_9_ces.dll" Component_="Microsoft.CodeAnalysis.CSharp.resour_9_ces.dll" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_9" Component_="Microsoft.CodeAnalysis.resources.dll_9" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\ru\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Data.SqlClient.dll_1" Component_="Microsoft.Data.SqlClient.dll_1" FileName="MICROS~1.DLL|Microsoft.Data.SqlClient.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Data.SqlClient.dll_2" Component_="Microsoft.Data.SqlClient.dll_2" FileName="MICROS~1.DLL|Microsoft.Data.SqlClient.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll" SelfReg="false"/>
+    <ROW File="System.Runtime.Caching.dll" Component_="System.Runtime.Caching.dll" FileName="SYSTEM~1.DLL|System.Runtime.Caching.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll" SelfReg="false"/>
+    <ROW File="System.Security.Cryptography.Pkcs.dll" Component_="System.Security.Cryptography.Pkcs.dll" FileName="SYSTEM~1.DLL|System.Security.Cryptography.Pkcs.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Data.SqlClient.SNI.dll" Component_="Microsoft.Data.SqlClient.SNI.dll" FileName="MICROS~1.DLL|Microsoft.Data.SqlClient.SNI.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Data.SqlClient.SNI.dll_1" Component_="Microsoft.Data.SqlClient.SNI.dll_1" FileName="MICROS~1.DLL|Microsoft.Data.SqlClient.SNI.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Data.SqlClient.SNI.dll_2" Component_="Microsoft.Data.SqlClient.SNI.dll_2" FileName="MICROS~1.DLL|Microsoft.Data.SqlClient.SNI.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll" SelfReg="false"/>
+    <ROW File="Microsoft.Data.SqlClient.SNI.dll_3" Component_="Microsoft.Data.SqlClient.SNI.dll_3" FileName="MICROS~1.DLL|Microsoft.Data.SqlClient.SNI.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll" SelfReg="false"/>
+    <ROW File="System.ClientModel.dll" Component_="System.ClientModel.dll" FileName="SYSTEM~1.DLL|System.ClientModel.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\System.ClientModel.dll" SelfReg="false"/>
+    <ROW File="System.IdentityModel.Tokens.Jwt.dll" Component_="System.IdentityModel.Tokens.Jwt.dll" FileName="SYSTEM~2.DLL|System.IdentityModel.Tokens.Jwt.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\System.IdentityModel.Tokens.Jwt.dll" SelfReg="false"/>
+    <ROW File="System.Memory.Data.dll" Component_="System.Memory.Data.dll" FileName="SYSTEM~3.DLL|System.Memory.Data.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\System.Memory.Data.dll" SelfReg="false"/>
+    <ROW File="System.Runtime.Caching.dll_1" Component_="System.Runtime.Caching.dll_1" FileName="SYSTEM~4.DLL|System.Runtime.Caching.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\System.Runtime.Caching.dll" SelfReg="false"/>
+    <ROW File="System.Security.Cryptography.Pkcs.dll_1" Component_="System.Security.Cryptography.Pkcs.dll_1" FileName="SYSTEM~5.DLL|System.Security.Cryptography.Pkcs.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\System.Security.Cryptography.Pkcs.dll" SelfReg="false"/>
+    <ROW File="_1_2.xls" Component_="_1_2.xls" FileName="РАСПИС~1.XLS|Расписание2024_1_ИС-2.xls" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Templates\Расписание2024_1_ИС-2.xls" SelfReg="false"/>
+    <ROW File="_1_2.xlsx" Component_="_1_2.xls" FileName="РАСПИС~2.XLS|Расписание2024_1_ИС-2.xlsx" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\Templates\Расписание2024_1_ИС-2.xlsx" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resour_10_ces.dll" Component_="Microsoft.CodeAnalysis.CSharp.resour_10_ces.dll" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_10" Component_="Microsoft.CodeAnalysis.resources.dll_10" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\tr\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="TSchedule.deps.json" Component_="TSchedule.deps.json" FileName="TSCHED~1.JSO|TSchedule.deps.json" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\TSchedule.deps.json" SelfReg="false"/>
+    <ROW File="TSchedule.dll" Component_="TSchedule.dll" FileName="TSCHED~1.DLL|TSchedule.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\TSchedule.dll" SelfReg="false"/>
+    <ROW File="TSchedule.dll.config" Component_="TSchedule.deps.json" FileName="TSCHED~1.CON|TSchedule.dll.config" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\TSchedule.dll.config" SelfReg="false"/>
+    <ROW File="TSchedule.exe" Component_="TSchedule.exe" FileName="TSCHED~1.EXE|TSchedule.exe" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\TSchedule.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="TSchedule.pdb" Component_="TSchedule.exe" FileName="TSCHED~1.PDB|TSchedule.pdb" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\TSchedule.pdb" SelfReg="false"/>
+    <ROW File="TSchedule.Persistence.dll" Component_="TSchedule.Persistence.dll" FileName="TSCHED~2.DLL|TSchedule.Persistence.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\TSchedule.Persistence.dll" SelfReg="false"/>
+    <ROW File="TSchedule.Persistence.pdb" Component_="TSchedule.Persistence.dll" FileName="TSCHED~2.PDB|TSchedule.Persistence.pdb" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\TSchedule.Persistence.pdb" SelfReg="false"/>
+    <ROW File="TSchedule.runtimeconfig.json" Component_="TSchedule.deps.json" FileName="TSCHED~2.JSO|TSchedule.runtimeconfig.json" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\TSchedule.runtimeconfig.json" SelfReg="false"/>
+    <ROW File="WinRT.Runtime.dll" Component_="WinRT.Runtime.dll" FileName="WINRTR~1.DLL|WinRT.Runtime.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\WinRT.Runtime.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resour_11_ces.dll" Component_="Microsoft.CodeAnalysis.CSharp.resour_11_ces.dll" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_11" Component_="Microsoft.CodeAnalysis.resources.dll_11" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.CSharp.resour_12_ces.dll" Component_="Microsoft.CodeAnalysis.CSharp.resour_12_ces.dll" FileName="MICROS~1.DLL|Microsoft.CodeAnalysis.CSharp.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.CodeAnalysis.resources.dll_12" Component_="Microsoft.CodeAnalysis.resources.dll_12" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
+    <ROW File="TSchedule.VisualElementsManifest.xml" Component_="TSchedule.VisualElementsManifest.xml" FileName="TSCHED~1.XML|TSchedule.VisualElementsManifest.xml" Attributes="0" SourcePath="&lt;AI_RES&gt;app.VisualElementsManifest.xml" SelfReg="false"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.custcomp.MsiEmbeddedUIComponent">
+    <ROW MsiEmbeddedUI="embeddeduiproxy" FileName="embeddeduiproxy.dll" Attributes="3" MessageFilter="201359327" Data="&lt;AI_HOME&gt;bin\x86\embeddeduiproxy.dll"/>
+    <ROW MsiEmbeddedUI="InstallerAnalytics" FileName="InstallerAnalytics.dll" Attributes="0" Data="&lt;AI_TEMPLATES&gt;PlaceHolder.dat"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.AiPersistentPropComponent">
+    <ROW Property="AI_IA_ENABLE" Registry="AI_IA_ENABLE" HklmSearch="AI_IA_ENABLE" HkcuSearch="AI_IA_ENABLE_1"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
+    <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BootstrapperUISequenceComponent">
+    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="249"/>
+    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="251"/>
+    <ROW Action="AI_DetectSoftware" Sequence="151"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
+    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" PackageFolder="Setup Files" PackageFileName="TSchedule Installer" Languages="ru" InstallationType="4" UseLargeSchema="true"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
+    <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
+    <ROW Path="&lt;AI_DICTS&gt;ui_ru.ail"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
+    <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
+    <ROW Fragment="LicenseAgreementDlg.aip" Path="&lt;AI_THEMES&gt;serene\fragments\LicenseAgreementDlg.aip"/>
+    <ROW Fragment="MaintenanceTypeDlg.aip" Path="&lt;AI_THEMES&gt;serene\fragments\MaintenanceTypeDlg.aip"/>
+    <ROW Fragment="MaintenanceWelcomeDlg.aip" Path="&lt;AI_THEMES&gt;serene\fragments\MaintenanceWelcomeDlg.aip"/>
+    <ROW Fragment="SequenceDialogs.aip" Path="&lt;AI_THEMES&gt;serene\fragments\SequenceDialogs.aip"/>
+    <ROW Fragment="Sequences.aip" Path="&lt;AI_FRAGS&gt;Sequences.aip"/>
+    <ROW Fragment="StaticUIStrings.aip" Path="&lt;AI_FRAGS&gt;StaticUIStrings.aip"/>
+    <ROW Fragment="Themes.aip" Path="&lt;AI_FRAGS&gt;Themes.aip"/>
+    <ROW Fragment="UI.aip" Path="&lt;AI_THEMES&gt;serene\fragments\UI.aip"/>
+    <ROW Fragment="Validation.aip" Path="&lt;AI_FRAGS&gt;Validation.aip"/>
+    <ROW Fragment="VerifyRemoveDlg.aip" Path="&lt;AI_THEMES&gt;serene\fragments\VerifyRemoveDlg.aip"/>
+    <ROW Fragment="VerifyRepairDlg.aip" Path="&lt;AI_THEMES&gt;serene\fragments\VerifyRepairDlg.aip"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.GenericXmlAttributeComponent">
+    <ROW XmlAttribute="BackgroundColor" XmlElement="VisualElements" Name="BackgroundColor" Flags="0" Order="0" Value="black"/>
+    <ROW XmlAttribute="Executable" XmlElement="VisualElements" Name="Executable" Flags="0" Order="0" FileId="TSchedule.exe"/>
+    <ROW XmlAttribute="ForegroundText" XmlElement="VisualElements" Name="ForegroundText" Flags="0" Order="0" Value="light"/>
+    <ROW XmlAttribute="ShowNameOnSquare150x150Logo" XmlElement="VisualElements" Name="ShowNameOnSquare150x150Logo" Flags="0" Order="0" Value="on"/>
+    <ROW XmlAttribute="xmlnsxsi" XmlElement="Application" Name="xmlns:xsi" Flags="0" Order="0" Value="http://www.w3.org/2001/XMLSchema-instance"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.GenericXmlElementComponent">
+    <ROW XmlElement="Application" Name="Application" Order="0" Flags="0" Type="53"/>
+    <ROW XmlElement="VisualElements" ParentElement="Application" Name="VisualElements" Order="1" Flags="0" Type="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.GenericXmlFileComponent">
+    <ROW XmlFile="TSchedule.VisualElementsManifest.xm" FileName="TSchedule.VisualElementsManifest.xml" RootElement="Application" Flags="89" Version="1.0" Encoding="UTF-8" IndentUnits="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiAppSearchComponent">
+    <ROW Property="AI_IA_ENABLE" Signature_="AI_IA_ENABLE"/>
+    <ROW Property="AI_IA_ENABLE" Signature_="AI_IA_ENABLE_1"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
+    <ROW Name="InstallerAnalytics.dll" SourcePath="&lt;AI_CUSTACTS&gt;InstallerAnalytics.dll"/>
+    <ROW Name="ShortcutFlags.dll" SourcePath="&lt;AI_CUSTACTS&gt;ShortcutFlags.dll"/>
+    <ROW Name="SoftwareDetector.dll" SourcePath="&lt;AI_CUSTACTS&gt;SoftwareDetector.dll"/>
+    <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
+    <ROW Name="favicon_square.png" SourcePath="..\TSchedule\Images\favicon_square.png"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiConditionComponent">
+    <ROW Feature_="TileAssets_DefaultBuild" Level="4" Condition="VersionNT &lt; 603"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlComponent">
+    <ROW Dialog_="AdminBrowseDlg" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="100" MsiKey="AdminBrowseDlg#Bitmap"/>
+    <ROW Dialog_="AdminBrowseDlg" Control="OK" Type="PushButton" X="425" Y="283" Width="79" Height="26" Attributes="3" Text="[ButtonText_OK]" TextStyle="DfltBlackTextStyle" Order="300" TextLocId="-" MsiKey="AdminBrowseDlg#OK"/>
+    <ROW Dialog_="AdminBrowseDlg" Control="Cancel" Type="PushButton" X="290" Y="283" Width="87" Height="26" Attributes="3" Text="[ButtonText_Cancel]" TextStyle="DfltBlackTextStyle" Order="400" TextLocId="-" MsiKey="AdminBrowseDlg#Cancel"/>
+    <ROW Dialog_="AdminBrowseDlg" Control="ComboLabel" Type="Text" X="77" Y="77" Width="80" Height="23" Attributes="65539" Text="&amp;Поиск в:" Order="500" TextLocId="Control.Text.AdminBrowseDlg#ComboLabel" MsiKey="AdminBrowseDlg#ComboLabel"/>
+    <ROW Dialog_="AdminBrowseDlg" Control="PathLabel" Type="Text" X="71" Y="220" Width="98" Height="22" Attributes="65539" Text="&amp;Имя папки:" Order="1000" TextLocId="Control.Text.AdminBrowseDlg#PathLabel" MsiKey="AdminBrowseDlg#PathLabel"/>
+    <ROW Dialog_="AdminBrowseDlg" Control="Title" Type="Text" X="71" Y="28" Width="413" Height="30" Attributes="65539" Text="Изменение папки назначения" TextStyle="LogoTextStyle" Order="1100" TextLocId="Control.Text.AdminBrowseDlg#Title" MsiKey="AdminBrowseDlg#Title"/>
+    <ROW Dialog_="AdminInstallPointDlg" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="200" MsiKey="AdminInstallPointDlg#Bitmap"/>
+    <ROW Dialog_="AdminInstallPointDlg" Control="Text" Type="Text" X="71" Y="181" Width="413" Height="21" Attributes="65539" Text="&amp;Введите путь вручную или нажмите &quot;Обзор&quot;." Order="300" MsiKey="AdminInstallPointDlg#Text"/>
+    <ROW Dialog_="AdminInstallPointDlg" Control="Browse" Type="PushButton" X="363" Y="236" Width="86" Height="26" Attributes="3" Text="[ButtonText_Browse]" TextStyle="DfltBlackTextStyle" Order="500" TextLocId="-" MsiKey="AdminInstallPointDlg#Browse"/>
+    <ROW Dialog_="AdminInstallPointDlg" Control="Back" Type="PushButton" X="15" Y="283" Width="80" Height="26" Attributes="3" Text="[ButtonText_Back]" TextStyle="DfltBlackTextStyle" Order="600" TextLocId="-" MsiKey="AdminInstallPointDlg#Back" Options="1"/>
+    <ROW Dialog_="AdminInstallPointDlg" Control="Next" Type="PushButton" X="392" Y="283" Width="112" Height="26" Attributes="3" Text="[ButtonText_Next]" TextStyle="DfltBlackTextStyle" Order="700" TextLocId="-" MsiKey="AdminInstallPointDlg#Next" Options="1"/>
+    <ROW Dialog_="AdminInstallPointDlg" Control="ProductNameTitle" Type="Text" X="101" Y="41" Width="312" Height="94" Attributes="196611" Text="[ProductName]" TextStyle="HugeLogoTextStyle" Order="800" TextLocId="-" MsiKey="AdminInstallPointDlg#ProductNameTitle"/>
+    <ROW Dialog_="AdminInstallPointDlg" Control="CompanyText" Type="Text" X="101" Y="14" Width="312" Height="27" Attributes="196611" Text="[Manufacturer]" TextStyle="LogoTextStyle" Order="900" TextLocId="-" MsiKey="AdminInstallPointDlg#CompanyText"/>
+    <ROW Dialog_="AdminInstallPointDlg" Control="ProductLogo" Type="Bitmap" X="23" Y="15" Width="65" Height="69" Attributes="1" Text="[AppLogo]" Order="1000" MsiKey="AdminInstallPointDlg#ProductLogo"/>
+    <ROW Dialog_="AdminWelcomeDlg" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="200" MsiKey="AdminWelcomeDlg#Bitmap"/>
+    <ROW Dialog_="AdminWelcomeDlg" Control="Next" Type="PushButton" X="392" Y="283" Width="112" Height="26" Attributes="3" Text="[ButtonText_Next]" TextStyle="DlgFont10" Order="300" TextLocId="-" MsiKey="AdminWelcomeDlg#Next" Options="1"/>
+    <ROW Dialog_="AdminWelcomeDlg" Control="Back" Type="PushButton" X="15" Y="283" Width="80" Height="26" Attributes="1" Text="[ButtonText_Back]" TextStyle="DlgFont10" Order="400" TextLocId="-" MsiKey="AdminWelcomeDlg#Back" Options="1"/>
+    <ROW Dialog_="AdminWelcomeDlg" Control="ProductNameTitle" Type="Text" X="101" Y="41" Width="312" Height="94" Attributes="196611" Text="[ProductName]" TextStyle="HugeLogoTextStyle" Order="500" TextLocId="-" MsiKey="AdminWelcomeDlg#ProductNameTitle"/>
+    <ROW Dialog_="AdminWelcomeDlg" Control="CompanyText" Type="Text" X="101" Y="14" Width="312" Height="27" Attributes="196611" Text="[Manufacturer]" TextStyle="LogoTextStyle" Order="600" TextLocId="-" MsiKey="AdminWelcomeDlg#CompanyText"/>
+    <ROW Dialog_="AdminWelcomeDlg" Control="ProductLogo" Type="Bitmap" X="23" Y="15" Width="65" Height="69" Attributes="1" Text="[AppLogo]" Order="700" MsiKey="AdminWelcomeDlg#ProductLogo"/>
+    <ROW Dialog_="AdminWelcomeDlg" Control="Description" Type="Text" X="71" Y="173" Width="378" Height="87" Attributes="196611" Text="Мастер создаст образ сервера &quot;[ProductName]&quot;, в указанной сетевой папке.  Нажмите кнопку &quot;[Text_Next]&quot;, чтобы продолжить или &quot;Отмена&quot;, чтобы выйти из мастера." Order="800" TextLocId="Control.Text.AdminWelcomeDlg#Description" MsiKey="AdminWelcomeDlg#Description"/>
+    <ROW Dialog_="BrowseDlg" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="100" MsiKey="BrowseDlg#Bitmap"/>
+    <ROW Dialog_="BrowseDlg" Control="OK" Type="PushButton" X="425" Y="283" Width="79" Height="26" Attributes="3" Text="[ButtonText_OK]" Order="300" TextLocId="-" MsiKey="BrowseDlg#OK"/>
+    <ROW Dialog_="BrowseDlg" Control="Cancel" Type="PushButton" X="290" Y="283" Width="87" Height="26" Attributes="3" Text="[ButtonText_Cancel]" Order="400" TextLocId="-" MsiKey="BrowseDlg#Cancel"/>
+    <ROW Dialog_="BrowseDlg" Control="ComboLabel" Type="Text" X="77" Y="77" Width="80" Height="23" Attributes="65539" Text="&amp;Поиск в:" Order="500" TextLocId="Control.Text.BrowseDlg#ComboLabel" MsiKey="BrowseDlg#ComboLabel"/>
+    <ROW Dialog_="BrowseDlg" Control="PathLabel" Type="Text" X="71" Y="220" Width="98" Height="22" Attributes="65539" Text="&amp;Имя папки:" Order="1000" TextLocId="Control.Text.BrowseDlg#PathLabel" MsiKey="BrowseDlg#PathLabel"/>
+    <ROW Dialog_="BrowseDlg" Control="Title" Type="Text" X="71" Y="28" Width="413" Height="30" Attributes="196611" Text="Изменение папки назначения" TextStyle="LogoTextStyle" Order="1100" TextLocId="Control.Text.BrowseDlg#Title" MsiKey="BrowseDlg#Title"/>
+    <ROW Dialog_="CancelDlg" Control="No" Type="PushButton" X="138" Y="71" Width="65" Height="22" Attributes="3" Text="[ButtonText_No]" Order="100" TextLocId="-" MsiKey="CancelDlg#No"/>
+    <ROW Dialog_="CancelDlg" Control="Yes" Type="PushButton" X="60" Y="71" Width="60" Height="22" Attributes="3" Text="[ButtonText_Yes]" Order="200" TextLocId="-" MsiKey="CancelDlg#Yes"/>
+    <ROW Dialog_="CancelDlg" Control="Text" Type="Text" X="48" Y="15" Width="207" Height="44" Attributes="3" Text="Вы уверены, что хотите отменить установку?" TextStyle="DfltBlackTextStyle" Order="400" MsiKey="CancelDlg#Text"/>
+    <ROW Dialog_="CustomizeDlg" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="100" MsiKey="CustomizeDlg#Bitmap"/>
+    <ROW Dialog_="CustomizeDlg" Control="Back" Type="PushButton" X="15" Y="283" Width="80" Height="26" Attributes="3" Text="[ButtonText_Back]" TextStyle="DlgFont10" Order="600" TextLocId="-" MsiKey="CustomizeDlg#Back" Options="1"/>
+    <ROW Dialog_="CustomizeDlg" Control="Next" Type="PushButton" X="392" Y="283" Width="112" Height="26" Attributes="3" Text="[ButtonText_Next]" TextStyle="DlgFont10" Order="700" TextLocId="-" MsiKey="CustomizeDlg#Next" Options="1"/>
+    <ROW Dialog_="CustomizeDlg" Control="Title" Type="Text" X="110" Y="11" Width="391" Height="68" Attributes="196611" Text="Выборочная установка" TextStyle="TitleFontSegoe" Order="1400" TextLocId="Control.Text.CustomizeDlg#Title" MsiKey="CustomizeDlg#Title"/>
+    <ROW Dialog_="DiskCostDlg" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="100" MsiKey="DiskCostDlg#Bitmap"/>
+    <ROW Dialog_="DiskCostDlg" Control="OK" Type="PushButton" X="425" Y="283" Width="79" Height="26" Attributes="3" Text="[ButtonText_OK]" Order="200" TextLocId="-" MsiKey="DiskCostDlg#OK"/>
+    <ROW Dialog_="DiskCostDlg" Control="VolumeList" Type="VolumeCostList" X="71" Y="149" Width="378" Height="114" Attributes="393223" Text="{120}{70}{70}{70}{70}" TextStyle="DlgFont10" Order="300" TextLocId="Control.Text.DiskCostDlg#VolumeList" MsiKey="DiskCostDlg#VolumeList"/>
+    <ROW Dialog_="DiskCostDlg" Control="Title" Type="Text" X="71" Y="7" Width="413" Height="73" Attributes="196611" Text="Требования к дисковому пространству" TextStyle="LogoTextStyle" Order="400" TextLocId="Control.Text.DiskCostDlg#Title" MsiKey="DiskCostDlg#Title"/>
+    <ROW Dialog_="DiskCostDlg" Control="Text" Type="Text" X="71" Y="80" Width="387" Height="61" Attributes="65539" Text="На указанном диске недостаточно места для установки. Освободите место или выберите другой диск для установки." Order="500" MsiKey="DiskCostDlg#Text"/>
+    <ROW Dialog_="ErrorDlg" Control="I" Type="PushButton" X="87" Y="80" Width="104" Height="24" Attributes="3" Text="[ButtonText_Ignore]" Order="-1" TextLocId="-" MsiKey="ErrorDlg#I" Options="1"/>
+    <ROW Dialog_="ErrorDlg" Control="N" Type="PushButton" X="100" Y="80" Width="68" Height="24" Attributes="3" Text="[ButtonText_No]" Order="-1" TextLocId="-" MsiKey="ErrorDlg#N" Options="1"/>
+    <ROW Dialog_="ErrorDlg" Control="O" Type="PushButton" X="100" Y="80" Width="68" Height="24" Attributes="3" Text="[ButtonText_OK]" Order="-1" TextLocId="-" MsiKey="ErrorDlg#O" Options="1"/>
+    <ROW Dialog_="ErrorDlg" Control="Y" Type="PushButton" X="100" Y="80" Width="56" Height="24" Attributes="3" Text="[ButtonText_Yes]" Order="-1" TextLocId="-" MsiKey="ErrorDlg#Y" Options="1"/>
+    <ROW Dialog_="ErrorDlg" Control="R" Type="PushButton" X="87" Y="80" Width="96" Height="24" Attributes="3" Text="[ButtonText_Retry]" Order="-1" TextLocId="-" MsiKey="ErrorDlg#R" Options="1"/>
+    <ROW Dialog_="ErrorDlg" Control="A" Type="PushButton" X="87" Y="80" Width="91" Height="24" Attributes="3" Text="[ButtonText_Cancel]" Order="-1" TextLocId="-" MsiKey="ErrorDlg#A" Options="1"/>
+    <ROW Dialog_="ErrorDlg" Control="C" Type="PushButton" X="87" Y="80" Width="93" Height="24" Attributes="3" Text="[ButtonText_Cancel]" Order="-1" TextLocId="-" MsiKey="ErrorDlg#C" Options="1"/>
+    <ROW Dialog_="ErrorDlg" Control="ErrorText" Type="Text" X="48" Y="15" Width="205" Height="60" Attributes="3" Text="Текстовая информация" TextStyle="DfltBlackTextStyle" Order="-1" TextLocId="Control.Text.ErrorDlg#ErrorText" MsiKey="ErrorDlg#ErrorText" Options="1"/>
+    <ROW Dialog_="ExitDialog" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="300" MsiKey="ExitDialog#Bitmap"/>
+    <ROW Dialog_="ExitDialog" Control="ViewReadmeCheckBox" Type="CheckBox" X="506" Y="200" Width="10" Height="10" Attributes="0" Property="VIEWREADME" Order="400" MsiKey="ExitDialog#ViewReadmeCheckBox" Options="1"/>
+    <ROW Dialog_="ExitDialog" Control="LaunchProdText" Type="Text" X="201" Y="218" Width="170" Height="17" Attributes="196611" Text="Запустить [ProductName]" Order="500" TextLocId="Control.Text.ExitDialog#LaunchProdText" MsiKey="ExitDialog#LaunchProdText"/>
+    <ROW Dialog_="ExitDialog" Control="LaunchProdCheckBox" Type="CheckBox" X="183" Y="225" Width="10" Height="10" Attributes="3" Property="RUNAPPLICATION" Order="600" MsiKey="ExitDialog#LaunchProdCheckBox" Options="1"/>
+    <ROW Dialog_="ExitDialog" Control="Finish" Type="PushButton" X="413" Y="284" Width="92" Height="26" Attributes="3" Text="[ButtonText_Finish]" TextStyle="DfltBlackTextStyle" Order="700" TextLocId="-" MsiKey="ExitDialog#Finish" Options="1"/>
+    <ROW Dialog_="ExitDialog" Control="ProductNameTitle" Type="Text" X="101" Y="41" Width="312" Height="94" Attributes="196611" Text="[ProductName]" TextStyle="HugeLogoTextStyle" Order="800" TextLocId="-" MsiKey="ExitDialog#ProductNameTitle"/>
+    <ROW Dialog_="ExitDialog" Control="CompanyText" Type="Text" X="101" Y="14" Width="312" Height="27" Attributes="196611" Text="[Manufacturer]" TextStyle="LogoTextStyle" Order="900" TextLocId="-" MsiKey="ExitDialog#CompanyText"/>
+    <ROW Dialog_="ExitDialog" Control="ProductLogo" Type="Bitmap" X="23" Y="15" Width="65" Height="69" Attributes="1" Text="[AppLogo]" Order="1000" MsiKey="ExitDialog#ProductLogo"/>
+    <ROW Dialog_="ExitDialog" Control="Description" Type="Text" X="51" Y="263" Width="354" Height="47" Attributes="196611" Text="Для выхода из мастера установки нажмите кнопку &quot;Готово&quot;" Order="1100" TextLocId="Control.Text.ExitDialog#Description" MsiKey="ExitDialog#Description"/>
+    <ROW Dialog_="ExitDialog" Control="Hyperlink" Type="Hyperlink" X="516" Y="173" Width="4" Height="20" Attributes="65538" Property="AiReadmeLink" Text="&lt;a href=&quot;[AiReadmeLink]&quot;&gt;View readme&lt;/a&gt;" TextStyle="DlgFont10" Order="1200" TextLocId="Control.Text.ExitDialog#ViewReadmeHyperlink" MsiKey="ExitDialog#Hyperlink"/>
+    <ROW Dialog_="FatalError" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="200" MsiKey="FatalError#Bitmap"/>
+    <ROW Dialog_="FatalError" Control="Finish" Type="PushButton" X="413" Y="284" Width="92" Height="26" Attributes="3" Text="[ButtonText_Finish]" Order="400" TextLocId="-" MsiKey="FatalError#Finish" Options="1"/>
+    <ROW Dialog_="FatalError" Control="LogCheckBoxLabel" Type="Text" X="156" Y="217" Width="227" Height="20" Attributes="65538" Property="AI_LOG_CHECKBOX_TEXT" Text="Показать журнал" Order="600" TextLocId="Control.Text.FatalError#LogCheckBox" MsiKey="FatalError#LogCheckBoxLabel"/>
+    <ROW Dialog_="FatalError" Control="ProductNameTitle" Type="Text" X="101" Y="41" Width="312" Height="94" Attributes="196611" Text="[ProductName]" TextStyle="HugeLogoTextStyle" Order="700" TextLocId="-" MsiKey="FatalError#ProductNameTitle"/>
+    <ROW Dialog_="FatalError" Control="CompanyText" Type="Text" X="101" Y="14" Width="312" Height="27" Attributes="196611" Text="[Manufacturer]" TextStyle="LogoTextStyle" Order="800" TextLocId="-" MsiKey="FatalError#CompanyText"/>
+    <ROW Dialog_="FatalError" Control="ProductLogo" Type="Bitmap" X="23" Y="15" Width="65" Height="69" Attributes="1" Text="[AppLogo]" Order="900" MsiKey="FatalError#ProductLogo"/>
+    <ROW Dialog_="FilesInUse" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="100" MsiKey="FilesInUse#Bitmap"/>
+    <ROW Dialog_="FilesInUse" Control="Retry" Type="PushButton" X="416" Y="281" Width="89" Height="29" Attributes="3" Text="[ButtonText_Retry]" Order="200" TextLocId="-" MsiKey="FilesInUse#Retry"/>
+    <ROW Dialog_="FilesInUse" Control="Ignore" Type="PushButton" X="284" Y="281" Width="113" Height="29" Attributes="3" Text="[ButtonText_Ignore]" Order="300" TextLocId="-" MsiKey="FilesInUse#Ignore"/>
+    <ROW Dialog_="FilesInUse" Control="Exit" Type="PushButton" X="194" Y="281" Width="74" Height="29" Attributes="3" Text="[ButtonText_Exit]" Order="400" TextLocId="-" MsiKey="FilesInUse#Exit" Options="1"/>
+    <ROW Dialog_="FilesInUse" Control="Title" Type="Text" X="70" Y="14" Width="379" Height="30" Attributes="196611" Text="Файлы используются" TextStyle="LogoTextStyle" Order="500" MsiKey="FilesInUse#Title"/>
+    <ROW Dialog_="FilesInUse" Control="Text" Type="Text" X="71" Y="51" Width="378" Height="99" Attributes="65539" Text="Следующие приложения используют файлы, которые нужно обновить. Вы можете закрыть приложения и затем нажать кнопку &quot;Повторить&quot; или &quot;Пропустить&quot;, чтобы продолжить и заменить их при перезагрузке." Order="600" MsiKey="FilesInUse#Text"/>
+    <ROW Dialog_="FilesInUse" Control="List" Type="ListBox" X="70" Y="158" Width="379" Height="107" Attributes="7" Property="FileInUseProcess" TextStyle="DlgFont10" Order="700" MsiKey="FilesInUse#List"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control="LicenseAgreementDlgDialogInitializer" Type="DialogInitializer" X="0" Y="0" Width="0" Height="0" Attributes="0" Order="-1" TextLocId="-" HelpLocId="-" ExtDataLocId="-"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="100" MsiKey="LicenseAgreementDlg#Bitmap"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control="Next" Type="PushButton" X="392" Y="283" Width="112" Height="26" Attributes="3" Text="[ButtonText_Next]" Order="200" TextLocId="-" MsiKey="LicenseAgreementDlg#Next" Options="1"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control="AgreementText" Type="ScrollableText" X="71" Y="68" Width="378" Height="191" Attributes="7" Property="EulaRead" Text="license.rtf" TextStyle="DlgFont10" Order="400" TextLocId="Control.Text.LicenseAgreementDlg#AgreementText" MsiKey="LicenseAgreementDlg#AgreementText"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control="Back" Type="PushButton" X="15" Y="283" Width="80" Height="26" Attributes="3" Text="[ButtonText_Back]" Order="500" TextLocId="-" MsiKey="LicenseAgreementDlg#Back" Options="1"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control="Title" Type="Text" X="71" Y="26" Width="378" Height="30" Attributes="196611" Text="Лицензионное соглашение" TextStyle="LogoTextStyle" Order="600" TextLocId="Control.Text.LicenseAgreementDlg#Title" MsiKey="LicenseAgreementDlg#Title"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="Next" Type="PushButton" X="392" Y="283" Width="112" Height="26" Attributes="1" Text="[ButtonText_Next]" TextStyle="DlgFont10" Order="100" TextLocId="-" MsiKey="MaintenanceTypeDlg#Next" Options="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="300" MsiKey="MaintenanceTypeDlg#Bitmap"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="ChangeButton" Type="PushButton" X="500" Y="78" Width="1" Height="48" Attributes="5767168" Text="[CustomSetupIcon]" Help="Изменить установку|" Order="400" HelpLocId="Control.Help.MaintenanceTypeDlg#ChangeButton" MsiKey="MaintenanceTypeDlg#ChangeButton"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="RepairLabel" Type="Text" X="140" Y="113" Width="155" Height="29" Attributes="65539" Text="&amp;Исправить" TextStyle="LogoTextStyle" Order="500" TextLocId="Control.Text.MaintenanceTypeDlg#RepairLabel" MsiKey="MaintenanceTypeDlg#RepairLabel"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="RepairButton" Type="PushButton" X="81" Y="125" Width="48" Height="48" Attributes="5767171" Text="[RepairIcon]" Help="Исправить установку|" Order="600" HelpLocId="Control.Help.MaintenanceTypeDlg#RepairButton" MsiKey="MaintenanceTypeDlg#RepairButton"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="RemoveLabel" Type="Text" X="140" Y="187" Width="111" Height="33" Attributes="65539" Text="&amp;Удалить" TextStyle="LogoTextStyle" Order="700" TextLocId="Control.Text.MaintenanceTypeDlg#RemoveLabel" MsiKey="MaintenanceTypeDlg#RemoveLabel"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="RemoveButton" Type="PushButton" X="81" Y="187" Width="48" Height="48" Attributes="5767171" Text="[RemoveIcon]" Help="Удалить установку|" Order="800" HelpLocId="Control.Help.MaintenanceTypeDlg#RemoveButton" MsiKey="MaintenanceTypeDlg#RemoveButton"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="Back" Type="PushButton" X="15" Y="283" Width="80" Height="26" Attributes="3" Text="[ButtonText_Back]" TextStyle="DfltBlackTextStyle" Order="900" TextLocId="-" MsiKey="MaintenanceTypeDlg#Back" Options="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="Title" Type="Text" X="110" Y="11" Width="391" Height="68" Attributes="196611" Text="Восстановление или удаление установки" TextStyle="LogoTextStyle" Order="1000" MsiKey="MaintenanceTypeDlg#Title"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="RepairText" Type="Text" X="140" Y="142" Width="340" Height="61" Attributes="65539" Text="Восстановление недостающих файлов, ярлыков и записей реестра." Order="1100" MsiKey="MaintenanceTypeDlg#RepairText"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="RemoveText" Type="Text" X="140" Y="220" Width="340" Height="34" Attributes="65539" Text="Удаление [ProductName] с вашего компьютера." Order="1200" TextLocId="Control.Text.MaintenanceTypeDlg#RemoveText" MsiKey="MaintenanceTypeDlg#RemoveText"/>
+    <ROW Dialog_="MaintenanceWelcomeDlg" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="300" MsiKey="MaintenanceWelcomeDlg#Bitmap"/>
+    <ROW Dialog_="MaintenanceWelcomeDlg" Control="Next" Type="PushButton" X="392" Y="283" Width="112" Height="26" Attributes="3" Text="[ButtonText_Next]" Order="400" TextLocId="-" MsiKey="MaintenanceWelcomeDlg#Next" Options="1"/>
+    <ROW Dialog_="MaintenanceWelcomeDlg" Control="ProductNameTitle" Type="Text" X="101" Y="41" Width="312" Height="94" Attributes="196611" Text="[ProductName]" TextStyle="HugeLogoTextStyle" Order="500" TextLocId="-" MsiKey="MaintenanceWelcomeDlg#ProductNameTitle"/>
+    <ROW Dialog_="MaintenanceWelcomeDlg" Control="CompanyText" Type="Text" X="101" Y="14" Width="312" Height="27" Attributes="196611" Text="[Manufacturer]" TextStyle="LogoTextStyle" Order="600" TextLocId="-" MsiKey="MaintenanceWelcomeDlg#CompanyText"/>
+    <ROW Dialog_="MaintenanceWelcomeDlg" Control="ProductLogo" Type="Bitmap" X="23" Y="15" Width="65" Height="69" Attributes="1" Text="[AppLogo]" Order="700" MsiKey="MaintenanceWelcomeDlg#ProductLogo"/>
+    <ROW Dialog_="MaintenanceWelcomeDlg" Control="Description" Type="Text" X="70" Y="154" Width="379" Height="117" Attributes="196611" Text="Мастер позволит вам восстановить &quot;[ProductName]&quot; или даже удалить &quot;[ProductName]&quot; с вашего компьютера. Нажмите кнопку &quot;[Text_Next]&quot;, чтобы продолжить или &quot;Отмена&quot;, чтобы выйти из мастера." Order="800" MsiKey="MaintenanceWelcomeDlg#Description"/>
+    <ROW Dialog_="MsiRMFilesInUse" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="100" MsiKey="MsiRMFilesInUse#Bitmap"/>
+    <ROW Dialog_="MsiRMFilesInUse" Control="OK" Type="PushButton" X="425" Y="283" Width="79" Height="26" Attributes="3" Text="[ButtonText_OK]" Order="200" TextLocId="-" MsiKey="MsiRMFilesInUse#OK"/>
+    <ROW Dialog_="MsiRMFilesInUse" Control="Cancel" Type="PushButton" X="338" Y="283" Width="77" Height="26" Attributes="3" Text="[ButtonText_Cancel]" Order="300" TextLocId="-" MsiKey="MsiRMFilesInUse#Cancel"/>
+    <ROW Dialog_="MsiRMFilesInUse" Control="Title" Type="Text" X="71" Y="14" Width="396" Height="30" Attributes="196611" Text="Файлы используются" TextStyle="LogoTextStyle" Order="400" MsiKey="MsiRMFilesInUse#Title"/>
+    <ROW Dialog_="MsiRMFilesInUse" Control="Text" Type="Text" X="71" Y="66" Width="378" Height="41" Attributes="65539" Text="Следующие приложения используют файлы, которые должны быть обновлены." Order="500" MsiKey="MsiRMFilesInUse#Text"/>
+    <ROW Dialog_="MsiRMFilesInUse" Control="List" Type="ListBox" X="71" Y="116" Width="378" Height="83" Attributes="7" Property="FileInUseProcess" TextStyle="DlgFont10" Order="600" MsiKey="MsiRMFilesInUse#List"/>
+    <ROW Dialog_="MsiRMFilesInUse" Control="Options" Type="RadioButtonGroup" X="71" Y="205" Width="378" Height="51" Attributes="3" Property="AppsShutdownOption" TextStyle="DlgFont10" Order="700" MsiKey="MsiRMFilesInUse#Options"/>
+    <ROW Dialog_="OutOfDiskDlg" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="100" MsiKey="OutOfDiskDlg#Bitmap"/>
+    <ROW Dialog_="OutOfDiskDlg" Control="OK" Type="PushButton" X="425" Y="283" Width="79" Height="26" Attributes="3" Text="[ButtonText_OK]" TextStyle="DlgFont10" Order="200" TextLocId="-" MsiKey="OutOfDiskDlg#OK"/>
+    <ROW Dialog_="OutOfDiskDlg" Control="Title" Type="Text" X="71" Y="32" Width="399" Height="30" Attributes="196611" Text="Недостаточно места на диске" TextStyle="LogoTextStyle" Order="400" TextLocId="Control.Text.OutOfDiskDlg#Title" MsiKey="OutOfDiskDlg#Title"/>
+    <ROW Dialog_="OutOfDiskDlg" Control="Text" Type="Text" X="71" Y="80" Width="378" Height="62" Attributes="65539" Text="На диске недостаточно места. Вы можете удалить ненужные файлы с данного диска, либо выбрать для установки другой диск." Order="500" MsiKey="OutOfDiskDlg#Text"/>
+    <ROW Dialog_="OutOfRbDiskDlg" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="100" MsiKey="OutOfRbDiskDlg#Bitmap"/>
+    <ROW Dialog_="OutOfRbDiskDlg" Control="Text2" Type="Text" X="71" Y="109" Width="378" Height="75" Attributes="65539" Text="Кроме того можно отключить откат установки. Откат позволяет вернуть исходное состояние настроек компьютера в случае, если установка прервана. Для отключения отката нажмите &quot;Да&quot;." Order="400" MsiKey="OutOfRbDiskDlg#Text2"/>
+    <ROW Dialog_="OutOfRbDiskDlg" Control="Text" Type="Text" X="71" Y="48" Width="378" Height="61" Attributes="65539" Text="На указанном диске недостаточно места. Вы можете удалить ненужные файлы или выбрать для установки другой диск." Order="500" MsiKey="OutOfRbDiskDlg#Text"/>
+    <ROW Dialog_="OutOfRbDiskDlg" Control="VolumeList" Type="VolumeCostList" X="71" Y="189" Width="378" Height="84" Attributes="4587527" Text="{120}{70}{70}{70}{70}" TextStyle="DlgFont10" Order="600" TextLocId="Control.Text.OutOfRbDiskDlg#VolumeList" MsiKey="OutOfRbDiskDlg#VolumeList"/>
+    <ROW Dialog_="OutOfRbDiskDlg" Control="Title" Type="Text" X="58" Y="13" Width="396" Height="30" Attributes="196611" Text="Недостаточно места на диске" TextStyle="LogoTextStyle" Order="700" TextLocId="Control.Text.OutOfRbDiskDlg#Title" MsiKey="OutOfRbDiskDlg#Title"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="200" MsiKey="PatchWelcomeDlg#Bitmap"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control="Next" Type="PushButton" X="392" Y="283" Width="112" Height="26" Attributes="3" Text="[ButtonText_Next]" Order="300" TextLocId="-" MsiKey="PatchWelcomeDlg#Next" Options="1"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control="Back" Type="PushButton" X="15" Y="283" Width="80" Height="26" Attributes="1" Text="[ButtonText_Back]" Order="400" TextLocId="-" MsiKey="PatchWelcomeDlg#Back" Options="1"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control="ProductNameTitle" Type="Text" X="101" Y="41" Width="312" Height="94" Attributes="196611" Text="[ProductName]" TextStyle="HugeLogoTextStyle" Order="500" TextLocId="-" MsiKey="PatchWelcomeDlg#ProductNameTitle"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control="CompanyText" Type="Text" X="101" Y="14" Width="312" Height="27" Attributes="196611" Text="[Manufacturer]" TextStyle="LogoTextStyle" Order="600" TextLocId="-" MsiKey="PatchWelcomeDlg#CompanyText"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control="ProductLogo" Type="Bitmap" X="23" Y="15" Width="65" Height="69" Attributes="1" Text="[AppLogo]" Order="700" MsiKey="PatchWelcomeDlg#ProductLogo"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control="Description" Type="Text" X="68" Y="170" Width="378" Height="82" Attributes="196611" Text="Мастер установит исправление &quot;[ProductName]2 на ваш компьютер. Нажмите кнопку &quot;[Text_Next]&quot;, чтобы продолжить или &quot;Отмена&quot;, чтобы выйти из мастера." Order="800" TextLocId="Control.Text.PatchWelcomeDlg#Description" MsiKey="PatchWelcomeDlg#Description"/>
+    <ROW Dialog_="PrepareDlg" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="200" MsiKey="PrepareDlg#Bitmap"/>
+    <ROW Dialog_="PrepareDlg" Control="Next" Type="PushButton" X="392" Y="283" Width="112" Height="26" Attributes="1" Text="[ButtonText_Next]" TextStyle="DfltBlackTextStyle" Order="300" TextLocId="-" MsiKey="PrepareDlg#Next" Options="1"/>
+    <ROW Dialog_="PrepareDlg" Control="Back" Type="PushButton" X="15" Y="283" Width="80" Height="26" Attributes="0" Text="[ButtonText_Back]" TextStyle="DfltBlackTextStyle" Order="400" TextLocId="-" MsiKey="PrepareDlg#Back" Options="1"/>
+    <ROW Dialog_="PrepareDlg" Control="ActionText" Type="Text" X="15" Y="198" Width="488" Height="20" Attributes="196611" Order="500" MsiKey="PrepareDlg#ActionText"/>
+    <ROW Dialog_="PrepareDlg" Control="ActionData" Type="Text" X="15" Y="228" Width="488" Height="48" Attributes="196611" Order="600" MsiKey="PrepareDlg#ActionData"/>
+    <ROW Dialog_="PrepareDlg" Control="ProductNameTitle" Type="Text" X="101" Y="41" Width="312" Height="94" Attributes="196611" Text="[ProductName]" TextStyle="HugeLogoTextStyle" Order="700" TextLocId="-" MsiKey="PrepareDlg#ProductNameTitle"/>
+    <ROW Dialog_="PrepareDlg" Control="CompanyText" Type="Text" X="101" Y="14" Width="312" Height="27" Attributes="196611" Text="[Manufacturer]" TextStyle="LogoTextStyle" Order="800" TextLocId="-" MsiKey="PrepareDlg#CompanyText"/>
+    <ROW Dialog_="PrepareDlg" Control="ProductLogo" Type="Bitmap" X="23" Y="15" Width="65" Height="69" Attributes="1" Text="[AppLogo]" Order="900" MsiKey="PrepareDlg#ProductLogo"/>
+    <ROW Dialog_="ProgressDlg" Control="Next" Type="PushButton" X="392" Y="283" Width="112" Height="26" Attributes="0" Text="[ButtonText_Next]" TextStyle="DlgFont10" Order="300" TextLocId="-" MsiKey="ProgressDlg#Next" Options="1"/>
+    <ROW Dialog_="ProgressDlg" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="400" MsiKey="ProgressDlg#Bitmap"/>
+    <ROW Dialog_="ProgressDlg" Control="ActionText" Type="Text" X="120" Y="237" Width="385" Height="24" Attributes="65539" Order="500" MsiKey="ProgressDlg#ActionText"/>
+    <ROW Dialog_="ProgressDlg" Control="StatusLabel" Type="Text" X="26" Y="237" Width="95" Height="24" Attributes="65539" Text="Состояние:" TextStyle="DfltTextStyle" Order="600" TextLocId="Control.Text.ProgressDlg#StatusLabel" MsiKey="ProgressDlg#StatusLabel"/>
+    <ROW Dialog_="ProgressDlg" Control="ProductNameTitle" Type="Text" X="101" Y="41" Width="312" Height="94" Attributes="196611" Text="[ProductName]" TextStyle="HugeLogoTextStyle" Order="800" TextLocId="-" MsiKey="ProgressDlg#ProductNameTitle"/>
+    <ROW Dialog_="ProgressDlg" Control="CompanyText" Type="Text" X="101" Y="14" Width="312" Height="27" Attributes="196611" Text="[Manufacturer]" TextStyle="LogoTextStyle" Order="900" TextLocId="-" MsiKey="ProgressDlg#CompanyText"/>
+    <ROW Dialog_="ProgressDlg" Control="ProductLogo" Type="Bitmap" X="23" Y="15" Width="65" Height="69" Attributes="1" Text="[AppLogo]" Order="1000" MsiKey="ProgressDlg#ProductLogo"/>
+    <ROW Dialog_="ResumeDlg" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="100" MsiKey="ResumeDlg#Bitmap"/>
+    <ROW Dialog_="ResumeDlg" Control="Cancel" Type="PushButton" X="290" Y="283" Width="87" Height="26" Attributes="3" Text="[ButtonText_Cancel]" Order="200" TextLocId="-" MsiKey="ResumeDlg#Cancel" Options="1"/>
+    <ROW Dialog_="ResumeDlg" Control="Install" Type="PushButton" X="391" Y="283" Width="113" Height="26" Attributes="3" Text="[ButtonText_Install]" Order="300" TextLocId="-" MsiKey="ResumeDlg#Install" Options="1"/>
+    <ROW Dialog_="ResumeDlg" Control="Back" Type="PushButton" X="15" Y="283" Width="80" Height="26" Attributes="1" Text="[ButtonText_Back]" Order="400" TextLocId="-" MsiKey="ResumeDlg#Back" Options="1"/>
+    <ROW Dialog_="ResumeDlg" Control="ProductNameTitle" Type="Text" X="101" Y="41" Width="312" Height="94" Attributes="196611" Text="[ProductName]" TextStyle="HugeLogoTextStyle" Order="500" TextLocId="-" MsiKey="ResumeDlg#ProductNameTitle"/>
+    <ROW Dialog_="ResumeDlg" Control="CompanyText" Type="Text" X="101" Y="14" Width="312" Height="27" Attributes="196611" Text="[Manufacturer]" TextStyle="LogoTextStyle" Order="600" TextLocId="-" MsiKey="ResumeDlg#CompanyText"/>
+    <ROW Dialog_="ResumeDlg" Control="ProductLogo" Type="Bitmap" X="23" Y="15" Width="65" Height="69" Attributes="1" Text="[AppLogo]" Order="700" MsiKey="ResumeDlg#ProductLogo"/>
+    <ROW Dialog_="ResumeDlg" Control="Description" Type="Text" X="71" Y="185" Width="378" Height="80" Attributes="196611" Text="Мастер завершит установку [ProductName] на вашем компьютере. Нажмите кнопку &quot;Установить&quot; для продолжения или &quot;Отмена&quot; для завершения работы мастера." Order="800" TextLocId="Control.Text.ResumeDlg#Description" MsiKey="ResumeDlg#Description"/>
+    <ROW Dialog_="UserExit" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="200" MsiKey="UserExit#Bitmap"/>
+    <ROW Dialog_="UserExit" Control="Finish" Type="PushButton" X="413" Y="284" Width="92" Height="26" Attributes="3" Text="[ButtonText_Finish]" Order="400" TextLocId="-" MsiKey="UserExit#Finish" Options="1"/>
+    <ROW Dialog_="UserExit" Control="ProductNameTitle" Type="Text" X="101" Y="41" Width="312" Height="94" Attributes="196611" Text="[ProductName]" TextStyle="HugeLogoTextStyle" Order="500" TextLocId="-" MsiKey="UserExit#ProductNameTitle"/>
+    <ROW Dialog_="UserExit" Control="CompanyText" Type="Text" X="101" Y="14" Width="312" Height="27" Attributes="196611" Text="[Manufacturer]" TextStyle="LogoTextStyle" Order="600" TextLocId="-" MsiKey="UserExit#CompanyText"/>
+    <ROW Dialog_="UserExit" Control="ProductLogo" Type="Bitmap" X="23" Y="15" Width="65" Height="69" Attributes="1" Text="[AppLogo]" Order="700" MsiKey="UserExit#ProductLogo"/>
+    <ROW Dialog_="UserExit" Control="Description1" Type="Text" X="71" Y="182" Width="378" Height="77" Attributes="196611" Text="Установка [ProductName] была прервана. Ваша система не была изменена. Чтобы установить эту программу, запустите установку снова." Order="800" MsiKey="UserExit#Description1"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="100" MsiKey="VerifyReadyDlg#Bitmap"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Install" Type="PushButton" X="398" Y="283" Width="107" Height="26" Attributes="3" Text="[ButtonText_Install]" TextStyle="DfltBlackTextStyle" Order="200" TextLocId="-" MsiKey="VerifyReadyDlg#Install" Options="1"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Back" Type="PushButton" X="15" Y="283" Width="80" Height="26" Attributes="3" Text="[ButtonText_Back]" TextStyle="DfltBlackTextStyle" Order="400" TextLocId="-" MsiKey="VerifyReadyDlg#Back" Options="1"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Text" Type="Text" X="67" Y="163" Width="378" Height="95" Attributes="196611" Text="Нажмите кнопку &quot;Установить&quot;, чтобы начать установку. Если вы хотите просмотреть или изменить какие-либо параметры установки, нажмите кнопку &quot;Назад&quot;, чтобы завершить работу мастера нажмите кнопку &quot;Отмена&quot;." Order="500" TextLocId="Control.Text.VerifyReadyDlg#Text" MsiKey="VerifyReadyDlg#Text"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="ProductNameTitle" Type="Text" X="101" Y="41" Width="312" Height="94" Attributes="196611" Text="[ProductName]" TextStyle="HugeLogoTextStyle" Order="600" TextLocId="-" MsiKey="VerifyReadyDlg#ProductNameTitle"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="CompanyText" Type="Text" X="101" Y="14" Width="312" Height="27" Attributes="196611" Text="[Manufacturer]" TextStyle="LogoTextStyle" Order="700" TextLocId="-" MsiKey="VerifyReadyDlg#CompanyText"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="ProductLogo" Type="Bitmap" X="23" Y="15" Width="65" Height="69" Attributes="1" Text="[AppLogo]" Order="800" MsiKey="VerifyReadyDlg#ProductLogo"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="100" MsiKey="VerifyRemoveDlg#Bitmap"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control="Back" Type="PushButton" X="15" Y="283" Width="80" Height="26" Attributes="3" Text="[ButtonText_Back]" TextStyle="DfltBlackTextStyle" Order="200" TextLocId="-" MsiKey="VerifyRemoveDlg#Back" Options="1"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control="Remove" Type="PushButton" X="412" Y="283" Width="92" Height="26" Attributes="3" Text="[ButtonText_Remove]" TextStyle="DfltBlackTextStyle" Order="300" TextLocId="-" MsiKey="VerifyRemoveDlg#Remove" Options="1"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control="Cancel" Type="PushButton" X="290" Y="283" Width="87" Height="26" Attributes="3" Text="[ButtonText_Cancel]" Order="400" TextLocId="-" MsiKey="VerifyRemoveDlg#Cancel" Options="1"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control="Title" Type="Text" X="71" Y="88" Width="320" Height="30" Attributes="196611" Text="Удалить [ProductName]" TextStyle="LogoTextStyle" Order="500" TextLocId="Control.Text.VerifyRemoveDlg#Title" MsiKey="VerifyRemoveDlg#Title"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control="Text" Type="Text" X="71" Y="155" Width="413" Height="101" Attributes="65539" Text="Нажмите кнопку &quot;Удалить&quot;, чтобы удалить [ProductName] с вашего компьютера.  Если вы хотите просмотреть или изменить параметры установки, нажмите кнопку &quot;Назад&quot;. Нажмите кнопку &quot;Отмена&quot; для выхода из мастера." Order="600" TextLocId="Control.Text.VerifyRemoveDlg#Text" MsiKey="VerifyRemoveDlg#Text"/>
+    <ROW Dialog_="VerifyRepairDlg" Control="Bitmap" Type="Bitmap" X="1" Y="1" Width="520" Height="320" Attributes="1" Text="[BannerBitmap]" Order="100" MsiKey="VerifyRepairDlg#Bitmap"/>
+    <ROW Dialog_="VerifyRepairDlg" Control="Repair" Type="PushButton" X="401" Y="283" Width="104" Height="26" Attributes="3" Text="[ButtonText_Repair]" TextStyle="DfltBlackTextStyle" Order="200" TextLocId="-" MsiKey="VerifyRepairDlg#Repair" Options="1"/>
+    <ROW Dialog_="VerifyRepairDlg" Control="Cancel" Type="PushButton" X="290" Y="283" Width="87" Height="26" Attributes="3" Text="[ButtonText_Cancel]" Order="300" TextLocId="-" MsiKey="VerifyRepairDlg#Cancel" Options="1"/>
+    <ROW Dialog_="VerifyRepairDlg" Control="Back" Type="PushButton" X="15" Y="283" Width="80" Height="26" Attributes="3" Text="[ButtonText_Back]" TextStyle="DlgFont10" Order="400" TextLocId="-" MsiKey="VerifyRepairDlg#Back" Options="1"/>
+    <ROW Dialog_="VerifyRepairDlg" Control="Title" Type="Text" X="71" Y="88" Width="320" Height="30" Attributes="196611" Text="Исправление [ProductName]" TextStyle="LogoTextStyle" Order="500" TextLocId="Control.Text.VerifyRepairDlg#Title" MsiKey="VerifyRepairDlg#Title"/>
+    <ROW Dialog_="VerifyRepairDlg" Control="Text" Type="Text" X="71" Y="155" Width="413" Height="101" Attributes="65539" Text="Нажмите кнопку &quot;Восстановить&quot; для восстановления установки [ProductName].  Если вы хотите просмотреть или изменить параметры установки, нажмите кнопку &quot;Назад&quot;. Нажмите кнопку &quot;Отмена&quot; для выхода из мастера." Order="600" TextLocId="Control.Text.VerifyRepairDlg#Text" MsiKey="VerifyRepairDlg#Text"/>
+    <ROW Dialog_="WaitForCostingDlg" Control="Return" Type="PushButton" X="113" Y="88" Width="113" Height="26" Attributes="3" Text="Вернуться" Order="100" MsiKey="WaitForCostingDlg#Return"/>
+    <ROW Dialog_="WaitForCostingDlg" Control="Text" Type="Text" X="48" Y="15" Width="279" Height="64" Attributes="3" Text="Подождите, пока программа установки определит требования к дисковому пространству." TextStyle="DfltBlackTextStyle" Order="200" TextLocId="Control.Text.WaitForCostingDlg#Text" MsiKey="WaitForCostingDlg#Text"/>
+    <ROW Dialog_="WaitForCostingDlg" Control="Icon" Type="Icon" X="16" Y="28" Width="24" Height="24" Attributes="5242881" Text="[ExclamationIcon]" Help="Значок с восклицательным знаком|" Order="300" HelpLocId="Control.Help.WaitForCostingDlg#Icon" MsiKey="WaitForCostingDlg#Icon"/>
+    <ATTRIBUTE name="DeletedRows" value="ExitDialog#ViewReadmeText@MaintenanceTypeDlg#ChangeLabel@MaintenanceTypeDlg#ChangeText@MaintenanceTypeDlg.aip@UI.aip"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlConditionComponent">
+    <ATTRIBUTE name="DeletedRows" value="ExitDialog#Hyperlink#Hide#((NOT AI_INSTALL) AND (NOT AI_PATCH)) OR NOT AiReadmeLink@ExitDialog#ViewReadmeText#Hide#(((NOT AI_INSTALL) AND (NOT AI_PATCH)) OR ((CTRLS &lt;&gt; 1) AND (CTRLS &lt;&gt; 3))) OR AiReadmeLink"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
+    <ROW Dialog_="MaintenanceWelcomeDlg" Control_="Next" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="99"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_MAINT" Ordering="198"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="201"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="ChangeButton" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_MAINT" Ordering="501"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceWelcomeDlg" Condition="AI_MAINT" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RemoveButton" Event="NewDialog" Argument="VerifyRemoveDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="601"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RepairButton" Event="NewDialog" Argument="VerifyRepairDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="601"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="1"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Repair" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="399" Options="1"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Remove" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="299" Options="1"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_PATCH" Ordering="201"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="202"/>
+    <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
+    <ROW Dialog_="CancelDlg" Control_="Yes" Event="DoAction" Argument="AI_IaLogPkgExitUserAbort" Condition="VersionMsi &lt; &quot;4.05&quot; OR UILevel = 2 OR LIMITUI = 1 OR UPGRADINGPRODUCTCODE" Ordering="101"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="EndDialog" Argument="Return" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="SpawnDialog" Argument="OutOfRbDiskDlg" Condition="AI_INSTALL AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST=&quot;P&quot; OR NOT PROMPTROLLBACKCOST)" Ordering="2" Options="2"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="EnableRollback" Argument="False" Condition="AI_INSTALL AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST=&quot;D&quot;" Ordering="3" Options="2"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="SpawnDialog" Argument="OutOfDiskDlg" Condition="AI_INSTALL AND ( (OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST=&quot;F&quot;) )" Ordering="4" Options="2"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="LicenseAgreementDlgDialogInitializer" Event="[AI_ButtonText_Next_Orig]" Argument="[ButtonText_Next]" Condition="AI_INSTALL" Ordering="0" Options="2"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="LicenseAgreementDlgDialogInitializer" Event="[ButtonText_Next]" Argument="[[AI_CommitButton]]" Condition="AI_INSTALL" Ordering="1" Options="2"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="LicenseAgreementDlgDialogInitializer" Event="[AI_Text_Next_Orig]" Argument="[Text_Next]" Condition="AI_INSTALL" Ordering="2" Options="2"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="LicenseAgreementDlgDialogInitializer" Event="[Text_Next]" Argument="[Text_Install]" Condition="AI_INSTALL" Ordering="3" Options="2"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Back" Event="[ButtonText_Next]" Argument="[AI_ButtonText_Next_Orig]" Condition="AI_INSTALL" Ordering="2" Options="2"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Back" Event="[Text_Next]" Argument="[AI_Text_Next_Orig]" Condition="AI_INSTALL" Ordering="3" Options="2"/>
+    <ATTRIBUTE name="DeletedRows" value="ExitDialog#ViewReadmeCheckBox#[AiSwitchCtrlsToWinui]#ViewReadmeText#AI_INSTALL"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
+    <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
+    <ROW Directory_="SHORTCUTDIR" Component_="SHORTCUTDIR" ManualDelete="false"/>
+    <ROW Directory_="User_Dir" Component_="User" ManualDelete="false"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
+    <ROW Action="AI_ApplyShortcutFlags" Type="3073" Source="ShortcutFlags.dll" Target="UpdateShortcutFlags" WithoutSeq="true"/>
+    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH_ORIGINAL" Target="[AI_SETUPEXEPATH]"/>
+    <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
+    <ROW Action="AI_DetectSoftware" Type="257" Source="SoftwareDetector.dll" Target="OnDetectSoftware"/>
+    <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
+    <ROW Action="AI_EnableDebugLog" Type="321" Source="aicustact.dll" Target="EnableDebugLog"/>
+    <ROW Action="AI_IaLogCustomInfo" Type="65" Source="InstallerAnalytics.dll" Target="OnAnalyticsLogCustomInfo"/>
+    <ROW Action="AI_IaLogInstallData" Type="65" Source="InstallerAnalytics.dll" Target="OnAnalyticsLogInstallData"/>
+    <ROW Action="AI_IaLogMachineInfo" Type="321" Source="InstallerAnalytics.dll" Target="OnAnalyticsLogMachineInfo"/>
+    <ROW Action="AI_IaLogPkgExitFatalError" Type="65" Source="InstallerAnalytics.dll" Target="OnAnalyticsLogFatalError"/>
+    <ROW Action="AI_IaLogPkgExitFinish" Type="65" Source="InstallerAnalytics.dll" Target="OnAnalyticsLogFinish"/>
+    <ROW Action="AI_IaLogPkgExitUserAbort" Type="65" Source="InstallerAnalytics.dll" Target="OnAnalyticsLogUserAbort" WithoutSeq="true"/>
+    <ROW Action="AI_IaLogPkgStarted" Type="321" Source="InstallerAnalytics.dll" Target="OnAnalyticsLogStart"/>
+    <ROW Action="AI_IaToggle" Type="65" Source="InstallerAnalytics.dll" Target="OnAnalyticsToggle"/>
+    <ROW Action="AI_InstallModeCheck" Type="1" Source="aicustact.dll" Target="UpdateInstallMode" WithoutSeq="true"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
+    <ROW Action="AI_PRESERVE_INSTALL_TYPE" Type="65" Source="aicustact.dll" Target="PreserveInstallType"/>
+    <ROW Action="AI_PinShortcuts" Type="1" Source="ShortcutFlags.dll" Target="PinShortcuts"/>
+    <ROW Action="AI_PinToStartScreen" Type="1025" Source="ShortcutFlags.dll" Target="PinToStartScreen" WithoutSeq="true"/>
+    <ROW Action="AI_PinToTaskbar" Type="1025" Source="ShortcutFlags.dll" Target="PinToTaskbar" WithoutSeq="true"/>
+    <ROW Action="AI_PrepareShortcutFlags" Type="1" Source="ShortcutFlags.dll" Target="PrepareActionData"/>
+    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH" Target="[AI_SETUPEXEPATH_ORIGINAL]"/>
+    <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
+    <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
+    <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
+    <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
+    <ROW Action="AI_UnpinFromStartScreen" Type="1025" Source="ShortcutFlags.dll" Target="UnpinFromStartScreen" WithoutSeq="true"/>
+    <ROW Action="AI_UnpinFromTaskbar" Type="1025" Source="ShortcutFlags.dll" Target="UnpinFromTaskbar" WithoutSeq="true"/>
+    <ROW Action="AI_UnpinShortcuts" Type="1" Source="ShortcutFlags.dll" Target="UnpinShortcuts"/>
+    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]"/>
+    <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
+    <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiDialogComponent">
+    <ROW Dialog="CancelDlg" HCentering="50" VCentering="50" Width="275" Height="102" Attributes="3" Title="Установка [ProductName]" Control_Default="No" Control_Cancel="No" TitleLocId="Dialog.CancelDlg" MsiKey="CancelDlg"/>
+    <ROW Dialog="WaitForCostingDlg" HCentering="50" VCentering="50" Width="339" Height="126" Attributes="3" Title="Установка [ProductName]" Control_Default="Return" Control_Cancel="Return" TitleLocId="Dialog.WaitForCostingDlg" MsiKey="WaitForCostingDlg"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatCompsComponent">
+    <ROW Feature_="MainFeature" Component_="APPDIR"/>
+    <ROW Feature_="MainFeature" Component_="ProductInformation"/>
+    <ROW Feature_="MainFeature" Component_="AI_IA_ENABLE"/>
+    <ROW Feature_="MainFeature" Component_="Azure.Core.dll"/>
+    <ROW Feature_="MainFeature" Component_="Azure.Identity.dll"/>
+    <ROW Feature_="MainFeature" Component_="BCrypt.NetNext.dll"/>
+    <ROW Feature_="MainFeature" Component_="CommunityToolkit.Mvvm.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resources.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resour_1_ces.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="EPPlus.dll"/>
+    <ROW Feature_="MainFeature" Component_="EPPlus.Interfaces.dll"/>
+    <ROW Feature_="MainFeature" Component_="EPPlus.System.Drawing.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resour_2_ces.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_2"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resour_3_ces.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_3"/>
+    <ROW Feature_="MainFeature" Component_="iNKORE.UI.WPF.dll"/>
+    <ROW Feature_="MainFeature" Component_="iNKORE.UI.WPF.Modern.Controls.dll"/>
+    <ROW Feature_="MainFeature" Component_="iNKORE.UI.WPF.Modern.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resour_4_ces.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_4"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resour_5_ces.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_5"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resour_6_ces.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_6"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Bcl.AsyncInterfaces.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Data.SqlClient.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.EntityFrameworkCore.Abstractions.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.EntityFrameworkCore.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.EntityFrameworkCore.Relational.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.EntityFrameworkCore.SqlServer.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Extensions.Caching.Abstractions.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Extensions.Caching.Memory.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Extensions.Configuration.Abstractions.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Extensions.Configuration.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Extensions.Configuration.FileExtensions.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Extensions.Configuration.Json.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Extensions.DependencyInjection.Abstractions.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Extensions.DependencyInjec_1_tion.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Extensions.FileProviders.Abstractions.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Extensions.FileProviders.Physical.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Extensions.FileSystemGlobbing.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Extensions.Logging.Abstractions.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Extensions.Logging.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Extensions.Options.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Extensions.Primitives.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Identity.Client.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Identity.Client.Extensions.Msal.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.IdentityModel.Abstractions.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.IdentityModel.JsonWebTokens.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.IdentityModel.Logging.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.IdentityModel.Protocols.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.IdentityModel.Protocols.OpenIdConnect.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.IdentityModel.Tokens.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.IO.RecyclableMemoryStream.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.SqlServer.Server.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Windows.SDK.NET.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resour_7_ces.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_7"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resour_8_ces.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_8"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resour_9_ces.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_9"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Data.SqlClient.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Data.SqlClient.dll_2"/>
+    <ROW Feature_="MainFeature" Component_="System.Runtime.Caching.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Security.Cryptography.Pkcs.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Data.SqlClient.SNI.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Data.SqlClient.SNI.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Data.SqlClient.SNI.dll_2"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.Data.SqlClient.SNI.dll_3"/>
+    <ROW Feature_="MainFeature" Component_="System.ClientModel.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.IdentityModel.Tokens.Jwt.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Memory.Data.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.Runtime.Caching.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="System.Security.Cryptography.Pkcs.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="_1_2.xls"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resour_10_ces.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_10"/>
+    <ROW Feature_="MainFeature" Component_="TSchedule.deps.json"/>
+    <ROW Feature_="MainFeature" Component_="TSchedule.dll"/>
+    <ROW Feature_="MainFeature" Component_="TSchedule.exe"/>
+    <ROW Feature_="MainFeature" Component_="TSchedule.Persistence.dll"/>
+    <ROW Feature_="MainFeature" Component_="WinRT.Runtime.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resour_11_ces.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_11"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.resour_12_ces.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_12"/>
+    <ROW Feature_="MainFeature" Component_="SHORTCUTDIR"/>
+    <ROW Feature_="TileAssets_DefaultBuild" Component_="TSchedule.VisualElementsManifest.xml"/>
+    <ROW Feature_="MainFeature" Component_="User"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
+    <ROW Name="TSchedule.exe" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0\TSchedule.exe" Index="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
+    <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
+    <ROW Action="AI_DETECT_MODERNWIN" Condition="(VersionNT &gt;= 603)" Sequence="57" MsiKey="AI_DETECT_MODERNWIN"/>
+    <ROW Action="AI_DETECT_WINTHEME" Condition="(VersionNT &gt;= 603)" Sequence="58" MsiKey="AI_DETECT_WINTHEME"/>
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
+    <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1501"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1397"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="56"/>
+    <ROW Action="AI_EnableDebugLog" Sequence="55"/>
+    <ROW Action="AI_IaToggle" Sequence="102"/>
+    <ROW Action="AI_IaLogPkgStarted" Condition="VersionMsi &lt; &quot;4.05&quot; OR UILevel = 2 OR LIMITUI = 1 OR UPGRADINGPRODUCTCODE" Sequence="54"/>
+    <ROW Action="AI_IaLogPkgExitFinish" Condition="VersionMsi &lt; &quot;4.05&quot; OR UILevel = 2 OR LIMITUI = 1 OR UPGRADINGPRODUCTCODE" Sequence="-1"/>
+    <ROW Action="AI_IaLogPkgExitFatalError" Condition="VersionMsi &lt; &quot;4.05&quot; OR UILevel = 2 OR LIMITUI = 1 OR UPGRADINGPRODUCTCODE" Sequence="-3"/>
+    <ROW Action="AI_IaLogPkgExitUserAbort" Condition="VersionMsi &lt; &quot;4.05&quot; OR UILevel = 2 OR LIMITUI = 1 OR UPGRADINGPRODUCTCODE" Sequence="-2"/>
+    <ROW Action="AI_IaLogInstallData" Sequence="1402"/>
+    <ROW Action="AI_IaLogMachineInfo" Sequence="399"/>
+    <ROW Action="AI_IaLogCustomInfo" Sequence="1401"/>
+    <ROW Action="AI_DetectSoftware" Sequence="101"/>
+    <ROW Action="AI_PrepareShortcutFlags" Condition="(VersionNT &gt; 501) AND ((NOT Installed) OR (Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;)))" Sequence="4501"/>
+    <ROW Action="AI_PinShortcuts" Condition="(VersionNT &gt; 600) AND ((NOT Installed) OR (Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;)))" Sequence="6499"/>
+    <ROW Action="AI_UnpinShortcuts" Condition="(VersionNT &gt; 600) AND (REMOVE = &quot;ALL&quot;)" Sequence="3199"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
+    <ROW Action="AI_PRESERVE_INSTALL_TYPE" Sequence="199"/>
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="54"/>
+    <ROW Action="AI_DpiContentScale" Sequence="53"/>
+    <ROW Action="AI_EnableDebugLog" Sequence="52"/>
+    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="98"/>
+    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="102"/>
+    <ROW Action="AI_IaToggle" Sequence="99"/>
+    <ROW Action="AI_IaLogPkgStarted" Condition="VersionMsi &lt; &quot;4.05&quot; OR UILevel = 2 OR LIMITUI = 1 OR UPGRADINGPRODUCTCODE" Sequence="51"/>
+    <ROW Action="AI_IaLogMachineInfo" Sequence="399"/>
+    <ROW Action="AI_DetectSoftware" Sequence="101"/>
+    <ROW Action="LicenseAgreementDlg" Condition="AI_INSTALL" Sequence="1230" SeqType="3" MsiKey="WelcomeDlg"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
+    <ROW Condition="((VersionNT &lt;&gt; 501) AND (VersionNT &lt;&gt; 502))" Description="Нельзя установить [ProductName] на [WindowsTypeNT5XDisplay]." DescriptionLocId="AI.LaunchCondition.NoNT5X" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="(VersionNT &lt;&gt; 400)" Description="Нельзя установить [ProductName] на [WindowsTypeNT40Display]." DescriptionLocId="AI.LaunchCondition.NoNT40" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="(VersionNT &lt;&gt; 500)" Description="Нельзя установить [ProductName] на [WindowsTypeNT50Display]." DescriptionLocId="AI.LaunchCondition.NoNT50" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="(VersionNT &lt;&gt; 600)" Description="Нельзя установить [ProductName] на [WindowsTypeNT60Display]." DescriptionLocId="AI.LaunchCondition.NoNT60" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="AI_DETECTED_INTERNET_CONNECTION" Description="Для установки [ProductName] требуется активное подключение к Интернету. Пожалуйста, проверьте настройки прокси-сервера и конфигурации сети." DescriptionLocId="AI.LaunchCondition.Internet" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="VersionNT" Description="[ProductName] не может быть установлен на [WindowsType9XDisplay]." DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRadioButtonComponent">
+    <ROW Property="AppsShutdownOption" Order="1" Value="All" X="10" Y="1" Width="360" Height="26" Text="&amp;Закрыть приложения." MsiKey="AppsShutdownOption#1"/>
+    <ROW Property="AppsShutdownOption" Order="2" Value="None" X="10" Y="27" Width="360" Height="21" Text="&amp;Не закрывать. (Потребуется перезагрузка)." MsiKey="AppsShutdownOption#2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRegLocatorComponent">
+    <ROW Signature_="AI_IA_ENABLE" Root="2" Key="Software\[Manufacturer]\[ProductCode]" Name="AI_IA_ENABLE" Type="2"/>
+    <ROW Signature_="AI_IA_ENABLE_1" Root="1" Key="Software\[Manufacturer]\[ProductCode]" Name="AI_IA_ENABLE" Type="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
+    <ROW Registry="AI_IA_ENABLE" Root="-1" Key="Software\[Manufacturer]\[ProductCode]" Name="AI_IA_ENABLE" Value="[AI_IA_ENABLE]" Component_="AI_IA_ENABLE"/>
+    <ROW Registry="Manufacturer" Root="-1" Key="Software\[Manufacturer]" Name="\"/>
+    <ROW Registry="Path" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Path" Value="[APPDIR]" Component_="ProductInformation"/>
+    <ROW Registry="ProductCode_1" Root="-1" Key="Software\[Manufacturer]\[ProductCode]" Name="\"/>
+    <ROW Registry="ProductName" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="\"/>
+    <ROW Registry="Software" Root="-1" Key="Software" Name="\"/>
+    <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
+    <ROW Shortcut="TSchedule" Directory_="SHORTCUTDIR" Name="TSCHED~1|TSchedule" Component_="TSchedule.exe" Target="[#TSchedule.exe]" Description="TSchedule" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR" CustomFlags="4"/>
+    <ROW Shortcut="TSchedule_1" Directory_="DesktopFolder" Name="TSCHED~1|TSchedule" Component_="TSchedule.exe" Target="[#TSchedule.exe]" Description="TSchedule" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiTextStyleComponent">
+    <ROW TextStyle="DfltBlackTextStyle" FaceName="Montserrat" Size="14" Color="0" StyleBits="0"/>
+    <ROW TextStyle="DfltTextStyle" FaceName="Montserrat" Size="14" Color="0" StyleBits="0"/>
+    <ROW TextStyle="HugeLogoTextStyle" FaceName="Montserrat SemiBold" Size="32" Color="0" StyleBits="0"/>
+    <ROW TextStyle="LogoTextStyle" FaceName="Montserrat SemiBold" Size="24" Color="0" StyleBits="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
+    <ATTRIBUTE name="UsedTheme" value="serene"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="0.0.1" VersionMax="[|ProductVersion]" Attributes="257" ActionProperty="OLDPRODUCTS"/>
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.NotesComponent">
+    <ROW Type="2" DisplayString="Builds" Note="{\rtf1\ansi\ansicpg1251\deff0\deflang1049{\fonttbl{\f0\fnil\fcharset204 MS Shell Dlg 2;}}&#13;&#10;\viewkind4\uc1\pard\f0\fs17\par&#13;&#10;}&#13;&#10;" ViewId="Builds"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.SynchronizedFolderComponent">
+    <ROW Directory_="APPDIR" SourcePath="..\TSchedule\bin\Release\net8.0-windows10.0.18362.0" Feature="MainFeature" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6"/>
+  </COMPONENT>
+</DOCUMENT>

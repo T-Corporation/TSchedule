@@ -20,7 +20,7 @@
     </ui:Page.Resources>
 
     <Grid>
-        <StackPanel Margin="6"
+        <StackPanel Margin="4"
                     Panel.ZIndex="1"
                     VerticalAlignment="Top"
                     Orientation="Horizontal"
@@ -29,8 +29,7 @@
             <Button Cursor="Hand"
                     CommandParameter="Import"
                     Command="{Binding OpenWizardCommand}">
-                <ui:IconAndText FontSize="11"
-                                IconSize="11"
+                <ui:IconAndText Cursor="Hand"
                                 Content="Импорт"
                                 Icon="{x:Static ui:SegoeFluentIcons.Import}"
                                 ToolTipService.ToolTip="Импортировать расписание из Excel
@@ -39,8 +38,7 @@
             <Button Cursor="Hand"
                     CommandParameter="Export"
                     Command="{Binding OpenWizardCommand}">
-                <ui:IconAndText FontSize="11"
-                                IconSize="11"
+                <ui:IconAndText Cursor="Hand"
                                 Content="Экспорт"
                                 Icon="{x:Static ui:SegoeFluentIcons.Export}"
                                 ToolTipService.ToolTip="Экспортировать расписание в Excel
@@ -76,7 +74,8 @@
                         
                         <DataGrid.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Click="CopyMenuItem_Click"
+                                <MenuItem Cursor="Hand"
+                                          Click="CopyMenuItem_Click"
                                           InputGestureText="Ctrl + C">
                                     <MenuItem.Header>
                                         <ui:IconAndText Content="Скопировать"
@@ -84,7 +83,8 @@
                                                         Icon="{x:Static ui:SegoeFluentIcons.Copy}"/>
                                     </MenuItem.Header>
                                 </MenuItem>
-                                <MenuItem Click="PasteMenuItem_Click"
+                                <MenuItem Cursor="Hand"
+                                          Click="PasteMenuItem_Click"
                                           InputGestureText="Ctrl + V">
                                     <MenuItem.Header>
                                         <ui:IconAndText Content="Вставить"
@@ -92,7 +92,8 @@
                                                         Icon="{x:Static ui:SegoeFluentIcons.Paste}"/>
                                     </MenuItem.Header>
                                 </MenuItem>
-                                <MenuItem InputGestureText="Insert"
+                                <MenuItem Cursor="Hand"
+                                          InputGestureText="Insert"
                                           Click="EditMenuItem_Click">
                                     <MenuItem.Header>
                                         <ui:IconAndText Content="Изменить"
@@ -100,7 +101,8 @@
                                                         Icon="{x:Static ui:SegoeFluentIcons.Edit}"/>
                                     </MenuItem.Header>
                                 </MenuItem>
-                                <MenuItem InputGestureText="Delete"
+                                <MenuItem Cursor="Hand"
+                                          InputGestureText="Delete"
                                           Click="DeleteMenuItem_Click">
                                     <MenuItem.Header>
                                         <ui:IconAndText Content="Удалить"
@@ -212,7 +214,8 @@
                         
                         <DataGrid.ContextMenu>
                             <ContextMenu>
-                                <MenuItem InputGestureText="Ctrl + C"
+                                <MenuItem Cursor="Hand"
+                                          InputGestureText="Ctrl + C"
                                           Click="CopyMenuItem_Click">
                                     <MenuItem.Header>
                                         <ui:IconAndText Content="Скопировать"
@@ -220,7 +223,8 @@
                                                         Icon="{x:Static ui:SegoeFluentIcons.Copy}"/>
                                     </MenuItem.Header>
                                 </MenuItem>
-                                <MenuItem InputGestureText="Ctrl + V"
+                                <MenuItem Cursor="Hand"
+                                          InputGestureText="Ctrl + V"
                                           Click="PasteMenuItem_Click">
                                     <MenuItem.Header>
                                         <ui:IconAndText Content="Вставить"
@@ -228,7 +232,8 @@
                                                         Icon="{x:Static ui:SegoeFluentIcons.Paste}"/>
                                     </MenuItem.Header>
                                 </MenuItem>
-                                <MenuItem InputGestureText="Insert"
+                                <MenuItem Cursor="Hand"
+                                          InputGestureText="Insert"
                                           Click="EditMenuItem_Click">
                                     <MenuItem.Header>
                                         <ui:IconAndText Content="Изменить"
@@ -236,7 +241,8 @@
                                                         Icon="{x:Static ui:SegoeFluentIcons.Edit}"/>
                                     </MenuItem.Header>
                                 </MenuItem>
-                                <MenuItem InputGestureText="Delete"
+                                <MenuItem Cursor="Hand"
+                                          InputGestureText="Delete"
                                           Click="DeleteMenuItem_Click">
                                     <MenuItem.Header>
                                         <ui:IconAndText Content="Удалить"

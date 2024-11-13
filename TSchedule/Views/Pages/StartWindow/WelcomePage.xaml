@@ -39,8 +39,7 @@
                 HorizontalAlignment="Stretch"
                 Content="Продолжить без авторизации"
                 Command="{Binding ContinueWithoutAuthenticationCommand}"
-                ToolTipService.ToolTip="Нажмите, чтобы войти в систему
-                в качестве гостя."/>
+                ToolTipService.ToolTip="Нажмите, чтобы войти в систему&#x0a;в качестве гостя."/>
     </StackPanel>
     
 </ui:Page>
