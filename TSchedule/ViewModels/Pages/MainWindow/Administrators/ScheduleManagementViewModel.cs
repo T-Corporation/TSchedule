@@ -185,7 +185,7 @@ public partial class ScheduleManagementViewModel : ObservableObject
             .GroupBy(s => s.LessonId)
             .ToDictionary(g => g.Key, g => g.ToList());
 
-        for (int lessonNumber = 1; lessonNumber <= TotalLessonsCount; lessonNumber++)
+        for (var lessonNumber = 1; lessonNumber <= TotalLessonsCount; lessonNumber++)
         {
             var lessonSchedule = new LessonScheduleModel
             {
@@ -285,17 +285,18 @@ public partial class ScheduleManagementViewModel : ObservableObject
         var lessonSchedule = scheduleCollection.FirstOrDefault(
             ls => ls.Lesson.Id == schedule.Lesson?.Id);
 
-        if (lessonSchedule is not null)
-            switch (schedule.WeekDay?.Id)
-            {
-                case 1: lessonSchedule.Monday = schedule; break;
-                case 2: lessonSchedule.Tuesday = schedule; break;
-                case 3: lessonSchedule.Wednesday = schedule; break;
-                case 4: lessonSchedule.Thursday = schedule; break;
-                case 5: lessonSchedule.Friday = schedule; break;
-                case 6: lessonSchedule.Saturday = schedule; break;
-                case 7: lessonSchedule.Sunday = schedule; break;
-            }
+        if (lessonSchedule is null) return;
+        
+        switch (schedule.WeekDay?.Id)
+        {
+            case 1: lessonSchedule.Monday = schedule; break;
+            case 2: lessonSchedule.Tuesday = schedule; break;
+            case 3: lessonSchedule.Wednesday = schedule; break;
+            case 4: lessonSchedule.Thursday = schedule; break;
+            case 5: lessonSchedule.Friday = schedule; break;
+            case 6: lessonSchedule.Saturday = schedule; break;
+            case 7: lessonSchedule.Sunday = schedule; break;
+        }
     }
 
     /// <summary>
@@ -335,14 +336,11 @@ public partial class ScheduleManagementViewModel : ObservableObject
     /// <returns>Истина, если нагрузка не превышена, иначе ложь.</returns>
     private bool MeetsScheduleRequirements(SubjectModel subject)
     {
-        int weeklyHours = subject.WeeklyHours;
-        int currentHours = CalculateCurrentWeeklyHours(subject.Id);
+        var weeklyHours = subject.WeeklyHours;
+        var currentHours = CalculateCurrentWeeklyHours(subject.Id);
 
         // Проверка, что добавление занятия не превысит допустимое количество часов
-        if (++currentHours > weeklyHours)
-            return false;
-
-        return true;
+        return ++currentHours <= weeklyHours;
     }
 
     /// <summary>
@@ -367,10 +365,10 @@ public partial class ScheduleManagementViewModel : ObservableObject
     /// <returns>Общее количество часов для указанного предмета.</returns>
     private static int CalculateHoursForSchedule(ObservableCollection<LessonScheduleModel> schedule, int subjectId)
     {
-        int totalHours = 0;
+        var totalHours = 0;
 
         foreach (var daySchedule in schedule)
-            foreach (var lesson in daySchedule.GetLessons()) // Предполагается метод GetLessons(), возвращающий расписания по всем дням недели
+            foreach (var lesson in daySchedule.GetLessons())
                 if (lesson is not null && lesson.Teacher?.Subject?.Id == subjectId)
                     totalHours += 2;
 
@@ -390,7 +388,7 @@ public partial class ScheduleManagementViewModel : ObservableObject
         var schedules = isDenominator ? DenominatorDailySchedule : NumeratorDailySchedule;
         foreach (var daySchedule in schedules)
         {
-            if (daySchedule.Lesson is null || daySchedule.Lesson.Id != lesson.Id)
+            if (daySchedule.Lesson.Id != lesson.Id)
                 continue;
 
             var lessonSchedule = GetLessonScheduleByDayOfWeek(daySchedule, dayOfWeek);
@@ -433,7 +431,7 @@ public partial class ScheduleManagementViewModel : ObservableObject
         var schedules = isDenominator ? DenominatorDailySchedule : NumeratorDailySchedule;
         foreach (var daySchedule in schedules)
         {
-            if (daySchedule.Lesson is null || daySchedule.Lesson.Id != lesson.Id)
+            if (daySchedule.Lesson.Id != lesson.Id)
                 continue;
 
             var lessonSchedule = GetLessonScheduleByDayOfWeek(daySchedule, dayOfWeek);

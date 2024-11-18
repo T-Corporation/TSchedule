@@ -13,7 +13,8 @@ public partial class SettingsPage
 
     private void ListView_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
     {
-        ScrollViewer.ScrollToVerticalOffset(ScrollViewer.VerticalOffset - (e.Delta / 2));
+        // ReSharper disable once PossibleLossOfFraction
+        ScrollViewer.ScrollToVerticalOffset(ScrollViewer.VerticalOffset - e.Delta / 2);
         e.Handled = true;
     }
 }

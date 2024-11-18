@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0-windows10.0.18362.0</TargetFramework>
 		<TargetOSVersion>10.0.18362.38</TargetOSVersion>
 		<SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+		<TargetFramework>net8.0-windows10.0.18362.0</TargetFramework>
 		
 		<Optimize>true</Optimize>
 		<DebugType>pdbonly</DebugType>
@@ -13,32 +13,32 @@
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		
 		<Version>1.1.0.0</Version>
-		<Authors>RomanStalinist, MarkRockord, Lexa256</Authors>
-		<Company>T-Corporation</Company>
 		<Product>TSchedule</Product>
-		<PackageId>com.romanjava.TSchedule</PackageId>
-		<AssemblyVersion>1.1.0.0</AssemblyVersion>
+		<Authors>RomanJava</Authors>
+		<Company>T-Corporation</Company>
 		<FileVersion>1.1.0.0</FileVersion>
-		<NeutralLanguage>ru</NeutralLanguage>
-		<Description>Программа для ведения расписания в образовательных учреждениях среднего и высшего образований</Description>
-		<Copyright>© TCorporation (RomanJava)</Copyright>
-		<RepositoryUrl>https://github.com/T-Corporation/TSchedule</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<PackageTags>Scheduling, Education, Timetable, WPF, .NET</PackageTags>
-		<PackageIconUrl>Images/favicon.ico</PackageIconUrl>
+		<NeutralLanguage>ru</NeutralLanguage>
 		<AssemblyName>TSchedule</AssemblyName>
+		<AssemblyVersion>1.1.0.0</AssemblyVersion>
+		<ApplicationName>TSchedule</ApplicationName>
+		<PackageId>com.romanjava.TSchedule</PackageId>
+		<Copyright>© TCorporation (RomanJava)</Copyright>
+		<PackageIconUrl>Images/favicon.ico</PackageIconUrl>
 		<ApplicationIcon>Images/favicon.ico</ApplicationIcon>
+		<PackageIcon>Images/favicon_square.png</PackageIcon>
+		<PackageTags>Scheduling, Education, Timetable, WPF, .NET</PackageTags>
+		<RepositoryUrl>https://github.com/T-Corporation/TSchedule</RepositoryUrl>
+		<Description>Программа для ведения расписания в образовательных учреждениях среднего и высшего образований</Description>
 		
 		<UseWPF>true</UseWPF>
 		<Nullable>enable</Nullable>
 		<OutputType>WinExe</OutputType>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<ApplicationName>TSchedule</ApplicationName>
 		<SignAssembly>False</SignAssembly>
-		<PackageIcon>favicon_square.png</PackageIcon>
-		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-		<AnalysisLevel>latest-recommended</AnalysisLevel>
+		<ImplicitUsings>enable</ImplicitUsings>
 		<StartupObject>TSchedule.App</StartupObject>
+		<AnalysisLevel>latest-recommended</AnalysisLevel>
+		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 		<RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
 		<RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
 	</PropertyGroup>
@@ -56,49 +56,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="Images\admin_375.png" />
-	  <None Remove="Images\bell_375.png" />
-	  <None Remove="Images\calendar_375.png" />
-	  <None Remove="Images\classroom_375.png" />
-	  <None Remove="Images\clock_375.png" />
-	  <None Remove="Images\conflict_375.png" />
-	  <None Remove="Images\edit_property_375.png" />
-	  <None Remove="Images\excel_48.png" />
-	  <None Remove="Images\faq_375.png" />
-	  <None Remove="Images\favicon.ico" />
-	  <None Remove="Images\group_375.png" />
-	  <None Remove="Images\settings_375.png" />
-	  <None Remove="Images\verified_375.png" />
-	  <None Remove="Music\Core\Akiko Toyama Trio – From The Beginning.wav" />
-	  <None Remove="Music\Core\Deep Purple – Smoke on the Water.wav" />
-	  <None Remove="Music\Core\DK – ГНОЙНЫЙ DISS CHALLANGE.wav" />
-	  <None Remove="Music\Core\DK – Плёнка в порядке.wav" />
-	  <None Remove="Music\Core\doombreaker – кристальный just dance.wav" />
-	  <None Remove="Music\Core\Fnaf – эмбиент вентилятора.wav" />
-	  <None Remove="Music\Core\Ghost – Mary On A Cross.wav" />
-	  <None Remove="Music\Core\Linkin Park – Numb.wav" />
-	  <None Remove="Music\Core\Lynyrd Skynyrd – Free Bird guitar solo.wav" />
-	  <None Remove="Music\Core\Mr Kitty The Neighbourhood – After dark x Sweater Weather [Mashup].wav" />
-	  <None Remove="Music\Core\mzlff, CMH – catharsis %28prod. by spbwaves%29.wav" />
-	  <None Remove="Music\Core\NAMCO SOUNDS – Only One Fight %28Noh Theater%29.wav" />
-	  <None Remove="Music\Core\pieruun supertrap + redda + grime type beat silly.wav" />
-	  <None Remove="Music\Core\Piwson TSC – PIWO HARDSTYLE.wav" />
-	  <None Remove="Music\Core\precoil – Лпсайз.wav" />
-	  <None Remove="Music\Core\Rammstein – Позови Меня с Собой Cover by ROCK.wav" />
-	  <None Remove="Music\Core\sadness112 – Dora is there.wav" />
-	  <None Remove="Music\Core\SORRELL – BASSLINE DESIRE.wav" />
-	  <None Remove="Music\Core\SORRELL – GOD%27S AFTER PARTY.wav" />
-	  <None Remove="Music\Core\The Boys – Homelander Theme.wav" />
-	  <None Remove="Music\Core\tranzipone – after bike.wav" />
-	  <None Remove="Music\Core\Valve Studio Orchestra – Misfortune teller.wav" />
-	  <None Remove="Music\Core\Valve Studio Orchestra – Right Behind you %28Meet the Spy theme%29.wav" />
-	  <None Remove="Music\Core\Xxtristanxo – Glamorous x 9 Am In Calabasas.wav" />
-	  <None Remove="Music\Core\адидь – Страсть к Голосованию.wav" />
-	  <None Remove="Music\Core\ГРИГОРИЙ ЛЕПС x БЕСКОНЕЧНОЕ ЛЕТО – ЛЕПС ЗАСТРЯЛ В ЛЕТНЕМ ЛАГЕРЕ.wav" />
-	  <None Remove="Music\Core\До связи – Uno-uno-uno este es hardbass.wav" />
-	  <None Remove="Music\Core\Мелодия – В мире животных.wav" />
-	  <None Remove="Templates\Расписание2024_1_ИС-2.xls" />
-	  <None Remove="Templates\Расписание2024_1_ИС-2.xlsx" />
+	  <None Remove="Images\splash.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -184,6 +142,10 @@
 
 	<ItemGroup>
 	  <Folder Include="Music\User\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <SplashScreen Include="Images\splash.png" />
 	</ItemGroup>
 
 </Project>
